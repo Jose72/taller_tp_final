@@ -2,7 +2,7 @@
 #define TILE_H
 
 #include "Terrain.h"
-#include "Map.h"
+//#include "Map.h"
 
 #define TILE_LENGHT 10//medida lado de la casilla
 
@@ -23,20 +23,23 @@ class tile{
 		
 		//para el a*
 		tile *parent;
-		int fValue(tile &dest);
-		int gValue();
-		int hValue(tile &dest);
+		
 		
 	public:
 		tile(int x, int y);
 		int getX();
 		int getY();
+		tile* getParent();
+		void setParent(tile *p);
+		void setParentNull();
+		int fValue(tile &dest);
+		int gValue();
+		int hValue(tile &dest);
 		bool isPassable(); //chequea si el terreno es pasable y si no hay unidades/edificios en la casilla
 		bool isEqual(tile &t); //comparacion para el a*
 		bool isOcupied();//si hay alguna unidad/edificio sobre la casilla
 		int dist(tile &t); //distancia entre casillas
-		int moveTo(tile &orig, tile &dest, Map &map); //a*
-	
+
 };
 
 
