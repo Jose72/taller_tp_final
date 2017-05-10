@@ -8,6 +8,7 @@ class Terrain{
 		double terrain_factor; //factor de velocidad en el terreno
 	public:
 		bool isPassable();
+		double getTerrainFactor();
 };
 
 #endif

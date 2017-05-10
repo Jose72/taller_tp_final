@@ -15,10 +15,11 @@ class tThread {
         void start(); 
         void join();
         virtual void run() = 0; 
-		tThread(const tThread&) = delete;
+        virtual void stop() = 0; 
+	tThread(const tThread&) = delete;
         tThread& operator=(const tThread&) = delete;
         virtual ~tThread() {} 
-		tThread(tThread&& other);
+	tThread(tThread&& other);
         tThread& operator=(tThread&& other);
 };
 

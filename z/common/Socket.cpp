@@ -12,15 +12,23 @@
 
 tSocket::tSocket() {
 	skt = socket(AF_INET, SOCK_STREAM, 0);
-	//int yes = 1;
-	//setsockopt(skt, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
+	if (skt == -1) {
+		std::cout << "tSocket: error create" << std::endl;
+		throw 1;}
+}
+
+tSocket::tSocket(int fd) {
+	skt = fd;
 	if (skt == -1) {
 		std::cout << "tSocket: error create" << std::endl;
 		throw 1;}
 }
 
 tSocket::~tSocket() {
-	if (skt != -1) ::close(skt);
+	if (skt != -1) {
+        ::shutdown(skt, SHUT_RDWR);
+        ::close(skt);
+        }
 }
 
 
@@ -42,19 +50,21 @@ void tSocket::bindAndListen(int &port_number) {
 void tSocket::connect(char *ip_address, int &port_number) {
 	struct sockaddr_in serv;
 	serv.sin_addr.s_addr = inet_addr(ip_address);
-    serv.sin_family = AF_INET;
-    serv.sin_port = port_number;
+        serv.sin_family = AF_INET;
+        serv.sin_port = port_number;
 	int s = ::connect(skt , (struct sockaddr *)&serv , sizeof(serv));
 	if (s == -1) {
 		std::cout << "tSocket: error connect" << std::endl;
 		throw 1;}
 }
 
-void tSocket::accept(tSocket &accepted_socket){
-	accepted_socket.skt = ::accept(skt, NULL, NULL);
-	if (accepted_socket.skt == -1) {
-		std::cout << "tSocket: error accept" << std::endl;
+tSocket tSocket::accept(){
+	int skt_ret = ::accept(skt, NULL, NULL);
+	if (skt_ret == -1) {
+		//std::cout << "tSocket: error accept" << std::endl;
 		throw 1;}
+        tSocket accepted(skt_ret);
+        return accepted;
 }
 
 int tSocket::send(const char* buffer, size_t length){
@@ -64,8 +74,6 @@ int tSocket::send(const char* buffer, size_t length){
 		MSG_NOSIGNAL);
         if (s < 0) {
 			return s;
-			//std::cout << "tSocket: error send" << std::endl;
-            //throw 1;
         } else {
 			if (s == 0) {
 				return 0;
@@ -83,8 +91,6 @@ int tSocket::receive(char* buffer, size_t length){
 		MSG_NOSIGNAL);
         if (s < 0) {
 			return s;
-			//std::cout << "tSocket: error receive" << std::endl;
-            //throw 1;
         } else {
 			if (s == 0) {
 				return 0;
@@ -96,14 +102,17 @@ int tSocket::receive(char* buffer, size_t length){
 }
 
 void tSocket::shutdown(int how){
-    if (::shutdown(skt, how) == -1) {throw 1;}
+    if (skt != -1) ::shutdown(skt, how);
+    //if (::shutdown(skt, how) == -1) {throw 1;}
 }
 
 tSocket::tSocket(tSocket&& other){
-	this->s = std::move(other.skt);
+	this->skt = std::move(other.skt);
+        other.skt = -1;
 }
 
 tSocket& tSocket::operator=(tSocket&& other){
 		this->skt = std::move(other.skt);
+                other.skt = -1;
 		return *this;
 }
