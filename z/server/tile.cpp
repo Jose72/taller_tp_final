@@ -71,6 +71,26 @@ int tile::fValue(tile &dest){
 	return gValue()+hValue(dest);
 }
 
+bool tile::operator <(tile &t){
+	return (this->g + this->h) < (t.g + t.h);
+}
 
+void tile::setG(int g){
+	this->g = g;
+}
 
+void tile::setH(int h){
+	this->h = h;
+}
 
+void tile::setH(tile &dest){
+	this->h = this->hValue(dest);
+}
+
+int tile::getG(){
+	return g;
+}
+
+int tile::getH(){
+	return h;
+}

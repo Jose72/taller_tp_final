@@ -1,7 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include "Terrain.h"
+#include "terrain.h"
 //#include "Map.h"
 
 #define TILE_LENGHT 10//medida lado de la casilla
@@ -11,7 +11,7 @@ class tile{
 		//cada casilla guarda su punto central
 		int x_cord;
 		int y_cord;
-		//Terrain terrain; // deberia ser puntero, para hacer polimorfismo con los tipos de terrenos
+		//terrain terrain; // deberia ser puntero, para hacer polimorfismo con los tipos de terrenos
 		bool blocked; //solo para testeos!!
 		//Unit *unit; puntero a unidad, si alguna unidad esta en la casilla, si no hay entonces null.
 		
@@ -23,6 +23,8 @@ class tile{
 		
 		//para el a*
 		tile *parent;
+		int h;
+		int g;
 		
 		
 	public:
@@ -31,10 +33,15 @@ class tile{
 		int getY();
 		tile* getParent();
 		void setParent(tile *p);
-		void setParentNull();
 		int fValue(tile &dest);
-		int gValue();
+		int gValue();                   //hacer gValue, hValue por fuera de tiles !!!!!!!
 		int hValue(tile &dest);
+		void setG(int g);
+		void setH(int h);
+		int getG();
+		int getH();
+		void setH(tile &dest);
+		bool operator <(tile &t);
 		bool isPassable(); //chequea si el terreno es pasable y si no hay unidades/edificios en la casilla
 		bool isEqual(tile &t); //comparacion para el a*
 		bool isOcupied();//si hay alguna unidad/edificio sobre la casilla
