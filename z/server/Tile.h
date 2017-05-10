@@ -2,10 +2,11 @@
 #define TILE_H
 
 #include "Terrain.h"
+#include "Map.h"
 
 #define TILE_LENGHT 10//medida lado de la casilla
 
-class Tile{
+class tile{
 	private:
 		//cada casilla guarda su punto central
 		int x_cord;
@@ -21,20 +22,20 @@ class Tile{
 		//si hay threads puede haber problemas, pero se podria controlar accesos con un mutex (poco eficiente??)
 		
 		//para el a*
-		Tile *parent;
-		int fValue(Tile &dest);
+		tile *parent;
+		int fValue(tile &dest);
 		int gValue();
-		int hValue(Tile &dest);
+		int hValue(tile &dest);
 		
 	public:
-		Tile(int x, int y);
+		tile(int x, int y);
 		int getX();
 		int getY();
 		bool isPassable(); //chequea si el terreno es pasable y si no hay unidades/edificios en la casilla
-		bool isEqual(Tile &t); //comparacion para el a*
+		bool isEqual(tile &t); //comparacion para el a*
 		bool isOcupied();//si hay alguna unidad/edificio sobre la casilla
-		int dist(Tile &t); //distancia entre casillas
-		int moveTo(Tile &t); //a*
+		int dist(tile &t); //distancia entre casillas
+		int moveTo(tile &orig, tile &dest, Map &map); //a*
 	
 };
 
