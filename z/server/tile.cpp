@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <vector>
 #include <map>
-
+#include <math.h>  
+#include <iostream>
 
 tile::tile(int x, int y, int terrain_id): x_cord(x), y_cord(y), terr(terrain(terrain_id)) {
 	parent = nullptr;
@@ -46,16 +47,16 @@ bool tile::isPassable(int unit_code){
 
 int tile::dist(tile &t){
 	//distancia manhattan (si no se puede mover en diagonal)
-	return abs(this->x_cord - t.x_cord) + abs(this->y_cord - t.y_cord);
+	return sqrt(pow((this->x_cord - t.x_cord),2)) + sqrt(pow((this->y_cord - t.y_cord),2));
 }
 
 int tile::gValue(){
 	//costo siguiendo el camino generado
-	tile *aux = this->parent;
-	int movs = 0;
+	tile *aux = this;
+	int movs = -1;
 	//voy hacia  atras con parent, y veo cant de movimientos
-	while (aux->parent != nullptr){
-		aux = parent;
+	while (aux != nullptr){
+		aux = aux->parent;
 		movs++;
 	}
 	return movs;
@@ -64,7 +65,8 @@ int tile::gValue(){
 int tile::hValue(tile &dest){
 	//distancia manhattan como aprox
 	//distancia / largo casilla = movs
-	return abs(this->x_cord - dest.x_cord) + abs(this->y_cord - dest.y_cord) / TILE_LENGHT;
+	//std::cout << "dx " << this->x_cord - dest.x_cord << " dy "<< this->y_cord - dest.y_cord << std::endl;
+	return sqrt(pow((this->x_cord - dest.x_cord),2)) +sqrt(pow((this->y_cord - dest.y_cord), 2)) ;
 }
 
 int tile::fValue(tile &dest){
@@ -72,7 +74,7 @@ int tile::fValue(tile &dest){
 	return gValue()+hValue(dest);
 }
 
-bool tile::operator <(tile &t){
+bool tile::operator<(tile &t){
 	return (this->g + this->h) < (t.g + t.h);
 }
 
@@ -94,4 +96,10 @@ int tile::getG(){
 
 int tile::getH(){
 	return h;
+}
+
+void tile::printTile(){
+	std::cout << "x: " << x_cord << std::endl;
+	std::cout << "y: " << y_cord << std::endl;
+	std::cout << std::endl;
 }

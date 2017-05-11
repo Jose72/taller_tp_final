@@ -14,8 +14,9 @@ class gameMap {
 	public:
 		gameMap(int height, int width, std::vector<tile> &casillas); //para testeo
 		gameMap(int height, int width); //pasarle el archivo xml y que complete casillas??
-		void getNeightboors(tile &q, std::vector<tile> &ady);
+		void getNeightboors(tile &q, std::vector<tile*> &ady);
 		tile getTile(int x, int y);
+		tile* getTileP(int x, int y);
 };
 
 #endif

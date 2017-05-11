@@ -1,7 +1,7 @@
 
 
 #include "pathfinder.h"
-
+#include <iostream>
 
 
 
@@ -9,7 +9,7 @@
 //hay que ver que tipo de unidad es para ver si puede pasar por determinadas casillas !!!!
 
 //buscar el mejor camino a la casilla destino
-int a_start(tile &orig, tile &dest, gameMap &gmap, int unit_code, std::vector<tile> &path){
+int a_start(tile *orig, tile *dest, gameMap &gmap, int unit_code, std::vector<tile*> &path){
 //necesitaria referencia al mapa??
 
 
@@ -27,47 +27,62 @@ tilesListCost open;
 tilesListCost closed; // nodos ya evaluados
 
 //inserto, seteo g y h (g = 0 en el origen)
-orig.setG(0);
-orig.setH(dest);
-orig.setParent(nullptr); //padre a null, es el origen
+orig->setG(0);
+orig->setH(*dest);
+orig->setParent(nullptr); //padre a null, es el origen
 open.insert(orig); //inserto en open
-tile *last;
-
+tile *last = nullptr;
+std::cout << "empiueza while" << std::endl;
 while (!open.empty()){//mientras al lista no este vacia
 	//saco la primera casilla del open list (la de menor f);
 	
-	tile q = open.begin();
+	tile *q = open.begin();
+	std::cout << "current" << std::endl;
+	q->printTile();
 	
-	// si el actual es el destino ya esta
-	if (q.isEqual(dest)){
-			last = &q;
+	
+	if (q->isEqual(*dest)){
+			last = q;
 			break;
-	}
+		}
 	
-	//lo borro de open y lo iserto el closed
-	open.eraseIfFound(q);
-	closed.insert(q);
-		
+	
 	//consigo la lista de casilleros adyacentes (maximo 8)
 	//necesito info del mapa
 	//hay que setear el parent de los adyacentes a q 
 	//habria que chequear que adyacentes estan bloqueados y descartarlos !!!
-	std::vector<tile> ady;
-	gmap.getNeightboors(q, ady);
+	std::vector<tile*> ady;
+	gmap.getNeightboors(*q, ady);
+	
+	
+	
 	//para todos los adyacentes
+	std::cout << "calculos" << std::endl;
 	for (auto it = ady.begin(); it != ady.end(); ++it){
 		//si no se puede pasar por la casilla no hago nada
-		if (!it->isPassable(unit_code)) continue;
+		if (!(*it)->isPassable(unit_code)) continue;
 		
-		//seteo de padre a q
-		it->setParent(&q);
 		
-
+		// si el actual es el destino ya esta
+		/*
+		if ((*it)->isEqual(*dest)){
+			(*it)->setParent(q);
+			last = (*it);
+			break;
+		}
+		*/
+	
+		
 		if (!closed.found(*it)){
-			//saco g y h
-			it->setG(q.gValue() + q.dist(*it)); 
-			it->setH(dest);
 			
+			//seteo de padre a q
+			(*it)->setParent(q);
+			//saco g y h
+			(*it)->setG(q->gValue() + q->dist(**it)); 
+			(*it)->setH(*dest);
+			//std::cout << "neightboor" << std::endl;
+			(*it)->printTile();
+			//std::cout << "g: " << (*it)->getG() << " h: " << (*it)->getH() << std::endl;
 			//si el sucesor no esta en open agrego
 			//si esta, pero este es mejor (menor f), reemplazo
 			open.foundReplaceOrInsert(*it);
@@ -75,15 +90,17 @@ while (!open.empty()){//mientras al lista no este vacia
 		
 		//si ya esta en close hay que reemplazar como en open?????
 	}
-	return false;
+	//borro q de open y lo inserto el closed
+	open.eraseIfFound(q);
+	closed.insert(q);
 }
 
 //hay que retornar la lista de casillas (o la lista de coordenadas mejor)
 //usar un stack? (es LIFO)
 
 //voy hacia  atras con parent, y veo cant de movimientos
-while (last->getParent() != nullptr){
-	path.push_back(*last);
+while (last != nullptr){
+	path.push_back(last);
 	last = last->getParent();
 }
 	

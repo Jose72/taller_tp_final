@@ -43,11 +43,12 @@ class tile{
 		int getG();
 		int getH();
 		void setH(tile &dest);
-		bool operator <(tile &t);
+		bool operator<(tile &t);
 		bool isPassable(int unit_code); //chequea si el terreno es pasable y si no hay unidades/edificios en la casilla
 		bool isEqual(tile &t); //comparacion para el a*
 		bool isOcupied();//si hay alguna unidad/edificio sobre la casilla
 		int dist(tile &t); //distancia entre casillas
+		void printTile();
 
 };
 

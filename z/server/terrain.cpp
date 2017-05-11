@@ -1,7 +1,22 @@
 #include "terrain.h"
 
 terrain::terrain(int terrain_code){
-	
+	//el switch queda medio feo, ver si hay mejor forma (algun patron??)
+	switch(terrain_code){
+		case(TIERRA):
+			this->construct(TIERRA, true, true, TIERRA_FACTOR);
+		case(AGUA):
+			this->construct(AGUA, true, false, AGUA_FACTOR);
+		case(LAVA):
+			this->construct(LAVA, false, false, LAVA_FACTOR);
+	}
+}
+
+void terrain::construct(int t_type, bool pb_robot, bool pb_vehicle, double t_factor){
+	t_type = t_type;
+	passable_by_robot = pb_robot;
+	passable_by_vehicle = pb_vehicle;
+	terrain_factor = t_factor;
 }
 
 terrain::terrain(int t_type, bool pb_robot, bool pb_vehicle, double t_factor): 
