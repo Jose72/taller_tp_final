@@ -6,9 +6,10 @@
 
 
 
+//hay que ver que tipo de unidad es para ver si puede pasar por determinadas casillas !!!!
 
 //buscar el mejor camino a la casilla destino
-int moveTo(tile &orig, tile &dest, gameMap &gmap){
+int a_start(tile &orig, tile &dest, gameMap &gmap, int unit_code){
 //necesitaria referencia al mapa??
 
 
@@ -55,6 +56,9 @@ while (!open.empty()){//mientras al lista no este vacia
 	gmap.getNeightboors(q, ady);
 	//para todos los adyacentes
 	for (auto it = ady.begin(); it != ady.end(); ++it){
+		//si no se puede pasar por la casilla no hago nada
+		if (!it->isPassable(unit_code)) continue;
+		
 		//seteo de padre a q
 		it->setParent(&q);
 		
@@ -65,7 +69,7 @@ while (!open.empty()){//mientras al lista no este vacia
 			it->setH(dest);
 			
 			//si el sucesor no esta en open agrego
-			//si esta, pero este es mejor, reemplazo
+			//si esta, pero este es mejor (menor f), reemplazo
 			open.foundReplaceOrInsert(*it);
 		}
 		

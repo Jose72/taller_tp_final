@@ -35,7 +35,7 @@ bool tile::isEqual(tile &t){
 
 //chequea si se puede pasar por la casilla
 //true si el terreno es pasable y si no hay unidades/edificios en la casilla
-bool tile::isPassable(){
+bool tile::isPassable(int unit_code){
 	/*
 	(terrain.isPassable && this->isOcupied) return true;
 	return false

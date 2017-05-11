@@ -19,9 +19,8 @@ void gameMap::getNeightboors(tile &q, std::vector<tile> &ady){
 		    int pos = x + y * width; //width tendria que ser cant de casillas horizontal
 			//si x e y son positivos y la pos existe
 			if (new_x >= 0 && new_y >= 0 && pos < (int) casillas.size()) {
-				tile q = casillas[pos];
-				//si es pasable, la guardo
-				if (q.isPassable()) ady.push_back(q);
+				//la guardo
+				ady.push_back(casillas[pos]);
 			}
 		}
 	}
