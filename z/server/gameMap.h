@@ -12,6 +12,7 @@ class gameMap {
 		int width;
 		std::vector<tile> casillas;
 	public:
+		gameMap(int height, int width); //pasarle el archivo xml y que complete casillas??
 		void getNeightboors(tile &q, std::vector<tile> &ady);
 		tile getTile(int x, int y);
 };

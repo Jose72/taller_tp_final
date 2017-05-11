@@ -1,15 +1,15 @@
-#include "tile.h"
-#include "tilesListCost.h"
-#include "gameMap.h"
-#include <set>
-#include <vector>
+
+
+#include "pathfinder.h"
+
+
 
 
 
 //hay que ver que tipo de unidad es para ver si puede pasar por determinadas casillas !!!!
 
 //buscar el mejor camino a la casilla destino
-int a_start(tile &orig, tile &dest, gameMap &gmap, int unit_code){
+int a_start(tile &orig, tile &dest, gameMap &gmap, int unit_code, std::vector<tile> &path){
 //necesitaria referencia al mapa??
 
 
@@ -31,7 +31,7 @@ orig.setG(0);
 orig.setH(dest);
 orig.setParent(nullptr); //padre a null, es el origen
 open.insert(orig); //inserto en open
-
+tile *last;
 
 while (!open.empty()){//mientras al lista no este vacia
 	//saco la primera casilla del open list (la de menor f);
@@ -40,7 +40,7 @@ while (!open.empty()){//mientras al lista no este vacia
 	
 	// si el actual es el destino ya esta
 	if (q.isEqual(dest)){
-			//return camino;
+			last = &q;
 			break;
 	}
 	
@@ -77,5 +77,16 @@ while (!open.empty()){//mientras al lista no este vacia
 	}
 	return false;
 }
+
+//hay que retornar la lista de casillas (o la lista de coordenadas mejor)
+//usar un stack? (es LIFO)
+
+//voy hacia  atras con parent, y veo cant de movimientos
+while (last->getParent() != nullptr){
+	path.push_back(*last);
+	last = last->getParent();
+}
+	
 return 0;
 }
+
