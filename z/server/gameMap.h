@@ -8,6 +8,8 @@
 //objecto protegido?
 class gameMap {
 	private:
+		int height;
+		int width;
 		std::vector<tile> casillas;
 	public:
 		void getNeightboors(tile &q, std::vector<tile> &ady);
