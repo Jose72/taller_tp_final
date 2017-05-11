@@ -12,7 +12,7 @@ class tile{
 		//cada casilla guarda su punto central
 		int x_cord;
 		int y_cord;
-		terrain *terr;
+		terrain terr;
 		//terrain terrain; // deberia ser puntero, para hacer polimorfismo con los tipos de terrenos
 		bool blocked; //solo para testeos!!
 		//Unit *unit; puntero a unidad, si alguna unidad esta en la casilla, si no hay entonces null.
@@ -30,7 +30,7 @@ class tile{
 		
 		
 	public:
-		tile(int x, int y);
+		tile(int x, int y, int terrain_id);
 		int getX();
 		int getY();
 		tile* getParent();

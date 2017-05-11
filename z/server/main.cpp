@@ -7,6 +7,10 @@
 int main(int argc, char **argv)
 {
 	
+	//seteo casilleros
+	std::vector<tile> casillas;
+	//tile q =
+	
 	
 	
 	return 0;

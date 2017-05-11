@@ -1,5 +1,10 @@
 #include "gameMap.h"
 
+
+gameMap::gameMap(int height, int width, std::vector<tile> &casillas): height(height), 
+width(width), casillas(casillas) {};
+
+
 // vecinos
 // x-1, y-1 | x, y-1   | x+1, y-1 |
 //-----------------------------------

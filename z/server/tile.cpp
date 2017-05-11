@@ -4,7 +4,8 @@
 #include <vector>
 #include <map>
 
-tile::tile(int x, int y): x_cord(x), y_cord(y) {
+
+tile::tile(int x, int y, int terrain_id): x_cord(x), y_cord(y), terr(terrain(terrain_id)) {
 	parent = nullptr;
 }
 

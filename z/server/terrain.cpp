@@ -1,5 +1,8 @@
 #include "terrain.h"
 
+terrain::terrain(int terrain_code){
+	
+}
 
 terrain::terrain(int t_type, bool pb_robot, bool pb_vehicle, double t_factor): 
 t_type(t_type), passable_by_robot(pb_robot), passable_by_vehicle(pb_vehicle), 
@@ -13,7 +16,8 @@ bool terrain::isPassable(int unit_code){
 
 
 
-
+/*
+//codigo viejo, guardado por las dudas
 //constructores de los terrenos
 
 terrainPradera::terrainPradera(): terrain(PRADERA, true, true, 
@@ -24,3 +28,4 @@ AGUA_FACTOR) {};
 
 terrainLava::terrainLava(): terrain(LAVA, false, false, 
 LAVA) {};
+*/

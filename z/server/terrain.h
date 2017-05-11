@@ -31,12 +31,14 @@ class terrain{
 		bool passable_by_vehicle;
 		double terrain_factor; //factor de velocidad en el terreno
 	public:
+		terrain(int terrain_code);
 		terrain(int t_type, bool pb_robot, bool pb_vehicle, double t_factor);
 		bool isPassable(int unit_code);
 		double getTerrainFactor();
 };
 
-
+/*
+// codigo viejo, guardado por la dudas
 //tipos de terrenos
 
 class terrainPradera: public terrain{
@@ -53,6 +55,6 @@ class terrainLava: public terrain{
 	public:
 		terrainLava();
 };
-
+*/
 
 #endif
