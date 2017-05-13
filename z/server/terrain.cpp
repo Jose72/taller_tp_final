@@ -1,14 +1,29 @@
 #include "terrain.h"
+#include <iostream>
 
 terrain::terrain(int terrain_code){
 	//el switch queda medio feo, ver si hay mejor forma (algun patron??)
 	switch(terrain_code){
 		case(TIERRA):
+			{
+			std::cout << "tierra terrain" << std::endl;
 			this->construct(TIERRA, true, true, TIERRA_FACTOR);
+			break;
+			}
 		case(AGUA):
+			{
+			std::cout << "agua terrain" << std::endl;
 			this->construct(AGUA, true, false, AGUA_FACTOR);
+			break;
+			}
 		case(LAVA):
+			{
+			std::cout << "lava terrain" << std::endl;
 			this->construct(LAVA, false, false, LAVA_FACTOR);
+			break;
+			}
+		default:
+			break;
 	}
 }
 

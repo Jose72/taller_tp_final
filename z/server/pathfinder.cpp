@@ -60,28 +60,17 @@ while (!open.empty()){//mientras al lista no este vacia
 	std::cout << "calculos" << std::endl;
 	for (auto it = ady.begin(); it != ady.end(); ++it){
 		//si no se puede pasar por la casilla no hago nada
-		if (!(*it)->isPassable(unit_code)) continue;
-		
-		
-		// si el actual es el destino ya esta
-		/*
-		if ((*it)->isEqual(*dest)){
-			(*it)->setParent(q);
-			last = (*it);
-			break;
-		}
-		*/
-	
-		
-		if (!closed.found(*it)){
-			
+		(*it)->printTile();
+		if (!closed.found(*it) && (*it)->isPassable(unit_code)){
+			// << !(*it)->isPassable(unit_code) << 
 			//seteo de padre a q
+			(*it)->printTile();
 			(*it)->setParent(q);
 			//saco g y h
 			(*it)->setG(q->gValue() + q->dist(**it)); 
 			(*it)->setH(*dest);
 			//std::cout << "neightboor" << std::endl;
-			(*it)->printTile();
+			
 			//std::cout << "g: " << (*it)->getG() << " h: " << (*it)->getH() << std::endl;
 			//si el sucesor no esta en open agrego
 			//si esta, pero este es mejor (menor f), reemplazo
