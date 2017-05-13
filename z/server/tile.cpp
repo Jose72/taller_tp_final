@@ -5,6 +5,7 @@
 #include <map>
 #include <math.h>  
 #include <iostream>
+#include <algorithm>
 
 tile::tile(int x, int y, int terrain_id): x_cord(x), y_cord(y), terr(terrain(terrain_id)) {
 	parent = nullptr;
@@ -43,12 +44,14 @@ bool tile::isPassable(int unit_code){
 
 }
 
-int tile::dist(tile &t){
+double tile::dist(tile &t){
 	//distancia manhattan (si no se puede mover en diagonal)
 	return sqrt(pow((this->x_cord - t.x_cord),2)) + sqrt(pow((this->y_cord - t.y_cord),2));
 }
 
-int tile::gValue(){
+double tile::gValue(){
+	return (2 - terr.getTerrainFactor());
+	/*
 	//costo siguiendo el camino generado
 	tile *aux = this;
 	int movs = -1;
@@ -58,16 +61,19 @@ int tile::gValue(){
 		movs++;
 	}
 	return movs;
+	*/
 }
 
-int tile::hValue(tile &dest){
+double tile::hValue(tile &dest){
+	//distancia euclideana
+	return sqrt(pow((this->x_cord - dest.x_cord),2) + pow((this->y_cord - dest.y_cord),2)) ;
+	//distancia diagonal
+	//return std::max((abs(this->x_cord - dest.x_cord)), (abs(this->y_cord - dest.y_cord)));
 	//distancia manhattan como aprox
-	//distancia / largo casilla = movs
-	//std::cout << "dx " << this->x_cord - dest.x_cord << " dy "<< this->y_cord - dest.y_cord << std::endl;
-	return sqrt(pow((this->x_cord - dest.x_cord),2)) +sqrt(pow((this->y_cord - dest.y_cord), 2)) ;
+	//return sqrt(pow((this->x_cord - dest.x_cord),2)) +sqrt(pow((this->y_cord - dest.y_cord), 2)) ;
 }
 
-int tile::fValue(tile &dest){
+double tile::fValue(tile &dest){
 	//f = g + h
 	return gValue()+hValue(dest);
 }
@@ -76,11 +82,11 @@ bool tile::operator<(tile &t){
 	return (this->g + this->h) < (t.g + t.h);
 }
 
-void tile::setG(int g){
+void tile::setG(double g){
 	this->g = g;
 }
 
-void tile::setH(int h){
+void tile::setH(double h){
 	this->h = h;
 }
 
@@ -88,11 +94,11 @@ void tile::setH(tile &dest){
 	this->h = this->hValue(dest);
 }
 
-int tile::getG(){
+double tile::getG(){
 	return g;
 }
 
-int tile::getH(){
+double tile::getH(){
 	return h;
 }
 

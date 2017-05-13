@@ -67,7 +67,7 @@ while (!open.empty()){//mientras al lista no este vacia
 			(*it)->printTile();
 			(*it)->setParent(q);
 			//saco g y h
-			(*it)->setG(q->gValue() + q->dist(**it)); 
+			(*it)->setG(q->getG() + (*it)->gValue()); 
 			(*it)->setH(*dest);
 			//std::cout << "neightboor" << std::endl;
 			

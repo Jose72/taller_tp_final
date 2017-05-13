@@ -27,9 +27,9 @@ int test_astart_solo_tierra(){
 	std::vector<tile> casillas;
 	tile a(0, 0, TIERRA), b(1, 0, TIERRA), c(2, 0, TIERRA), d(3, 0, TIERRA);
 	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-	a = tile(0, 1, LAVA); b = tile(1, 1, LAVA); c = tile(2, 1, AGUA); d = tile(3, 1, TIERRA);
+	a = tile(0, 1, AGUA); b = tile(1, 1, LAVA); c = tile(2, 1, TIERRA); d = tile(3, 1, TIERRA);
 	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-	a = tile(0, 2, TIERRA); b = tile(1, 2, LAVA); c = tile(2, 2, TIERRA); d = tile(3, 2, TIERRA);
+	a = tile(0, 2, AGUA); b = tile(1, 2, LAVA); c = tile(2, 2, LAVA); d = tile(3, 2, LAVA);
 	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
 	a = tile(0, 3, TIERRA); b = tile(1, 3, TIERRA); c = tile(2, 3, TIERRA); d = tile(3, 3, TIERRA);
 	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
@@ -42,8 +42,8 @@ int test_astart_solo_tierra(){
 	
 	gameMap mapa(4, 4, casillas);
 	
-	tile *orig = mapa.getTileP(0,0);
-	tile *dest = mapa.getTileP(0,2);
+	tile *orig = mapa.getTileP(2,0);
+	tile *dest = mapa.getTileP(3,3);
 	std::vector<tile*> camino;
 	
 	

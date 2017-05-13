@@ -25,8 +25,8 @@ class tile{
 		
 		//para el a*
 		tile *parent;
-		int h;
-		int g;
+		double h;
+		double g;
 		
 		
 	public:
@@ -35,19 +35,19 @@ class tile{
 		int getY();
 		tile* getParent();
 		void setParent(tile *p);
-		int fValue(tile &dest);
-		int gValue();                   //hacer gValue, hValue por fuera de tiles !!!!!!!
-		int hValue(tile &dest);
-		void setG(int g);
-		void setH(int h);
-		int getG();
-		int getH();
+		double fValue(tile &dest);
+		double gValue();                   //hacer gValue, hValue por fuera de tiles !!!!!!!
+		double hValue(tile &dest);
+		void setG(double g);
+		void setH(double h);
+		double getG();
+		double getH();
 		void setH(tile &dest);
 		bool operator<(tile &t);
 		bool isPassable(int unit_code); //chequea si el terreno es pasable y si no hay unidades/edificios en la casilla
 		bool isEqual(tile &t); //comparacion para el a*
 		bool isOcupied();//si hay alguna unidad/edificio sobre la casilla
-		int dist(tile &t); //distancia entre casillas
+		double dist(tile &t); //distancia entre casillas
 		void printTile();
 
 };

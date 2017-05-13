@@ -6,20 +6,22 @@ terrain::terrain(int terrain_code){
 	switch(terrain_code){
 		case(TIERRA):
 			{
-			std::cout << "tierra terrain" << std::endl;
 			this->construct(TIERRA, true, true, TIERRA_FACTOR);
 			break;
 			}
 		case(AGUA):
 			{
-			std::cout << "agua terrain" << std::endl;
 			this->construct(AGUA, true, false, AGUA_FACTOR);
 			break;
 			}
 		case(LAVA):
 			{
-			std::cout << "lava terrain" << std::endl;
 			this->construct(LAVA, false, false, LAVA_FACTOR);
+			break;
+			}
+		case(CARRETERA):
+			{
+			this->construct(CARRETERA, true, true, CARRETERA_FACTOR);
 			break;
 			}
 		default:
@@ -44,7 +46,9 @@ bool terrain::isPassable(int unit_code){
 	return false;
 }
 
-
+double terrain::getTerrainFactor(){
+	return terrain_factor;
+}
 
 /*
 //codigo viejo, guardado por las dudas
