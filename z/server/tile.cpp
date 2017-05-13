@@ -44,7 +44,8 @@ bool tile::isPassable(int unit_code){
 
 }
 
-//solo para adyacentes
+
+//solo para casillas adyacentes
 double tile::dist(tile &t){
 	//si es diagonal costo es +0.4
 	if (this->isDiagonal(t)) {
@@ -54,19 +55,10 @@ double tile::dist(tile &t){
 	
 }
 
+
+//costo de moverse a esta casilla desde una vecina no diagonal
 double tile::gValue(){
 	return (2 - terr.getTerrainFactor());
-	/*
-	//costo siguiendo el camino generado
-	tile *aux = this;
-	int movs = -1;
-	//voy hacia  atras con parent, y veo cant de movimientos
-	while (aux != nullptr){
-		aux = aux->parent;
-		movs++;
-	}
-	return movs;
-	*/
 }
 
 double tile::hValue(tile &dest){
@@ -74,14 +66,10 @@ double tile::hValue(tile &dest){
 	return sqrt(pow((this->x_cord - dest.x_cord),2) + pow((this->y_cord - dest.y_cord),2)) ;
 	//distancia diagonal
 	//return std::max((abs(this->x_cord - dest.x_cord)), (abs(this->y_cord - dest.y_cord)));
-	//distancia manhattan como aprox
+	//distancia manhattan
 	//return sqrt(pow((this->x_cord - dest.x_cord),2)) +sqrt(pow((this->y_cord - dest.y_cord), 2)) ;
 }
 
-double tile::fValue(tile &dest){
-	//f = g + h
-	return gValue()+hValue(dest);
-}
 
 bool tile::operator<(tile &t){
 	return (this->g + this->h) < (t.g + t.h);

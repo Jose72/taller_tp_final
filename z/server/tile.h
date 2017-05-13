@@ -35,7 +35,6 @@ class tile{
 		int getY();
 		tile* getParent();
 		void setParent(tile *p);
-		double fValue(tile &dest);
 		double gValue();                   //hacer gValue, hValue por fuera de tiles !!!!!!!
 		double hValue(tile &dest);
 		void setG(double g);
