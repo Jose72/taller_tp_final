@@ -44,9 +44,14 @@ bool tile::isPassable(int unit_code){
 
 }
 
+//solo para adyacentes
 double tile::dist(tile &t){
-	//distancia manhattan (si no se puede mover en diagonal)
-	return sqrt(pow((this->x_cord - t.x_cord),2)) + sqrt(pow((this->y_cord - t.y_cord),2));
+	//si es diagonal costo es +0.4
+	if (this->isDiagonal(t)) {
+		return 0.4 + t.gValue();
+	}
+	return t.gValue();
+	
 }
 
 double tile::gValue(){
@@ -106,4 +111,12 @@ void tile::printTile(){
 	std::cout << "x: " << x_cord << std::endl;
 	std::cout << "y: " << y_cord << std::endl;
 	std::cout << std::endl;
+}
+
+bool tile::isDiagonal(tile &t){
+	if (x_cord == 1 + t.x_cord && y_cord == 1 + t.y_cord) return true;
+	if (x_cord == 1 + t.x_cord && y_cord == -1 + t.y_cord) return true;
+	if (x_cord == -1 + t.x_cord && y_cord == 1 + t.y_cord) return true;
+	if (x_cord == -1 + t.x_cord && y_cord == -1 + t.y_cord) return true;
+	return false;
 }

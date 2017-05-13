@@ -23,7 +23,7 @@ void gameMap::getNeightboors(tile &q, std::vector<tile*> &ady){
 			int new_x = x + dx;
 			int new_y = y + dy;
 		    int pos = new_x + new_y * width; //width tendria que ser cant de casillas horizontal
-			//si x e y son positivos y la pos existe
+			//si x e y son positivos, y no se pasan de cant de casillas, y la pos existe
 			if (new_x >= 0 && new_y >= 0 && pos < (int) casillas.size() &&
 			!(new_x == x && new_y == y) && (new_x < width) && (new_y < height)) {
 				//la guardo

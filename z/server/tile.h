@@ -49,6 +49,7 @@ class tile{
 		bool isOcupied();//si hay alguna unidad/edificio sobre la casilla
 		double dist(tile &t); //distancia entre casillas
 		void printTile();
+		bool isDiagonal(tile &t);
 
 };
 

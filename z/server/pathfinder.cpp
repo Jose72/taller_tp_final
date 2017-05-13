@@ -50,7 +50,6 @@ while (!open.empty()){//mientras al lista no este vacia
 	//consigo la lista de casilleros adyacentes (maximo 8)
 	//necesito info del mapa
 	//hay que setear el parent de los adyacentes a q 
-	//habria que chequear que adyacentes estan bloqueados y descartarlos !!!
 	std::vector<tile*> ady;
 	gmap.getNeightboors(*q, ady);
 	
@@ -59,15 +58,16 @@ while (!open.empty()){//mientras al lista no este vacia
 	//para todos los adyacentes
 	std::cout << "calculos" << std::endl;
 	for (auto it = ady.begin(); it != ady.end(); ++it){
-		//si no se puede pasar por la casilla no hago nada
-		(*it)->printTile();
+		//(*it)->printTile();
+		//si no esta en closed y es pasable
 		if (!closed.found(*it) && (*it)->isPassable(unit_code)){
 			// << !(*it)->isPassable(unit_code) << 
 			//seteo de padre a q
 			(*it)->printTile();
 			(*it)->setParent(q);
 			//saco g y h
-			(*it)->setG(q->getG() + (*it)->gValue()); 
+			//agregar mas costo si es diagonal !!!!
+			(*it)->setG(q->getG() + q->dist(**it)); 
 			(*it)->setH(*dest);
 			//std::cout << "neightboor" << std::endl;
 			
@@ -88,11 +88,13 @@ while (!open.empty()){//mientras al lista no este vacia
 //usar un stack? (es LIFO)
 
 //voy hacia  atras con parent, y veo cant de movimientos
+
 while (last != nullptr){
 	path.push_back(last);
 	last = last->getParent();
 }
-	
+
+
 return 0;
 }
 
