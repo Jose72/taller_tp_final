@@ -7,7 +7,7 @@
 #define UNIT_DEAD 1
 
 class unit {
-	private:
+	protected:
 		armament arma;
 		int shoot_freq; //en segundos
 		int range;
@@ -17,8 +17,15 @@ class unit {
 	public:
 		unit(int arma_code, int shoot_f, int range, double h, 
 		int f_time, int t_lvl);
-		double getDamage(int time); //necesito un tiempo para calcular el daño
+		double getDamage(double time); //necesito un tiempo para calcular el daño
 		int receiveDamage(double dam);
+};
+
+class vehicle: public unit {
+	private:
+		unit *driver;
+	public:
+		bool inUse();
 };
 
 #endif
