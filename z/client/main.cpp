@@ -3,7 +3,8 @@
 #include "csprite.h"
 #include "Animation.h"
 #include "Game_map.h"
-#include "flag.h"
+#include "Flag.h"
+#include "Fort.h"
 
 #define IMAGEPATH "/home/matias/Escritorio/Client/sprites/robot1/1.bmp"
 
@@ -21,10 +22,11 @@ int main(int argc, char *argv[]){
     }
     atexit(SDL_Quit);
 
-    Animation animation(screen,IMAGEPATH,70,80,0);
+    Animation animation(screen,IMAGEPATH,70,80);
 
     Game_map game_map(screen);
     Flag flag(screen,10,10);
+    Fort fort(screen,400,0);
 
     SDL_Event occur;
 
@@ -37,7 +39,8 @@ int main(int argc, char *argv[]){
         }
        //animation.animate(100,100);
         game_map.draw_map();
-        flag.animate_flag();
+        flag.animate();
+        fort.animate();
 
 
 
