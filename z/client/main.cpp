@@ -5,6 +5,7 @@
 #include "Game_map.h"
 #include "Flag.h"
 #include "Fort.h"
+#include "Grunt.h"
 
 #define IMAGEPATH "/home/matias/Escritorio/Client/sprites/robot1/1.bmp"
 
@@ -27,6 +28,7 @@ int main(int argc, char *argv[]){
     Game_map game_map(screen);
     Flag flag(screen,10,10);
     Fort fort(screen,400,0);
+    Grunt grunt(screen,200,200);
 
     SDL_Event occur;
 
@@ -41,6 +43,7 @@ int main(int argc, char *argv[]){
         game_map.draw_map();
         flag.animate();
         fort.animate();
+        grunt.animate();
 
 
 
