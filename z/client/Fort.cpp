@@ -1,4 +1,5 @@
 #include "Fort.h"
+/*
 Fort::Fort(SDL_Surface *screen, int posx, int posy) {
     this->screen = screen;
     this->posx = posx;
@@ -13,4 +14,5 @@ Fort::Fort(SDL_Surface *screen, int posx, int posy) {
                                     160,192);
     this->animation.push_back(fort_death);
 }
+ */
 

@@ -9,16 +9,17 @@
 #include <SDL_video.h>
 #include <vector>
 #include "Animation.h"
+#include "SpritesPool.h"
 
 class Unit {
 protected:
-    SDL_Surface *screen;
     int posx;
     int posy;
     int current_frame;
     std::vector<Animation *> animation;
 public:
 
+    Unit( std::vector<Animation *> animation, int posx, int posy);
     Unit();
     ~Unit();
     void animate();

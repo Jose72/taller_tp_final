@@ -1,4 +1,5 @@
 #include "Grunt.h"
+/*
 
 Grunt::Grunt(SDL_Surface *screen, int posx, int posy) {
     this->screen = screen;
@@ -14,3 +15,4 @@ Grunt::Grunt(SDL_Surface *screen, int posx, int posy) {
                                         16,16);
     this->animation.push_back(grunt1);
 }
+ */

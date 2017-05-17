@@ -21,5 +21,5 @@ void Animation::animate(int posx, int posy) {
     SDL_Rect dest;
     dest.x = posx;
     dest.y = posy;
-    SDL_BlitSurface(image,&frame,screen,&dest);
+    SDL_BlitSurface(image,&frame,this->screen,&dest);
 }

@@ -3,10 +3,10 @@
 #include "csprite.h"
 #include "Animation.h"
 #include "Game_map.h"
-#include "Flag.h"
 #include "Fort.h"
 #include "Grunt.h"
 #include "SelectionHandler.h"
+#include "Factory_Units.h"
 
 #define IMAGEPATH "/home/matias/Escritorio/Client/sprites/robot1/1.bmp"
 
@@ -36,9 +36,15 @@ int main(int argc, char *argv[]){
     int destinoy;
     int seleccionx;
     int selecciony;
-
-    std::vector<Unit*> all_units;
+    SpritesPool pool(screen);
+    Factory_Units factory(pool);
+    Unit *grunt = factory.createUnit(BLUE_GRUNT,posx1,posy1);
+    Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
     Game_map game_map(screen);
+
+    /*
+    std::vector<Unit*> all_units;
+
     Flag flag(screen,10,10);
     Fort fort(screen,400,0);
     Unit* grunt = new Grunt(screen,posx2,posy2);
@@ -49,7 +55,9 @@ int main(int argc, char *argv[]){
     all_units.push_back(grunt_prueba);
     grunt_prueba->get_posx();
 
+
     SelectionHandler sHandler(all_units);
+     */
 
     SDL_Event event;
 
@@ -71,7 +79,7 @@ int main(int argc, char *argv[]){
                 if(event.button.button == RIGHT_BUTTON){
                     seleccionx = event.button.x;
                     selecciony = event.button.y;
-                    sHandler.select_unit(seleccionx,selecciony);
+                    //sHandler.select_unit(seleccionx,selecciony);
                     break;
                 }
 
@@ -90,7 +98,9 @@ int main(int argc, char *argv[]){
             if (posy1 > destinoy) {
                 posy1 -= 1;
             }
-        }/*
+        }
+        grunt->set_pos(posx1,posy1);
+        /*
         if(sHandler.get_unit_s()!= NULL) {
             sHandler.get_unit_s()->set_pos(posx1,posy1);
 
@@ -100,13 +110,16 @@ int main(int argc, char *argv[]){
        //animation.animate(100,100);
 
         game_map.draw_map();
-        flag.animate();
-        fort.animate();
+        flag->animate();
+        grunt->animate();
+
+        /*
         //grunt_prueba->set_pos(posx,posy);
         for (int i = 0; i <all_units.size() ; ++i) {
             all_units[i]->set_pos(posx1,posy1);
             all_units[i]->animate();
         }
+         */
 
 
         SDL_Flip(screen);

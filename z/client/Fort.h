@@ -8,7 +8,7 @@
 
 class Fort: public Unit {
 public:
-    Fort(SDL_Surface *screen,int x, int y);
+    //Fort(SDL_Surface *screen,int x, int y);
 };
 
 

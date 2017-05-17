@@ -10,7 +10,7 @@
 
 class Grunt: public Unit {
 public:
-    Grunt(SDL_Surface *screen,int posx, int posy);
+    //Grunt(SDL_Surface *screen,int posx, int posy);
 
 };
 

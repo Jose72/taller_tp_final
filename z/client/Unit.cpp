@@ -1,6 +1,10 @@
 #include "Unit.h"
 
-Unit::Unit() {}
+Unit::Unit(std::vector<Animation*> animation, int posx, int posy):
+        animation(animation),posx(posx),posy(posy) {
+    this->current_frame = 0;
+}
+
 Unit::~Unit() {
     for (int i = 0; i <animation.size() ; ++i) {
         delete (this->animation[i]);
