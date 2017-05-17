@@ -1,4 +1,4 @@
-#include "commonThread.h"
+#include "Thread.h"
 
 
 tThread::tThread(){
