@@ -8,7 +8,7 @@
 #include "SelectionHandler.h"
 #include "Factory_Units.h"
 
-#define IMAGEPATH "/home/matias/Escritorio/Client/sprites/robot1/1.bmp"
+#define IMAGEPATH "client/sprites/robot1/1.bmp"
 
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 1
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]){
             all_units[i]->set_pos(posx1,posy1);
             all_units[i]->animate();
         }
-         */
+        */
 
 
         SDL_Flip(screen);

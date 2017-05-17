@@ -61,11 +61,11 @@ void Game_map::draw_map() {
 // 5.BMP RUTA
 // 6.bmp ARENA
 void Game_map::load_tex() {
-    this->tex0 = new Animation(this->screen,"/home/matias/Escritorio/Client/sprites/tiles/1.bmp",32,32);
-    this->tex1 = new Animation(this->screen,"/home/matias/Escritorio/Client/sprites/tiles/2.bmp",32,32);
-    this->tex2 = new Animation(this->screen,"/home/matias/Escritorio/Client/sprites/tiles/3.bmp",32,32);
-    this->tex3 = new Animation(this->screen,"/home/matias/Escritorio/Client/sprites/tiles/4.bmp",32,32);
-    this->tex4 = new Animation(this->screen,"/home/matias/Escritorio/Client/sprites/tiles/5.bmp",32,32);
-    this->tex5 = new Animation(this->screen,"/home/matias/Escritorio/Client/sprites/tiles/6.bmp",32,32);
+    this->tex0 = new Animation(this->screen,"client/sprites/tiles/1.bmp",32,32);
+    this->tex1 = new Animation(this->screen,"client/sprites/tiles/2.bmp",32,32);
+    this->tex2 = new Animation(this->screen,"client/sprites/tiles/3.bmp",32,32);
+    this->tex3 = new Animation(this->screen,"client/sprites/tiles/4.bmp",32,32);
+    this->tex4 = new Animation(this->screen,"client/sprites/tiles/5.bmp",32,32);
+    this->tex5 = new Animation(this->screen,"client/sprites/tiles/6.bmp",32,32);
 
 }
