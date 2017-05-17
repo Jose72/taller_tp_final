@@ -15,3 +15,15 @@ void Unit::animate() {
     animation[current_frame]->animate(this->posx,this->posy);
 
 }
+void Unit::set_pos(int x, int y) {
+    this->posx = x;
+    this->posy = y;
+}
+
+int Unit::get_posx() {
+    return this->posx;
+}
+
+int Unit::get_posy() {
+    return  this->posy;
+}

@@ -18,9 +18,13 @@ protected:
     int current_frame;
     std::vector<Animation *> animation;
 public:
+
     Unit();
     ~Unit();
     void animate();
+    void set_pos(int x,int y);
+    int get_posx();
+    int get_posy();
 
 
 
