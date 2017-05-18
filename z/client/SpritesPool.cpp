@@ -37,8 +37,22 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
     c_flag.push_back(flag3);
     this->pool[COLORLESS_FLAG] = c_flag;
 
+    //FORT
 
+    std::vector<Animation*> fort;
+    Animation *fort_alive = new Animation(this->screen,
+                                          "client/sprites/fuertes/alive.bmp",
+                                          160,192);
+    fort.push_back(fort_alive);
+    Animation*fort_death = new Animation(this->screen,
+                                         "client/sprites/fuertes/death.bmp",
+                                         160,192);
+    fort.push_back(fort_death);
+    this->pool[FORT] = fort;
 }
+
+
+
 
 std::vector<Animation*> SpritesPool::get_animations(FlagsUnitType flag) {
     return this->pool[flag];

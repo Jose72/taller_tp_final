@@ -8,7 +8,8 @@
 enum FlagsUnitType{
     BLUE_GRUNT = 11,
     YELLOW_GRUNT = 12,
-    COLORLESS_FLAG = 90
+    COLORLESS_FLAG = 90,
+    FORT = 100
 };
 
 class SpritesPool {

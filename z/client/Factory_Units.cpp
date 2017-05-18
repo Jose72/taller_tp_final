@@ -11,6 +11,9 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit, int posx, int posy) {
         case COLORLESS_FLAG:
         animation = this->pool.get_animations(COLORLESS_FLAG);
             return new Unit(animation,posx,posy);
+        case FORT:
+            animation = this->pool.get_animations(FORT);
+            return  new Unit(animation,posx,posy);
 
     }
 

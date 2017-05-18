@@ -2,7 +2,6 @@
 #include "SDL.h"
 #include "Animation.h"
 #include "Game_map.h"
-#include "Fort.h"
 #include "SelectionHandler.h"
 #include "Factory_Units.h"
 #include "Camera.h"
@@ -43,9 +42,11 @@ int main(int argc, char *argv[]){
     Factory_Units factory(pool);
     Unit *grunt = factory.createUnit(BLUE_GRUNT,posx1,posy1);
     Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
+    Unit *fort = factory.createUnit(FORT,posx1,posy2);
     std::vector<Unit*> all_units;
     all_units.push_back(grunt);
     all_units.push_back(flag);
+    all_units.push_back(fort);
     Game_map game_map(screen);
     game_map.load_configuration();
 

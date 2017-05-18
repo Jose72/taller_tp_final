@@ -25,6 +25,3 @@ void SelectionHandler::select_unit(int posx, int posy) {
     }
 }
 
-Grunt* SelectionHandler::get_unit_s() {
-    return this->unit_s;
-}
