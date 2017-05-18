@@ -17,6 +17,7 @@ class gameMap {
 		void getNeightboors(tile &q, std::vector<tile*> &ady);
 		tile getTile(int x, int y);
 		tile* getTileP(int x, int y);
+		tile* getTilePFromUnit(int x, int y);
 };
 
 #endif

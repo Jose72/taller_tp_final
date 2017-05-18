@@ -1,9 +1,8 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-//codigo de unidad para ver si pasan por el terreno
-#define ROBOT 4
-#define VEHICLE 5
+//para los codigos de unidades
+#include "unit.h"
 
 //esto en un xml?
 #define TIERRA 6

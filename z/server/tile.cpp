@@ -47,10 +47,12 @@ bool tile::isPassable(int unit_code){
 
 //solo para casillas adyacentes
 double tile::dist(tile &t){
+	/*
 	//si es diagonal costo es +0.4
 	if (this->isDiagonal(t)) {
 		return 0.4 + t.gValue();
 	}
+	*/
 	return t.gValue();
 	
 }

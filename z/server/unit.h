@@ -35,6 +35,10 @@ class unit {
 		bool isMoving();
 		int getUnitId();
 		int getClassId();
+		int getX();
+		int getY();
+		int getDestX();
+		int getDestY();
 		//double getDamage(double time); //necesito un tiempo para calcular el daño
 		//int receiveDamage(double dam);
 };

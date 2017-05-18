@@ -40,3 +40,19 @@ tile gameMap::getTile(int x, int y){
 tile* gameMap::getTileP(int x, int y){
 	return &casillas[x + y * width];
 }
+
+tile* gameMap::getTilePFromUnit(int x, int y){
+	int px;
+	int py;
+	for (px = 0; px < width; px++) {
+		if ((px+1)*32 >= x) {
+			break;
+		}
+	}
+	for (py = 0; py < height; py++) {
+		if ((py+1)*32 >= y) {
+			break;
+		}
+	}
+	return &casillas[px + py * width];
+}

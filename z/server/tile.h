@@ -4,7 +4,7 @@
 #include "terrain.h"
 //#include "Map.h"
 
-#define TILE_LENGHT 10//medida lado de la casilla, valor a definir
+#define TILE_LENGHT 32//medida lado de la casilla, valor a definir
 
 
 class tile{

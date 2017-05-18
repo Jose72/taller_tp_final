@@ -32,3 +32,19 @@ int unit::getUnitId(){
 int unit::getClassId(){
 	return class_id;
 }
+
+int unit::getX(){
+	return x;
+}
+
+int unit::getY(){
+	return y;
+}
+
+int unit::getDestX(){
+	return dest_x;
+}
+
+int unit::getDestY(){
+	return dest_y;
+}

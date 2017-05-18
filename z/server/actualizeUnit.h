@@ -4,6 +4,7 @@
 #include "unit.h"
 #include "behaviour.h"
 #include "gameMap.h"
+#include "tile.h"
 
 enum unit_speed {
 		ROBOT_SPEED = 4,
