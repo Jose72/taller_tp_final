@@ -57,6 +57,7 @@ int main(int argc, char *argv[]){
     game_map.load_configuration();
 
     SDL_Event event;
+    SelectionHandler sHandler;
     //main application loop
     while(running == true){
         SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
@@ -94,31 +95,17 @@ int main(int argc, char *argv[]){
                 if(event.button.button == LEFT_BUTTON){
                     destinox = event.button.x;
                     destinoy = event.button.y;
+                    sHandler.set_destiny(destinox,destinoy);
                     break;
                 }
                 if(event.button.button == RIGHT_BUTTON){
                     seleccionx = event.button.x;
                     selecciony = event.button.y;
-                    //sHandler.select_unit(seleccionx,selecciony);
+                    sHandler.set_location(seleccionx,selecciony,all_units);
                     break;
                 }
         }
-
-        if ((ticks % 10) == 0) {
-            if (posx1 < destinox) {
-                posx1 += 1;
-            }
-            if (posx1 > destinox) {
-                posx1 -= 1;
-            }
-            if (posy1 < destinoy) {
-                posy1 += 1;
-            }
-            if (posy1 > destinoy) {
-                posy1 -= 1;
-            }
-        }
-        grunt->set_pos(posx1,posy1);
+        sHandler.move_unit();
         camera.show(all_units, game_map);
 
 

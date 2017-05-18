@@ -9,13 +9,19 @@
 
 class SelectionHandler {
 private:
-    int posX;
-    int posY;
+    int destinyX;
+    int destinyY;
+    bool unit_selected;
+    Unit * unit;
 
 
 public:
-    SelectionHandler(std::vector<Unit *> u);
-    void select_unit(int posx, int posy);
+    SelectionHandler();
+    void select_unit(std::vector<Unit*> &units);
+    void set_destiny(int destX, int destY);
+    void set_location(int posX, int posY,std::vector<Unit*> &units);
+    void move_unit();
+    bool unit_select();
 };
 
 
