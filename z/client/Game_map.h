@@ -1,12 +1,11 @@
 #ifndef CLIENT_GAME_MAP_H
 #define CLIENT_GAME_MAP_H
 #define N_TEXTURAS 5
-#define MAP_LENGHT 100
+#define MAP_LENGHT 1000
 
 
 #include <vector>
 #include "Casillas.h"
-#include "csprite.h"
 #include "Animation.h"
 
 class Game_map {
@@ -18,6 +17,8 @@ private:
     // 4 RUTA
     SDL_Surface *screen;
     Animation *tex0,*tex1,*tex2,*tex3,*tex4, *tex5;
+    int map_descriptor[MAP_LENGHT];
+    /*
     int map_descriptor[MAP_LENGHT] = {0,0,0,0,0,0,0,0,0,0,
                                        0,0,0,0,0,0,0,0,0,0,
                                        0,1,0,0,3,0,0,2,0,0,
@@ -28,6 +29,7 @@ private:
                                        0,1,0,5,3,0,0,2,0,0,
                                        0,0,0,0,0,0,0,0,0,0,
                                        0,0,0,0,0,0,0,0,0,0};
+                                       */
 
 
 public:
@@ -35,6 +37,7 @@ public:
     ~Game_map();
     void load_configuration();
     void draw_map();
+    void draw_map(int limitXL, int limitXR, int limitYU, int limitYD);
 
 private:
     void load_tex();

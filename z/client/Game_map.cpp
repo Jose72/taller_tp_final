@@ -13,6 +13,10 @@ Game_map::~Game_map() {
 }
 
 void Game_map::load_configuration() {
+    for (int i = 0; i <MAP_LENGHT ; ++i) {
+        this->map_descriptor[i] = 0;
+
+    }
 
 }
 
@@ -47,10 +51,47 @@ void Game_map::draw_map() {
                 default:
                     break;
             }
-
         }
     }
-    this->tex0->animate(0,0);
+}
+
+void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD) {
+
+    int x,y,t;
+    //dibujar escenario
+    for (int i =limitYU ; i<limitYD; i++) {
+        for (int j=limitXL ; j<limitXR; j++) {
+            int pos = ((i*10)+(j));
+            if(pos < MAP_LENGHT ){
+                t = this->map_descriptor[pos];
+                // calculo de la posición del tile
+                x = j*32;
+                y = i*32;
+                switch (t) {
+                    case 0:
+                        this->tex0->animate(x, y);
+                        break;
+                    case 1:
+                        this->tex1->animate(x, y);
+                        break;
+                    case 2:
+                        this->tex2->animate(x, y);
+                        break;
+                    case 3:
+                        this->tex3->animate(x, y);
+                        break;
+                    case 4:
+                        this->tex4->animate(x, y);
+                        break;
+                    case 5:
+                        this->tex5->animate(x, y);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 
 }
 
