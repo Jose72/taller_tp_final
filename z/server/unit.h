@@ -6,26 +6,37 @@
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
 
+enum class_units {ROBOT, VEHICLE, OT_OBJECT};
+
+enum units {GRUNT, PSYCHO, TOUGHT , PYRO, SNIPER, LASER, 
+			JEEP, MEDIUM_TANK, LIGHT_TANK, HEAVY_TANK, MML
+};
+
 class unit {
 	protected:
+		int class_id;
+		int unit_id;
+		int x;
+		int y;
+		int dest_x;
+		int dest_y;
+		double health;
+		/*
 		armament arma;
 		int shoot_freq; //en segundos
 		int range;
-		double health;
 		int fab_time; //en segundos
 		int min_tech_lvl;
+		*/
 	public:
 		unit(int arma_code, int shoot_f, int range, double h, 
 		int f_time, int t_lvl);
-		double getDamage(double time); //necesito un tiempo para calcular el daño
-		int receiveDamage(double dam);
-};
-
-class vehicle: public unit {
-	private:
-		unit *driver;
-	public:
-		bool inUse();
+		void setDestiny(int d_x, int d_y);
+		bool isMoving();
+		int getUnitId();
+		int getClassId();
+		//double getDamage(double time); //necesito un tiempo para calcular el daño
+		//int receiveDamage(double dam);
 };
 
 #endif
