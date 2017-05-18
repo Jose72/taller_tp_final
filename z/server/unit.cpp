@@ -1,4 +1,5 @@
 #include "unit.h"
+#include <iostream>
 /*
 unit::unit(int arma_code, int shoot_f, int range, double h, 
 int f_time, int t_lvl): arma(armament(arma_code)), shoot_freq(shoot_f), 
@@ -15,6 +16,17 @@ int unit::receiveDamage(double dam){
 	return DAMAGE_TAKEN;
 }
 */
+unit::unit(int class_id, int unit_id, int x, int y, double health):  
+class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
+health(health) {} 
+
+
+void unit::setPos(int p_x, int p_y){
+	x = p_x;
+	y = p_y;
+}
+
+
 void unit::setDestiny(int d_x, int d_y){
 	dest_x = d_x;
 	dest_y = d_y;
@@ -47,4 +59,15 @@ int unit::getDestX(){
 
 int unit::getDestY(){
 	return dest_y;
+}
+
+void unit::printPos(){
+	std::cout << "unit--------" << std::endl;
+	//std::cout << "class_id: " << class_id << std::endl;
+	//std::cout << "unit_id: " << unit_id << std::endl;
+	std::cout << "x_pos: " << x << std::endl;
+	std::cout << "y_pos: " << y << std::endl;
+	std::cout << "des_x: " << dest_x << std::endl;
+	std::cout << "des_y: " << dest_y << std::endl;
+	std::cout << "health: " << health << std::endl;
 }

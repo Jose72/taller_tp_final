@@ -29,8 +29,8 @@ class unit {
 		int min_tech_lvl;
 		*/
 	public:
-		unit(int arma_code, int shoot_f, int range, double h, 
-		int f_time, int t_lvl);
+		unit(int class_id, int unit_id, int x, int y, double health);
+		void setPos(int p_x, int p_y);
 		void setDestiny(int d_x, int d_y);
 		bool isMoving();
 		int getUnitId();
@@ -39,6 +39,7 @@ class unit {
 		int getY();
 		int getDestX();
 		int getDestY();
+		void printPos();
 		//double getDamage(double time); //necesito un tiempo para calcular el daño
 		//int receiveDamage(double dam);
 };

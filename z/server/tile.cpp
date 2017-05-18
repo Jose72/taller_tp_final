@@ -110,3 +110,7 @@ bool tile::isDiagonal(tile &t){
 	if (x_cord == -1 + t.x_cord && y_cord == -1 + t.y_cord) return true;
 	return false;
 }
+
+double tile::getTerrainFactor(){
+	return terr.getTerrainFactor();
+}

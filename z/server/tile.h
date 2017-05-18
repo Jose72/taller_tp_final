@@ -49,6 +49,7 @@ class tile{
 		double dist(tile &t); //distancia entre casillas
 		void printTile();
 		bool isDiagonal(tile &t);
+		double getTerrainFactor();
 
 };
 

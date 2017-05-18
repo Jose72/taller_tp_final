@@ -6,7 +6,7 @@
 #include "gameMap.h"
 #include "tile.h"
 
-enum unit_speed {
+enum unit_speed { //veocidad (por seg)
 		ROBOT_SPEED = 4,
 		JEPP_SPEED = 8,
 		MEDIUM_TANK_SPEED = 5,
@@ -17,7 +17,7 @@ enum unit_speed {
 
 class actualizeUnit: public behaviour {
 	public:
-		void run(unit &u, gameMap &mapa);
+		int operator()(unit &u, gameMap &mapa, double time);
 };
 
 #endif
