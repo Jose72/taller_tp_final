@@ -4,9 +4,10 @@
 #define SIZE_OF_DELTA 20
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
-
+/*
 SelectionHandler::SelectionHandler(std::vector<Unit*> u):units(u){}
 
+/*
 void SelectionHandler::select_unit(int posx, int posy) {
     int dx1 = posx - SIZE_OF_DELTA;
     int dx2 = posx + SIZE_OF_DELTA;
@@ -24,4 +25,5 @@ void SelectionHandler::select_unit(int posx, int posy) {
         }
     }
 }
+ */
 

@@ -14,9 +14,11 @@ Camera::~Camera() {}
 
 void Camera::set_camera_position(int posX, int posY) {
     if((posX > 0)){
+        this->posCameraXOld = this->posCameraX;
         this->posCameraX = posX;
     }
     if(posY > 0){
+        this->posCameraYOld = this->posCameraY;
         this->posCameraY = posY;
     }
 }
@@ -44,3 +46,26 @@ void Camera::show(std::vector<Unit *> &units, Game_map &game_map) {
 
 }
 
+void Camera::set_relative_position(std::vector<Unit *> &units) {
+    for (int i = 0; i <units.size() ; ++i) {
+        int posUnitX = units[i]->get_posx();
+        int posUnitY = units[i]->get_posy();
+
+        if( posCameraXOld < posCameraX){
+            int deltaX = posCameraX - posCameraXOld;
+            posUnitX = posUnitX - deltaX;
+        } else if( posCameraXOld > posCameraX){
+            int deltaX = posCameraXOld - posCameraX;
+            posUnitX = posUnitX + deltaX;
+        } else if( posCameraYOld < posCameraY){
+            int deltaY = posCameraY - posCameraYOld;
+            posUnitY = posUnitY - deltaY;
+        } else if( posCameraYOld > posCameraY ){
+            int deltaY = posCameraYOld - posCameraY;
+            posUnitY = posUnitY + deltaY;
+        }
+
+        units[i]->set_pos(posUnitX,posUnitY);
+
+    }
+}

@@ -16,7 +16,7 @@
 int main(int argc, char *argv[]){
     bool running = true;
     SDL_Surface *screen;
-
+//INICIA SDL Y CREA LA PANTALLA
     if(SDL_Init(SDL_INIT_VIDEO)<0){
         std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
         return 1;
@@ -37,34 +37,26 @@ int main(int argc, char *argv[]){
     int destinoy;
     int seleccionx;
     int selecciony;
+
     Camera camera(posCameraX,posCameraY,WINDOW_W,WINDOW_H);
+
     SpritesPool pool(screen);
+
     Factory_Units factory(pool);
+
     Unit *grunt = factory.createUnit(BLUE_GRUNT,posx1,posy1);
     Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
     Unit *fort = factory.createUnit(FORT,posx1,posy2);
+
     std::vector<Unit*> all_units;
     all_units.push_back(grunt);
     all_units.push_back(flag);
     all_units.push_back(fort);
+
     Game_map game_map(screen);
     game_map.load_configuration();
 
-    /*
-    std::vector<Unit*> all_units;
-    Flag flag(screen,10,10);
-    Fort fort(screen,400,0);
-    Unit* grunt = new Grunt(screen,posx2,posy2);
-    all_units.push_back(grunt);
-    std::cout << all_units[0]->get_posx();
-    Unit* grunt_prueba = new Grunt(screen,posx1,posy1);
-    all_units.push_back(grunt_prueba);
-    grunt_prueba->get_posx();
-    SelectionHandler sHandler(all_units);
-     */
-
     SDL_Event event;
-
     //main application loop
     while(running == true){
         SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
@@ -74,20 +66,27 @@ int main(int argc, char *argv[]){
             case SDL_QUIT:
                 running = false;
                 break;
-
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym){
                     case SDLK_LEFT:
                         posCameraX--;
+                        camera.set_camera_position(posCameraX,posCameraY);
+                        camera.set_relative_position(all_units);
                         break;
                     case SDLK_RIGHT:
                         posCameraX++;
+                        camera.set_camera_position(posCameraX,posCameraY);
+                        camera.set_relative_position(all_units);
                         break;
                     case SDLK_UP:
                         posCameraY--;
+                        camera.set_camera_position(posCameraX,posCameraY);
+                        camera.set_relative_position(all_units);
                         break;
                     case SDLK_DOWN:
                         posCameraY++;
+                        camera.set_camera_position(posCameraX,posCameraY);
+                        camera.set_relative_position(all_units);
                         break;
                 }
                 break;
@@ -120,31 +119,9 @@ int main(int argc, char *argv[]){
             }
         }
         grunt->set_pos(posx1,posy1);
-        camera.set_camera_position(posCameraX,posCameraY);
-        /*
-        if(sHandler.get_unit_s()!= NULL) {
-            sHandler.get_unit_s()->set_pos(posx1,posy1);
-
-        }
-        */
-        //grunt.set_pos(sHandler.get_unit_selected()->get_posx(),sHandler.get_unit_selected()->get_posy());
-       //animation.animate(posCameraX,posCameraY);
-
-
-        //game_map.draw_map();
-        /*
-        flag->animate();
-        grunt->animate();
-         */
         camera.show(all_units, game_map);
 
-        /*
-        //grunt_prueba->set_pos(posx,posy);
-        for (int i = 0; i <all_units.size() ; ++i) {
-            all_units[i]->set_pos(posx1,posy1);
-            all_units[i]->animate();
-        }
-        */
+
 
 
         SDL_Flip(screen);

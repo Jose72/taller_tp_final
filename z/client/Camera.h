@@ -10,6 +10,8 @@ class Camera {
 private:
     int posCameraX;
     int posCameraY;
+    int posCameraXOld;
+    int posCameraYOld;
     int cameraW;
     int cameraH;
 
@@ -20,6 +22,8 @@ public:
     void set_camera_position(int posX, int posY);
 
     void show(std::vector<Unit*>&units, Game_map &game_map);
+
+    void set_relative_position(std::vector<Unit*> &units);
 
 };
 

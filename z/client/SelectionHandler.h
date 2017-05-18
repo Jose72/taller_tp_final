@@ -5,10 +5,13 @@
 #include <vector>
 #include "Unit.h"
 
+#define SELECTOR_D 20
 
 class SelectionHandler {
 private:
-    std::vector<Unit*> & units;
+    int posX;
+    int posY;
+
 
 public:
     SelectionHandler(std::vector<Unit *> u);
