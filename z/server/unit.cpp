@@ -1,5 +1,5 @@
 #include "unit.h"
-
+/*
 unit::unit(int arma_code, int shoot_f, int range, double h, 
 int f_time, int t_lvl): arma(armament(arma_code)), shoot_freq(shoot_f), 
 range(range), health(h), fab_time(f_time), min_tech_lvl(t_lvl) {};
@@ -14,12 +14,21 @@ int unit::receiveDamage(double dam){
 	else health -= dam;
 	return DAMAGE_TAKEN;
 }
+*/
+void unit::setDestiny(int d_x, int d_y){
+	dest_x = d_x;
+	dest_y = d_y;
+}
 
-////////////////////////////////////////////////////////////
-//                    vehicle                             //
-////////////////////////////////////////////////////////////
-
-bool vehicle::inUse(){
-	if (driver) return true;
+bool unit::isMoving(){
+	if (x != dest_x || y != dest_y) return true;
 	return false;
+};
+
+int unit::getUnitId(){
+	return unit_id;
+}
+
+int unit::getClassId(){
+	return class_id;
 }
