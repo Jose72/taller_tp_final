@@ -36,8 +36,8 @@ void Camera::show(std::vector<Unit *> &units, Game_map &game_map) {
     int limitYD = this->posCameraY + this->cameraH;
     //game_map.draw_map(limitXL,limitXR,limitYU,limitYD);
     for (int i = 0; i <units.size() ; ++i) {
-        if(BETWEEN(units[i]->get_posx(),limitXL,limitXR)){
-            if(BETWEEN(units[i]->get_posy(),limitYU,limitYD)){
+        if(BETWEEN(units[i]->get_cameraPosX(),limitXL,limitXR)){
+            if(BETWEEN(units[i]->get_cameraPosY(),limitYU,limitYD)){
                 units[i]->animate();
             }
         }
@@ -64,8 +64,8 @@ void Camera::set_relative_position(std::vector<Unit *> &units) {
             int deltaY = posCameraYOld - posCameraY;
             posUnitY = posUnitY + deltaY;
         }
-
-        units[i]->set_pos(posUnitX,posUnitY);
+        //units[i]->set_pos(posUnitX,posUnitY);
+        units[i]->set_pos_camera(posUnitX,posUnitY);
 
     }
 }

@@ -21,7 +21,6 @@ void SelectionHandler::set_location(int posX, int posY,std::vector<Unit *> &unit
                 this->unit_selected = true;
                 this->unit = units[i];
                 set_destiny(this->unit->get_posx(),this->unit->get_posy());
-
             }
         }
     }

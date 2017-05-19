@@ -50,12 +50,11 @@ int main(int argc, char *argv[]){
 
     std::vector<Unit*> all_units;
     all_units.push_back(grunt);
-    all_units.push_back(flag);
-    all_units.push_back(fort);
+    //all_units.push_back(flag);
+   // all_units.push_back(fort);
 
     Game_map game_map(screen);
     game_map.load_configuration();
-
     SDL_Event event;
     SelectionHandler sHandler;
     //main application loop
@@ -71,23 +70,15 @@ int main(int argc, char *argv[]){
                 switch(event.key.keysym.sym){
                     case SDLK_LEFT:
                         posCameraX--;
-                        camera.set_camera_position(posCameraX,posCameraY);
-                        camera.set_relative_position(all_units);
                         break;
                     case SDLK_RIGHT:
                         posCameraX++;
-                        camera.set_camera_position(posCameraX,posCameraY);
-                        camera.set_relative_position(all_units);
                         break;
                     case SDLK_UP:
                         posCameraY--;
-                        camera.set_camera_position(posCameraX,posCameraY);
-                        camera.set_relative_position(all_units);
                         break;
                     case SDLK_DOWN:
                         posCameraY++;
-                        camera.set_camera_position(posCameraX,posCameraY);
-                        camera.set_relative_position(all_units);
                         break;
                 }
                 break;
@@ -105,12 +96,12 @@ int main(int argc, char *argv[]){
                     break;
                 }
         }
+
         sHandler.move_unit();
+        camera.set_camera_position(posCameraX,posCameraY);
+        camera.set_relative_position(all_units);
+
         camera.show(all_units, game_map);
-
-
-
-
         SDL_Flip(screen);
     }
 }
