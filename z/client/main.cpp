@@ -5,6 +5,7 @@
 #include "SelectionHandler.h"
 #include "Factory_Units.h"
 #include "Camera.h"
+#include "Socket.h"
 
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
 
@@ -14,6 +15,10 @@
 #define WINDOW_W 800
 
 int main(int argc, char *argv[]){
+    tSocket socket;
+    int port_number = atoi(argv[2]);
+    socket.connect(argv[1],port_number);
+
     bool running = true;
     SDL_Surface *screen;
 //INICIA SDL Y CREA LA PANTALLA
@@ -54,7 +59,6 @@ int main(int argc, char *argv[]){
    // all_units.push_back(fort);
 
     Game_map game_map(screen);
-    game_map.load_configuration();
     SDL_Event event;
     SelectionHandler sHandler;
     //main application loop

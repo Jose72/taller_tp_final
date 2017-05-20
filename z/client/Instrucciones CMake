@@ -1,0 +1,5 @@
+Archivo de configuracion del CMake CMakeLists.txt
+En la carpeta del cliente 
+cmake
+y despues para correrlo 
+./Client ip_adress port

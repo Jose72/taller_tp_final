@@ -10,14 +10,20 @@
 
 class Game_map {
 private:
-    // 0 PASTO
+    // 0 PRADERA
     // 1 AGUA
-    //2 LAVA
+    // 2 LAVA
     // 3 NIEVE
-    // 4 RUTA
+    // 4 ASFALTO
+    // 5 PANTANO
+
+    //AGREGAR COD PARA LAS TEXTURAS FALTANTES
+
+    // TIERRA PRADERA NIEVE AGUA PANTANO LAVA CARRETERA ASFALTO
     SDL_Surface *screen;
     Animation *tex0,*tex1,*tex2,*tex3,*tex4, *tex5;
     int map_descriptor[MAP_LENGHT];
+    std::vector<int> map_des;
     /*
     int map_descriptor[MAP_LENGHT] = {0,0,0,0,0,0,0,0,0,0,
                                        0,0,0,0,0,0,0,0,0,0,
@@ -35,7 +41,7 @@ private:
 public:
     Game_map(SDL_Surface *sc);
     ~Game_map();
-    void load_configuration();
+    void add_tile(int tile);
     void draw_map();
     void draw_map(int limitXL, int limitXR, int limitYU, int limitYD);
 

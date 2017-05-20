@@ -12,12 +12,8 @@ Game_map::~Game_map() {
     delete(tex0);
 }
 
-void Game_map::load_configuration() {
-    for (int i = 0; i <MAP_LENGHT ; ++i) {
-        this->map_descriptor[i] = 0;
-
-    }
-
+void Game_map::add_tile(int tile) {
+   map_des.push_back(tile);
 }
 
 void Game_map::draw_map() {
