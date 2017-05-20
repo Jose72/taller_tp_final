@@ -22,7 +22,7 @@ private:
     // TIERRA PRADERA NIEVE AGUA PANTANO LAVA CARRETERA ASFALTO
     SDL_Surface *screen;
     Animation *tex0,*tex1,*tex2,*tex3,*tex4, *tex5;
-    int map_descriptor[MAP_LENGHT];
+    //int map_descriptor[MAP_LENGHT];
     std::vector<int> map_des;
     /*
     int map_descriptor[MAP_LENGHT] = {0,0,0,0,0,0,0,0,0,0,

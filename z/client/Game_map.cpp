@@ -25,7 +25,7 @@ void Game_map::draw_map() {
     for (i=0 ; i<10 ; i++) {
         for (j=0 ; j<10 ; j++) {
             int pos = ((i*10)+(j));
-            t = this->map_descriptor[pos];
+            t = this->map_des[pos];
             // calculo de la posición del tile
             x = j*32;
             y = i*32;
@@ -62,7 +62,7 @@ void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD) {
         for (int j=limitXL ; j<limitXR; j++) {
             int pos = ((i*10)+(j));
             if(pos < MAP_LENGHT ){
-                t = this->map_descriptor[pos];
+                t = this->map_des[pos];
                 // calculo de la posición del tile
                 x = j*32;
                 y = i*32;
