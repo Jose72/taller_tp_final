@@ -1,6 +1,8 @@
 #include "clientManager.h"
 #include <string>
 #include <iostream>
+#include "unit.h"
+#include "actualizeUnit.h"
 #include <vector>
 #include "string.h"
 #include <mutex>
@@ -48,7 +50,7 @@ void tClientManager::run(){
 	
 	//primero recibir datos de usuario
 	//enviar datos partida
-	int map_codes[64] = {0};
+	int map_codes[100] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
 	map_codes[17] = 1;
@@ -61,11 +63,14 @@ void tClientManager::run(){
 	map_codes[57] = 2;
 	map_codes[58] = 2;
 
-	cli_skt.send((char*) map_codes, sizeof(int) * 64);
+	int sss = 100;
+	std::cout << sss << std::endl;
+	cli_skt.send((char*) &sss, sizeof(int));
+	cli_skt.send((char*) &map_codes, sizeof(int) * sss);
 
 	char bu[512];
 
-	cli_skt.receive(&bu[0], 4);
+	cli_skt.receive(&bu[0], sizeof(int));
 	std::cout << bu << std::endl;
 	
 	//send();
