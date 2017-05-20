@@ -23,19 +23,4 @@ class tilesListCost{
 		void print();
 };
 
-/*
-class tilesListCost{
-	private:
-		std::vector<tile> casillas;
-	public:
-		void insert(tile &t);
-		void eraseIfFound(tile &t);
-		bool empty();
-		bool found(tile &t);
-		tile begin();
-		int foundReplaceOrInsert(tile &t);
-		int size();
-};
-*/
-
 #endif

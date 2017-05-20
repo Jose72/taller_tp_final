@@ -139,6 +139,9 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 		//multiplico por el factor de terreno de la casilla actual
 		//y por 
 		double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getDamage()), 1.0);
+		//si es una unidad no movible hay un error
+		if (speed == 0) return 1; //no deberia suceder
+		
 		//calculo los nuevos xy
 		int new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
 		int new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;

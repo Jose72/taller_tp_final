@@ -6,7 +6,7 @@
 #include "gameMap.h"
 #include "tile.h"
 
-
+int aStart(tile *orig, tile *dest, gameMap &gmap, int unit_code, std::vector<tile*> &path);
 
 class actualizeUnit: public behaviour {
 	public:
