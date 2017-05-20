@@ -138,7 +138,7 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 		//seteo velocidad
 		//multiplico por el factor de terreno de la casilla actual
 		//y por 
-		double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getDamage()), 1.0);
+		double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
 		//si es una unidad no movible hay un error
 		if (speed == 0) return 1; //no deberia suceder
 		

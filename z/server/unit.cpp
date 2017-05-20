@@ -18,7 +18,8 @@ int unit::receiveDamage(double dam){
 */
 unit::unit(int class_id, int unit_id, int x, int y, int health, int speed):  
 class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
-b_health(health), health(health), speed(speed) {} 
+b_health(health), health(health), speed(speed) {
+	} 
 
 
 void unit::setPos(int p_x, int p_y){
@@ -26,11 +27,6 @@ void unit::setPos(int p_x, int p_y){
 	y = p_y;
 }
 
-
-void unit::setDestiny(int d_x, int d_y){
-	dest_x = d_x;
-	dest_y = d_y;
-}
 
 bool unit::isMoving(){
 	if (x != dest_x || y != dest_y) return true;
@@ -76,6 +72,15 @@ int unit::getSpeed(){
 	return speed;
 }
 
-double unit::getDamage(){
+double unit::getRelativeDamage(){
 	return (b_health-health) / b_health;
+}
+
+void unit::move(int d_x, int d_y){
+	dest_x = d_x;
+	dest_y = d_y;
+}
+
+int unit::getDps(){
+	return dps;
 }

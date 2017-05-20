@@ -30,7 +30,7 @@ int test_move_unit(){
 	// to (3,3), in (108, 112)
 	
 	unit r(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	r.setDestiny(108, 112);
+	r.move(108, 112);
 	
 	while (r.isMoving()){
 		au(r, mapa, 1);
