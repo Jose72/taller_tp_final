@@ -1,4 +1,7 @@
 #include "Game_map.h"
+Game_map::Game_map() {
+    this->load_tex();
+}
 
 Game_map::Game_map(SDL_Surface *sc) {
     this->screen = sc;
@@ -105,4 +108,8 @@ void Game_map::load_tex() {
     this->tex4 = new Animation(this->screen,"client/sprites/tiles/5.bmp",32,32);
     this->tex5 = new Animation(this->screen,"client/sprites/tiles/6.bmp",32,32);
 
+}
+
+void Game_map::set_screen(SDL_Surface *sc) {
+    this->screen = sc;
 }

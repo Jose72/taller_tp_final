@@ -16,6 +16,7 @@ public:
     TClient_receive(tSocket &s, Game_map &game_map);
     ~TClient_receive();
     void run();
+    void stop();
 
 };
 

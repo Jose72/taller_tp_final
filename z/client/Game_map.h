@@ -39,11 +39,13 @@ private:
 
 
 public:
+    Game_map();
     Game_map(SDL_Surface *sc);
     ~Game_map();
     void add_tile(int tile);
     void draw_map();
     void draw_map(int limitXL, int limitXR, int limitYU, int limitYD);
+    void set_screen(SDL_Surface *sc);
 
 private:
     void load_tex();

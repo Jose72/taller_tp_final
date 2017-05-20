@@ -17,3 +17,7 @@ void TClient_receive::run() {
     socket.send((char*)&confirm,4);
 
 }
+
+void TClient_receive::stop() {
+    this->socket.shutdown(SHUT_RDWR);
+}

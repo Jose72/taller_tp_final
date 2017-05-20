@@ -6,6 +6,9 @@
 #include "Factory_Units.h"
 #include "Camera.h"
 #include "Socket.h"
+#include "Thread.h"
+#include "T_Client.h"
+#include "TClient_receive.h"
 
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
 
@@ -16,8 +19,13 @@
 
 int main(int argc, char *argv[]){
     tSocket socket;
+    Game_map game_map;
     int port_number = atoi(argv[2]);
     socket.connect(argv[1],port_number);
+    std::vector<tThread*> threads;
+
+    TClient_receive* tclient = new TClient_receive(socket,game_map);
+    tclient->run();
 
     bool running = true;
     SDL_Surface *screen;
@@ -58,7 +66,7 @@ int main(int argc, char *argv[]){
     //all_units.push_back(flag);
    // all_units.push_back(fort);
 
-    Game_map game_map(screen);
+    game_map.set_screen(screen);
     SDL_Event event;
     SelectionHandler sHandler;
     //main application loop
