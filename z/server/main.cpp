@@ -7,12 +7,19 @@
 
 #include "testS.h" //small tests
 
+#include <stdio.h>
+#include "server.h"
+#include <iostream>
 
 int main(int argc, char **argv)
 {
-	//test_astart_solo_tierra();
-	//test_find_unit_tile();
-	//test_move_unit();
+	char c = '0';
+	tServer server(atoi(argv[1]));
+	server.start();
+	while(c != 'q'){
+		std::cin.get(c);
+	}
+	server.stop();
+	server.join();
 	return 0;
 }
-

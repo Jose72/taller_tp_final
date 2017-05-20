@@ -48,8 +48,27 @@ void tClientManager::run(){
 	
 	//primero recibir datos de usuario
 	//enviar datos partida
+	int map_codes[64] = {0};
+	map_codes[15] = 1;
+	map_codes[16] = 1;
+	map_codes[17] = 1;
+	map_codes[18] = 1;
+	map_codes[31] = 1;
+	map_codes[32] = 1;
+	map_codes[33] = 1;
+	map_codes[34] = 1;
+	map_codes[56] = 2;
+	map_codes[57] = 2;
+	map_codes[58] = 2;
+
+	cli_skt.send((char*) map_codes, sizeof(int) * 64);
+
+	char bu[512];
+
+	cli_skt.receive(&bu[0], 4);
+	std::cout << bu << std::endl;
 	
-	
+	//send();
 	//aca tendria que lanzar la partida !!!!!!
 	//que pasa si otro ya la lanzo??
 	//bool para saber?
@@ -61,7 +80,8 @@ void tClientManager::run(){
 	
 	
 	//loop receptor de eventos
-	int s = 1;
+	//int s = 1;
+	/*
 	while (s>0){//mientras socket valido
 		
 		//recivo eventos del cliente
@@ -69,5 +89,6 @@ void tClientManager::run(){
 		//guardarlos en la cola de eventos
 		
 	}
+	*/
 	return;
 }

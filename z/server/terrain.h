@@ -6,13 +6,13 @@
 
 //esto en un xml?
 #define TIERRA 6
-#define PRADERA 7
-#define NIEVE 8
-#define AGUA 9
-#define PANTANO 10
-#define LAVA 11
-#define CARRETERA 12
-#define ASFALTO 13
+#define PRADERA 0
+#define NIEVE 3
+#define AGUA 1
+#define PANTANO 5
+#define LAVA 2
+#define CARRETERA 7
+#define ASFALTO 4
 
 #define TIERRA_FACTOR 1
 #define PRADERA_FACTOR 1

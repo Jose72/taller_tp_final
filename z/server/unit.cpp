@@ -10,11 +10,7 @@ double unit::getDamage(double time){
 	return (this->arma.getBaseDamage() * time) / this->shoot_freq;
 }
 
-int unit::receiveDamage(double dam){
-	if (health - dam < 0) return UNIT_DEAD;
-	else health -= dam;
-	return DAMAGE_TAKEN;
-}
+
 */
 unit::unit(int class_id, int unit_id, int x, int y, int health, int speed):  
 class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
@@ -81,6 +77,13 @@ void unit::move(int d_x, int d_y){
 	dest_y = d_y;
 }
 
-int unit::getDps(){
-	return dps;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!arreglar
+bool unit::isInRange(unit &u){
+	return true;
+}
+
+int unit::takeDamage(int dam){
+	if (health - dam < 0) return UNIT_DEAD;
+	else health -= dam;
+	return DAMAGE_TAKEN;
 }

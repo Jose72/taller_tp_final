@@ -8,7 +8,7 @@
 
 enum class_units {ROBOT, VEHICLE, OT_OBJECT};
 
-enum units {GRUNT, PSYCHO, TOUGHT , PYRO, SNIPER, LASER, 
+enum units {GRUNT, PSYCHO, TOUGHT , PYRO, SNIPER, LAZER, 
 JEEP, MEDIUM_TANK, LIGHT_TANK, HEAVY_TANK, MML};
 
 enum unit_speed { //veocidad (por seg ?)
@@ -32,7 +32,6 @@ class unit {
 		int b_health;
 		int health;
 		int speed;
-		int dps;
 		/*
 		armament arma;
 		int shoot_freq; //en segundos
@@ -54,9 +53,9 @@ class unit {
 		int getSpeed();
 		double getRelativeDamage();
 		void move(int d_x, int d_y);
-		int getDps();
+		bool isInRange(unit &u);
 		//double getDamage(double time); 
-		//int receiveDamage(double dam);
+		int takeDamage(int dam);
 };
 
 #endif

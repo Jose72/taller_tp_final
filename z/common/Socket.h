@@ -9,7 +9,7 @@ class tSocket {
 
 	public:
 		tSocket();
-                explicit tSocket(int fd);
+		explicit tSocket(int fd);
 		~tSocket();
 		void bindAndListen(int &port_number);
 		void connect(char *ip_address, int &port_number);
