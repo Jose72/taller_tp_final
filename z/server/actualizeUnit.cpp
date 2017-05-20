@@ -3,6 +3,7 @@
 #include "tilesListCost.h"
 #include <iostream>
 #include <math.h>  
+#include <algorithm> 
 
 //hay que ver que tipo de unidad es para ver si puede pasar por determinadas casillas !!!!
 
@@ -115,7 +116,7 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 		//conseguir el centro de la casilla (coord pixel)
 		int x_closer = 15 + 32 * closer_tile->getX();
 		int y_closer = 15 + 32 * closer_tile->getY(); 
-		//si hay una sola casilla (estas en el destino)
+		//si hay una sola casilla (estas en la casilla destino)
 		//los yx que queres son los de destino, no el centro de la casilla
 		if (camino.size() == 1){
 			x_closer = u.getDestX(); 
@@ -130,28 +131,14 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 		//std::cout << x_unit - x_closer << std::endl;
 		//std::cout << y_unit - y_closer << std::endl;
 		
-		if (dist == 0) {
+		if (dist == 0) { //ya estas en el destino
 			return 0;
 		}
 		
 		//seteo velocidad
-		int speed = 0;
-		switch(c_id) {
-			case ROBOT: {
-				speed = ROBOT_SPEED;
-				//std::cout << "set robot speed" << std::endl;
-				break;
-			}
-			case VEHICLE: {
-				speed = ROBOT_SPEED;
-				break;
-			}
-			default:
-				break;
-		}
-		
 		//multiplico por el factor de terreno de la casilla actual
-		speed = speed * orig->getTerrainFactor();
+		//y por 
+		double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getDamage()), 1.0);
 		//calculo los nuevos xy
 		int new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
 		int new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;

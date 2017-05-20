@@ -16,9 +16,9 @@ int unit::receiveDamage(double dam){
 	return DAMAGE_TAKEN;
 }
 */
-unit::unit(int class_id, int unit_id, int x, int y, double health):  
+unit::unit(int class_id, int unit_id, int x, int y, int health, int speed):  
 class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
-health(health) {} 
+b_health(health), health(health), speed(speed) {} 
 
 
 void unit::setPos(int p_x, int p_y){
@@ -70,4 +70,12 @@ void unit::printPos(){
 	std::cout << "des_x: " << dest_x << std::endl;
 	std::cout << "des_y: " << dest_y << std::endl;
 	std::cout << "health: " << health << std::endl;
+}
+
+int unit::getSpeed(){
+	return speed;
+}
+
+double unit::getDamage(){
+	return (b_health-health) / b_health;
 }
