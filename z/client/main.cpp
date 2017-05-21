@@ -5,8 +5,8 @@
 #include "SelectionHandler.h"
 #include "Factory_Units.h"
 #include "Camera.h"
-#include "../common/Socket.h"
-#include "../common/Thread.h"
+#include "Socket.h"
+#include "Thread.h"
 #include "T_Client.h"
 #include "TClient_receive.h"
 
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]){
     Unit *fort = factory.createUnit(FORT,posx1,posy2);
 
 
-    all_units.push_back(grunt);
+    //all_units.push_back(grunt);
     //all_units.push_back(flag);
    // all_units.push_back(fort);
 

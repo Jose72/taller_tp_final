@@ -1,3 +1,4 @@
+#include <iostream>
 #include "TClient_receive.h"
 #include "Unit.h"
 
@@ -8,6 +9,7 @@ TClient_receive::~TClient_receive() {}
 
 void TClient_receive::run() {
     int tamanio_map;
+    bool r = true;
     socket.receive((char*)&tamanio_map,4);
     //network to host
     for (int i = 0; i <tamanio_map ; ++i) {
@@ -32,10 +34,19 @@ void TClient_receive::run() {
         }
 
     }
-    int confirm = 0;
+    int confirm = 120;
+    socket.send((char*)&confirm,4);
     socket.send((char*)&confirm,4);
 
+    while (r){
+        int posX;
+        int posY;
+        socket.receive((char*)&posX,4);
+        socket.receive((char*)&posY,4);
+       // units[0]->set_pos(posX,posY);
+        std::cout << posX;
 
+    }
 }
 
 void TClient_receive::stop() {
