@@ -2,3 +2,5 @@
 *.obj
 
 .codelite/
+
+z/client/CMakeFiles
