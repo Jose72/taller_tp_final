@@ -3,4 +3,7 @@
 
 .codelite/
 
-z/client/CMakeFiles
+z/client/CMakeFiles/
+z/client/CMakeCache.txt
+z/client/cmake_install.cmake
+z/client/Client
