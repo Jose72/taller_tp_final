@@ -3,8 +3,8 @@
 
 enum class_units {ROBOT, VEHICLE, OT_OBJECT};
 
-enum units {GRUNT, PSYCHO, TOUGHT , PYRO, SNIPER, LAZER, 
-JEEP, MEDIUM_TANK, LIGHT_TANK, HEAVY_TANK, MML};
+enum units {GRUNT = 0, PSYCHO = 1, TOUGHT = 2, PYRO = 3, SNIPER = 4, LAZER = 5, 
+JEEP = 6, MEDIUM_TANK = 7, LIGHT_TANK = 8, HEAVY_TANK = 9, MML = 10};
 
 enum unit_speed { //veocidad (por seg ?)
 		ROBOT_SPEED = 4, JEEP_SPEED = 8, MEDIUM_TANK_SPEED = 5, 
