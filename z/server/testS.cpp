@@ -6,6 +6,7 @@
 #include "tile.h"
 #include "terrain.h"
 #include "actualizeUnit.h"
+#include <vector>
 
 int test_create_map(){
 	std::vector<int> tile_codes;
@@ -25,6 +26,7 @@ int test_create_map(){
 		tile_codes.push_back(map_codes[i]);
 	}
 	gameMap mapa(tile_codes);
+	std::cout << "mam" << std::endl;
 	mapa.printMap();
 	return 0;
 }

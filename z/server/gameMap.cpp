@@ -8,8 +8,8 @@ gameMap::gameMap(std::vector<int> &casilla_code){
 	height = sqrt(casilla_code.size());
 	width = sqrt(casilla_code.size());
 	for (int i = 0; i < height; i++){
-		for (int j = 0; i < width; i++){
-			casillas.push_back(tile(i, j, casilla_code[i]));
+		for (int j = 0; j < width; j++){
+			casillas.push_back(tile(j, i, casilla_code[j + i * width]));
 		}
 	}
 }
