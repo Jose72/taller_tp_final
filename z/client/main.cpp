@@ -5,8 +5,8 @@
 #include "SelectionHandler.h"
 #include "Factory_Units.h"
 #include "Camera.h"
-#include "Socket.h"
-#include "Thread.h"
+#include "../common/Socket.h"
+#include "../common/Thread.h"
 #include "T_Client.h"
 #include "TClient_receive.h"
 

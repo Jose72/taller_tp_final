@@ -1,8 +1,9 @@
 #ifndef TCLIENTMANAGER_H
 #define TCLIENTMANAGER_H
 
-#include "Thread.h"
-#include "Socket.h"
+
+#include "../common/Thread.h"
+#include "../common/Socket.h"
 #include <mutex>
 
 class tClientManager: public tThread{

@@ -3,9 +3,10 @@
 #define CLIENT_TCLIENT_RECEIVE_H
 
 
-#include "Thread.h"
-#include "Socket.h"
+
 #include "Game_map.h"
+#include "../common/Thread.h"
+#include "../common/Socket.h"
 
 class TClient_receive: public tThread {
 private:

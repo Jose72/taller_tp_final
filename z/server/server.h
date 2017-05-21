@@ -6,8 +6,8 @@
 #include <string>
 #include <mutex>
 
-#include "Socket.h"
-#include "Thread.h"
+#include "../common/Socket.h"
+#include "../common/Thread.h"
 #include "clientManager.h"
 
 class tServer: public tThread{
