@@ -25,6 +25,9 @@ file(GLOB SOURCE_FILES_SERVER
         common/*.h
         )
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+
 add_executable(cliente ${SOURCE_FILES_CLIENT})
 add_executable(server ${SOURCE_FILES_SERVER})
 
