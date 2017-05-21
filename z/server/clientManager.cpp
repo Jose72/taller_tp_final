@@ -89,20 +89,24 @@ void tClientManager::run(){
 	int unit_code = GRUNT;
 	int xx = u1.getX();
 	int yy = u1.getY();
+	int unit_cant = 1;
+	cli_skt.send((char*) &unit_cant, sizeof(int));
 	cli_skt.send((char*) &unit_code, sizeof(int));
 	cli_skt.send((char*) &xx, sizeof(int));
 	cli_skt.send((char*) &yy, sizeof(int));
 
 	
+	int x_dest = 0;
+	int y_dest = 0;
+	cli_skt.receive((char*) &x_dest, sizeof(int));
+	cli_skt.receive((char*) &y_dest, sizeof(int));
+	u1.move(x_dest, y_dest);
+	
 	actualizeUnit actualizer;
 	
 	int s = 1;
 	while(s > 0){
-		int x_dest = 0;
-		int y_dest = 0;
-		s = cli_skt.receive((char*) &x_dest, sizeof(int));
-		s = cli_skt.receive((char*) &y_dest, sizeof(int));
-		u1.move(x_dest, y_dest);
+		
 		actualizer(u1, mapa, 1);
 		sleep(1);
 		int xx = u1.getX();
@@ -113,11 +117,11 @@ void tClientManager::run(){
 	}
 	
 
-	char bu[512];
+	//char bu[512];
 
-	cli_skt.receive(&bu[0], sizeof(int));
+	//cli_skt.receive(&bu[0], sizeof(int));
 	
-	std::cout << bu << std::endl;
+	//std::cout << bu << std::endl;
 	
 	//send();
 	//aca tendria que lanzar la partida !!!!!!

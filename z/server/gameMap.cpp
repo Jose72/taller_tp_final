@@ -68,3 +68,9 @@ tile* gameMap::getTilePFromUnit(int x, int y){
 	}
 	return &casillas[px + py * width];
 }
+
+void gameMap::printMap(){
+	for (unsigned int i = 0; i < casillas.size(); i++){
+		casillas[i].printTile();
+	}
+}

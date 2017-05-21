@@ -19,6 +19,7 @@ public:
 		tile getTile(int x, int y);
 		tile* getTileP(int x, int y);
 		tile* getTilePFromUnit(int x, int y);
+		void printMap();
 };
 
 #endif
