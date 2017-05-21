@@ -1,10 +1,9 @@
 #ifndef ARMAMENT_H
 #define ARMAMENT_H
 
-#include "unit.h"
+#include "constants.h"
 
-enum weapon_damage {BALAS = 2, LANZALLAMAS = 10, PROYECTILES = 20, 
-LASER = 10, MISILES = 25};
+
 
 class armament{
 	private:

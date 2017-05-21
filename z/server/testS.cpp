@@ -7,7 +7,26 @@
 #include "terrain.h"
 #include "actualizeUnit.h"
 
+int test_attack_unit_in_range(){
+	unit r1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
+	unit r2(ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
+	unit r4(ROBOT, GRUNT, 43, 18, 300, ROBOT_SPEED);
+	return 0;
+}
 
+
+int test_units_in_range(){
+	unit r1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
+	unit r2(ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
+	unit r3(ROBOT, GRUNT, 42, 18, 300, ROBOT_SPEED);
+	unit r4(ROBOT, GRUNT, 43, 18, 300, ROBOT_SPEED);
+	unit r5(ROBOT, GRUNT, 35, 22, 300, ROBOT_SPEED);
+	std::cout << r1.isInRange(r2, 7) << std::endl;
+	std::cout << r1.isInRange(r3, 7) << std::endl;
+	std::cout << r1.isInRange(r4, 7) << std::endl;
+	std::cout << r1.isInRange(r5, 7) << std::endl;
+	return 0;
+}
 
 int test_move_unit(){
 	actualizeUnit au;

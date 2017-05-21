@@ -1,5 +1,6 @@
 #include "unit.h"
 #include <iostream>
+#include "math.h"
 /*
 unit::unit(int arma_code, int shoot_f, int range, double h, 
 int f_time, int t_lvl): arma(armament(arma_code)), shoot_freq(shoot_f), 
@@ -12,10 +13,17 @@ double unit::getDamage(double time){
 
 
 */
-unit::unit(int class_id, int unit_id, int x, int y, int health, int speed):  
+unit::unit(int class_id, int unit_id, int x, int y, int health, int speed): class_id(class_id), 
+unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), b_health(health), health(health), 
+speed(speed), arma(armament(unit_id)) {};
+
+unit::unit(int class_id, int unit_id, int x, int y, int health, int speed, 
+double shoot_f, int rang, double fab_time, int min_t): 
 class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
-b_health(health), health(health), speed(speed) {
-	} 
+b_health(health), health(health), speed(speed), arma(armament(unit_id)), shoot_freq(shoot_f), 
+range_u(rang), fab_time(fab_time), min_tech_lvl(min_t) {};
+	
+	
 
 
 void unit::setPos(int p_x, int p_y){
@@ -59,8 +67,6 @@ void unit::printPos(){
 	//std::cout << "unit_id: " << unit_id << std::endl;
 	std::cout << "x_pos: " << x << std::endl;
 	std::cout << "y_pos: " << y << std::endl;
-	std::cout << "des_x: " << dest_x << std::endl;
-	std::cout << "des_y: " << dest_y << std::endl;
 	std::cout << "health: " << health << std::endl;
 }
 
@@ -77,9 +83,11 @@ void unit::move(int d_x, int d_y){
 	dest_y = d_y;
 }
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!arreglar
-bool unit::isInRange(unit &u){
-	return true;
+bool unit::isInRange(unit &u, int range){
+	if (sqrt(pow((this->x - u.x),2) + pow((this->y - u.y),2)) <= range) {
+		return true;
+	}
+	return false;
 }
 
 int unit::takeDamage(int dam){
@@ -87,3 +95,52 @@ int unit::takeDamage(int dam){
 	else health -= dam;
 	return DAMAGE_TAKEN;
 }
+
+void unit::setAttack(unit *u){
+	attacking = u;
+}
+
+
+/*
+unitMovable::unitMovable(int class_id, int unit_id, int x, int y): unit(class_id, unit_id, 
+x, y), dest_x(x), dest_y(y), attacking(nullptr), arma(armament(unit_id)){
+	switch (unit_id) {
+		case GRUNT:
+			shoot_freq = 2;
+			range = 7;
+		case PSYCHO:
+			shoot_freq = 10;
+			range = 7;
+		case TOUGHT: 
+			shoot_freq = 2;
+			range = 5;
+		case PYRO:
+			shoot_freq = 10;
+			range = 7;
+		case SNIPER: 
+			shoot_freq = 4;
+			range = 10;
+		case LAZER: 
+			shoot_freq = 4;
+			range = 7;
+		case JEEP:
+			shoot_freq = 6;
+			range = 6;
+		case MML: 
+			shoot_freq = 2;
+			range = 8;
+		case MEDIUM_TANK:
+			shoot_freq = 0.5;
+			range = 7;
+		case LIGHT_TANK:
+			shoot_freq = 0.5;
+			range = 6;
+		case HEAVY_TANK:
+			shoot_freq = 0.5;
+			range = 6;
+		default:
+			shoot_freq = 0;
+			range = 0;
+	}
+}
+*/
