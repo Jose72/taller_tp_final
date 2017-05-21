@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.7)
 project(z)
 
 
@@ -28,7 +28,7 @@ file(GLOB SOURCE_FILES_SERVER
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 
-add_executable(cliente ${SOURCE_FILES_CLIENT})
-add_executable(server ${SOURCE_FILES_SERVER})
+add_executable(clientGame ${SOURCE_FILES_CLIENT})
+add_executable(serverGame ${SOURCE_FILES_SERVER})
 
-target_link_libraries(cliente ${SDL_LIBRARIES})
+target_link_libraries(clientGame ${SDL_LIBRARIES})
