@@ -6,14 +6,18 @@
 #include "Thread.h"
 #include "Socket.h"
 #include "Game_map.h"
+#include "Unit.h"
+#include "Factory_Units.h"
 
 class TClient_receive: public tThread {
 private:
     tSocket &socket;
     Game_map &game_map;
+    std::vector<Unit*> &units;
+    Factory_Units  &factory;
 
 public:
-    TClient_receive(tSocket &s, Game_map &game_map);
+    TClient_receive(tSocket &s, Game_map &game_map,std::vector<Unit*> &u, Factory_Units &f);
     ~TClient_receive();
     void run();
     void stop();

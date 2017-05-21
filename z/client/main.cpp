@@ -18,17 +18,8 @@
 #define WINDOW_W 800
 
 int main(int argc, char *argv[]){
-    tSocket socket;
-    Game_map game_map;
-    int port_number = atoi(argv[2]);
-    socket.connect(argv[1],port_number);
-    std::vector<tThread*> threads;
-
-    TClient_receive* tclient = new TClient_receive(socket,game_map);
-    tclient->run();
-
-    bool running = true;
     SDL_Surface *screen;
+    std::vector<Unit*> all_units;
 //INICIA SDL Y CREA LA PANTALLA
     if(SDL_Init(SDL_INIT_VIDEO)<0){
         std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
@@ -39,6 +30,19 @@ int main(int argc, char *argv[]){
         std::cout<<"No se puede inicializar el modo grafico\n" <<SDL_GetError();
     }
     atexit(SDL_Quit);
+    SpritesPool pool(screen);
+    Factory_Units factory(pool);
+    tSocket socket;
+    Game_map game_map(screen);
+    int port_number = atoi(argv[2]);
+    socket.connect(argv[1],port_number);
+    std::vector<tThread*> threads;
+
+    TClient_receive* tclient = new TClient_receive(socket,game_map,all_units,factory);
+    tclient->run();
+
+
+    bool running = true;
 
     int posx1 = 100;
     int posy1 = 100;
@@ -53,20 +57,16 @@ int main(int argc, char *argv[]){
 
     Camera camera(posCameraX,posCameraY,WINDOW_W,WINDOW_H);
 
-    SpritesPool pool(screen);
-
-    Factory_Units factory(pool);
-
     Unit *grunt = factory.createUnit(BLUE_GRUNT,posx1,posy1);
     Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
     Unit *fort = factory.createUnit(FORT,posx1,posy2);
 
-    std::vector<Unit*> all_units;
+
     all_units.push_back(grunt);
     //all_units.push_back(flag);
    // all_units.push_back(fort);
 
-    game_map.set_screen(screen);
+    //game_map.set_screen(screen);
     SDL_Event event;
     SelectionHandler sHandler;
     //main application loop
@@ -116,4 +116,5 @@ int main(int argc, char *argv[]){
         camera.show(all_units, game_map);
         SDL_Flip(screen);
     }
+    tclient->join();
 }

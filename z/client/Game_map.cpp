@@ -58,8 +58,8 @@ void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD) {
 
     int x,y,t;
     //dibujar escenario
-    for (int i =limitYU ; i<limitYD; i++) {
-        for (int j=limitXL ; j<limitXR; j++) {
+    for (int i =0 ; i<10; i++) {
+        for (int j=0 ; j<10; j++) {
             int pos = ((i*10)+(j));
             if(pos < MAP_LENGHT ){
                 t = this->map_des[pos];
