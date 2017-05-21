@@ -100,6 +100,7 @@ double tile::getH(){
 void tile::printTile(){
 	std::cout << "x: " << x_cord << std::endl;
 	std::cout << "y: " << y_cord << std::endl;
+	std::cout << terr.getTerrainFactor() << std::endl;
 	std::cout << std::endl;
 }
 

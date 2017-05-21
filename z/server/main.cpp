@@ -13,7 +13,8 @@
 
 int main(int argc, char **argv)
 {
-	
+	test_create_map();
+	/*
 	char c = '0';
 	tServer server(atoi(argv[1]));
 	server.start();
@@ -23,5 +24,6 @@ int main(int argc, char **argv)
 	server.stop();
 	server.join();
 	return 0;
+	 */
 
 }

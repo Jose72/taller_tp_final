@@ -3,6 +3,8 @@
 armament::armament(int code){
 	switch (code) {
 		case GRUNT:
+			damage = BALAS;
+			explosive = false;
 		case PSYCHO:
 		case SNIPER: 
 		case JEEP:

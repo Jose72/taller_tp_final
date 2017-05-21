@@ -92,7 +92,7 @@ bool unit::isInRange(unit &u, int range){
 
 int unit::takeDamage(int dam){
 	if (health - dam < 0) return UNIT_DEAD;
-	else health -= dam;
+	else health = health - dam;
 	return DAMAGE_TAKEN;
 }
 

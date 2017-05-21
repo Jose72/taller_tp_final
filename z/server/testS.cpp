@@ -7,8 +7,29 @@
 #include "terrain.h"
 #include "actualizeUnit.h"
 #include <vector>
+#include "attack.h"
+
+
+int test_attack_unit_in_range(){
+	unit r1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
+	unit r2(ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
+	unit r4(ROBOT, GRUNT, 43, 18, 300, ROBOT_SPEED);
+	Attack ata(GRUNT);
+	
+	ata(&r1, &r2, 1);
+	std::cout << "daño rel: " << r2.getRelativeDamage() << std::endl;
+	ata(&r1, &r2, 1);
+	std::cout << "daño rel: " << r2.getRelativeDamage() << std::endl;
+	ata(&r1, &r2, 1);
+	std::cout << "daño rel: " << r2.getRelativeDamage() << std::endl;
+	ata(&r1, &r2, 1);
+	std::cout << "daño rel: " << r2.getRelativeDamage() << std::endl;
+	return 0;
+}
 
 int test_create_map(){
+	
+	actualizeUnit au;
 	std::vector<int> tile_codes;
 	int map_codes[100] = {0};
 	map_codes[15] = 1;
@@ -25,18 +46,23 @@ int test_create_map(){
 	for (int i = 0; i < 100; i++){
 		tile_codes.push_back(map_codes[i]);
 	}
+	
 	gameMap mapa(tile_codes);
 	std::cout << "mam" << std::endl;
 	mapa.printMap();
+	
+	
+	unit r(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
+	r.move(120, 120);
+	
+	while (r.isMoving()){
+		au(r, mapa, 1);
+	}
+	
 	return 0;
 }
 
-int test_attack_unit_in_range(){
-	unit r1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	unit r2(ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
-	unit r4(ROBOT, GRUNT, 43, 18, 300, ROBOT_SPEED);
-	return 0;
-}
+
 
 
 int test_units_in_range(){

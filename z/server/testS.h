@@ -1,6 +1,8 @@
 #ifndef TESTS_CPP
 #define TESTS_CPP
 
+
+int test_attack_unit_in_range();
 int test_create_map();
 int test_astart_solo_tierra();
 int test_find_unit_tile();

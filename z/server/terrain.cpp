@@ -9,6 +9,11 @@ terrain::terrain(int terrain_code){
 			this->construct(TIERRA, true, true, TIERRA_FACTOR);
 			break;
 			}
+		case(PRADERA):
+			{
+			this->construct(PRADERA, true, true, PRADERA_FACTOR);
+			break;
+			}
 		case(AGUA):
 			{
 			this->construct(AGUA, true, false, AGUA_FACTOR);

@@ -2,6 +2,7 @@
 #include <vector>
 #include "math.h"
 #include "constants.h"
+#include <iostream>
 
 Attack::Attack(int unit_id): arma(armament(unit_id)){
 	switch (unit_id) {
@@ -47,6 +48,7 @@ Attack::Attack(int unit_id): arma(armament(unit_id)){
 int Attack::operator()(unit *attacker, unit *attacked, double time){
 	if (attacked){
 		double t_damage = arma.getBaseDamage() * time;
+		std::cout << "daño: " << t_damage << std::endl;
 		if (attacker->isInRange(*attacked, range)){
 			attacked->takeDamage(round(t_damage));
 		}
