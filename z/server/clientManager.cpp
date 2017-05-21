@@ -6,6 +6,7 @@
 #include <vector>
 #include "string.h"
 #include <mutex>
+#include <unistd.h>
 
 tClientManager::tClientManager(tSocket cli_s, std::mutex &manager_m): 
 cli_skt(std::move(cli_s)), manager_m(manager_m) {}
@@ -50,6 +51,8 @@ void tClientManager::run(){
 	
 	//primero recibir datos de usuario
 	//enviar datos partida
+	std::vector<int> tile_codes;
+	
 	int map_codes[100] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
@@ -64,14 +67,61 @@ void tClientManager::run(){
 	map_codes[58] = 2;
 
 	int sss = 100;
+	
+	for (int i = 0; i < 100; i++){
+		tile_codes.push_back(map_codes[i]);
+	}
+	
 	std::cout << sss << std::endl;
 	cli_skt.send((char*) &sss, sizeof(int));
 	cli_skt.send((char*) &map_codes, sizeof(int) * sss);
 
-	char bu[512];
+	gameMap mapa(tile_codes);
+	
+	/*
+	for (int i = 0; i < 100; i++){
+		std::cout << << map_codes[i] << std::endl;
+		std::cout << tile_codes[i] << std::endl;
+	}
+	*/
+	  
+	unit u1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
+	int unit_code = GRUNT;
+	int xx = u1.getX();
+	int yy = u1.getY();
+	int unit_cant = 1;
+	cli_skt.send((char*) &unit_cant, sizeof(int));
+	cli_skt.send((char*) &unit_code, sizeof(int));
+	cli_skt.send((char*) &xx, sizeof(int));
+	cli_skt.send((char*) &yy, sizeof(int));
 
-	cli_skt.receive(&bu[0], sizeof(int));
-	std::cout << bu << std::endl;
+	
+	int x_dest = 0;
+	int y_dest = 0;
+	cli_skt.receive((char*) &x_dest, sizeof(int));
+	cli_skt.receive((char*) &y_dest, sizeof(int));
+	u1.move(x_dest, y_dest);
+	
+	actualizeUnit actualizer;
+	
+	int s = 1;
+	while(s > 0){
+		
+		actualizer(u1, mapa, 1);
+		sleep(1);
+		int xx = u1.getX();
+		int yy = u1.getY();
+		s = cli_skt.send((char*) &xx, sizeof(int));
+		s = cli_skt.send((char*) &yy, sizeof(int));
+		
+	}
+	
+
+	//char bu[512];
+
+	//cli_skt.receive(&bu[0], sizeof(int));
+	
+	//std::cout << bu << std::endl;
 	
 	//send();
 	//aca tendria que lanzar la partida !!!!!!

@@ -34,7 +34,7 @@ void Camera::show(std::vector<Unit *> &units, Game_map &game_map) {
         limitYU = 0;
     }
     int limitYD = this->posCameraY + this->cameraH;
-    //game_map.draw_map(limitXL,limitXR,limitYU,limitYD);
+    game_map.draw_map(limitXL,limitXR,limitYU,limitYD);
     for (int i = 0; i <units.size() ; ++i) {
         if(BETWEEN(units[i]->get_cameraPosX(),limitXL,limitXR)){
             if(BETWEEN(units[i]->get_cameraPosY(),limitYU,limitYD)){

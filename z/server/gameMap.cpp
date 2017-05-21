@@ -1,6 +1,18 @@
 #include "gameMap.h"
 #include <iostream>
+#include <vector>
+#include "math.h"
 
+
+gameMap::gameMap(std::vector<int> &casilla_code){
+	height = sqrt(casilla_code.size());
+	width = sqrt(casilla_code.size());
+	for (int i = 0; i < height; i++){
+		for (int j = 0; j < width; j++){
+			casillas.push_back(tile(j, i, casilla_code[j + i * width]));
+		}
+	}
+}
 
 gameMap::gameMap(int height, int width, std::vector<tile> &casillas): height(height), 
 width(width), casillas(casillas) {};
@@ -55,4 +67,10 @@ tile* gameMap::getTilePFromUnit(int x, int y){
 		}
 	}
 	return &casillas[px + py * width];
+}
+
+void gameMap::printMap(){
+	for (unsigned int i = 0; i < casillas.size(); i++){
+		casillas[i].printTile();
+	}
 }

@@ -6,6 +6,30 @@
 #include "tile.h"
 #include "terrain.h"
 #include "actualizeUnit.h"
+#include <vector>
+
+int test_create_map(){
+	std::vector<int> tile_codes;
+	int map_codes[100] = {0};
+	map_codes[15] = 1;
+	map_codes[16] = 1;
+	map_codes[17] = 1;
+	map_codes[18] = 1;
+	map_codes[31] = 1;
+	map_codes[32] = 1;
+	map_codes[33] = 1;
+	map_codes[34] = 1;
+	map_codes[56] = 2;
+	map_codes[57] = 2;
+	map_codes[58] = 2;
+	for (int i = 0; i < 100; i++){
+		tile_codes.push_back(map_codes[i]);
+	}
+	gameMap mapa(tile_codes);
+	std::cout << "mam" << std::endl;
+	mapa.printMap();
+	return 0;
+}
 
 int test_attack_unit_in_range(){
 	unit r1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
