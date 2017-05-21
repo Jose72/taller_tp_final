@@ -78,13 +78,21 @@ void tClientManager::run(){
 
 	gameMap mapa(tile_codes);
 	
+	/*
+	for (int i = 0; i < 100; i++){
+		std::cout << << map_codes[i] << std::endl;
+		std::cout << tile_codes[i] << std::endl;
+	}
+	*/
+	  
 	unit u1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
 	int unit_code = GRUNT;
 	int xx = u1.getX();
 	int yy = u1.getY();
 	cli_skt.send((char*) &unit_code, sizeof(int));
-	cli_skt.send((char*) &xx, sizeof(int) * sss);
-	cli_skt.send((char*) &yy, sizeof(int) * sss);
+	cli_skt.send((char*) &xx, sizeof(int));
+	cli_skt.send((char*) &yy, sizeof(int));
+
 	
 	actualizeUnit actualizer;
 	
@@ -99,15 +107,16 @@ void tClientManager::run(){
 		sleep(1);
 		int xx = u1.getX();
 		int yy = u1.getY();
-		cli_skt.send((char*) &xx, sizeof(int) * sss);
-		cli_skt.send((char*) &yy, sizeof(int) * sss);
+		s = cli_skt.send((char*) &xx, sizeof(int));
+		s = cli_skt.send((char*) &yy, sizeof(int));
 		
 	}
-
+	
 
 	char bu[512];
 
 	cli_skt.receive(&bu[0], sizeof(int));
+	
 	std::cout << bu << std::endl;
 	
 	//send();
