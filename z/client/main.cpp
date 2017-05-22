@@ -5,11 +5,12 @@
 #include "SelectionHandler.h"
 #include "Factory_Units.h"
 #include "Camera.h"
-#include "Socket.h"
-#include "Thread.h"
+#include "../common/Socket.h"
+#include "../common/Thread.h"
 #include "T_Client.h"
 #include "TClient_receive.h"
 #include "Units_Protected.h"
+#include "ClickableButton.h"
 
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
 
@@ -67,12 +68,17 @@ int main(int argc, char *argv[]){
 
     //game_map.set_screen(screen);
     SDL_Event event;
+
+    ClickableButton clickableButton(750,550,50,50);
+
     SelectionHandler sHandler;
     while(waiting_server){}
     //main application loop
+    SDL_PollEvent(&event);
     while(running == true){
         SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
-        SDL_PollEvent(&event);
+
+        SDL_WaitEvent(&event);
         Uint32 ticks = SDL_GetTicks();
         switch (event.type){
             case SDL_QUIT:
@@ -95,6 +101,7 @@ int main(int argc, char *argv[]){
                 }
                 break;
             case SDL_MOUSEBUTTONDOWN:
+                clickableButton.checkBounds(event.button.x,event.button.y);
                 if(event.button.button == LEFT_BUTTON){
                     destinox = event.button.x;
                     destinoy = event.button.y;
