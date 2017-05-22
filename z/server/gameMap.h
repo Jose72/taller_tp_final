@@ -11,7 +11,8 @@ class gameMap {
 		int height;
 		int width;
 		std::vector<tile> casillas;
-public:
+	public:
+		gameMap(int *casilla, int size);
 		gameMap(std::vector<int> &casilla_code);
 		gameMap(int height, int width, std::vector<tile> &casillas); //para testeo
 		gameMap(int height, int width); //pasarle el archivo xml y que complete casillas??
