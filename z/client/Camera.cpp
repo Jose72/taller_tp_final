@@ -23,7 +23,7 @@ void Camera::set_camera_position(int posX, int posY) {
     }
 }
 
-void Camera::show(std::vector<Unit *> &units, Game_map &game_map) {
+void Camera::show(Units_Protected &units, Game_map &game_map) {
     int limitXL = this->posCameraX - this->cameraW;
     if(limitXL <0){
         limitXL = 0;
@@ -46,7 +46,7 @@ void Camera::show(std::vector<Unit *> &units, Game_map &game_map) {
 
 }
 
-void Camera::set_relative_position(std::vector<Unit *> &units) {
+void Camera::set_relative_position(Units_Protected &units) {
     for (int i = 0; i <units.size() ; ++i) {
         int posUnitX = units[i]->get_posx();
         int posUnitY = units[i]->get_posy();

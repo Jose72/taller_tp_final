@@ -2,7 +2,7 @@
 #include "TClient_receive.h"
 #include "Unit.h"
 
-TClient_receive::TClient_receive(tSocket &s, Game_map &game_map,std::vector<Unit*> &u, Factory_Units &f):
+TClient_receive::TClient_receive(tSocket &s, Game_map &game_map,Units_Protected &u, Factory_Units &f):
         socket(s),game_map(game_map),units(u), factory(f) {}
 
 TClient_receive::~TClient_receive() {}
@@ -29,7 +29,7 @@ void TClient_receive::run() {
         switch (unit_code){
             case 0:
                 Unit* grunt = factory.createUnit(BLUE_GRUNT,posX,posY);
-                units.push_back(grunt);
+                units.add(grunt);
                 break;
         }
 
@@ -45,7 +45,7 @@ void TClient_receive::run() {
         if (posX == -1) return;
         socket.receive((char*)&posY,4);
         if (posY == -1) return;
-       // units[0]->set_pos(posX,posY);
+        units[0]->set_pos(posX,posY);
         std::cout << "x: "<< posX << std::endl;
         std::cout << "y: "<< posY << std::endl;
 

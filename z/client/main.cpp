@@ -5,10 +5,11 @@
 #include "SelectionHandler.h"
 #include "Factory_Units.h"
 #include "Camera.h"
-#include "../common/Socket.h"
-#include "../common/Thread.h"
+#include "Socket.h"
+#include "Thread.h"
 #include "T_Client.h"
 #include "TClient_receive.h"
+#include "Units_Protected.h"
 
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
 
@@ -19,8 +20,10 @@
 
 int main(int argc, char *argv[]){
     SDL_Surface *screen;
-    std::vector<Unit*> all_units;
-//INICIA SDL Y CREA LA PANTALLA
+    std::vector<Unit*> u;
+    Units_Protected all_units(u);
+
+    //INICIA SDL Y CREA LA PANTALLA
     if(SDL_Init(SDL_INIT_VIDEO)<0){
         std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
         return 1;
@@ -37,13 +40,9 @@ int main(int argc, char *argv[]){
     int port_number = atoi(argv[2]);
     socket.connect(argv[1],port_number);
     std::vector<tThread*> threads;
-
-    TClient_receive* tclient = new TClient_receive(socket,game_map,all_units,factory);
-    tclient->run();
-
-
+    threads.push_back(new TClient_receive(socket,game_map,all_units,factory));
+    threads[0]->start();
     bool running = true;
-
     int posx1 = 100;
     int posy1 = 100;
     int posx2 = 400;
@@ -60,8 +59,6 @@ int main(int argc, char *argv[]){
     Unit *grunt = factory.createUnit(BLUE_GRUNT,posx1,posy1);
     Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
     Unit *fort = factory.createUnit(FORT,posx1,posy2);
-
-
     //all_units.push_back(grunt);
     //all_units.push_back(flag);
    // all_units.push_back(fort);
@@ -116,5 +113,8 @@ int main(int argc, char *argv[]){
         camera.show(all_units, game_map);
         SDL_Flip(screen);
     }
-    tclient->join();
+    for (int i = 0; i <threads.size(); ++i) {
+        threads[i]->join();
+
+    }
 }

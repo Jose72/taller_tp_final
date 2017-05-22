@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Unit.h"
 #include "Game_map.h"
+#include "Units_Protected.h"
 
 class Camera {
 private:
@@ -21,9 +22,9 @@ public:
 
     void set_camera_position(int posX, int posY);
 
-    void show(std::vector<Unit*>&units, Game_map &game_map);
+    void show(Units_Protected &units, Game_map &game_map);
 
-    void set_relative_position(std::vector<Unit*> &units);
+    void set_relative_position(Units_Protected &units);
 
 };
 

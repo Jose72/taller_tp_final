@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SelectionHandler.h"
+#include "Units_Protected.h"
 
 #define SIZE_OF_DELTA 20
 
@@ -9,7 +10,7 @@ SelectionHandler::SelectionHandler(){
     this->unit_selected = false;
 }
 
-void SelectionHandler::set_location(int posX, int posY,std::vector<Unit *> &units) {
+void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     int dx1 = posX - SIZE_OF_DELTA;
     int dx2 = posX + SIZE_OF_DELTA;
     int dy1 = posY - SIZE_OF_DELTA;

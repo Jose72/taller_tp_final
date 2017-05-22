@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "Unit.h"
+#include "Units_Protected.h"
 
 #define SELECTOR_D 20
 
@@ -19,7 +20,7 @@ public:
     SelectionHandler();
     void select_unit(std::vector<Unit*> &units);
     void set_destiny(int destX, int destY);
-    void set_location(int posX, int posY,std::vector<Unit*> &units);
+    void set_location(int posX, int posY,Units_Protected &units);
     void move_unit();
     bool unit_select();
 };
