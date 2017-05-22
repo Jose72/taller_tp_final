@@ -42,9 +42,12 @@ void TClient_receive::run() {
         int posX;
         int posY;
         socket.receive((char*)&posX,4);
+        if (posX == -1) return;
         socket.receive((char*)&posY,4);
+        if (posY == -1) return;
        // units[0]->set_pos(posX,posY);
-        std::cout << posX;
+        std::cout << "x: "<< posX << std::endl;
+        std::cout << "y: "<< posY << std::endl;
 
     }
 }

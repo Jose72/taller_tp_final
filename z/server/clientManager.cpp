@@ -108,7 +108,7 @@ void tClientManager::run(){
 	while(s > 0 && u1.isMoving()){
 		
 		actualizer(u1, mapa, 1);
-		sleep(0.3);
+		sleep(1);
 		int xx = u1.getX();
 		int yy = u1.getY();
 		s = cli_skt.send((char*) &xx, sizeof(int));
@@ -116,7 +116,8 @@ void tClientManager::run(){
 		
 	}
 	
-	
+	int b = -1;
+	s = cli_skt.send((char*) &b, sizeof(int));
 	//char bu[512];
 
 	//cli_skt.receive(&bu[0], sizeof(int));
