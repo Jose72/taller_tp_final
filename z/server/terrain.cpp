@@ -14,9 +14,19 @@ terrain::terrain(int terrain_code){
 			this->construct(PRADERA, true, true, PRADERA_FACTOR);
 			break;
 			}
+		case(NIEVE):
+			{
+			this->construct(NIEVE, true, true, NIEVE_FACTOR);
+			break;
+			}
 		case(AGUA):
 			{
 			this->construct(AGUA, true, false, AGUA_FACTOR);
+			break;
+			}
+		case(PANTANO):
+			{
+			this->construct(PANTANO, true, false, PANTANO_FACTOR);
 			break;
 			}
 		case(LAVA):
@@ -27,6 +37,11 @@ terrain::terrain(int terrain_code){
 		case(CARRETERA):
 			{
 			this->construct(CARRETERA, true, true, CARRETERA_FACTOR);
+			break;
+			}
+		case(ASFALTO):
+			{
+			this->construct(ASFALTO, true, true, ASFALTO_FACTOR);
 			break;
 			}
 		default:
