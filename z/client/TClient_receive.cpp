@@ -35,9 +35,11 @@ void TClient_receive::run() {
 
     }
     done = false;
+    /*
     int confirm = 120;
     socket.send((char*)&confirm,4);
     socket.send((char*)&confirm,4);
+     */
 
     while (r){
         int posX;
@@ -54,5 +56,5 @@ void TClient_receive::run() {
 }
 
 void TClient_receive::stop() {
-    this->socket.shutdown(SHUT_RDWR);
+    this->socket.shutdown(SHUT_RD);
 }

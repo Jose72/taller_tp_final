@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
 
     ClickableButton clickableButton(750,550,50,50);
 
-    SelectionHandler sHandler;
+    SelectionHandler sHandler(socket);
     while(waiting_server){}
     //main application loop
     SDL_PollEvent(&event);
@@ -116,7 +116,8 @@ int main(int argc, char *argv[]){
                 }
         }
 
-        sHandler.move_unit();
+        //Una vez que se recibe se comenta la linea siguiente
+        //sHandler.move_unit();
         camera.set_camera_position(posCameraX,posCameraY);
         camera.set_relative_position(all_units);
 

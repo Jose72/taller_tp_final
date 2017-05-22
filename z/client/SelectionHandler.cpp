@@ -6,7 +6,7 @@
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
 
-SelectionHandler::SelectionHandler(){
+SelectionHandler::SelectionHandler(tSocket &s):socket(s){
     this->unit_selected = false;
 }
 
@@ -56,6 +56,11 @@ bool SelectionHandler::unit_select() {
 void SelectionHandler::set_destiny(int destX, int destY) {
     this->destinyX = destX;
     this->destinyY = destY;
+    //int unit_id = this->unit->get_id();
+    //socket.send((char*)id,4);
+    socket.send((char*)destX,4);
+    socket.send((char*)destY,4);
+
 }
 
 

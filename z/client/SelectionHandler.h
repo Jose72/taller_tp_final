@@ -5,6 +5,7 @@
 #include <vector>
 #include "Unit.h"
 #include "Units_Protected.h"
+#include "Socket.h"
 
 #define SELECTOR_D 20
 
@@ -14,10 +15,11 @@ private:
     int destinyY;
     bool unit_selected;
     Unit * unit;
+    tSocket &socket;
 
 
 public:
-    SelectionHandler();
+    SelectionHandler(tSocket &s);
     void select_unit(std::vector<Unit*> &units);
     void set_destiny(int destX, int destY);
     void set_location(int posX, int posY,Units_Protected &units);
