@@ -1,5 +1,5 @@
 #include "Units_Protected.h"
-#include "Lock.h"
+#include "../common/Lock.h"
 
 Units_Protected::Units_Protected(std::vector<Unit *> &units): units(units){}
 

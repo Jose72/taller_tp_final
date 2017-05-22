@@ -27,6 +27,10 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     }
 }
 
+Unit* SelectionHandler::getUnit(){
+    return this->unit;
+}
+
 void SelectionHandler::move_unit() {
     if(unit_selected){
         int unit_posX = this->unit->get_posx();

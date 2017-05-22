@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SDL.h"
+#include "SDL_image.h"
 #include "Animation.h"
 #include "Game_map.h"
 #include "SelectionHandler.h"
@@ -11,6 +12,7 @@
 #include "TClient_receive.h"
 #include "Units_Protected.h"
 #include "ClickableButton.h"
+#include "PlayerInterface.h"
 
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
 
@@ -18,6 +20,7 @@
 #define RIGHT_BUTTON 1
 #define WINDOW_H 600
 #define WINDOW_W 800
+#define PLAYER_INTERFACE_W 300
 
 int main(int argc, char *argv[]){
     SDL_Surface *screen;
@@ -30,7 +33,7 @@ int main(int argc, char *argv[]){
         std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
         return 1;
     }
-    screen = SDL_SetVideoMode(WINDOW_W, WINDOW_H, 32,SDL_HWSURFACE);
+    screen = SDL_SetVideoMode(WINDOW_W + PLAYER_INTERFACE_W, WINDOW_H, 32,SDL_HWSURFACE);
     if(screen == NULL){
         std::cout<<"No se puede inicializar el modo grafico\n" <<SDL_GetError();
     }
@@ -72,6 +75,8 @@ int main(int argc, char *argv[]){
     ClickableButton clickableButton(750,550,50,50);
 
     SelectionHandler sHandler(socket);
+    PlayerInterface playerInterface(screen,&sHandler,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
+
     while(waiting_server){}
     //main application loop
     SDL_PollEvent(&event);
@@ -122,6 +127,7 @@ int main(int argc, char *argv[]){
         camera.set_relative_position(all_units);
 
         camera.show(all_units, game_map);
+        playerInterface.show();
         SDL_Flip(screen);
     }
     for (int i = 0; i <threads.size(); ++i) {

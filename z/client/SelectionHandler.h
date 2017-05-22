@@ -5,7 +5,7 @@
 #include <vector>
 #include "Unit.h"
 #include "Units_Protected.h"
-#include "Socket.h"
+#include "../common/Socket.h"
 
 #define SELECTOR_D 20
 
@@ -25,6 +25,8 @@ public:
     void set_location(int posX, int posY,Units_Protected &units);
     void move_unit();
     bool unit_select();
+
+    Unit *getUnit();
 };
 
 
