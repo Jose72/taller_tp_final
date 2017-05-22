@@ -21,5 +21,6 @@ void Animation::animate(int posx, int posy) {
     SDL_Rect dest;
     dest.x = posx;
     dest.y = posy;
+    SDL_SetColorKey(image, SDL_SRCCOLORKEY, SDL_MapRGB(image->format, 0, 0, 0));
     SDL_BlitSurface(image,&frame,this->screen,&dest);
 }

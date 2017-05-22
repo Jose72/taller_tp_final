@@ -2,8 +2,8 @@
 #include "TClient_receive.h"
 #include "Unit.h"
 
-TClient_receive::TClient_receive(tSocket &s, Game_map &game_map,Units_Protected &u, Factory_Units &f):
-        socket(s),game_map(game_map),units(u), factory(f) {}
+TClient_receive::TClient_receive(tSocket &s, Game_map &game_map,Units_Protected &u, Factory_Units &f, bool &done):
+        socket(s),game_map(game_map),units(u), factory(f), done(done) {}
 
 TClient_receive::~TClient_receive() {}
 
@@ -34,6 +34,7 @@ void TClient_receive::run() {
         }
 
     }
+    done = false;
     int confirm = 120;
     socket.send((char*)&confirm,4);
     socket.send((char*)&confirm,4);

@@ -23,6 +23,7 @@ int main(int argc, char *argv[]){
     std::vector<Unit*> u;
     Units_Protected all_units(u);
 
+    bool waiting_server = true;
     //INICIA SDL Y CREA LA PANTALLA
     if(SDL_Init(SDL_INIT_VIDEO)<0){
         std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
@@ -40,9 +41,10 @@ int main(int argc, char *argv[]){
     int port_number = atoi(argv[2]);
     socket.connect(argv[1],port_number);
     std::vector<tThread*> threads;
-    threads.push_back(new TClient_receive(socket,game_map,all_units,factory));
+    threads.push_back(new TClient_receive(socket,game_map,all_units,factory,waiting_server));
     threads[0]->start();
     bool running = true;
+
     int posx1 = 100;
     int posy1 = 100;
     int posx2 = 400;
@@ -66,6 +68,7 @@ int main(int argc, char *argv[]){
     //game_map.set_screen(screen);
     SDL_Event event;
     SelectionHandler sHandler;
+    while(waiting_server){}
     //main application loop
     while(running == true){
         SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
