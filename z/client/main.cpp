@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SDL_ttf.h>
 #include "SDL.h"
 #include "SDL_image.h"
 #include "Animation.h"
@@ -33,6 +34,19 @@ int main(int argc, char *argv[]){
         std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
         return 1;
     }
+
+    //Initialize PNG loading
+    int imgFlags = IMG_INIT_PNG;
+    if( !( IMG_Init( imgFlags ) & imgFlags ) ){
+        std::cout<< "No se pudo iniciar SDL_image Error:" << IMG_GetError() << std::endl;
+        return 2;
+    }
+
+    if(TTF_Init()==-1) {
+        std::cout<< "No se pudo iniciar TTF_Init:" << TTF_GetError() << std::endl;
+        return 3;
+    }
+
     screen = SDL_SetVideoMode(WINDOW_W + PLAYER_INTERFACE_W, WINDOW_H, 32,SDL_HWSURFACE);
     if(screen == NULL){
         std::cout<<"No se puede inicializar el modo grafico\n" <<SDL_GetError();
@@ -72,8 +86,6 @@ int main(int argc, char *argv[]){
     //game_map.set_screen(screen);
     SDL_Event event;
 
-    ClickableButton clickableButton(750,550,50,50);
-
     SelectionHandler sHandler(socket);
     PlayerInterface playerInterface(screen,&sHandler,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
 
@@ -106,18 +118,19 @@ int main(int argc, char *argv[]){
                 }
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                clickableButton.checkBounds(event.button.x,event.button.y);
-                if(event.button.button == LEFT_BUTTON){
-                    destinox = event.button.x;
-                    destinoy = event.button.y;
-                    sHandler.set_destiny(destinox,destinoy);
-                    break;
-                }
-                if(event.button.button == RIGHT_BUTTON){
-                    seleccionx = event.button.x;
-                    selecciony = event.button.y;
-                    sHandler.set_location(seleccionx,selecciony,all_units);
-                    break;
+                if(!playerInterface.checkClickedButtons(event.button.x,event.button.y)) {
+                    if (event.button.button == LEFT_BUTTON) {
+                        destinox = event.button.x;
+                        destinoy = event.button.y;
+                        sHandler.set_destiny(destinox, destinoy);
+                        break;
+                    }
+                    if (event.button.button == RIGHT_BUTTON) {
+                        seleccionx = event.button.x;
+                        selecciony = event.button.y;
+                        sHandler.set_location(seleccionx, selecciony, all_units);
+                        break;
+                    }
                 }
         }
 
@@ -134,4 +147,10 @@ int main(int argc, char *argv[]){
         threads[i]->join();
 
     }
+
+
+
+    TTF_Quit();
+    IMG_Quit();
+
 }

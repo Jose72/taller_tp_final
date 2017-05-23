@@ -5,7 +5,7 @@
 #include <iostream>
 #include "ClickableButton.h"
 
-ClickableButton::ClickableButton(int x, int y, int width, int height) {
+ClickableButton::ClickableButton(int x, int y, int width, int height, std::string text):text(std::move(text)) {
     this->x = x;
     this->y = y;
 
@@ -19,12 +19,32 @@ ClickableButton::~ClickableButton() {
 
 }
 
-void ClickableButton::checkBounds(int posX, int posY) {
+bool ClickableButton::checkBounds(int posX, int posY) {
     if ( posX >= x && posX <= x+width) {
         if ( posY >= y && posY <= y+height) {
-            std::cout << "click" << std::endl;
+            click();
+            return true;
         }
-    } else {
-        std::cout << "no" << std::endl;
     }
+    return false;
+}
+
+const std::string &ClickableButton::getText() const {
+    return text;
+}
+
+int ClickableButton::getX() const {
+    return x;
+}
+
+int ClickableButton::getY() const {
+    return y;
+}
+
+int ClickableButton::getWidth() const {
+    return width;
+}
+
+int ClickableButton::getHeight() const {
+    return height;
 }

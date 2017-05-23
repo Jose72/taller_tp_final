@@ -3,9 +3,11 @@
 //
 
 #include <iostream>
+#include <SDL_ttf.h>
 #include "PlayerInterface.h"
 #include "Animation.h"
-
+#include "ClickableButtonGrunt.h"
+#include "ClickableButtonLaser.h"
 
 
 PlayerInterface::PlayerInterface(SDL_Surface* screen,
@@ -19,25 +21,20 @@ PlayerInterface::PlayerInterface(SDL_Surface* screen,
     this->gameHeight = gameHeight;
     this->width = width;
     this->background = new Animation(this->screen,"client/sprites/tiles/5.bmp",32,32);
+    buttons.push_back(new ClickableButtonGrunt(getCol(2,1,100),300,50,100,"Grunt"));
+    buttons.push_back(new ClickableButtonLaser(getCol(2,1,100),400,50,100,"Laser"));
 }
 
-int DrawImage( SDL_Surface *surface, char *image_path, int x_pos, int y_pos )
-{
-    SDL_Surface *image = IMG_Load ( image_path );
-    if ( !image )
-    {
-        printf ( "IMG_Load: %s\n", IMG_GetError () );
-        return 1;
+int PlayerInterface::getCol(int division,int offset,int sizeElement){
+    return gameWidth + (width/division) * offset - sizeElement;
+}
+
+bool PlayerInterface::checkClickedButtons(int x, int y){
+    bool result = false;
+    for(int i = 0; i != buttons.size(); i++) {
+        result = result || buttons[i]->checkBounds(x,y);
     }
-
-    // Draws the image on the screen:
-    SDL_Rect rcDest = { x_pos, y_pos, 0, 0 };
-    SDL_BlitSurface ( image, NULL, surface, &rcDest );
-
-    // something like SDL_UpdateRect(surface, x_pos, y_pos, image->w, image->h); is missing here
-
-    SDL_FreeSurface ( image );
-    return 0;
+    return result;
 }
 
 void PlayerInterface::show() {
@@ -45,38 +42,30 @@ void PlayerInterface::show() {
     if(locked)
         SDL_LockSurface(screen);
 
-    Uint32 *pixels = (Uint32 *)screen->pixels;
-    int pixelNum = screen->w * screen->h;
-
-
-    for (int j = gameWidth; j < gameWidth + width; j = j +32) {
-        for (int k = 0; k < gameHeight; k = k+32) {
-            background->animate(j, k);
-        }
-    }
-
-    for(int i = gameWidth; i < pixelNum;) {
-        pixels[i] = SDL_MapRGB(screen->format, 255, 255, 255);
-        pixels[i+1] = SDL_MapRGB(screen->format, 255, 255, 255);
-        pixels[i+2] = SDL_MapRGB(screen->format, 255, 255, 255);
-        pixels[i+3] = SDL_MapRGB(screen->format, 255, 255, 255);
-        pixels[i+4] = SDL_MapRGB(screen->format, 255, 255, 255);
-        i += gameWidth + width;
-    }
-
+    drawer.drawBackground(gameWidth,gameHeight,width,background);
+    drawer.drawLine(screen,gameWidth);
+    drawer.drawImage(screen,"client/sprites/portraits/grunt_blue/SHEADBI2_0002.png", getCol(2,1,32), 80);//hacer funcion calcule posicion
+    drawer.drawText(screen,"Z",getCol(2,1,0),0);
     if(selectionHandler->unit_select()){
-       // std::cout << selectionHandler->getUnit()->get_cameraPosX() << std::endl;
+        drawer.drawText(screen,std::to_string(selectionHandler->getUnit()->get_posx()),getCol(2,1,0),150);
+        drawer.drawText(screen,std::to_string(selectionHandler->getUnit()->get_posy()),getCol(2,1,0),170);
     } else {
-        //std::cout << "nada seleccionado" << std::endl;
+        drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),150);;
     }
 
-    DrawImage(screen,"client/sprites/portraits/grunt_blue/SHEADBI2_0002.png", gameWidth + 100, 100);//hacer funcion calcule posicion
+    for(int i = 0; i != buttons.size(); i++) {
+        drawer.drawButton(screen,buttons[i]);
+    }
+
 
     if(locked)
         SDL_UnlockSurface(screen);
 }
 
 PlayerInterface::~PlayerInterface() {
+    for(int i = 0; i != buttons.size(); i++) {
+        delete(buttons[i]);
+    }
     delete(background);
 }
 

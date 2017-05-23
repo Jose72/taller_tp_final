@@ -10,6 +10,9 @@
 #include <SDL_image.h>
 #include "Animation.h"
 #include "SelectionHandler.h"
+#include "TTF_Writter.h"
+#include "Drawer.h"
+#include "ClickableButton.h"
 
 class PlayerInterface {
 private:
@@ -19,6 +22,8 @@ private:
     int gameHeight;
     int width;
     Animation *background;
+    Drawer drawer;
+    std::vector<ClickableButton*> buttons;
 public:
     PlayerInterface(SDL_Surface* screen,
                     SelectionHandler* selectionHandler,
@@ -30,6 +35,11 @@ public:
 
     virtual ~PlayerInterface();
 
+    int getCol(int division, int offset);
+
+    int getCol(int division, int offset, int sizeElement);
+
+    bool checkClickedButtons(int x, int y);
 };
 
 

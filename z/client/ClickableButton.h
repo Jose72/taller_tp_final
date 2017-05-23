@@ -5,6 +5,7 @@
 #ifndef Z_CLICKABLEBUTTON_H
 #define Z_CLICKABLEBUTTON_H
 
+#include <string>
 
 class ClickableButton {
     private:
@@ -12,13 +13,25 @@ class ClickableButton {
         int y;
         int width;
         int height;
+        std::string text;
     public:
-        ClickableButton(int x, int y, int width, int height);
+        ClickableButton(int x, int y, int width, int height, std::string text);
         ~ClickableButton();
 
-        void checkBounds(int posX, int posY);
+        bool checkBounds(int posX, int posY);
 
-        ClickableButton* next;
+    int getX() const;
+
+    int getY() const;
+
+    int getWidth() const;
+
+    int getHeight() const;
+
+    const std::string &getText() const;
+
+    virtual void click() = 0;
+    ClickableButton* next;
 };
 
 
