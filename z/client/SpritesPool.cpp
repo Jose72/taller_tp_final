@@ -90,8 +90,8 @@ void SpritesPool::load_sprites(char *path,
         full_dir.append(mother);
         full_dir.append("/");
         full_dir.append(list_dir[j]);
-
-        Animation *robot_move = new Animation(this->screen,full_dir.c_str(),16,16);
+        char * full_dirNoConst = const_cast<char*> (full_dir.c_str());
+        Animation *robot_move = new Animation(this->screen,full_dirNoConst,16,16);
         if(list_dir[j].find("blue") != std::string::npos){
             b_grunt.push_back(robot_move);
         }else if(list_dir[j].find("green") != std::string::npos){

@@ -90,11 +90,11 @@ int main(int argc, char *argv[]){
 
     while(waiting_server){}
     //main application loop
-    SDL_PollEvent(&event);
+
     while(running == true){
         SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
-
-        SDL_WaitEvent(&event);
+        SDL_PollEvent(&event);
+        //SDL_WaitEvent(&event);
         Uint32 ticks = SDL_GetTicks();
         switch (event.type){
             case SDL_QUIT:
