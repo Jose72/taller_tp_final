@@ -1,109 +1,14 @@
 #include "SpritesPool.h"
 #include <vector>
+#include <dirent.h>
 #include "Animation.h"
 
 SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->screen = screen;
-    //BLUE GRUNT
-    std::vector<Animation*> b_grunt;
+    this->load_sprites("client/sprites/robot1",BLUE_GRUNT,GREEN_GRUNT,RED_GRUNT,YELLOW_GRUNT);
+    this->load_sprites("client/sprites/grunt_fire",FIRE_BLUE_GRUNT,FIRE_GREEN_GRUNT,FIRE_RED_GRUNT,FIRE_YELLOW_GRUNT);
+    this->load_sprites("client/sprites/laser_fire",FIRE_LASER_BLUE,FIRE_LASER_GREEN,FIRE_LASER_RED,FIRE_LASER_YELLOW);
 
-    Animation *grunt_blue0 = new Animation(this->screen,"client/sprites/robot1/bw000.bmp",16,16);
-    b_grunt.push_back(grunt_blue0);
-
-    Animation*grunt_blue1= new Animation(this->screen,"client/sprites/robot1/bw001.bmp",16,16);
-    b_grunt.push_back(grunt_blue1);
-
-    Animation *grunt_blue2 = new Animation(this->screen,"client/sprites/robot1/bw002.bmp",16,16);
-    b_grunt.push_back(grunt_blue2);
-
-    Animation*grunt_blue3= new Animation(this->screen,"client/sprites/robot1/bw003.bmp",16,16);
-    b_grunt.push_back(grunt_blue3);
-
-    Animation *grunt_blue4 = new Animation(this->screen,"client/sprites/robot1/bw450.bmp",16,16);
-    b_grunt.push_back(grunt_blue4);
-
-    Animation*grunt_blue5= new Animation(this->screen,"client/sprites/robot1/bw451.bmp",16,16);
-    b_grunt.push_back(grunt_blue5);
-
-    Animation *grunt_blue6 = new Animation(this->screen,"client/sprites/robot1/bw452.bmp",16,16);
-    b_grunt.push_back(grunt_blue6);
-
-    Animation*grunt_blue7= new Animation(this->screen,"client/sprites/robot1/bw453.bmp",16,16);
-    b_grunt.push_back(grunt_blue7);
-
-    Animation *grunt_blue8 = new Animation(this->screen,"client/sprites/robot1/bw900.bmp",16,16);
-    b_grunt.push_back(grunt_blue8);
-
-    Animation*grunt_blue9= new Animation(this->screen,"client/sprites/robot1/bw901.bmp",16,16);
-    b_grunt.push_back(grunt_blue9);
-
-    Animation *grunt_blue10 = new Animation(this->screen,"client/sprites/robot1/bw902.bmp",16,16);
-    b_grunt.push_back(grunt_blue10);
-
-    Animation*grunt_blue11= new Animation(this->screen,"client/sprites/robot1/bw903.bmp",16,16);
-    b_grunt.push_back(grunt_blue11);
-
-    Animation *grunt_blue12 = new Animation(this->screen,"client/sprites/robot1/bw1350.bmp",16,16);
-    b_grunt.push_back(grunt_blue12);
-
-    Animation*grunt_blue13= new Animation(this->screen,"client/sprites/robot1/bw1351.bmp",16,16);
-    b_grunt.push_back(grunt_blue13);
-
-    Animation *grunt_blue14 = new Animation(this->screen,"client/sprites/robot1/bw1352.bmp",16,16);
-    b_grunt.push_back(grunt_blue14);
-
-    Animation*grunt_blue15= new Animation(this->screen,"client/sprites/robot1/bw1353.bmp",16,16);
-    b_grunt.push_back(grunt_blue15);
-
-    Animation *grunt_blue16 = new Animation(this->screen,"client/sprites/robot1/bw1800.bmp",16,16);
-    b_grunt.push_back(grunt_blue16);
-
-    Animation*grunt_blue17= new Animation(this->screen,"client/sprites/robot1/bw1801.bmp",16,16);
-    b_grunt.push_back(grunt_blue17);
-
-    Animation *grunt_blue18 = new Animation(this->screen,"client/sprites/robot1/bw1802.bmp",16,16);
-    b_grunt.push_back(grunt_blue18);
-
-    Animation*grunt_blue19= new Animation(this->screen,"client/sprites/robot1/bw1803.bmp",16,16);
-    b_grunt.push_back(grunt_blue19);
-
-    Animation *grunt_blue20 = new Animation(this->screen,"client/sprites/robot1/bw2250.bmp",16,16);
-    b_grunt.push_back(grunt_blue20);
-
-    Animation*grunt_blue21= new Animation(this->screen,"client/sprites/robot1/bw2251.bmp",16,16);
-    b_grunt.push_back(grunt_blue21);
-
-    Animation *grunt_blue22 = new Animation(this->screen,"client/sprites/robot1/bw2252.bmp",16,16);
-    b_grunt.push_back(grunt_blue22);
-
-    Animation*grunt_blue23= new Animation(this->screen,"client/sprites/robot1/bw2253.bmp",16,16);
-    b_grunt.push_back(grunt_blue23);
-
-    Animation *grunt_blue24 = new Animation(this->screen,"client/sprites/robot1/bw2700.bmp",16,16);
-    b_grunt.push_back(grunt_blue24);
-
-    Animation*grunt_blue25= new Animation(this->screen,"client/sprites/robot1/bw2701.bmp",16,16);
-    b_grunt.push_back(grunt_blue25);
-
-    Animation *grunt_blue26 = new Animation(this->screen,"client/sprites/robot1/bw2702.bmp",16,16);
-    b_grunt.push_back(grunt_blue26);
-
-    Animation*grunt_blue27= new Animation(this->screen,"client/sprites/robot1/bw2703.bmp",16,16);
-    b_grunt.push_back(grunt_blue27);
-
-    Animation *grunt_blue28 = new Animation(this->screen,"client/sprites/robot1/bw3150.bmp",16,16);
-    b_grunt.push_back(grunt_blue28);
-
-    Animation*grunt_blue29= new Animation(this->screen,"client/sprites/robot1/bw3151.bmp",16,16);
-    b_grunt.push_back(grunt_blue29);
-
-    Animation *grunt_blue30 = new Animation(this->screen,"client/sprites/robot1/bw3152.bmp",16,16);
-    b_grunt.push_back(grunt_blue30);
-
-    Animation*grunt_blue31= new Animation(this->screen,"client/sprites/robot1/bw3153.bmp",16,16);
-    b_grunt.push_back(grunt_blue31);
-
-    this->pool[BLUE_GRUNT] = b_grunt;
 
     //COLORLESS FLAG
 
@@ -146,3 +51,60 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
 std::vector<Animation*> SpritesPool::get_animations(FlagsUnitType flag) {
     return this->pool[flag];
 }
+
+void SpritesPool::load_sprites(char *path,
+                               FlagsUnitType blue,
+                               FlagsUnitType green,
+                               FlagsUnitType red,
+                               FlagsUnitType yellow) {
+
+    DIR *dir;
+    struct dirent *ent;
+    std::vector<Animation*> b_grunt,g_grunt,r_grunt,y_grunt;
+    std::vector<std::string> list_dir;
+    std::string mother(path);
+    if ((dir = opendir (path)) != NULL) {
+        while ((ent = readdir (dir)) != NULL) {
+            std::string name(ent->d_name);
+            list_dir.push_back(name);
+        }
+        closedir (dir);
+    } else {
+        /* could not open directory */
+        perror ("");
+        //return EXIT_FAILURE;
+    }
+    std::string temp;
+    for (int i = 0; i <list_dir.size(); ++i) {
+        for (int j = 0; j <list_dir.size(); ++j) {
+
+            if (list_dir[i] < list_dir[j]) {
+                temp = list_dir[j];
+                list_dir[j] = list_dir[i];
+                list_dir[i] = temp;
+            }
+        }
+    }
+    for (int j = 2; j <list_dir.size() ; ++j) {
+        std::string full_dir;
+        full_dir.append(mother);
+        full_dir.append("/");
+        full_dir.append(list_dir[j]);
+
+        Animation *robot_move = new Animation(this->screen,full_dir.c_str(),16,16);
+        if(list_dir[j].find("blue") != std::string::npos){
+            b_grunt.push_back(robot_move);
+        }else if(list_dir[j].find("green") != std::string::npos){
+            g_grunt.push_back(robot_move);
+        }else if(list_dir[j].find("red") != std::string::npos){
+            r_grunt.push_back(robot_move);
+        }else if(list_dir[j].find("yellow") != std::string::npos){
+            y_grunt.push_back(robot_move);
+        }
+    }
+    this->pool[blue] = b_grunt;
+    this->pool[red] = r_grunt;
+    this->pool[green] = g_grunt;
+    this->pool[yellow] = y_grunt;
+}
+

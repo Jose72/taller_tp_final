@@ -87,7 +87,7 @@ return 0;
 
 
 int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
-	std::cout << "pasada---------------------------------------" << std::endl;
+	//std::cout << "pasada---------------------------------------" << std::endl;
 	if (u.isMoving()) {
 		//necesito clse de unidad
 		int c_id = u.getClassId();
@@ -96,17 +96,25 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 		//saco casillas origen y destino 
 		tile *orig = mapa.getTilePFromUnit(x_unit, y_unit);
 		tile *dest = mapa.getTilePFromUnit(u.getDestX(), u.getDestY());
-		orig->printTile();
-		dest->printTile();
+		//orig->printTile();
+		//dest->printTile();
 		std::vector<tile*> camino;
 		
 		//corro el astart para obtener el camino
 		aStart(orig, dest, mapa, c_id, camino);
 		
+		/*
+		std::cout << "camnio" << std::endl;
+		for (unsigned int i = 0; i < camino.size(); i++){
+			camino[i]->printTile();
+		}
+		std::cout << "camnio end" << std::endl;
+		*/
+		
 		//se tiene que mover hasta el centro de la siguiente casilla del camino
 		//que seria la segunda guardada en camino (la primera en el origen)
 		//si no hay mas de 1 es el origen
-		std::cout << camino.size() << std::endl;
+		//std::cout << camino.size() << std::endl;
 		if (camino.size() == 0) return 1;
 		tile *closer_tile = camino[camino.size() - 1];
 		if (camino.size() > 1){
@@ -165,7 +173,7 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 		} else {
 			u.setPos(x_closer, y_closer);
 		}
-		std::cout << "end_pasada" << std::endl;
+		//std::cout << "end_pasada" << std::endl;
 		u.printPos();
 	
 	}

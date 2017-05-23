@@ -13,18 +13,39 @@
 int test_attack_unit_in_range(){
 	unit r1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
 	unit r2(ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
-	unit r4(ROBOT, GRUNT, 43, 18, 300, ROBOT_SPEED);
+	unit r4(ROBOT, GRUNT, 44, 18, 300, ROBOT_SPEED);
+	unit r5(VEHICLE, JEEP, 44, 18, 300, ROBOT_SPEED);
 	Attack ata(GRUNT);
 	
 	ata(&r1, &r2, 1);
-	std::cout << "daño rel: " << r2.getRelativeDamage() << std::endl;
+	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	ata(&r1, &r2, 1);
-	std::cout << "daño rel: " << r2.getRelativeDamage() << std::endl;
+	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	ata(&r1, &r2, 1);
-	std::cout << "daño rel: " << r2.getRelativeDamage() << std::endl;
+	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	ata(&r1, &r2, 1);
-	std::cout << "daño rel: " << r2.getRelativeDamage() << std::endl;
+	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
+	
+	//ataque no en rango
+	int map_codes[100] = {0};
+	
+	gameMap mapa(&map_codes[0], 100);
+	actualizeUnit au;
+	
+	ata(&r5, &r1, 1);
+	std::cout << "daño rel  " << r4.getRelativeDamage() << std::endl;
+	r1.move(100, 18);
+	for (int i = 0; i < 20; i++){
+		std::cout << "\nACT 1" << r4.getRelativeDamage() << std::endl;
+		au(r1, mapa, 1);
+		std::cout << "\nACT 5" << r4.getRelativeDamage() << std::endl;
+		au(r5, mapa, 1);
+		
+		ata(&r5, &r1, 1);
+		std::cout << "daño rel: " << r1.getRelativeDamage() << std::endl;
+	}
 	return 0;
+	
 }
 
 int test_create_map(){
@@ -52,8 +73,8 @@ int test_create_map(){
 	mapa.printMap();
 	
 	
-	unit r(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	r.move(120, 120);
+	unit r(ROBOT, GRUNT, 200, 10, 300, ROBOT_SPEED);
+	r.move(200, 200);
 	
 	while (r.isMoving()){
 		au(r, mapa, 1);

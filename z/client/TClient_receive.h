@@ -3,8 +3,8 @@
 #define CLIENT_TCLIENT_RECEIVE_H
 
 
-#include "../common/Thread.h"
-#include "../common/Socket.h"
+#include "Thread.h"
+#include "Socket.h"
 #include "Game_map.h"
 #include "Unit.h"
 #include "Factory_Units.h"

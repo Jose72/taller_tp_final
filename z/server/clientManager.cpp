@@ -8,8 +8,10 @@
 #include <mutex>
 #include <unistd.h>
 
+#include "juego.h"
+
 tClientManager::tClientManager(tSocket cli_s, std::mutex &manager_m): 
-cli_skt(std::move(cli_s)), manager_m(manager_m) {}
+cli_skt(std::move(cli_s)), manager_m(manager_m), j(nullptr) {}
 
 
 //enviar y recibir (protocolo envia size primero, son del tp3) cambiarlos!!!
@@ -62,6 +64,15 @@ void tClientManager::run(){
 	map_codes[32] = 1;
 	map_codes[33] = 1;
 	map_codes[34] = 1;
+	map_codes[43] = 2;
+	map_codes[44] = 2;
+	map_codes[45] = 2;
+	map_codes[46] = 2;
+	map_codes[47] = 2;
+	map_codes[48] = 2;
+	map_codes[53] = 2;
+	map_codes[54] = 2;
+	map_codes[55] = 2;
 	map_codes[56] = 2;
 	map_codes[57] = 2;
 	map_codes[58] = 2;
@@ -85,7 +96,7 @@ void tClientManager::run(){
 	}
 	*/
 	
-	unit u1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
+	unit u1(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
 	int unit_code = GRUNT;
 	int xx = u1.getX();
 	int yy = u1.getY();
@@ -118,13 +129,8 @@ void tClientManager::run(){
 	
 	int b = -1;
 	s = cli_skt.send((char*) &b, sizeof(int));
-	//char bu[512];
 
-	//cli_skt.receive(&bu[0], sizeof(int));
-	
-	//std::cout << bu << std::endl;
-	
-	//send();
+
 	//aca tendria que lanzar la partida !!!!!!
 	//que pasa si otro ya la lanzo??
 	//bool para saber?

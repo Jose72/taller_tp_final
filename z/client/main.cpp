@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SDL_ttf.h>
 #include "SDL.h"
-#include "SDL_image.h"
 #include "Animation.h"
 #include "Game_map.h"
 #include "SelectionHandler.h"
@@ -76,10 +75,10 @@ int main(int argc, char *argv[]){
 
     Camera camera(posCameraX,posCameraY,WINDOW_W,WINDOW_H);
 
-    Unit *grunt = factory.createUnit(BLUE_GRUNT,posx1,posy1);
+    Unit *grunt = factory.createUnit(GREEN_GRUNT,posx1,posy1);
     Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
     Unit *fort = factory.createUnit(FORT,posx1,posy2);
-    //all_units.push_back(grunt);
+    //all_units.add(grunt);
     //all_units.push_back(flag);
    // all_units.push_back(fort);
 
@@ -135,7 +134,7 @@ int main(int argc, char *argv[]){
         }
 
         //Una vez que se recibe se comenta la linea siguiente
-        //sHandler.move_unit();
+        sHandler.move_unit();
         camera.set_camera_position(posCameraX,posCameraY);
         camera.set_relative_position(all_units);
 
