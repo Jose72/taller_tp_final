@@ -75,7 +75,6 @@ int unit::getSpeed(){
 }
 
 double unit::getRelativeDamage(){
-	std::cout << health / b_health << std::endl;
 	return ((b_health - health) / (double) b_health);
 }
 
