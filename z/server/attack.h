@@ -11,7 +11,7 @@ class Attack: public behaviour {
 	private:
 		armament arma;
 		double shoot_freq;
-		int range;
+		int a_range;
 	public:
 		Attack(int unit_id);
 		int operator()(unit *attacker, unit *attacked, double time);

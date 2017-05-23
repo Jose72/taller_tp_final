@@ -52,8 +52,8 @@ int test_create_map(){
 	mapa.printMap();
 	
 	
-	unit r(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	r.move(120, 120);
+	unit r(ROBOT, GRUNT, 200, 10, 300, ROBOT_SPEED);
+	r.move(200, 200);
 	
 	while (r.isMoving()){
 		au(r, mapa, 1);

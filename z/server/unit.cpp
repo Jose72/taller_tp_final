@@ -75,12 +75,18 @@ int unit::getSpeed(){
 }
 
 double unit::getRelativeDamage(){
-	return (b_health-health) / b_health;
+	std::cout << health / b_health << std::endl;
+	return ((b_health - health) / (double) b_health);
 }
 
 void unit::move(int d_x, int d_y){
 	dest_x = d_x;
 	dest_y = d_y;
+}
+
+void unit::stop(){
+	dest_x = x;
+	dest_y = y;
 }
 
 bool unit::isInRange(unit &u, int range){

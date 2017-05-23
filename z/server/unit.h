@@ -50,6 +50,7 @@ class unit {
 		int getSpeed();
 		double getRelativeDamage();
 		void move(int d_x, int d_y);
+		void stop();
 		bool isInRange(unit &u, int range);
 		//double getDamage(double time); 
 		int takeDamage(int dam);

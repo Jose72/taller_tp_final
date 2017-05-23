@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-	//test_create_map();
+	//test_attack_unit_in_range();
 	
 	char c = '0';
 	tServer server(atoi(argv[1]));

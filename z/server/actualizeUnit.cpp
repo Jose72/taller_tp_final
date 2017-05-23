@@ -103,6 +103,14 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 		//corro el astart para obtener el camino
 		aStart(orig, dest, mapa, c_id, camino);
 		
+		/*
+		std::cout << "camnio" << std::endl;
+		for (unsigned int i = 0; i < camino.size(); i++){
+			camino[i]->printTile();
+		}
+		std::cout << "camnio end" << std::endl;
+		*/
+		
 		//se tiene que mover hasta el centro de la siguiente casilla del camino
 		//que seria la segunda guardada en camino (la primera en el origen)
 		//si no hay mas de 1 es el origen
