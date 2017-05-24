@@ -3,6 +3,9 @@
 
 #include "constants.h"
 #include "armament.h"
+#include "behaviour.h"
+#include "attackBehaviour.h"
+#include "createBehaviour.h"
 
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
@@ -22,11 +25,8 @@ class unit {
 		int speed;
 		//Attack attack_b;
 		unit *attacking;
-		armament arma;
-		double shoot_freq; //en segundos
-		int range_u;
-		int fab_time; //en segundos
-		int min_tech_lvl;
+		attackBehaviour attack_b;
+		
 		/*
 		armament arma;
 		int shoot_freq; //en segundos
@@ -40,6 +40,8 @@ class unit {
 		double shoot_f, int rang, double fab_time, int min_t);
 		void setPos(int p_x, int p_y);
 		bool isMoving();
+		bool isAttacking();
+		bool isCreating();
 		int getUnitId();
 		int getClassId();
 		int getX();
@@ -55,6 +57,10 @@ class unit {
 		//double getDamage(double time); 
 		int takeDamage(int dam);
 		void setAttack(unit *u);
+		double getDamage(double time);
+		int attackRange();
+		unit* getTarget();
+		void printPosDest();
 };
 
 #endif

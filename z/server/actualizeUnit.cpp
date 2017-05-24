@@ -86,10 +86,8 @@ return 0;
 
 
 
-int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
-	//std::cout << "pasada---------------------------------------" << std::endl;
-	if (u.isMoving()) {
-		//necesito clse de unidad
+int moveActualize(unit &u, gameMap &mapa, double time){
+	//necesito clse de unidad
 		int c_id = u.getClassId();
 		int x_unit = u.getX();
 		int y_unit = u.getY();
@@ -173,10 +171,80 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 		} else {
 			u.setPos(x_closer, y_closer);
 		}
-		//std::cout << "end_pasada" << std::endl;
+
 		u.printPos();
+		return 0;
+}
+
+int attackActualize(unit &attacker, double time){
+	unit *attacked = attacker.getTarget();
+	if (attacker.isInRange(*attacked, attacker.attackRange())){
+			//si me estoy moviendo me detengo
+			//estaba siguiendo a la unidad para atacar
+			if (attacker.isMoving()) {
+				//std::cout << "me detuve" << std::endl;
+				attacker.stop();
+			}
+			attacked->takeDamage(round(attacker.getDamage(time)));
+		} else {
+			//si no estoy en rango, seteo como destino a la unidad
+			//el target se puede estar moviendo por eso hay que hacer esto cada vez
+			//asi actualizar el destino
+			//hay que usar un bool para saber si es auto-ataque y no hacer esto
+			//std::cout << "seteo target como destino" << std::endl;
+			attacker.move(attacked->getX(), attacked->getY());
+		}
+		return 0;
+}
+
+int autoAttackActualize(unit &u, gameMap &mapa, double time){
+	/*
+	//recorro el vect de unidades
+	for (auto it = targets.begin(); it != targets.end(); ++it){
 	
+		//chequeo quien es el dueño de la unidad
+		if ((*it)->isEnemy(attacker->Owner())){
+			//si esta en rango
+			if (attacker->isInRange((*it))){
+			
+				attack(attacker, (*it));
+				//le pego y ya, no sigo con los demas
+				return;
+				
+				// en vez de esto se podria setear la unidad como target
+				// con un booleano que indique autoataque
+				// y que la actualizacion de ataque haga el resto
+			
+			}
+		
+		
+		}
 	}
+	*/
+	return 0;
+}
+
+int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
+	//std::cout << "pasada---------------------------------------" << std::endl;
+	
+	if (u.isMoving()) {
+		moveActualize(u, mapa, time);
+	} 
+	
+	
+	if (u.isAttacking()){
+		attackActualize(u, time);
+	} else {
+		autoAttackActualize(u, mapa, time);
+	}
+	
+	
+	
+	if (u.isCreating()){ 
+		
+	}
+	
+	
 	return 0;
 }
 

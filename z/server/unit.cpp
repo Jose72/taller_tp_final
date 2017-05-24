@@ -15,13 +15,8 @@ double unit::getDamage(double time){
 */
 unit::unit(int class_id, int unit_id, int x, int y, int health, int speed): class_id(class_id), 
 unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), b_health(health), health(health), 
-speed(speed), arma(armament(unit_id)) {};
+speed(speed), attacking(nullptr), attack_b(attackBehaviour(unit_id)) {};
 
-unit::unit(int class_id, int unit_id, int x, int y, int health, int speed, 
-double shoot_f, int rang, double fab_time, int min_t): 
-class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
-b_health(health), health(health), speed(speed), arma(armament(unit_id)), shoot_freq(shoot_f), 
-range_u(rang), fab_time(fab_time), min_tech_lvl(min_t) {};
 	
 	
 
@@ -32,10 +27,24 @@ void unit::setPos(int p_x, int p_y){
 }
 
 
+
+//preguntar a los beaviours ???
 bool unit::isMoving(){
 	if (x != dest_x || y != dest_y) return true;
 	return false;
 };
+
+bool unit::isAttacking(){
+	if (attacking) return true;
+	return false;
+}
+
+bool unit::isCreating(){
+	return false;
+}
+//////
+
+
 
 int unit::getUnitId(){
 	return unit_id;
@@ -105,47 +114,19 @@ void unit::setAttack(unit *u){
 	attacking = u;
 }
 
-
-/*
-unitMovable::unitMovable(int class_id, int unit_id, int x, int y): unit(class_id, unit_id, 
-x, y), dest_x(x), dest_y(y), attacking(nullptr), arma(armament(unit_id)){
-	switch (unit_id) {
-		case GRUNT:
-			shoot_freq = 2;
-			range = 7;
-		case PSYCHO:
-			shoot_freq = 10;
-			range = 7;
-		case TOUGHT: 
-			shoot_freq = 2;
-			range = 5;
-		case PYRO:
-			shoot_freq = 10;
-			range = 7;
-		case SNIPER: 
-			shoot_freq = 4;
-			range = 10;
-		case LAZER: 
-			shoot_freq = 4;
-			range = 7;
-		case JEEP:
-			shoot_freq = 6;
-			range = 6;
-		case MML: 
-			shoot_freq = 2;
-			range = 8;
-		case MEDIUM_TANK:
-			shoot_freq = 0.5;
-			range = 7;
-		case LIGHT_TANK:
-			shoot_freq = 0.5;
-			range = 6;
-		case HEAVY_TANK:
-			shoot_freq = 0.5;
-			range = 6;
-		default:
-			shoot_freq = 0;
-			range = 0;
-	}
+int unit::attackRange(){
+	return attack_b.getRange();
 }
-*/
+
+double unit::getDamage(double time){
+	return attack_b.getDamage(time);
+}
+
+unit* unit::getTarget(){
+	return attacking;
+}
+
+void unit::printPosDest(){
+	std::cout << "x: " << x << " d_x: " << dest_x << std::endl;
+	std::cout << "y: " << y << " d_y: " << dest_y << std::endl;
+}

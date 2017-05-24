@@ -7,43 +7,35 @@
 #include "terrain.h"
 #include "actualizeUnit.h"
 #include <vector>
-#include "attack.h"
 
 
 int test_attack_unit_in_range(){
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	
 	unit r1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
 	unit r2(ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
-	unit r4(ROBOT, GRUNT, 44, 18, 300, ROBOT_SPEED);
+	unit r4(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
 	unit r5(VEHICLE, JEEP, 44, 18, 300, ROBOT_SPEED);
-	Attack ata(GRUNT);
-	
-	ata(&r1, &r2, 1);
-	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
-	ata(&r1, &r2, 1);
-	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
-	ata(&r1, &r2, 1);
-	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
-	ata(&r1, &r2, 1);
-	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
-	
-	//ataque no en rango
-	int map_codes[100] = {0};
-	
-	gameMap mapa(&map_codes[0], 100);
 	actualizeUnit au;
+	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
+	r1.setAttack(&r2);
+	au(r1, mapa, 1);
+	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	
-	ata(&r5, &r1, 1);
-	std::cout << "daño rel  " << r4.getRelativeDamage() << std::endl;
-	r1.move(100, 18);
-	for (int i = 0; i < 20; i++){
-		std::cout << "\nACT 1" << r4.getRelativeDamage() << std::endl;
-		au(r1, mapa, 1);
-		std::cout << "\nACT 5" << r4.getRelativeDamage() << std::endl;
+	
+	r5.setAttack(&r4);
+	
+	r4.move(100, 18);
+	
+	for (int i = 0; i < 27; i++){
+		au(r4, mapa, 1);
 		au(r5, mapa, 1);
 		
-		ata(&r5, &r1, 1);
-		std::cout << "daño rel: " << r1.getRelativeDamage() << std::endl;
+		std::cout << "daño rel r4: " << r4.getRelativeDamage() << std::endl;
 	}
+
+	
 	return 0;
 	
 }
