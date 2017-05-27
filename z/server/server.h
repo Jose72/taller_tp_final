@@ -15,7 +15,7 @@ class tServer: public tThread{
 		int port_number;
 		tSocket serv_skt;
 		bool acepter_open;
-		std::vector<tThread*> client_mngrs;
+		std::vector<tClientManager*> client_mngrs;
 		std::mutex m;
 	public:
 		tServer(int port);

@@ -10,8 +10,9 @@
 
 #include "juego.h"
 
-tClientManager::tClientManager(tSocket cli_s, std::mutex &manager_m): 
-cli_skt(std::move(cli_s)), manager_m(manager_m), j(nullptr) {}
+tClientManager::tClientManager(int id, tSocket cli_s, std::mutex &manager_m): 
+id_client(id), cli_skt(std::move(cli_s)), manager_m(manager_m), j(nullptr) {}
+
 
 
 //enviar y recibir (protocolo envia size primero, son del tp3) cambiarlos!!!
@@ -44,13 +45,19 @@ int sendMessage(tSocket &skt_cli, std::string &msg_to_send){
 
 
 
+
 void tClientManager::stop(){
         cli_skt.shutdown(SHUT_RDWR);
 }
 
 void tClientManager::run(){
 	std::string msg;
-	
+	/*
+	//espero a que me pasen el 2do socket
+	while (!cli_skt2.validSocket()){
+		sleep(1);
+	}
+	*/
 	//primero recibir datos de usuario
 	//enviar datos partida
 	std::vector<int> tile_codes;
