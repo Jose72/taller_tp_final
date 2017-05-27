@@ -12,6 +12,7 @@ class gameMap {
 		int width;
 		std::vector<tile> casillas;
 	public:
+		gameMap();
 		gameMap(int *casilla, int size);
 		gameMap(std::vector<int> &casilla_code);
 		gameMap(int height, int width, std::vector<tile> &casillas); //para testeo

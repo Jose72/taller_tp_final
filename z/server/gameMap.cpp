@@ -3,6 +3,7 @@
 #include <vector>
 #include "math.h"
 
+gameMap::gameMap(){}
 
 gameMap::gameMap(std::vector<int> &casilla_code){
 	height = sqrt(casilla_code.size());

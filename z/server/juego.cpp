@@ -11,9 +11,12 @@ juego::juego(std::vector<tSocket*> &skts, std::mutex &cli_m): cli_m(cli_m){
 }
 
 void juego::stop(){
+	
+	/*
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->shutdown(SHUT_RDWR);
 	}
+	*/
 }
 
 void juego::take_event(Event &e){
@@ -22,10 +25,8 @@ void juego::take_event(Event &e){
 	return;
 }
 
-void juego::run(){
-	
-	
-	//mapa codes de las casillas
+
+void juego::sendInit(){
 	int map_codes[100] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
@@ -35,11 +36,21 @@ void juego::run(){
 	map_codes[32] = 1;
 	map_codes[33] = 1;
 	map_codes[34] = 1;
+	map_codes[43] = 2;
+	map_codes[44] = 2;
+	map_codes[45] = 2;
+	map_codes[46] = 2;
+	map_codes[47] = 2;
+	map_codes[48] = 2;
+	map_codes[53] = 2;
+	map_codes[54] = 2;
+	map_codes[55] = 2;
 	map_codes[56] = 2;
 	map_codes[57] = 2;
 	map_codes[58] = 2;
 
 	int sss = 100;
+	
 	/*
 	std::vector<int> tile_codes;
 	for (int i = 0; i < 100; i++){
@@ -47,18 +58,15 @@ void juego::run(){
 	}
 	*/
 	
-	//genero unidad 
-	unit u1(ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	int unit_code = GRUNT;
-	int xx = u1.getX();
-	int yy = u1.getY();
-	int unit_cant = 1;
-	
 	std::cout << "map size: " << sss << std::endl;
 	
 	//cargo mi mapa
-	gameMap mapa(map_codes, sss);
+	mapa = gameMap(map_codes, sss);
 	
+	cli_skts[0]->send((char*) &sss, sizeof(int));
+	cli_skts[0]->send((char*) &map_codes, sizeof(int) * sss);
+	
+	/*
 	//paso el mapa y unidades a todos
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->send((char*) &sss, sizeof(int));
@@ -68,46 +76,76 @@ void juego::run(){
 		(*it)->send((char*) &xx, sizeof(int));
 		(*it)->send((char*) &yy, sizeof(int));
 	}
+	*/
+	
+	unit* u1 = new unit(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
+	units.push_back(u1);
+	int unit_code = GRUNT;
+	int xx = u1->getX();
+	int yy = u1->getY();
+	int unit_cant = 1;
+	cli_skts[0]->send((char*) &unit_cant, sizeof(int));
+	cli_skts[0]->send((char*) &unit_code, sizeof(int));
+	cli_skts[0]->send((char*) &xx, sizeof(int));
+	cli_skts[0]->send((char*) &yy, sizeof(int));
+}
+
+void juego::run(){
+	
+	
+	//mapa codes de las casillas
+	
+	
+	
 	
 	actualizeUnit actualizer;
-	
+	unit* u1 = units[0];
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
 	while(s > 0){
 			
 			//lockeo cola de evntos
-			game_m.lock();
+			cli_m.lock();
 			if (!event_list.empty()){
 				Event e = event_list.front();
 				event_list.pop();
 				//esto esta harcodeado, tendria que llamar a una funcion
 				//que identifique la op y ejecute (handler)
-				u1.move(e.takeX(), e.takeY());
+				u1->move(e.takeX(), e.takeY());
 			}
-			game_m.unlock();
 			//deslockeo
+			cli_m.unlock();
+			
 			
 			//actualizo
-			actualizer(u1, mapa, 1);
+			actualizer(*u1, mapa, 1);
 			sleep(1);
-			//envio 
-			int xx = u1.getX();
-			int yy = u1.getY();
-			for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-				s = (*it)->send((char*) &xx, sizeof(int));
-				s = (*it)->send((char*) &yy, sizeof(int));
-			}
+			int xx = u1->getX();
+			int yy = u1->getY();
+			s = cli_skts[0]->send((char*) &xx, sizeof(int));
+			s = cli_skts[0]->send((char*) &yy, sizeof(int));
 			
 			//si termine de mover salgo de loop
 			//solo para cortar el ejemplo
-			if (!u1.isMoving()) break;
+			if (!u1->isMoving()) {
+				std::cout << "termino mov" << std::endl;
+				break;
+			}
+				
 	}
 	
-	//señal de que termino, mando a todos
+	
+	std::cout << "delete units" << std::endl;
+	for (unsigned int i = 0; i < units.size(); i++){
+		delete units[i];
+	}
+	
 	int b = -1;
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->send((char*) &b, sizeof(int));
 	}
+	
+	
 	
 	return;
 }

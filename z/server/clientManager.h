@@ -15,6 +15,7 @@ class tClientManager: public tThread{
 		juego *j;
 	public:
 		tClientManager(int id, tSocket cli_skt, std::mutex &manager_m);
+		~tClientManager();
 		void run() override;
 		void stop();
 };

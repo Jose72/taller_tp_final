@@ -8,10 +8,14 @@
 #include <mutex>
 #include <vector>
 #include <queue>
+#include "gameMap.h"
+#include "unit.h"
 
 class juego: public tThread{
 	private:
+		gameMap mapa;
 		std::queue<Event> event_list;
+		std::vector<unit*> units;
 		std::vector<tSocket*> cli_skts;
 		std::mutex game_m; //juego esta protegido
 		std::mutex &cli_m; //socket sincronizar con clientes
@@ -20,6 +24,7 @@ class juego: public tThread{
 		void run() override;
 		void stop();
 		void take_event(Event &e); //para apsarle los eventos desde los clientManager
+		void sendInit();
 };
 
 #endif

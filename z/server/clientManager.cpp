@@ -13,6 +13,11 @@
 tClientManager::tClientManager(int id, tSocket cli_s, std::mutex &manager_m): 
 id_client(id), cli_skt(std::move(cli_s)), manager_m(manager_m), j(nullptr) {}
 
+tClientManager::~tClientManager(){
+	if (j){
+		delete j;
+	}
+}
 
 
 //enviar y recibir (protocolo envia size primero, son del tp3) cambiarlos!!!
@@ -52,12 +57,14 @@ void tClientManager::stop(){
 
 void tClientManager::run(){
 	std::string msg;
+	std::mutex mmm;
 	/*
 	//espero a que me pasen el 2do socket
 	while (!cli_skt2.validSocket()){
 		sleep(1);
 	}
 	*/
+	/*
 	//primero recibir datos de usuario
 	//enviar datos partida
 	std::vector<int> tile_codes;
@@ -95,7 +102,7 @@ void tClientManager::run(){
 	cli_skt.send((char*) &map_codes, sizeof(int) * sss);
 
 	gameMap mapa(tile_codes);
-	
+	*/
 	/*
 	for (int i = 0; i < 100; i++){
 		std::cout << << map_codes[i] << std::endl;
@@ -103,6 +110,10 @@ void tClientManager::run(){
 	}
 	*/
 	
+	std::vector <tSocket*> socks;
+	socks.push_back(&cli_skt);
+	j = new juego(socks, mmm);
+	/*
 	unit u1(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
 	int unit_code = GRUNT;
 	int xx = u1.getX();
@@ -112,14 +123,26 @@ void tClientManager::run(){
 	cli_skt.send((char*) &unit_code, sizeof(int));
 	cli_skt.send((char*) &xx, sizeof(int));
 	cli_skt.send((char*) &yy, sizeof(int));
-
+	*/
+	j->sendInit(); 
 	
 	int x_dest = 0;
 	int y_dest = 0;
 	cli_skt.receive((char*) &x_dest, sizeof(int));
 	cli_skt.receive((char*) &y_dest, sizeof(int));
-	u1.move(x_dest, y_dest);
+	Event e(1, x_dest, y_dest);
+	mmm.lock();
+	j->take_event(e);
+	mmm.unlock();
 	
+	
+	j->start();
+	
+	std::cout << "join" << std::endl;
+	j->join();
+	std::cout << "termino juego salir manager" << std::endl;
+	//delete j;
+	/*
 	actualizeUnit actualizer;
 	
 	int s = 1;
@@ -136,7 +159,7 @@ void tClientManager::run(){
 	
 	int b = -1;
 	s = cli_skt.send((char*) &b, sizeof(int));
-
+	*/
 
 	//aca tendria que lanzar la partida !!!!!!
 	//que pasa si otro ya la lanzo??
