@@ -19,7 +19,7 @@ enum FlagsUnitType{
     FIRE_LASER_RED = 33,
     FIRE_LASER_YELLOW = 34,
     COLORLESS_FLAG = 90,
-    FORT = 100
+    FORT_SPRITE = 100
 };
 
 class SpritesPool {

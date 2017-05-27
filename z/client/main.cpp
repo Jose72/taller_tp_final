@@ -13,7 +13,7 @@
 #include "Units_Protected.h"
 #include "ClickableButton.h"
 #include "PlayerInterface.h"
-
+#include "EventHandler.h"
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
 
 #define LEFT_BUTTON 3
@@ -68,71 +68,31 @@ int main(int argc, char *argv[]){
     int posy2 = 400;
     int posCameraX = 500;
     int posCameraY = 500;
-    int destinox;
-    int destinoy;
-    int seleccionx;
-    int selecciony;
 
     Camera camera(posCameraX,posCameraY,WINDOW_W,WINDOW_H);
 
     Unit *grunt = factory.createUnit(GREEN_GRUNT,posx1,posy1);
     Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
-    Unit *fort = factory.createUnit(FORT,posx1,posy2);
+    Unit *fort = factory.createUnit(FORT_SPRITE,posx1,posy2);
     //all_units.add(grunt);
     //all_units.push_back(flag);
    // all_units.push_back(fort);
 
     //game_map.set_screen(screen);
-    SDL_Event event;
-
     SelectionHandler sHandler(socket);
     PlayerInterface playerInterface(screen,&sHandler,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
 
     while(waiting_server){}
     //main application loop
 
+    threads.push_back(new EventHandler(screen,camera,playerInterface,all_units,socket, game_map, running));
+    threads[1]->start();
+/*
     while(running == true){
+        int ticks =SDL_GetTicks();
+        /*
         SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
-        SDL_PollEvent(&event);
-        //SDL_WaitEvent(&event);
-        Uint32 ticks = SDL_GetTicks();
-        switch (event.type){
-            case SDL_QUIT:
-                running = false;
-                break;
-            case SDL_KEYDOWN:
-                switch(event.key.keysym.sym){
-                    case SDLK_LEFT:
-                        posCameraX--;
-                        break;
-                    case SDLK_RIGHT:
-                        posCameraX++;
-                        break;
-                    case SDLK_UP:
-                        posCameraY--;
-                        break;
-                    case SDLK_DOWN:
-                        posCameraY++;
-                        break;
-                }
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                if(!playerInterface.checkClickedButtons(event.button.x,event.button.y)) {
-                    if (event.button.button == LEFT_BUTTON) {
-                        destinox = event.button.x;
-                        destinoy = event.button.y;
-                        sHandler.set_destiny(destinox, destinoy);
-                        break;
-                    }
-                    if (event.button.button == RIGHT_BUTTON) {
-                        seleccionx = event.button.x;
-                        selecciony = event.button.y;
-                        sHandler.set_location(seleccionx, selecciony, all_units);
-                        break;
-                    }
-                }
-        }
-
+        /*
         //Una vez que se recibe se comenta la linea siguiente
         sHandler.move_unit();
         camera.set_camera_position(posCameraX,posCameraY);
@@ -140,15 +100,19 @@ int main(int argc, char *argv[]){
 
         camera.show(all_units, game_map);
         playerInterface.show();
+         */
+        /*
+        camera.show(all_units, game_map);
+        playerInterface.show();
         SDL_Flip(screen);
+        */
+/*
     }
+*/
     for (int i = 0; i <threads.size(); ++i) {
         threads[i]->join();
 
     }
-
-
-
     TTF_Quit();
     IMG_Quit();
 

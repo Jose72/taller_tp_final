@@ -69,3 +69,11 @@ void Camera::set_relative_position(Units_Protected &units) {
 
     }
 }
+
+int Camera::get_camera_posX() {
+    return this->posCameraX;
+}
+
+int Camera::get_camera_posY() {
+    return this->posCameraY;
+}

@@ -26,6 +26,9 @@ public:
 
     void set_relative_position(Units_Protected &units);
 
+    int get_camera_posX();
+    int get_camera_posY();
+
 };
 
 

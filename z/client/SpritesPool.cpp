@@ -42,7 +42,7 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                          "client/sprites/fuertes/death.bmp",
                                          160,192);
     fort.push_back(fort_death);
-    this->pool[FORT] = fort;
+    this->pool[FORT_SPRITE] = fort;
 }
 
 
