@@ -6,15 +6,14 @@
 #include <unistd.h>
 
 
-juego::juego(std::vector<tSocket*> &skts, std::mutex &cli_m): cli_m(cli_m){
-	cli_skts = skts;
+juego::juego(tSocket* creator_skt, std::mutex &cli_m): cli_m(cli_m){
+	cli_skts.push_back(creator_skt);
 }
 
 void juego::stop(){
 	std::cout << "juego stop" << std::endl;	
 	
-	//rompo el socket
-	
+	//rompo los sockets
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->shutdown(SHUT_RDWR);
 	}
@@ -56,13 +55,6 @@ void juego::sendInit(){
 
 	int sss = 100;
 	
-	/*
-	std::vector<int> tile_codes;
-	for (int i = 0; i < 100; i++){
-		tile_codes.push_back(map_codes[i]);
-	}
-	*/
-	
 	std::cout << "map size: " << sss << std::endl;
 	
 	//cargo mi mapa
@@ -99,9 +91,6 @@ void juego::run(){
 	
 	
 	//mapa codes de las casillas
-	
-	
-	
 	
 	actualizeUnit actualizer;
 	unit* u1 = units[0];

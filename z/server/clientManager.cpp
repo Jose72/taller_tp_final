@@ -50,89 +50,53 @@ int sendMessage(tSocket &skt_cli, std::string &msg_to_send){
 
 void tClientManager::stop(){
 		std::cout << "manager stop" << std::endl;	
-		/*
-		j->stop();
-		j->join();
-		delete j;
-		*/
         cli_skt.shutdown(SHUT_RDWR);
 		std::cout << "manager stop out" << std::endl;	
 }
 
 void tClientManager::run(){
-	std::string msg;
+	std::string player_name;
 	std::mutex mmm;
 	
 	
-	/*
 	//primero recibir datos de usuario
 	//enviar datos partida
-	std::vector<int> tile_codes;
 	
-	int map_codes[100] = {0};
-	map_codes[15] = 1;
-	map_codes[16] = 1;
-	map_codes[17] = 1;
-	map_codes[18] = 1;
-	map_codes[31] = 1;
-	map_codes[32] = 1;
-	map_codes[33] = 1;
-	map_codes[34] = 1;
-	map_codes[43] = 2;
-	map_codes[44] = 2;
-	map_codes[45] = 2;
-	map_codes[46] = 2;
-	map_codes[47] = 2;
-	map_codes[48] = 2;
-	map_codes[53] = 2;
-	map_codes[54] = 2;
-	map_codes[55] = 2;
-	map_codes[56] = 2;
-	map_codes[57] = 2;
-	map_codes[58] = 2;
-
-	int sss = 100;
+	//si seleccione nuevo juego
+	if (true) {
+		//creo el juego
+		j = new juego(&cli_skt, mmm);
+		//pusheo en el vector
+		juegos.push_back(j);
 	
-	for (int i = 0; i < 100; i++){
-		tile_codes.push_back(map_codes[i]);
+	
+		//
+		j->sendInit(); 
+	
+		//empiezo el juego
+		j->start();
+	} else { //si seleccione unirme
+		//enviar llos juegos
+		//busco en el vector de juegos
+		//j = juegos[i];
+		//j->playerJoin(cli_skt);
 	}
 	
-	std::cout << sss << std::endl;
-	cli_skt.send((char*) &sss, sizeof(int));
-	cli_skt.send((char*) &map_codes, sizeof(int) * sss);
-
-	gameMap mapa(tile_codes);
-	*/
 	/*
-	for (int i = 0; i < 100; i++){
-		std::cout << << map_codes[i] << std::endl;
-		std::cout << tile_codes[i] << std::endl;
+	//espero a que el juego este listo para empezar
+	while (!j->ready()){
+		sleep(1);
 	}
+	
+	o espero confimacion del cliente cuando le envio el mapa y todo?
+	int ready = 0;
+	receive((char*) &ready, sizeof(int));
+	
+	if (!ready) return;
+	 
 	*/
 	
-	std::vector <tSocket*> socks;
-	socks.push_back(&cli_skt);
-	//creo el juego
-	j = new juego(socks, mmm);
-	//pusheo en el vector
-	juegos.push_back(j);
 	
-	
-	/*
-	unit u1(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
-	int unit_code = GRUNT;
-	int xx = u1.getX();
-	int yy = u1.getY();
-	int unit_cant = 1;
-	cli_skt.send((char*) &unit_cant, sizeof(int));
-	cli_skt.send((char*) &unit_code, sizeof(int));
-	cli_skt.send((char*) &xx, sizeof(int));
-	cli_skt.send((char*) &yy, sizeof(int));
-	*/
-	
-	j->sendInit(); 
-	
-	j->start();
 	
 	int s = 1;
 	while (s > 0) {

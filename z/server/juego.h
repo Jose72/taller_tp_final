@@ -19,10 +19,10 @@ private:
 		std::queue<Event> event_list;
 		std::vector<unit*> units;
 		std::vector<tSocket*> cli_skts;
-		std::mutex game_m; //juego esta protegido
-		std::mutex &cli_m; //socket sincronizar con clientes
+		std::mutex game_m;
+		std::mutex &cli_m; //proteger eventos
 	public:
-		juego(std::vector<tSocket*> &skts, std::mutex &cli_m);
+		juego(tSocket* creator_skt, std::mutex &cli_m);
 		void run() override;
 		void stop();
 		void take_event(Event &e); //para apsarle los eventos desde los clientManager
