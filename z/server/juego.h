@@ -12,7 +12,9 @@
 #include "unit.h"
 
 class juego: public tThread{
-	private:
+private:
+		std::string creator;
+		int max_players;
 		gameMap mapa;
 		std::queue<Event> event_list;
 		std::vector<unit*> units;

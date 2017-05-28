@@ -12,10 +12,11 @@ class tClientManager: public tThread{
 		int id_client;
 		tSocket cli_skt;
 		std::mutex &manager_m;
+		std::vector<juego*> &juegos;
 		juego *j;
 	public:
-		tClientManager(int id, tSocket cli_skt, std::mutex &manager_m);
-		~tClientManager();
+		tClientManager(int id, tSocket cli_skt, std::vector<juego*> & jgs, 
+		std::mutex &manager_m);
 		void run() override;
 		void stop();
 };

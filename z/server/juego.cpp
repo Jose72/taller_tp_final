@@ -11,16 +11,21 @@ juego::juego(std::vector<tSocket*> &skts, std::mutex &cli_m): cli_m(cli_m){
 }
 
 void juego::stop(){
+	std::cout << "juego stop" << std::endl;	
 	
-	/*
+	//rompo el socket
+	
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->shutdown(SHUT_RDWR);
 	}
-	*/
+	
+	std::cout << "juego stop out" << std::endl;	
+	
 }
 
 void juego::take_event(Event &e){
-	tLock l(game_m);//lockeo
+	//tLock l(game_m);//lockeo
+	std::cout << "event push" << std::endl;
 	event_list.push(e);
 	return;
 }
@@ -123,28 +128,37 @@ void juego::run(){
 			int xx = u1->getX();
 			int yy = u1->getY();
 			s = cli_skts[0]->send((char*) &xx, sizeof(int));
-			s = cli_skts[0]->send((char*) &yy, sizeof(int));
+			if (s > 0) {
+				s = cli_skts[0]->send((char*) &yy, sizeof(int));
+			}
+			
 			
 			//si termine de mover salgo de loop
 			//solo para cortar el ejemplo
+			/*
 			if (!u1->isMoving()) {
 				std::cout << "termino mov" << std::endl;
 				break;
 			}
+			*/
 				
 	}
 	
-	
 	std::cout << "delete units" << std::endl;
 	for (unsigned int i = 0; i < units.size(); i++){
-		delete units[i];
+		if (units[i]) {
+			delete units[i];
+			units[i] = nullptr;
+		}
 	}
 	
+	std::cout << "juego out" << std::endl;	
+	/*
 	int b = -1;
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->send((char*) &b, sizeof(int));
 	}
-	
+	*/
 	
 	
 	return;

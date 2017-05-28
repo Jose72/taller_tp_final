@@ -9,6 +9,7 @@
 #include "../common/Socket.h"
 #include "../common/Thread.h"
 #include "clientManager.h"
+#include "juego.h"
 
 class tServer: public tThread{
 	private:
@@ -16,6 +17,7 @@ class tServer: public tThread{
 		tSocket serv_skt;
 		bool acepter_open;
 		std::vector<tClientManager*> client_mngrs;
+		std::vector<juego*> juegos;
 		std::mutex m;
 	public:
 		tServer(int port);

@@ -14,14 +14,25 @@ tServer::tServer(int port) : serv_skt(tSocket()) {
 
 
 void tServer::stop(){
+		std::cout << "server stop" << std::endl;	
 		acepter_open = false;
 		serv_skt.shutdown(SHUT_RDWR);
+		
 		for (unsigned int j = 0; j < client_mngrs.size(); j++){
 			//paro y joineo los managers
 			client_mngrs[j]->stop();
 			client_mngrs[j]->join();
 			delete client_mngrs[j];
 		}
+		
+		for (unsigned int j = 0; j < juegos.size(); j++){
+			//paro y joineo los juegos
+			juegos[j]->stop();
+			juegos[j]->join();
+			delete juegos[j];
+		}
+		
+		std::cout << "server stop out" << std::endl;	
 }
 
 
@@ -38,7 +49,7 @@ int tServer::processClient(){
 				//std::cout << "new client" << std::endl;
 				
 				tClientManager *cli_man = new tClientManager(client_id_count+1, std::move(new_skt),
-				m); //paso al manager
+				juegos, m); //paso al manager
 				client_mngrs.push_back(cli_man);
 				cli_man->start();
 				
@@ -49,7 +60,7 @@ int tServer::processClient(){
 		}
 	}	
 	
-	
+	std::cout << "server out" << std::endl;	
 	return 0;
 }
 

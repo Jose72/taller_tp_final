@@ -7,17 +7,14 @@
 #include "string.h"
 #include <mutex>
 #include <unistd.h>
+#include "../common/Lock.h"
 
 #include "juego.h"
 
-tClientManager::tClientManager(int id, tSocket cli_s, std::mutex &manager_m): 
-id_client(id), cli_skt(std::move(cli_s)), manager_m(manager_m), j(nullptr) {}
+tClientManager::tClientManager(int id, tSocket cli_s, std::vector<juego*> & jgs, 
+std::mutex &manager_m): id_client(id), cli_skt(std::move(cli_s)), 
+manager_m(manager_m), juegos(jgs), j(nullptr) {}
 
-tClientManager::~tClientManager(){
-	if (j){
-		delete j;
-	}
-}
 
 
 //enviar y recibir (protocolo envia size primero, son del tp3) cambiarlos!!!
@@ -52,18 +49,21 @@ int sendMessage(tSocket &skt_cli, std::string &msg_to_send){
 
 
 void tClientManager::stop(){
+		std::cout << "manager stop" << std::endl;	
+		/*
+		j->stop();
+		j->join();
+		delete j;
+		*/
         cli_skt.shutdown(SHUT_RDWR);
+		std::cout << "manager stop out" << std::endl;	
 }
 
 void tClientManager::run(){
 	std::string msg;
 	std::mutex mmm;
-	/*
-	//espero a que me pasen el 2do socket
-	while (!cli_skt2.validSocket()){
-		sleep(1);
-	}
-	*/
+	
+	
 	/*
 	//primero recibir datos de usuario
 	//enviar datos partida
@@ -112,7 +112,12 @@ void tClientManager::run(){
 	
 	std::vector <tSocket*> socks;
 	socks.push_back(&cli_skt);
+	//creo el juego
 	j = new juego(socks, mmm);
+	//pusheo en el vector
+	juegos.push_back(j);
+	
+	
 	/*
 	unit u1(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
 	int unit_code = GRUNT;
@@ -124,23 +129,26 @@ void tClientManager::run(){
 	cli_skt.send((char*) &xx, sizeof(int));
 	cli_skt.send((char*) &yy, sizeof(int));
 	*/
+	
 	j->sendInit(); 
-	
-	int x_dest = 0;
-	int y_dest = 0;
-	cli_skt.receive((char*) &x_dest, sizeof(int));
-	cli_skt.receive((char*) &y_dest, sizeof(int));
-	Event e(1, x_dest, y_dest);
-	mmm.lock();
-	j->take_event(e);
-	mmm.unlock();
-	
 	
 	j->start();
 	
-	std::cout << "join" << std::endl;
-	j->join();
-	std::cout << "termino juego salir manager" << std::endl;
+	int s = 1;
+	while (s > 0) {
+		int x_dest = 0;
+		int y_dest = 0;
+		s = cli_skt.receive((char*) &x_dest, sizeof(int));
+		s = cli_skt.receive((char*) &y_dest, sizeof(int));
+		Event e(1, x_dest, y_dest);
+		tLock l(mmm);
+		//mmm.lock();
+		j->take_event(e);
+		//mmm.unlock();
+	}
+	
+	
+	std::cout << "manager out" << std::endl;	
 	//delete j;
 	/*
 	actualizeUnit actualizer;
