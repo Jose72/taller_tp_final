@@ -6,6 +6,7 @@
 #include "Unit.h"
 #include "Game_map.h"
 #include "Units_Protected.h"
+#include "Factory_Units.h"
 
 class Camera {
 private:
@@ -15,9 +16,10 @@ private:
     int posCameraYOld;
     int cameraW;
     int cameraH;
+    Factory_Units &factory;
 
 public:
-    Camera(int posX, int posY, int W, int H);
+    Camera(int posX, int posY, int W, int H, Factory_Units &factory_units);
     ~Camera();
 
     void set_camera_position(int posX, int posY);

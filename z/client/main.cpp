@@ -18,8 +18,8 @@
 
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 1
-#define WINDOW_H 600
-#define WINDOW_W 800
+#define WINDOW_H 800
+#define WINDOW_W 600
 #define PLAYER_INTERFACE_W 300
 
 int main(int argc, char *argv[]){
@@ -66,10 +66,10 @@ int main(int argc, char *argv[]){
     int posy1 = 100;
     int posx2 = 400;
     int posy2 = 400;
-    int posCameraX = 500;
-    int posCameraY = 500;
+    int posCameraX = 200;
+    int posCameraY = 200;
 
-    Camera camera(posCameraX,posCameraY,WINDOW_W,WINDOW_H);
+    Camera camera(posCameraX,posCameraY,200,200, factory);
 
     Unit *grunt = factory.createUnit(GREEN_GRUNT,posx1,posy1);
     Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);

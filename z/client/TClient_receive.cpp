@@ -35,11 +35,11 @@ void TClient_receive::run() {
 
     }
     done = false;
-    /*
-    int confirm = 120;
+
+    int confirm = 280;
     socket.send((char*)&confirm,4);
     socket.send((char*)&confirm,4);
-     */
+
 
     while (r){
         int posX;
