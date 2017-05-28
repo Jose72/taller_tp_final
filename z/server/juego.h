@@ -19,6 +19,7 @@ private:
 		std::queue<Event> event_list;
 		std::vector<unit*> units;
 		std::vector<tSocket*> cli_skts;
+		std::vector<int> cli_ids;
 		std::mutex game_m;
 		std::mutex &cli_m; //proteger eventos
 	public:
@@ -27,6 +28,8 @@ private:
 		void stop();
 		void take_event(Event &e); //para apsarle los eventos desde los clientManager
 		void sendInit();
+		bool readyToStart();
+		int clientJoin(tSocket *cli_s);
 };
 
 #endif

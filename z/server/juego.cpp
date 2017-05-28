@@ -15,7 +15,7 @@ void juego::stop(){
 	
 	//rompo los sockets
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-		(*it)->shutdown(SHUT_RDWR);
+		(*it)->shutdown(SHUT_WR);
 	}
 	
 	std::cout << "juego stop out" << std::endl;	
@@ -29,6 +29,19 @@ void juego::take_event(Event &e){
 	return;
 }
 
+bool juego::readyToStart(){
+	//si tengo tantos clientes como jugadores espero
+	if (cli_skts.size() == (unsigned int) max_players) return true;
+	return false;
+}
+
+int juego::clientJoin(tSocket *cli_s){
+	if (cli_skts.size() < (unsigned int) max_players){
+		cli_skts.push_back(cli_s);
+		return 0;
+	}
+	return 1;
+}
 
 void juego::sendInit(){
 	int map_codes[100] = {0};
@@ -55,15 +68,26 @@ void juego::sendInit(){
 
 	int sss = 100;
 	
-	std::cout << "map size: " << sss << std::endl;
-	
 	//cargo mi mapa
 	mapa = gameMap(map_codes, sss);
 	
-	cli_skts[0]->send((char*) &sss, sizeof(int));
-	cli_skts[0]->send((char*) &map_codes, sizeof(int) * sss);
+	
+	unit* u1 = new unit(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
+	units.push_back(u1);
+	int unit_code = GRUNT;
+	int xx = u1->getX();
+	int yy = u1->getY();
+	int unit_cant = 1;
 	
 	/*
+	cli_skts[0]->send((char*) &sss, sizeof(int));
+	cli_skts[0]->send((char*) &map_codes, sizeof(int) * sss);
+	cli_skts[0]->send((char*) &unit_cant, sizeof(int));
+	cli_skts[0]->send((char*) &unit_code, sizeof(int));
+	cli_skts[0]->send((char*) &xx, sizeof(int));
+	cli_skts[0]->send((char*) &yy, sizeof(int));
+	*/
+	
 	//paso el mapa y unidades a todos
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->send((char*) &sss, sizeof(int));
@@ -73,18 +97,10 @@ void juego::sendInit(){
 		(*it)->send((char*) &xx, sizeof(int));
 		(*it)->send((char*) &yy, sizeof(int));
 	}
-	*/
 	
-	unit* u1 = new unit(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
-	units.push_back(u1);
-	int unit_code = GRUNT;
-	int xx = u1->getX();
-	int yy = u1->getY();
-	int unit_cant = 1;
-	cli_skts[0]->send((char*) &unit_cant, sizeof(int));
-	cli_skts[0]->send((char*) &unit_code, sizeof(int));
-	cli_skts[0]->send((char*) &xx, sizeof(int));
-	cli_skts[0]->send((char*) &yy, sizeof(int));
+	
+	
+	
 }
 
 void juego::run(){
@@ -116,21 +132,11 @@ void juego::run(){
 			sleep(1);
 			int xx = u1->getX();
 			int yy = u1->getY();
-			s = cli_skts[0]->send((char*) &xx, sizeof(int));
-			if (s > 0) {
+			for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
+				s = cli_skts[0]->send((char*) &xx, sizeof(int));
 				s = cli_skts[0]->send((char*) &yy, sizeof(int));
 			}
 			
-			
-			//si termine de mover salgo de loop
-			//solo para cortar el ejemplo
-			/*
-			if (!u1->isMoving()) {
-				std::cout << "termino mov" << std::endl;
-				break;
-			}
-			*/
-				
 	}
 	
 	std::cout << "delete units" << std::endl;
@@ -142,12 +148,6 @@ void juego::run(){
 	}
 	
 	std::cout << "juego out" << std::endl;	
-	/*
-	int b = -1;
-	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-		(*it)->send((char*) &b, sizeof(int));
-	}
-	*/
 	
 	
 	return;

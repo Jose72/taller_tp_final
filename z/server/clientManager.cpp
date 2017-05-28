@@ -97,62 +97,23 @@ void tClientManager::run(){
 	*/
 	
 	
-	
 	int s = 1;
 	while (s > 0) {
 		int x_dest = 0;
 		int y_dest = 0;
 		s = cli_skt.receive((char*) &x_dest, sizeof(int));
 		s = cli_skt.receive((char*) &y_dest, sizeof(int));
-		Event e(1, x_dest, y_dest);
-		tLock l(mmm);
-		//mmm.lock();
-		j->take_event(e);
-		//mmm.unlock();
+		if (s > 0) {
+			Event e(1, x_dest, y_dest);
+			tLock l(mmm);
+			//mmm.lock();
+			j->take_event(e);
+			//mmm.unlock();
+		}
 	}
 	
 	
 	std::cout << "manager out" << std::endl;	
-	//delete j;
-	/*
-	actualizeUnit actualizer;
-	
-	int s = 1;
-	while(s > 0 && u1.isMoving()){
-		
-		actualizer(u1, mapa, 1);
-		sleep(1);
-		int xx = u1.getX();
-		int yy = u1.getY();
-		s = cli_skt.send((char*) &xx, sizeof(int));
-		s = cli_skt.send((char*) &yy, sizeof(int));
-		
-	}
-	
-	int b = -1;
-	s = cli_skt.send((char*) &b, sizeof(int));
-	*/
 
-	//aca tendria que lanzar la partida !!!!!!
-	//que pasa si otro ya la lanzo??
-	//bool para saber?
-	
-	//en la partida se les envia a todos
-	//los managers pasan a solo recibir eventos
-	//la partida tendria que tener los socket de los clientes
-	//mandar puntero al socket??
-	
-	
-	//loop receptor de eventos
-	//int s = 1;
-	/*
-	while (s>0){//mientras socket valido
-		
-		//recivo eventos del cliente
-		
-		//guardarlos en la cola de eventos
-		
-	}
-	*/
 	return;
 }
