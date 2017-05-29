@@ -38,7 +38,7 @@ void tServer::stop(){
 
 //este es el while aceptador
 int tServer::processClient(){
-	int client_id_count = 0;
+	int client_id_count = 1;
 	
 	while (acepter_open){ //mientras aceptador abierto
 		try {
@@ -48,8 +48,9 @@ int tServer::processClient(){
 				tSocket new_skt = serv_skt.accept();
 				//std::cout << "new client" << std::endl;
 				
-				tClientManager *cli_man = new tClientManager(client_id_count+1, std::move(new_skt),
+				tClientManager *cli_man = new tClientManager(client_id_count, std::move(new_skt),
 				juegos, m); //paso al manager
+				client_id_count++;
 				client_mngrs.push_back(cli_man);
 				cli_man->start();
 				

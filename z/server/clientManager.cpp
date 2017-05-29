@@ -104,7 +104,7 @@ void tClientManager::run(){
 		s = cli_skt.receive((char*) &x_dest, sizeof(int));
 		s = cli_skt.receive((char*) &y_dest, sizeof(int));
 		if (s > 0) {
-			Event e(1, x_dest, y_dest);
+			Event e(1, 1,x_dest, y_dest);
 			tLock l(mmm);
 			//mmm.lock();
 			j->take_event(e);

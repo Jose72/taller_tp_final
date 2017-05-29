@@ -14,6 +14,7 @@
 
 class unit {
 	protected:
+		int owner;
 		int class_id;
 		int unit_id;
 		int x;
@@ -35,8 +36,9 @@ class unit {
 		int min_tech_lvl;
 		*/
 	public:
+		unit(int owner, int class_id, int unit_id, int x, int y, int health, int speed);
 		unit(int class_id, int unit_id, int x, int y, int health, int speed);
-		unit(int class_id, int unit_id, int x, int y, int health, int speed, 
+		unit(int owner, int class_id, int unit_id, int x, int y, int health, int speed, 
 		double shoot_f, int rang, double fab_time, int min_t);
 		void setPos(int p_x, int p_y);
 		bool isMoving();

@@ -1,23 +1,18 @@
 #include "unit.h"
 #include <iostream>
 #include "math.h"
-/*
-unit::unit(int arma_code, int shoot_f, int range, double h, 
-int f_time, int t_lvl): arma(armament(arma_code)), shoot_freq(shoot_f), 
-range(range), health(h), fab_time(f_time), min_tech_lvl(t_lvl) {};
-
-//necesito un tiempo para calcular el daño
-double unit::getDamage(double time){
-	return (this->arma.getBaseDamage() * time) / this->shoot_freq;
-}
 
 
-*/
-unit::unit(int class_id, int unit_id, int x, int y, int health, int speed): class_id(class_id), 
-unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), b_health(health), health(health), 
-speed(speed), attacking(nullptr), attack_b(attackBehaviour(unit_id)) {};
 
-	
+unit::unit(int owner, int class_id, int unit_id, int x, int y, int health, 
+int speed): owner(owner), class_id(class_id), unit_id(unit_id), x(x), y(y), 
+dest_x(x), dest_y(y), b_health(health), health(health), speed(speed), 
+attacking(nullptr), attack_b(attackBehaviour(unit_id)) {};
+
+unit::unit(int class_id, int unit_id, int x, int y, int health, int speed): 
+class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
+b_health(health), health(health), speed(speed), attacking(nullptr), 
+attack_b(attackBehaviour(unit_id)) {};	
 	
 
 
@@ -111,7 +106,10 @@ int unit::takeDamage(int dam){
 }
 
 void unit::setAttack(unit *u){
-	attacking = u;
+	if (u->owner != this->owner){
+		attacking = u;
+	}
+	
 }
 
 int unit::attackRange(){

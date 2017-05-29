@@ -1,6 +1,7 @@
 #include "juego.h"
 #include <vector>
 #include "gameMap.h"
+#include <map>
 #include <iostream>
 #include "actualizeUnit.h"
 #include <unistd.h>
@@ -8,6 +9,7 @@
 
 juego::juego(tSocket* creator_skt, std::mutex &cli_m): cli_m(cli_m){
 	cli_skts.push_back(creator_skt);
+	id_unit_counter = 1; //se empieza contando desde 1
 }
 
 void juego::stop(){
@@ -73,7 +75,11 @@ void juego::sendInit(){
 	
 	
 	unit* u1 = new unit(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
-	units.push_back(u1);
+	//units.push_back(u1);
+	
+	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
+	id_unit_counter++;
+	
 	int unit_code = GRUNT;
 	int xx = u1->getX();
 	int yy = u1->getY();
@@ -109,7 +115,7 @@ void juego::run(){
 	//mapa codes de las casillas
 	
 	actualizeUnit actualizer;
-	unit* u1 = units[0];
+	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
 	while(s > 0){
@@ -121,32 +127,49 @@ void juego::run(){
 				event_list.pop();
 				//esto esta harcodeado, tendria que llamar a una funcion
 				//que identifique la op y ejecute (handler)
-				u1->move(e.takeX(), e.takeY());
+				std::map<int,unit*>::iterator it;
+				it = units.find(e.getId());
+				//find devuelte el iterador del elemento o el ultimo si no existe la key
+				//hay que chequear que devolvio correctamente
+				if (it->first == e.getId()){
+					unit *u1 = it->second;
+					u1->move(e.getX(), e.getY()); //hay que hacer un handler
+				}
 			}
 			//deslockeo
 			cli_m.unlock();
 			
 			
-			//actualizo
-			actualizer(*u1, mapa, 1);
-			sleep(1);
-			int xx = u1->getX();
-			int yy = u1->getY();
-			for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-				s = cli_skts[0]->send((char*) &xx, sizeof(int));
-				s = cli_skts[0]->send((char*) &yy, sizeof(int));
+			//actualizo las undiades --- crear una func aparte!!!!!!
+			for (auto it = units.begin(); it != units.end(); ++it){
+				unit *u1 = it->second;
+				actualizer(*u1, mapa, 1);
+				sleep(1);
+				int xx = u1->getX();
+				int yy = u1->getY();
+				for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
+					s = cli_skts[0]->send((char*) &xx, sizeof(int));
+					s = cli_skts[0]->send((char*) &yy, sizeof(int));
+				}
 			}
 			
 	}
 	
+	
 	std::cout << "delete units" << std::endl;
+	for (auto it = units.begin(); it != units.end(); ++it){
+		delete it->second;
+	}
+	
+	/*
+	
 	for (unsigned int i = 0; i < units.size(); i++){
 		if (units[i]) {
 			delete units[i];
 			units[i] = nullptr;
 		}
 	}
-	
+	*/
 	std::cout << "juego out" << std::endl;	
 	
 	
