@@ -38,9 +38,6 @@ class unit {
 		*/
 	public:
 		unit(int owner, int unit_id, int x, int y);
-		unit(int owner, int class_id, int unit_id, int x, int y, int health, int speed);
-		unit(int owner, int class_id, int unit_id, int x, int y, int health, int speed, 
-		double shoot_f, int rang, double fab_time, int min_t);
 		~unit();
 		void setPos(int p_x, int p_y);
 		bool isMoving();

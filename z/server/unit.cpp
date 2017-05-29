@@ -19,13 +19,6 @@ dest_x(x), dest_y(y), attacking(nullptr) {
 	
 };
 
-unit::unit(int owner, int class_id, int unit_id, int x, int y, int health, 
-int speed): owner(owner), class_id(class_id), unit_id(unit_id), x(x), y(y), 
-dest_x(x), dest_y(y), b_health(health), health(health), speed(speed), 
-attacking(nullptr) {
-	attack_b = new attackBehaviour(unit_id);
-	create_b = new createBehaviour(unit_id);
-};
 
 /*
 unit::unit(int class_id, int unit_id, int x, int y, int health, int speed): 

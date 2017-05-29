@@ -43,9 +43,9 @@ int test_auto_attack_unit(){
 	std::map<int, unit*> units;
 	int unit_id_count = 1;
 	
-	unit r1(1, ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	unit r2(2, ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
-	unit r3(3, ROBOT, GRUNT, 60, 18, 300, ROBOT_SPEED);
+	unit r1(1, GRUNT, 35, 18);
+	unit r2(2, GRUNT, 40, 18);
+	unit r3(3, GRUNT, 60, 18);
 	actualizeUnit au;
 	units.insert(std::pair<int,unit*>(1,&r1));
 	units.insert(std::pair<int,unit*>(2,&r2));
@@ -75,10 +75,10 @@ int test_attack_unit_in_range(){
 	std::map<int, unit*> units;
 	int unit_id_count = 1;
 	
-	unit r1(1,ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	unit r2(2,ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
-	unit r4(3,ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	unit r5(4,VEHICLE, JEEP, 44, 18, 300, ROBOT_SPEED);
+	unit r1(1,GRUNT, 35, 18);
+	unit r2(2,GRUNT, 40, 18);
+	unit r4(3,GRUNT, 35, 18);
+	unit r5(4,JEEP, 44, 18);
 	actualizeUnit au;
 	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	r1.setAttack(&r2);
@@ -130,7 +130,7 @@ int test_create_map(){
 	mapa.printMap();
 	
 	
-	unit r(1, ROBOT, GRUNT, 200, 10, 300, ROBOT_SPEED);
+	unit r(1, GRUNT, 200, 10);
 	r.move(200, 200);
 	
 	while (r.isMoving()){
@@ -144,11 +144,11 @@ int test_create_map(){
 
 
 int test_units_in_range(){
-	unit r1(1, ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
-	unit r2(2, ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
-	unit r3(3, ROBOT, GRUNT, 42, 18, 300, ROBOT_SPEED);
-	unit r4(4, ROBOT, GRUNT, 43, 18, 300, ROBOT_SPEED);
-	unit r5(5, ROBOT, GRUNT, 35, 22, 300, ROBOT_SPEED);
+	unit r1(1, GRUNT, 35, 18);
+	unit r2(2, GRUNT, 40, 18);
+	unit r3(3, GRUNT, 42, 18);
+	unit r4(4, GRUNT, 43, 18);
+	unit r5(5, GRUNT, 35, 22);
 	std::cout << r1.isInRange(r2, 7) << std::endl;
 	std::cout << r1.isInRange(r3, 7) << std::endl;
 	std::cout << r1.isInRange(r4, 7) << std::endl;
@@ -178,7 +178,7 @@ int test_move_unit(){
 	// to (2,2), in (80, 70)
 	// to (3,3), in (108, 112)
 	
-	unit r(1, ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
+	unit r(1, GRUNT, 35, 18);
 	r.move(108, 112);
 	
 	while (r.isMoving()){
