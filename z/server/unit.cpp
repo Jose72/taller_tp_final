@@ -128,3 +128,10 @@ void unit::printPosDest(){
 	std::cout << "x: " << x << " d_x: " << dest_x << std::endl;
 	std::cout << "y: " << y << " d_y: " << dest_y << std::endl;
 }
+
+bool unit::isEnemy(unit &u){
+	//pendiente: chequear si el owner es mageMap 
+	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
+	if (this->owner != u.owner) return true;
+	return false;
+}

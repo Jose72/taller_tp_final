@@ -9,9 +9,41 @@
 #include <vector>
 
 
+int test_auto_attack_unit(){
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	
+	unit r1(1, ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
+	unit r2(2, ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
+	unit r3(3, ROBOT, GRUNT, 60, 18, 300, ROBOT_SPEED);
+	actualizeUnit au;
+	units.insert(std::pair<int,unit*>(1,&r1));
+	units.insert(std::pair<int,unit*>(2,&r2));
+	units.insert(std::pair<int,unit*>(3,&r3));
+	
+	r1.move(44, 22);
+	r3.setAttack(&r2);
+	for (int i = 0; i < 27; i++){
+		au(r1, units, mapa, 1);
+		au(r2, units, mapa, 1);
+		au(r3, units, mapa, 1);
+		
+		std::cout << "daño rel r1: " << r1.getRelativeDamage() << std::endl;
+		std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
+		std::cout << "daño rel r3: " << r3.getRelativeDamage() << std::endl;
+	}
+
+	
+	return 0;
+	
+}
+
+
 int test_attack_unit_in_range(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
 	
 	unit r1(1,ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
 	unit r2(2,ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
@@ -20,7 +52,7 @@ int test_attack_unit_in_range(){
 	actualizeUnit au;
 	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	r1.setAttack(&r2);
-	au(r1, mapa, 1);
+	au(r1, units, mapa, 1);
 	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	
 	
@@ -29,8 +61,8 @@ int test_attack_unit_in_range(){
 	r4.move(100, 18);
 	
 	for (int i = 0; i < 27; i++){
-		au(r4, mapa, 1);
-		au(r5, mapa, 1);
+		au(r4, units,mapa, 1);
+		au(r5, units,mapa, 1);
 		
 		std::cout << "daño rel r4: " << r4.getRelativeDamage() << std::endl;
 	}
@@ -44,6 +76,7 @@ int test_create_map(){
 	
 	actualizeUnit au;
 	std::vector<int> tile_codes;
+	std::map<int, unit*> units;
 	int map_codes[100] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
@@ -69,7 +102,7 @@ int test_create_map(){
 	r.move(200, 200);
 	
 	while (r.isMoving()){
-		au(r, mapa, 1);
+		au(r, units,mapa, 1);
 	}
 	
 	return 0;
@@ -94,6 +127,7 @@ int test_units_in_range(){
 int test_move_unit(){
 	actualizeUnit au;
 	std::vector<tile> casillas;
+	std::map<int, unit*> units;
 	tile a(0, 0, TIERRA), b(1, 0, AGUA), c(2, 0, TIERRA), d(3, 0, TIERRA);
 	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
 	a = tile(0, 1, TIERRA); b = tile(1, 1, AGUA); c = tile(2, 1, AGUA ); d = tile(3, 1, TIERRA);
@@ -115,7 +149,7 @@ int test_move_unit(){
 	r.move(108, 112);
 	
 	while (r.isMoving()){
-		au(r, mapa, 1);
+		au(r, units,mapa, 1);
 	}
 	
 	return 0;

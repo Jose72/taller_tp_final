@@ -143,7 +143,7 @@ void juego::run(){
 			//actualizo las undiades --- crear una func aparte!!!!!!
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u1 = it->second;
-				actualizer(*u1, mapa, 1);
+				actualizer(*u1, units, mapa, 1);
 				sleep(1);
 				int xx = u1->getX();
 				int yy = u1->getY();

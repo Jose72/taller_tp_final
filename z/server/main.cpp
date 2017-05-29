@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-	//test_attack_unit_in_range();
+	//test_auto_attack_unit();
 	
 	char c = '0';
 	tServer server(atoi(argv[1]));
@@ -23,6 +23,7 @@ int main(int argc, char **argv)
 	}
 	server.stop();
 	server.join();
+	
 	return 0;
 	
 

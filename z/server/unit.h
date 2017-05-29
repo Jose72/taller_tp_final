@@ -63,6 +63,7 @@ class unit {
 		int attackRange();
 		unit* getTarget();
 		void printPosDest();
+		bool isEnemy(unit &u);
 };
 
 #endif

@@ -197,19 +197,20 @@ int attackActualize(unit &attacker, double time){
 		return 0;
 }
 
-int autoAttackActualize(unit &u, gameMap &mapa, double time){
-	/*
+int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &mapa, double time){
+	//si el atacante se mueve no hay autoataque
+	if (attacker.isMoving()) return 1;
 	//recorro el vect de unidades
-	for (auto it = targets.begin(); it != targets.end(); ++it){
-	
+	for (auto it = units.begin(); it != units.end(); ++it){
+		unit *target = it->second;
 		//chequeo quien es el dueño de la unidad
-		if ((*it)->isEnemy(attacker->Owner())){
+		if (target->isEnemy(attacker)){
 			//si esta en rango
-			if (attacker->isInRange((*it))){
+			if (attacker.isInRange(*target, attacker.attackRange())){
 			
-				attack(attacker, (*it));
+				target->takeDamage(round(attacker.getDamage(time)));
 				//le pego y ya, no sigo con los demas
-				return;
+				return 0;
 				
 				// en vez de esto se podria setear la unidad como target
 				// con un booleano que indique autoataque
@@ -220,11 +221,11 @@ int autoAttackActualize(unit &u, gameMap &mapa, double time){
 		
 		}
 	}
-	*/
+	
 	return 0;
 }
 
-int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
+int actualizeUnit::operator()(unit &u, std::map<int, unit*> &units, gameMap &mapa, double time){
 	//std::cout << "pasada---------------------------------------" << std::endl;
 	
 	if (u.isMoving()) {
@@ -235,11 +236,11 @@ int actualizeUnit::operator()(unit &u, gameMap &mapa, double time){
 	if (u.isAttacking()){
 		attackActualize(u, time);
 	} else {
-		autoAttackActualize(u, mapa, time);
+		autoAttackActualize(u, units, mapa, time);
 	}
 	
 	
-	
+	//pendiente: chequear la cant de unidades antes de crear
 	if (u.isCreating()){ 
 		
 	}
