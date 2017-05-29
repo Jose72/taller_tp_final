@@ -2,19 +2,37 @@
 #include <iostream>
 #include "math.h"
 
-
+unit::unit(int owner, int unit_id, int x, int y): owner(owner), unit_id(unit_id), x(x), y(y), 
+dest_x(x), dest_y(y), attacking(nullptr) {
+	class_id = getClassCodeFromUnit(unit_id);
+	speed = getSpeedFromUnit(unit_id);
+	b_health = getHealthFromUnit(unit_id);
+	health = b_health;
+	attack_b = new attackBehaviour(unit_id);
+	create_b = new createBehaviour(unit_id);
+};
 
 unit::unit(int owner, int class_id, int unit_id, int x, int y, int health, 
 int speed): owner(owner), class_id(class_id), unit_id(unit_id), x(x), y(y), 
 dest_x(x), dest_y(y), b_health(health), health(health), speed(speed), 
-attacking(nullptr), attack_b(attackBehaviour(unit_id)) {};
+attacking(nullptr) {
+	attack_b = new attackBehaviour(unit_id);
+	create_b = new createBehaviour(unit_id);
+};
 
+/*
 unit::unit(int class_id, int unit_id, int x, int y, int health, int speed): 
 class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
-b_health(health), health(health), speed(speed), attacking(nullptr), 
-attack_b(attackBehaviour(unit_id)) {};	
-	
+b_health(health), health(health), speed(speed), attacking(nullptr) {
+	attack_b = new attackBehaviour(unit_id);
+	create_b = new createBehaviour(unit_id);
+};	
 
+*/	
+unit::~unit(){
+	if (attack_b) delete attack_b;
+	if (create_b) delete create_b;
+}
 
 void unit::setPos(int p_x, int p_y){
 	x = p_x;
@@ -35,6 +53,7 @@ bool unit::isAttacking(){
 }
 
 bool unit::isCreating(){
+	if (create_b) return true;
 	return false;
 }
 //////
@@ -113,11 +132,11 @@ void unit::setAttack(unit *u){
 }
 
 int unit::attackRange(){
-	return attack_b.getRange();
+	return attack_b->getRange();
 }
 
 double unit::getDamage(double time){
-	return attack_b.getDamage(time);
+	return attack_b->getDamage(time);
 }
 
 unit* unit::getTarget(){
@@ -134,4 +153,19 @@ bool unit::isEnemy(unit &u){
 	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
 	if (this->owner != u.owner) return true;
 	return false;
+}
+
+int unit::checkCreating(double time){
+	return create_b->actualize(time);
+}
+
+void unit::destroy(){
+	if (attack_b) delete attack_b;
+	attack_b = nullptr;
+	if (create_b) delete attack_b;
+	attack_b = nullptr;
+}
+
+int unit::getOwner(){
+	return owner;
 }

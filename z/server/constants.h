@@ -1,7 +1,12 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-enum class_units {ROBOT = 20, VEHICLE = 21, ALL = 22};
+
+int getClassCodeFromUnit(int unit_c);
+int getSpeedFromUnit(int unit_c);
+int getHealthFromUnit(int unit_c);
+
+enum class_units {ROBOT = 20, VEHICLE = 21, BUILDING = 22};
 
 enum units {GRUNT = 0, PSYCHO = 1, TOUGHT = 2, PYRO = 3, SNIPER = 4, LAZER = 5, 
 	JEEP = 6, MEDIUM_TANK = 7, LIGHT_TANK = 8, HEAVY_TANK = 9, MML = 10, 
@@ -14,7 +19,7 @@ enum unit_speed { //veocidad (por seg ?)
 enum base_health {GRUNT_HEALTH = 60, PSYCHO_HEALTH = 80, TOUGHT_HEALTH = 300, 
 PYRO_HEALTH = 100, SNIPER_HEALTH = 80, LASER_HEALTH = 100, JEEP_HEALTH = 60, 
 MEDIUM_TANK_HEALTH = 120, LIGHT_TANK_HEALTH = 80, HEAVY_TANK_HEALTH = 180, 
-MML_HEALTH = 200 };
+MML_HEALTH = 200, BUILDING_HEALTH = 1000 };
 
 enum weapon_damage {BALAS = 2, LANZALLAMAS = 10, PROYECTILES = 20, 
 LASER = 10, MISILES = 25 };

@@ -1,6 +1,7 @@
 #ifndef TESTS_CPP
 #define TESTS_CPP
 
+int test_create_unit();
 int test_auto_attack_unit();
 int test_attack_unit_in_range();
 int test_create_map();

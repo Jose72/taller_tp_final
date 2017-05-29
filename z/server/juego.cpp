@@ -74,7 +74,7 @@ void juego::sendInit(){
 	mapa = gameMap(map_codes, sss);
 	
 	
-	unit* u1 = new unit(ROBOT, GRUNT, 60, 15, 300, ROBOT_SPEED);
+	unit* u1 = new unit(1, GRUNT, 60, 15);
 	//units.push_back(u1);
 	
 	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
@@ -84,15 +84,7 @@ void juego::sendInit(){
 	int xx = u1->getX();
 	int yy = u1->getY();
 	int unit_cant = 1;
-	
-	/*
-	cli_skts[0]->send((char*) &sss, sizeof(int));
-	cli_skts[0]->send((char*) &map_codes, sizeof(int) * sss);
-	cli_skts[0]->send((char*) &unit_cant, sizeof(int));
-	cli_skts[0]->send((char*) &unit_code, sizeof(int));
-	cli_skts[0]->send((char*) &xx, sizeof(int));
-	cli_skts[0]->send((char*) &yy, sizeof(int));
-	*/
+
 	
 	//paso el mapa y unidades a todos
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
@@ -143,7 +135,7 @@ void juego::run(){
 			//actualizo las undiades --- crear una func aparte!!!!!!
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u1 = it->second;
-				actualizer(*u1, units, mapa, 1);
+				actualizer(*u1, units, mapa, 1, id_unit_counter);
 				sleep(1);
 				int xx = u1->getX();
 				int yy = u1->getY();
@@ -158,18 +150,11 @@ void juego::run(){
 	
 	std::cout << "delete units" << std::endl;
 	for (auto it = units.begin(); it != units.end(); ++it){
+		it->second->destroy(); //limpio la unidad
 		delete it->second;
 	}
 	
-	/*
-	
-	for (unsigned int i = 0; i < units.size(); i++){
-		if (units[i]) {
-			delete units[i];
-			units[i] = nullptr;
-		}
-	}
-	*/
+
 	std::cout << "juego out" << std::endl;	
 	
 	

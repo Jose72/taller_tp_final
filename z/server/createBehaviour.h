@@ -3,7 +3,6 @@
 
 #include "behaviour.h"
 #include "armament.h"
-#include "unit.h"
 #include <vector>
 
 
@@ -15,9 +14,13 @@ class createBehaviour: public behaviour {
 	private:
 		int time_count; //en segundos, contador de tiempo, cuando llega a 0 crea la unidad
 		int unit_code; //codigo de la unidad que se esta fabricando 
+		int unit_time;
+		int type_f;
 		int tech_level;
+		void createVehicleFactory(int unit_c);
+		void createRobotFactory(int unit_c);
 	public:
-		createBehaviour(int unit_c);
+		createBehaviour(int factory_c);
 		int actualize(int t);
 		void create(int unit_c);
 		int getUnitCode();

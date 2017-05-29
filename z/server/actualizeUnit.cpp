@@ -225,7 +225,18 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 	return 0;
 }
 
-int actualizeUnit::operator()(unit &u, std::map<int, unit*> &units, gameMap &mapa, double time){
+int createActualize(unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count){
+	int new_u_code = u.checkCreating(time);
+	if (new_u_code != -1){
+		unit *n_u = new unit(u.getOwner(), new_u_code, u.getDestX(), u.getDestY());
+		units.insert(std::pair<int,unit*>(unit_id_count, n_u));
+		unit_id_count++;
+		std::cout << "new unit" <<std::endl;
+	}
+	return 0;
+}
+
+int actualizeUnit::operator()(unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count){
 	//std::cout << "pasada---------------------------------------" << std::endl;
 	
 	if (u.isMoving()) {
@@ -239,10 +250,9 @@ int actualizeUnit::operator()(unit &u, std::map<int, unit*> &units, gameMap &map
 		autoAttackActualize(u, units, mapa, time);
 	}
 	
-	
 	//pendiente: chequear la cant de unidades antes de crear
 	if (u.isCreating()){ 
-		
+		createActualize(u, units, mapa, time, unit_id_count);
 	}
 	
 	

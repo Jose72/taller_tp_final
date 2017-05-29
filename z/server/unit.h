@@ -26,7 +26,8 @@ class unit {
 		int speed;
 		//Attack attack_b;
 		unit *attacking;
-		attackBehaviour attack_b;
+		attackBehaviour *attack_b;
+		createBehaviour *create_b;
 		
 		/*
 		armament arma;
@@ -36,10 +37,11 @@ class unit {
 		int min_tech_lvl;
 		*/
 	public:
+		unit(int owner, int unit_id, int x, int y);
 		unit(int owner, int class_id, int unit_id, int x, int y, int health, int speed);
-		unit(int class_id, int unit_id, int x, int y, int health, int speed);
 		unit(int owner, int class_id, int unit_id, int x, int y, int health, int speed, 
 		double shoot_f, int rang, double fab_time, int min_t);
+		~unit();
 		void setPos(int p_x, int p_y);
 		bool isMoving();
 		bool isAttacking();
@@ -64,6 +66,9 @@ class unit {
 		unit* getTarget();
 		void printPosDest();
 		bool isEnemy(unit &u);
+		int checkCreating(double time);
+		void destroy();
+		int getOwner();
 };
 
 #endif

@@ -31,7 +31,6 @@ void tServer::stop(){
 			juegos[j]->join();
 			delete juegos[j];
 		}
-		
 		std::cout << "server stop out" << std::endl;	
 }
 

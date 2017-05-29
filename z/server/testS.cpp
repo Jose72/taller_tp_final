@@ -8,11 +8,40 @@
 #include "actualizeUnit.h"
 #include <vector>
 
+int test_create_unit(){
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	int unit_id_count = 1;
+	
+	unit *r1 = new unit(1, ROBOT_FACTORY, 35, 18);
+	units.insert(std::pair<int,unit*>(unit_id_count,r1));
+	unit_id_count++;
+	
+	actualizeUnit au;
+	for (int i = 0; i < 1200; i++){
+		au(*r1, units, mapa, 1, unit_id_count);
+		
+	}
+	std::cout << units.size() << std::endl;
+	
+	for (auto it = units.begin(); it != units.end(); ++it){
+		unit* h = it->second;
+		std::cout << "owner: " << h->getOwner() << std::endl;
+		std::cout << "unit id: " << h->getUnitId() << std::endl;
+		it->second->destroy(); //limpio la unidad
+		delete it->second;
+	}
+	
+	return 0;
+}
+
 
 int test_auto_attack_unit(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
+	int unit_id_count = 1;
 	
 	unit r1(1, ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
 	unit r2(2, ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
@@ -25,9 +54,9 @@ int test_auto_attack_unit(){
 	r1.move(44, 22);
 	r3.setAttack(&r2);
 	for (int i = 0; i < 27; i++){
-		au(r1, units, mapa, 1);
-		au(r2, units, mapa, 1);
-		au(r3, units, mapa, 1);
+		au(r1, units, mapa, 1, unit_id_count);
+		au(r2, units, mapa, 1, unit_id_count);
+		au(r3, units, mapa, 1, unit_id_count);
 		
 		std::cout << "daño rel r1: " << r1.getRelativeDamage() << std::endl;
 		std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
@@ -44,6 +73,7 @@ int test_attack_unit_in_range(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
+	int unit_id_count = 1;
 	
 	unit r1(1,ROBOT, GRUNT, 35, 18, 300, ROBOT_SPEED);
 	unit r2(2,ROBOT, GRUNT, 40, 18, 300, ROBOT_SPEED);
@@ -52,7 +82,7 @@ int test_attack_unit_in_range(){
 	actualizeUnit au;
 	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	r1.setAttack(&r2);
-	au(r1, units, mapa, 1);
+	au(r1, units, mapa, 1, unit_id_count);
 	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
 	
 	
@@ -61,8 +91,8 @@ int test_attack_unit_in_range(){
 	r4.move(100, 18);
 	
 	for (int i = 0; i < 27; i++){
-		au(r4, units,mapa, 1);
-		au(r5, units,mapa, 1);
+		au(r4, units,mapa, 1, unit_id_count);
+		au(r5, units,mapa, 1, unit_id_count);
 		
 		std::cout << "daño rel r4: " << r4.getRelativeDamage() << std::endl;
 	}
@@ -78,6 +108,8 @@ int test_create_map(){
 	std::vector<int> tile_codes;
 	std::map<int, unit*> units;
 	int map_codes[100] = {0};
+	int unit_id_count = 1;
+	
 	map_codes[15] = 1;
 	map_codes[16] = 1;
 	map_codes[17] = 1;
@@ -102,7 +134,7 @@ int test_create_map(){
 	r.move(200, 200);
 	
 	while (r.isMoving()){
-		au(r, units,mapa, 1);
+		au(r, units,mapa, 1, unit_id_count);
 	}
 	
 	return 0;
@@ -128,6 +160,7 @@ int test_move_unit(){
 	actualizeUnit au;
 	std::vector<tile> casillas;
 	std::map<int, unit*> units;
+	int unit_id_count = 1;
 	tile a(0, 0, TIERRA), b(1, 0, AGUA), c(2, 0, TIERRA), d(3, 0, TIERRA);
 	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
 	a = tile(0, 1, TIERRA); b = tile(1, 1, AGUA); c = tile(2, 1, AGUA ); d = tile(3, 1, TIERRA);
@@ -149,7 +182,7 @@ int test_move_unit(){
 	r.move(108, 112);
 	
 	while (r.isMoving()){
-		au(r, units,mapa, 1);
+		au(r, units,mapa, 1, unit_id_count);
 	}
 	
 	return 0;
