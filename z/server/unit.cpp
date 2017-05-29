@@ -8,8 +8,15 @@ dest_x(x), dest_y(y), attacking(nullptr) {
 	speed = getSpeedFromUnit(unit_id);
 	b_health = getHealthFromUnit(unit_id);
 	health = b_health;
-	attack_b = new attackBehaviour(unit_id);
-	create_b = new createBehaviour(unit_id);
+	attack_b = nullptr;
+	create_b = nullptr;
+	
+	if (class_id == BUILDING){
+		create_b = new createBehaviour(unit_id);
+	} else {
+		attack_b = new attackBehaviour(unit_id);
+	}
+	
 };
 
 unit::unit(int owner, int class_id, int unit_id, int x, int y, int health, 

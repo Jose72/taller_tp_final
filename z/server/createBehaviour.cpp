@@ -3,20 +3,22 @@
 
 createBehaviour::createBehaviour(int factory_c){
 	tech_level = 1;
-	type_f = factory_c;
 	switch (factory_c){
 		case VEHICLE_FACTORY:
+			type_f = factory_c;
 			unit_code = JEEP;
 			time_count = JEEP_F_TIME;
 			unit_time = JEEP_F_TIME;
 			return;
 		case FORT:
 		case ROBOT_FACTORY:
+			type_f = factory_c;
 			unit_code = GRUNT;
 			time_count = GRUNT_F_TIME;
 			unit_time = GRUNT_F_TIME;
 			return;
 		default:
+			
 			return;
 	}
 }
