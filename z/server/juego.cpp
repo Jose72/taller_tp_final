@@ -111,7 +111,7 @@ void juego::run(){
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
 	while(s > 0){
-			
+			//std::cout << "loop juego" << std::endl;
 			//lockeo cola de evntos
 			cli_m.lock();
 			if (!event_list.empty()){

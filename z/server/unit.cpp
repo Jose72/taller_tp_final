@@ -43,12 +43,14 @@ void unit::setPos(int p_x, int p_y){
 
 //preguntar a los beaviours ???
 bool unit::isMoving(){
-	if (x != dest_x || y != dest_y) return true;
+	//pendiente: crear un moveBehaviour y chequear eso en vez del id de clase
+	if ((x != dest_x || y != dest_y) && (class_id == ROBOT || class_id == VEHICLE)) return true;
 	return false;
 };
 
 bool unit::isAttacking(){
-	if (attacking) return true;
+	//si tiene objetivo y ataq behaviour
+	if (attacking && attack_b) return true;
 	return false;
 }
 
