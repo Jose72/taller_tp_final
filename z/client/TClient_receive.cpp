@@ -2,14 +2,14 @@
 #include "TClient_receive.h"
 #include "Unit.h"
 
-TClient_receive::TClient_receive(tSocket &s, Game_map &game_map,Units_Protected &u, Factory_Units &f, bool &done):
-        socket(s),game_map(game_map),units(u), factory(f), done(done) {}
+TClient_receive::TClient_receive(tSocket &s, Game_map &game_map,Units_Protected &u, Factory_Units &f, bool &done, bool &r):
+        socket(s),game_map(game_map),units(u), factory(f), done(done), running(r) {}
 
 TClient_receive::~TClient_receive() {}
 
 void TClient_receive::run() {
+
     int tamanio_map;
-    bool r = true;
     socket.receive((char*)&tamanio_map,4);
     //network to host
     for (int i = 0; i <tamanio_map ; ++i) {
@@ -41,7 +41,8 @@ void TClient_receive::run() {
     socket.send((char*)&confirm,4);
 
 
-    while (r){
+
+    while (running){
         int posX;
         int posY;
         socket.receive((char*)&posX,4);

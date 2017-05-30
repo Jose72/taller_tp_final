@@ -25,6 +25,7 @@ int main(int argc, char *argv[]){
     SDL_Surface *screen;
     std::vector<Unit*> u;
     Units_Protected all_units(u);
+    bool running = true;
 
     bool waiting_server = true;
     //INICIA SDL Y CREA LA PANTALLA
@@ -57,9 +58,9 @@ int main(int argc, char *argv[]){
     int port_number = atoi(argv[2]);
     socket.connect(argv[1],port_number);
     std::vector<tThread*> threads;
-    threads.push_back(new TClient_receive(socket,game_map,all_units,factory,waiting_server));
+    threads.push_back(new TClient_receive(socket,game_map,all_units,factory,waiting_server, running));
     threads[0]->start();
-    bool running = true;
+
 
     int posx1 = 100;
     int posy1 = 100;

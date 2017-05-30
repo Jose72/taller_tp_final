@@ -146,8 +146,8 @@ void juego::run(){
 				int xx = u1->getX();
 				int yy = u1->getY();
 				for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-					s = cli_skts[0]->send((char*) &xx, sizeof(int));
-					s = cli_skts[0]->send((char*) &yy, sizeof(int));
+					s = (*it)->send((char*) &xx, sizeof(int));
+					s = (*it)->send((char*) &yy, sizeof(int));
 				}
 			}
 			

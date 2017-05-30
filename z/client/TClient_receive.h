@@ -17,9 +17,10 @@ private:
     Units_Protected &units;
     Factory_Units  &factory;
     bool &done;
+    bool &running;
 
 public:
-    TClient_receive(tSocket &s, Game_map &game_map,Units_Protected &u, Factory_Units &f, bool &done);
+    TClient_receive(tSocket &s, Game_map &game_map,Units_Protected &u, Factory_Units &f, bool &done, bool &r);
     ~TClient_receive();
     void run();
     void stop();

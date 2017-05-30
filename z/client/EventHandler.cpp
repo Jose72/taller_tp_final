@@ -23,15 +23,38 @@ void EventHandler::run() {
     Camera2 camera2(posCameraX,posCameraY,480,240,WINDOW_W,WINDOW_H,factory);
     int destinoX, destinoY, seleccionX, seleccionY;
     while(running == true) {
+        camera2.set_position_cameraRect(posCameraX,posCameraY);
+        camera2.draw(units,gameMap);
+        playerInterface.show();
+        SDL_Flip(screen);
         if (SDL_PollEvent(&event)) {
             SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
             switch (event.type) {
                 case SDL_QUIT:
+                    SDL_Quit();
                     running = false;
                     break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_LEFT:
+                            //camera2.startMovingLeft()
+                            posCameraX = posCameraX -20;
+                            break;
+                        case SDLK_RIGHT:
+                            posCameraX = posCameraX + 20;
+                            break;
+                        case SDLK_UP:
+                            posCameraY = posCameraY - 20;
+                            break;
+                        case SDLK_DOWN:
+                            posCameraY = posCameraY + 20;
+                            break;
+                    }
+                    break;
+                case SDL_KEYUP:
+                    switch (event.key.keysym.sym) {
+                        case SDLK_LEFT:
+                           // camera2.stopMovingLeft()
                             posCameraX = posCameraX -20;
                             break;
                         case SDLK_RIGHT:
@@ -52,6 +75,7 @@ void EventHandler::run() {
                             destinoY = event.button.y;
                             sHandler.set_destiny(destinoX, destinoY);
                             break;
+                            //SDL_Quit()
                         }
                         if (event.button.button == RIGHT_BUTTON) {
                             seleccionX = event.button.x;
@@ -62,11 +86,9 @@ void EventHandler::run() {
                     }
             }
         }
+        //camera2.update_pos();
         sHandler.move_unit();
-        camera2.set_position_cameraRect(posCameraX,posCameraY);
-        camera2.draw(units,gameMap);
-        playerInterface.show();
-        SDL_Flip(screen);
+
     }
 }
 
