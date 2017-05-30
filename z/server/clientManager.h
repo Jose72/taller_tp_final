@@ -13,6 +13,7 @@ class tClientManager: public tThread{
 		tSocket cli_skt;
 		std::mutex &manager_m;
 		std::vector<juego*> &juegos;
+		bool end_game;
 		juego *j;
 	public:
 		tClientManager(int id, tSocket cli_skt, std::vector<juego*> & jgs, 

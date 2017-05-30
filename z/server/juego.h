@@ -23,16 +23,18 @@ class juego: public tThread{
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
+		bool running;
 		std::mutex game_m; 
 		std::mutex &cli_m; //proteger eventos
 	public:
-		juego(tSocket* creator_skt, std::mutex &cli_m);
+		juego(int cant_players, tSocket* creator_skt, std::mutex &cli_m);
 		void run() override;
 		void stop();
 		void take_event(Event &e); //para apsarle los eventos desde los clientManager
 		void sendInit();
 		bool readyToStart();
 		int clientJoin(tSocket *cli_s);
+		bool isRunning();
 };
 
 #endif

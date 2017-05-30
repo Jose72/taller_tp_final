@@ -13,7 +13,7 @@
 
 tClientManager::tClientManager(int id, tSocket cli_s, std::vector<juego*> & jgs, 
 std::mutex &manager_m): id_client(id), cli_skt(std::move(cli_s)), 
-manager_m(manager_m), juegos(jgs), j(nullptr) {}
+manager_m(manager_m), juegos(jgs), end_game(false), j(nullptr) {}
 
 
 
@@ -50,6 +50,7 @@ int sendMessage(tSocket &skt_cli, std::string &msg_to_send){
 
 void tClientManager::stop(){
 		std::cout << "manager stop" << std::endl;	
+		end_game = true;
         cli_skt.shutdown(SHUT_RDWR);
 		std::cout << "manager stop out" << std::endl;	
 }
@@ -65,29 +66,47 @@ void tClientManager::run(){
 	//si seleccione nuevo juego
 	if (true) {
 		//creo el juego
-		j = new juego(&cli_skt, mmm);
+		//hardcodeado cant jugadores
+		j = new juego(1, &cli_skt, mmm);
 		//pusheo en el vector
 		juegos.push_back(j);
 	
+		
+		//espero hasta que esten todos listos
+		while (!j->readyToStart() && !end_game){
+			usleep(200);
+		}
+		//si sali del loop porque se acaba el juego, salgo del manager
+		if (end_game) return;
+		
 	
-		//
-		j->sendInit(); 
-	
+		//que el juego envio datos iniciales
+		j->sendInit();
+		
 		//empiezo el juego
 		j->start();
+		
 	} else { //si seleccione unirme
-		//enviar llos juegos
+		//enviar lista de los juegos
 		//busco en el vector de juegos
-		//j = juegos[i];
-		//j->playerJoin(cli_skt);
+		
+		//HARDOCDEADO
+		if (juegos.size() > 0){ //si hay juegos
+			j = juegos[0];
+			j->clientJoin(&cli_skt);
+			//espero a que todos esten listos
+			while (!j->readyToStart() && !end_game){
+				usleep(200);
+			}
+			if (end_game) return;
+		} else {
+			return; //si no hay juegos salgo
+		}
+		
 	}
 	
 	/*
-	//espero a que el juego este listo para empezar
-	while (!j->ready()){
-		sleep(1);
-	}
-	
+	 * 
 	o espero confimacion del cliente cuando le envio el mapa y todo?
 	int ready = 0;
 	receive((char*) &ready, sizeof(int));

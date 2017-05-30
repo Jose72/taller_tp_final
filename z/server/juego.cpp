@@ -7,9 +7,14 @@
 #include <unistd.h>
 
 
-juego::juego(tSocket* creator_skt, std::mutex &cli_m): cli_m(cli_m){
+juego::juego(int cant_players, tSocket* creator_skt, std::mutex &cli_m): 
+max_players(cant_players), cli_m(cli_m), running(false){
 	cli_skts.push_back(creator_skt);
 	id_unit_counter = 1; //se empieza contando desde 1
+}
+
+bool juego::isRunning(){
+	return running;
 }
 
 void juego::stop(){
@@ -17,7 +22,7 @@ void juego::stop(){
 	
 	//rompo los sockets
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-		(*it)->shutdown(SHUT_WR);
+			(*it)->shutdown(SHUT_WR);
 	}
 	
 	std::cout << "juego stop out" << std::endl;	
@@ -103,7 +108,7 @@ void juego::sendInit(){
 
 void juego::run(){
 	
-	
+	running = true;
 	//mapa codes de las casillas
 	
 	actualizeUnit actualizer;
@@ -121,7 +126,8 @@ void juego::run(){
 				//que identifique la op y ejecute (handler)
 				std::map<int,unit*>::iterator it;
 				it = units.find(e.getId());
-				//find devuelte el iterador del elemento o el ultimo si no existe la key
+				//find devuelte el iterador del elemento 
+				//o el ultimo si no existe la key
 				//hay que chequear que devolvio correctamente
 				if (it->first == e.getId()){
 					unit *u1 = it->second;
