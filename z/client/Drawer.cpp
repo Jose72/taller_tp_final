@@ -24,7 +24,7 @@ void Drawer::drawLine(SDL_Surface* screen,int y) {
 void Drawer::drawBackground(int gameWidth,int gameHeight, int width, Animation* background) {
     for (int j = gameWidth; j < gameWidth + width; j = j +32) {
         for (int k = 0; k < gameHeight; k = k+32) {
-            background->animate(j, k);
+            background->animate_static(j, k);
         }
     }
 }

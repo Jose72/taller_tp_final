@@ -1,4 +1,8 @@
 #include "Game_map.h"
+
+#define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
+
+
 Game_map::Game_map() {
     this->load_tex();
 }
@@ -19,7 +23,7 @@ void Game_map::add_tile(int tile) {
    map_des.push_back(tile);
 }
 
-void Game_map::draw_map() {
+void Game_map::draw_map(SDL_Rect &cameraRect) {
     int i,j,x,y,t;
     //dibujar escenario
     for (i=0 ; i<10 ; i++) {
@@ -31,22 +35,22 @@ void Game_map::draw_map() {
             y = i*32;
             switch (t) {
                 case 0:
-                    this->tex0->animate(x, y);
+                    this->tex0->animate(x, y, cameraRect);
                     break;
                 case 1:
-                    this->tex1->animate(x, y);
+                    this->tex1->animate(x, y, cameraRect);
                     break;
                 case 2:
-                    this->tex2->animate(x, y);
+                    this->tex2->animate(x, y,cameraRect);
                     break;
                 case 3:
-                    this->tex3->animate(x, y);
+                    this->tex3->animate(x, y,cameraRect);
                     break;
                 case 4:
-                    this->tex4->animate(x, y);
+                    this->tex4->animate(x, y,cameraRect);
                     break;
                 case 5:
-                    this->tex5->animate(x,y);
+                    this->tex5->animate(x,y,cameraRect);
                 default:
                     break;
             }
@@ -54,7 +58,7 @@ void Game_map::draw_map() {
     }
 }
 
-void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD) {
+void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD, SDL_Rect &cameraRect) {
 
     int x,y,t;
     //dibujar escenario
@@ -66,27 +70,31 @@ void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD) {
                 // calculo de la posición del tile
                 x = j*32;
                 y = i*32;
-                switch (t) {
-                    case 0:
-                        this->tex0->animate(x, y);
-                        break;
-                    case 1:
-                        this->tex1->animate(x, y);
-                        break;
-                    case 2:
-                        this->tex2->animate(x, y);
-                        break;
-                    case 3:
-                        this->tex3->animate(x, y);
-                        break;
-                    case 4:
-                        this->tex4->animate(x, y);
-                        break;
-                    case 5:
-                        this->tex5->animate(x, y);
-                        break;
-                    default:
-                        break;
+                if (BETWEEN(x,limitXL,limitXR)){
+                    if(BETWEEN(y,limitYU,limitYD)){
+                        switch (t) {
+                            case 0:
+                                this->tex0->animate(x, y,cameraRect);
+                                break;
+                            case 1:
+                                this->tex1->animate(x, y,cameraRect);
+                                break;
+                            case 2:
+                                this->tex2->animate(x, y,cameraRect);
+                                break;
+                            case 3:
+                                this->tex3->animate(x, y,cameraRect);
+                                break;
+                            case 4:
+                                this->tex4->animate(x, y,cameraRect);
+                                break;
+                            case 5:
+                                this->tex5->animate(x, y,cameraRect);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         }

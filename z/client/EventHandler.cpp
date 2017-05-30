@@ -1,12 +1,15 @@
 #include "EventHandler.h"
 #include "../server/gameMap.h"
+#include "Camera2.h"
 
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 1
+#define WINDOW_H 800
+#define WINDOW_W 600
 
 
-EventHandler::EventHandler(SDL_Surface *screen,Camera &c, PlayerInterface &p, Units_Protected &u, tSocket &s, Game_map &m, bool &b):
-        gameCamera(c),playerInterface(p),units(u),socket(s), gameMap(m),running(b){
+EventHandler::EventHandler(SDL_Surface *screen,PlayerInterface &p, Units_Protected &u, tSocket &s, Game_map &m, bool &b, Factory_Units &f):
+        playerInterface(p),units(u),socket(s), gameMap(m),running(b), factory(f){
     this->screen = screen;
 }
 
@@ -15,8 +18,9 @@ EventHandler::~EventHandler() {}
 void EventHandler::run() {
     SelectionHandler sHandler(socket);
     SDL_Event event;
-    int posCameraX = gameCamera.get_camera_posX();
-    int posCameraY = gameCamera.get_camera_posY();
+    int posCameraX = 0;
+    int posCameraY = 0;
+    Camera2 camera2(posCameraX,posCameraY,480,240,WINDOW_W,WINDOW_H,factory);
     int destinoX, destinoY, seleccionX, seleccionY;
     while(running == true) {
         if (SDL_PollEvent(&event)) {
@@ -59,11 +63,8 @@ void EventHandler::run() {
             }
         }
         sHandler.move_unit();
-
-        gameCamera.set_camera_position(posCameraX, posCameraY);
-        gameCamera.set_relative_position(units);
-
-        gameCamera.show(units, gameMap);
+        camera2.set_position_cameraRect(posCameraX,posCameraY);
+        camera2.draw(units,gameMap);
         playerInterface.show();
         SDL_Flip(screen);
     }

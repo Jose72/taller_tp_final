@@ -11,86 +11,82 @@ Unit::~Unit() {
         delete (this->animation[i]);
     }
 }
-void Unit::animate() {
+void Unit::animate(SDL_Rect &cameraRect) {
     if(current_frame< FRAME_LIMIT){
         ++current_frame;
     } else{
         current_frame = 0;
     }
-    //animation[current_frame]->animate(this->cameraPosX,this->cameraPosY);
-
     switch (direction){
         case ZERO:
             if((posx == posxO) && (posy == posyO)){
-                animation[0]->animate(this->cameraPosX,this->cameraPosY);
+                animation[0]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame]->animate(this->cameraPosX,this->cameraPosY);
+                animation[current_frame]->animate(posx,posy,cameraRect);
             }
             break;
 
         case ONE:
             if((posx == posxO) && (posy == posyO)){
-                animation[4]->animate(this->cameraPosX,this->cameraPosY);
+                animation[4]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame + 4]->animate(this->cameraPosX, this->cameraPosY);
+                animation[current_frame + 4]->animate(posx,posy,cameraRect);
             }
             break;
 
         case TWO:
             if((posx == posxO) && (posy == posyO)){
-                animation[8]->animate(this->cameraPosX, this->cameraPosY);
+                animation[8]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame + 8]->animate(this->cameraPosX, this->cameraPosY);
+                animation[current_frame + 8]->animate(posx,posy,cameraRect);
             }
             break;
 
         case THREE:
             if((posx == posxO) && (posy == posyO)){
-                animation[12]->animate(this->cameraPosX,this->cameraPosY);
+                animation[12]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame + 12]->animate(this->cameraPosX,this->cameraPosY);
+                animation[current_frame + 12]->animate(posx,posy,cameraRect);
             }
             break;
 
         case FOUR:
             if((posx == posxO) && (posy == posyO)) {
-                animation[16]->animate(this->cameraPosX, this->cameraPosY);
+                animation[16]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame + 16]->animate(this->cameraPosX, this->cameraPosY);
+                animation[current_frame + 16]->animate(posx,posy,cameraRect);
             }
             break;
 
         case FIVE:
             if((posx == posxO) && (posy == posyO)) {
-                animation[20]->animate(this->cameraPosX, this->cameraPosY);
+                animation[20]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame + 20]->animate(this->cameraPosX,this->cameraPosY);
+                animation[current_frame + 20]->animate(posx,posy,cameraRect);
             }
             break;
 
         case SIX:
             if((posx == posxO) && (posy == posyO)) {
-                animation[24]->animate(this->cameraPosX,this->cameraPosY);
+                animation[24]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame + 24]->animate(this->cameraPosX,this->cameraPosY);
+                animation[current_frame + 24]->animate(posx,posy,cameraRect);
             }
             break;
 
         case SEVEN:
             if((posx == posxO) && (posy == posyO)) {
-                animation[28]->animate(this->cameraPosX,this->cameraPosY);
+                animation[28]->animate(posx,posy,cameraRect);
             }else{
-                animation[current_frame + 28]->animate(this->cameraPosX,this->cameraPosY);
+                animation[current_frame + 28]->animate(posx,posy,cameraRect);
             }
             break;
         default:
-            animation[0]->animate(this->cameraPosX,this->cameraPosY);
+            animation[0]->animate(posx,posy,cameraRect);
             break;
     }
-    //animation[current_frame]->animate(this->posx,this->posy);
-
-
 }
+
 void Unit::set_pos(int x, int y) {
     this->posxO = this->posx;
     this->posyO = this->posy;

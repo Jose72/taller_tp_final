@@ -13,7 +13,8 @@ public:
    Animation(SDL_Surface *screen,char *imagepath, int frame_w, int frame_h);
 
     ~Animation();
-    void animate(int posx, int posy);
+    void animate_static(int posx, int posy);
+    void animate(int posx, int posy, SDL_Rect & cameraRect);
 };
 
 

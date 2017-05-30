@@ -17,10 +17,19 @@ Animation::~Animation() {
     SDL_FreeSurface(this->image);
 }
 
-void Animation::animate(int posx, int posy) {
-    SDL_Rect dest;
-    dest.x = posx;
-    dest.y = posy;
+void Animation::animate(int posx, int posy, SDL_Rect &cameraRect) {
+    SDL_Rect position;
+    position.x = posx;
+    position.y = posy;
+    SDL_Rect animationReact = {position.x - cameraRect.x,position.y - cameraRect.y, this->frame.w, this->frame.h};
     SDL_SetColorKey(image, SDL_SRCCOLORKEY, SDL_MapRGB(image->format, 0, 0, 0));
-    SDL_BlitSurface(image,&frame,this->screen,&dest);
+    SDL_BlitSurface(image,&frame,this->screen,&animationReact);
+}
+
+void Animation::animate_static(int posx, int posy){
+    SDL_Rect position;
+    position.x = posx;
+    position.y = posy;
+    SDL_SetColorKey(image, SDL_SRCCOLORKEY, SDL_MapRGB(image->format, 0, 0, 0));
+    SDL_BlitSurface(image,&frame,this->screen,&position);
 }

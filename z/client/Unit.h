@@ -32,7 +32,7 @@ public:
 
     Unit( std::vector<Animation *> animation, int posx, int posy);
     ~Unit();
-    void animate();
+    void animate(SDL_Rect &cameraRect);
     void set_pos(int x,int y);
     void set_pos_camera(int x, int y);
     int get_cameraPosX();

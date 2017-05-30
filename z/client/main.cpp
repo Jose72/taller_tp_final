@@ -5,7 +5,6 @@
 #include "Game_map.h"
 #include "SelectionHandler.h"
 #include "Factory_Units.h"
-#include "Camera.h"
 #include "../common/Socket.h"
 #include "../common/Thread.h"
 #include "T_Client.h"
@@ -68,8 +67,7 @@ int main(int argc, char *argv[]){
     int posy2 = 400;
     int posCameraX = 200;
     int posCameraY = 200;
-
-    Camera camera(posCameraX,posCameraY,200,200, factory);
+    SDL_Rect cameraRect = {0,0,640,480};
 
     Unit *grunt = factory.createUnit(GREEN_GRUNT,posx1,posy1);
     Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
@@ -85,7 +83,7 @@ int main(int argc, char *argv[]){
     while(waiting_server){}
     //main application loop
 
-    threads.push_back(new EventHandler(screen,camera,playerInterface,all_units,socket, game_map, running));
+    threads.push_back(new EventHandler(screen,playerInterface,all_units,socket, game_map, running,factory));
     threads[1]->start();
 /*
     while(running == true){

@@ -43,8 +43,8 @@ public:
     Game_map(SDL_Surface *sc);
     ~Game_map();
     void add_tile(int tile);
-    void draw_map();
-    void draw_map(int limitXL, int limitXR, int limitYU, int limitYD);
+    void draw_map(SDL_Rect &cameraRect);
+    void draw_map(int limitXL, int limitXR, int limitYU, int limitYD, SDL_Rect &cameraRect);
     void set_screen(SDL_Surface *sc);
 
 private:
