@@ -9,3 +9,8 @@
 * sudo apt-get install libsdl1.2-dev
 * sudo apt-get install libsdl-image1.2-dev
 * sudo apt-get install libsdl-ttf2.0-dev
+
+## Google DOC con el protocolo
+
+https://docs.google.com/document/d/178xBpWjOt6C_WLy_5Afi7Uj_ESmpFbSi_2EzSoe6g2U/edit?usp=sharing
+
