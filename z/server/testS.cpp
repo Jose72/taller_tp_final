@@ -29,7 +29,6 @@ int test_create_unit(){
 		unit* h = it->second;
 		std::cout << "owner: " << h->getOwner() << std::endl;
 		std::cout << "unit id: " << h->getUnitId() << std::endl;
-		it->second->destroy(); //limpio la unidad
 		delete it->second;
 	}
 	

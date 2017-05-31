@@ -15,19 +15,32 @@
 class unit {
 	protected:
 		int owner;
+		std::vector<int> allies;
 		int class_id;
 		int unit_id;
 		int x;
 		int y;
-		int dest_x;
-		int dest_y;
 		int b_health;
 		int health;
+		
+		//movimiento
+		int dest_x;
+		int dest_y;
 		int speed;
-		//Attack attack_b;
+		
+		//ataque
 		unit *attacking;
-		attackBehaviour *attack_b;
-		createBehaviour *create_b;
+		int attack_range;
+		int base_damage;
+		
+		//creacion o ataque
+		int base_time;
+		int countdown;
+		int tech_level;
+		
+		//bandera
+		
+		
 		
 		/*
 		armament arma;
@@ -38,7 +51,8 @@ class unit {
 		*/
 	public:
 		unit(int owner, int unit_id, int x, int y);
-		~unit();
+		unit(int owner, int class_id, int unit_id, std::vector<int> &allies, 
+int x, int y, int health, int speed, int a_range, int base_damage, int base_time, int tech_level);
 		void setPos(int p_x, int p_y);
 		bool isMoving();
 		bool isAttacking();
@@ -58,7 +72,7 @@ class unit {
 		//double getDamage(double time); 
 		int takeDamage(int dam);
 		void setAttack(unit *u);
-		double getDamage(double time);
+		double getDamage();
 		int attackRange();
 		unit* getTarget();
 		void printPosDest();
@@ -66,6 +80,7 @@ class unit {
 		int checkCreating(double time);
 		void destroy();
 		int getOwner();
+		bool isAlive();
 };
 
 #endif

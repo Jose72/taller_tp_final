@@ -5,6 +5,7 @@
 #include <iostream>
 #include "actualizeUnit.h"
 #include <unistd.h>
+#include "unitBuilder.h"
 
 
 juego::juego(int cant_players, tSocket* creator_skt, std::mutex &cli_m): 
@@ -79,8 +80,9 @@ void juego::sendInit(){
 	mapa = gameMap(map_codes, sss);
 	
 	
-	unit* u1 = new unit(1, GRUNT, 60, 15);
-	//units.push_back(u1);
+	//unit* u1 = new unit(1, GRUNT, 60, 15);
+	std::vector<int> all;
+	unit *u1 = builder.build(GRUNT, 1, all, 60, 15);
 	
 	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
 	id_unit_counter++;
@@ -113,6 +115,7 @@ void juego::run(){
 	
 	actualizeUnit actualizer;
 	
+	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
 	while(s > 0){
@@ -139,6 +142,8 @@ void juego::run(){
 			
 			
 			//actualizo las undiades --- crear una func aparte!!!!!!
+			std::vector<int> dead_units;
+			std::vector<int> actualized_units;
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u1 = it->second;
 				actualizer(*u1, units, mapa, 1, id_unit_counter);
@@ -156,7 +161,6 @@ void juego::run(){
 	
 	std::cout << "delete units" << std::endl;
 	for (auto it = units.begin(); it != units.end(); ++it){
-		it->second->destroy(); //limpio la unidad
 		delete it->second;
 	}
 	

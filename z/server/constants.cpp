@@ -64,7 +64,7 @@ int getHealthFromUnit(int unit_c){
 		case SNIPER:
 			return SNIPER_HEALTH;
 		case LAZER:
-			return LASER_HEALTH;
+			return LAZER_HEALTH;
 		case JEEP:
 			return JEEP_HEALTH;
 		case LIGHT_TANK:

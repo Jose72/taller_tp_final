@@ -69,7 +69,7 @@ void tClientManager::run(){
 	if (id_client == 1) {
 		//creo el juego
 		//hardcodeado cant jugadores
-		j = new juego(2, &cli_skt, mmm);
+		j = new juego(1, &cli_skt, mmm);
 		//pusheo en el vector
 		juegos.push_back(j);
 	

@@ -7,26 +7,26 @@ armament::armament(int code){
 		case PSYCHO:
 		case SNIPER: 
 		case JEEP:
-			damage = BALAS;
+			damage = BALAS_D;
 			explosive = false;
 			return;
 		case TOUGHT: 
-			damage = MISILES;
+			damage = MISILES_D;
 			explosive = true;
 			return;
 		case PYRO:
 		case MML: 
-			damage = MISILES;
+			damage = MISILES_D;
 			explosive = true;
 			return;
 		case LAZER: 
-			damage = LASER;
+			damage = LASER_D;
 			explosive = false;
 			return;
 		case MEDIUM_TANK:
 		case LIGHT_TANK:
 		case HEAVY_TANK:
-			damage = PROYECTILES;
+			damage = PROYECTILES_D;
 			explosive = true;
 			return;
 		default:

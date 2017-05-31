@@ -87,6 +87,8 @@ return 0;
 
 
 int moveActualize(unit &u, gameMap &mapa, double time){
+	
+		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
 	//necesito clse de unidad
 		int c_id = u.getClassId();
 		int x_unit = u.getX();
@@ -185,7 +187,7 @@ int attackActualize(unit &attacker, double time){
 				//std::cout << "me detuve" << std::endl;
 				attacker.stop();
 			}
-			attacked->takeDamage(round(attacker.getDamage(time)));
+			attacked->takeDamage(round(attacker.getDamage()));
 		} else {
 			//si no estoy en rango, seteo como destino a la unidad
 			//el target se puede estar moviendo por eso hay que hacer esto cada vez
@@ -208,7 +210,7 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 			//si esta en rango
 			if (attacker.isInRange(*target, attacker.attackRange())){
 			
-				target->takeDamage(round(attacker.getDamage(time)));
+				target->takeDamage(round(attacker.getDamage()));
 				//le pego y ya, no sigo con los demas
 				return 0;
 				
@@ -224,7 +226,7 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 	
 	return 0;
 }
-
+/*
 int createActualize(unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count){
 	int new_u_code = u.checkCreating(time);
 	if (new_u_code != -1){
@@ -235,7 +237,7 @@ int createActualize(unit &u, std::map<int, unit*> &units, gameMap &mapa, double 
 	}
 	return 0;
 }
-
+*/
 int actualizeUnit::operator()(unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count){
 	//std::cout << "pasada---------------------------------------" << std::endl;
 	
@@ -243,7 +245,7 @@ int actualizeUnit::operator()(unit &u, std::map<int, unit*> &units, gameMap &map
 		moveActualize(u, mapa, time);
 	} 
 	
-	
+	/*
 	if (u.isAttacking()){
 		attackActualize(u, time);
 	} else {
@@ -251,10 +253,11 @@ int actualizeUnit::operator()(unit &u, std::map<int, unit*> &units, gameMap &map
 	}
 	
 	//pendiente: chequear la cant de unidades antes de crear
+	
 	if (u.isCreating()){ 
 		createActualize(u, units, mapa, time, unit_id_count);
 	}
-	
+	*/
 	
 	return 0;
 }

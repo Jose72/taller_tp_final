@@ -8,16 +8,17 @@ dest_x(x), dest_y(y), attacking(nullptr) {
 	speed = getSpeedFromUnit(unit_id);
 	b_health = getHealthFromUnit(unit_id);
 	health = b_health;
-	attack_b = nullptr;
-	create_b = nullptr;
-	
-	if (class_id == BUILDING){
-		create_b = new createBehaviour(unit_id);
-	} else {
-		attack_b = new attackBehaviour(unit_id);
-	}
+
 	
 };
+
+unit::unit(int owner, int class_id, int unit_id, std::vector<int> &allies, 
+int x, int y, int health, int speed, int a_range, int base_damage, int base_time, int tech_level): owner(owner), 
+allies(allies), class_id(class_id), unit_id(unit_id), x(x), y(y), 
+b_health(health), health(health), dest_x(x), dest_y(y) ,speed(speed), 
+attacking(nullptr), attack_range(a_range), base_damage(base_damage), base_time(base_time), 
+countdown(base_time), tech_level(tech_level) {};
+
 
 
 /*
@@ -27,12 +28,8 @@ b_health(health), health(health), speed(speed), attacking(nullptr) {
 	attack_b = new attackBehaviour(unit_id);
 	create_b = new createBehaviour(unit_id);
 };	
+*/
 
-*/	
-unit::~unit(){
-	if (attack_b) delete attack_b;
-	if (create_b) delete create_b;
-}
 
 void unit::setPos(int p_x, int p_y){
 	x = p_x;
@@ -50,14 +47,11 @@ bool unit::isMoving(){
 
 bool unit::isAttacking(){
 	//si tiene objetivo y ataq behaviour
-	if (attacking && attack_b) return true;
+	if (attacking) return true;
 	return false;
 }
 
-bool unit::isCreating(){
-	if (create_b) return true;
-	return false;
-}
+
 //////
 
 
@@ -134,11 +128,11 @@ void unit::setAttack(unit *u){
 }
 
 int unit::attackRange(){
-	return attack_b->getRange();
+	return attack_range;
 }
 
-double unit::getDamage(double time){
-	return attack_b->getDamage(time);
+double unit::getDamage(){
+	return base_damage;
 }
 
 unit* unit::getTarget(){
@@ -153,21 +147,23 @@ void unit::printPosDest(){
 bool unit::isEnemy(unit &u){
 	//pendiente: chequear si el owner es mageMap 
 	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
-	if (this->owner != u.owner) return true;
+	
+	if (this->owner != u.owner) {
+		for (auto it = allies.begin(); it != allies.end(); ++it){
+			if ((*it) == u.owner) return false;
+		}
+		//if (0 == u.owner) return true; //es un objeto del mapa
+		return true;
+	}
 	return false;
 }
 
-int unit::checkCreating(double time){
-	return create_b->actualize(time);
-}
-
-void unit::destroy(){
-	if (attack_b) delete attack_b;
-	attack_b = nullptr;
-	if (create_b) delete attack_b;
-	attack_b = nullptr;
-}
 
 int unit::getOwner(){
 	return owner;
+}
+
+bool unit::isAlive(){
+	if (health > 0) return true;
+	return false;
 }
