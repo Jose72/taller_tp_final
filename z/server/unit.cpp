@@ -107,8 +107,8 @@ void unit::stop(){
 	dest_y = y;
 }
 
-bool unit::isInRange(unit &u, int range){
-	if (sqrt(pow((this->x - u.x),2) + pow((this->y - u.y),2)) <= range) {
+bool unit::isInRange(unit &u){
+	if (sqrt(pow((this->x - u.x),2) + pow((this->y - u.y),2)) <= this->attack_range) {
 		return true;
 	}
 	return false;
@@ -166,4 +166,24 @@ int unit::getOwner(){
 bool unit::isAlive(){
 	if (health > 0) return true;
 	return false;
+}
+
+
+//countdown me dice cuando puedo atacar (cuando esta en 0)
+//hay "espera" por la frecuencia de disparo
+//
+bool unit::canAttack(){
+	return (countdown == 0);
+}
+
+//resto el tiempo del time slice al countdown
+//el tiempo en milisegundos
+void unit::actualizeTimer(int time){
+	if (countdown - time == 0) return;
+	countdown = countdown - time;
+}
+
+//reseteo el countdown si acabo de disparar
+void unit::resetTimer(){
+	countdown = base_time;
 }

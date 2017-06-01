@@ -3,10 +3,7 @@
 
 #include "constants.h"
 #include "armament.h"
-#include "behaviour.h"
-#include "attackBehaviour.h"
-#include "createBehaviour.h"
-
+#include <vector>
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
 
@@ -36,6 +33,7 @@ class unit {
 		//creacion o ataque
 		int base_time;
 		int countdown;
+		int unit_code_to_create;
 		int tech_level;
 		
 		//bandera
@@ -68,7 +66,7 @@ int x, int y, int health, int speed, int a_range, int base_damage, int base_time
 		double getRelativeDamage();
 		void move(int d_x, int d_y);
 		void stop();
-		bool isInRange(unit &u, int range);
+		bool isInRange(unit &u);
 		//double getDamage(double time); 
 		int takeDamage(int dam);
 		void setAttack(unit *u);
@@ -81,6 +79,9 @@ int x, int y, int health, int speed, int a_range, int base_damage, int base_time
 		void destroy();
 		int getOwner();
 		bool isAlive();
+		bool canAttack();
+		void actualizeTimer(int time);
+		void resetTimer();
 };
 
 #endif

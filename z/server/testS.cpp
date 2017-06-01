@@ -7,7 +7,7 @@
 #include "terrain.h"
 #include "actualizeUnit.h"
 #include <vector>
-
+/*
 int test_create_unit(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
@@ -148,10 +148,10 @@ int test_units_in_range(){
 	unit r3(3, GRUNT, 42, 18);
 	unit r4(4, GRUNT, 43, 18);
 	unit r5(5, GRUNT, 35, 22);
-	std::cout << r1.isInRange(r2, 7) << std::endl;
-	std::cout << r1.isInRange(r3, 7) << std::endl;
-	std::cout << r1.isInRange(r4, 7) << std::endl;
-	std::cout << r1.isInRange(r5, 7) << std::endl;
+	std::cout << r1.isInRange(r2) << std::endl;
+	std::cout << r1.isInRange(r3) << std::endl;
+	std::cout << r1.isInRange(r4) << std::endl;
+	std::cout << r1.isInRange(r5) << std::endl;
 	return 0;
 }
 
@@ -186,7 +186,7 @@ int test_move_unit(){
 	
 	return 0;
 }
-
+*/
 
 int test_find_unit_tile(){
 	

@@ -1,4 +1,5 @@
-#include "actualizeUnit.h"
+
+#include "moveHandler.h"
 #include <vector>
 #include "tilesListCost.h"
 #include <iostream>
@@ -8,7 +9,7 @@
 //hay que ver que tipo de unidad es para ver si puede pasar por determinadas casillas !!!!
 
 //buscar el mejor camino a la casilla destino
-int aStart(tile *orig, tile *dest, gameMap &gmap, int unit_code, std::vector<tile*> &path){
+int a_Start(tile *orig, tile *dest, gameMap &gmap, int unit_code, std::vector<tile*> &path){
 //se ordena con el f, seria una especie de costo por moverse
 //cada casilla tiene uno, lo uso para buscar el camino hasta el destino
 //f = g + h
@@ -85,8 +86,23 @@ return 0;
 }
 
 
+int moveHandler::moveActualize(unit &u, gameMap &mapa, int time){
+	int u_class = u.getClassId();
+	switch(u_class){
+		case ROBOT:
+		case VEHICLE:
+			return moveCommonActualize(u, mapa, time);
+		case BULLET:
+			return moveBulletActualize(u, time);
+		default:
+			return 0;
+	}
+	
+}
 
-int moveActualize(unit &u, gameMap &mapa, double time){
+
+
+int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 	
 		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
 	//necesito clse de unidad
@@ -101,7 +117,7 @@ int moveActualize(unit &u, gameMap &mapa, double time){
 		std::vector<tile*> camino;
 		
 		//corro el astart para obtener el camino
-		aStart(orig, dest, mapa, c_id, camino);
+		a_Start(orig, dest, mapa, c_id, camino);
 		
 		/*
 		std::cout << "camnio" << std::endl;
@@ -178,91 +194,19 @@ int moveActualize(unit &u, gameMap &mapa, double time){
 		return 0;
 }
 
-int attackActualize(unit &attacker, double time){
-	unit *attacked = attacker.getTarget();
-	if (attacker.isInRange(*attacked)){
-			//si me estoy moviendo me detengo
-			//estaba siguiendo a la unidad para atacar
-			if (attacker.isMoving()) {
-				//std::cout << "me detuve" << std::endl;
-				attacker.stop();
-			}
-			attacked->takeDamage(round(attacker.getDamage()));
-		} else {
-			//si no estoy en rango, seteo como destino a la unidad
-			//el target se puede estar moviendo por eso hay que hacer esto cada vez
-			//asi actualizar el destino
-			//hay que usar un bool para saber si es auto-ataque y no hacer esto
-			//std::cout << "seteo target como destino" << std::endl;
-			attacker.move(attacked->getX(), attacked->getY());
-		}
-		return 0;
-}
-
-int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &mapa, double time){
-	//si el atacante se mueve no hay autoataque
-	if (attacker.isMoving()) return 1;
-	//recorro el vect de unidades
-	for (auto it = units.begin(); it != units.end(); ++it){
-		unit *target = it->second;
-		//chequeo quien es el dueño de la unidad
-		if (target->isEnemy(attacker)){
-			//si esta en rango
-			if (attacker.isInRange(*target)){
-			
-				target->takeDamage(round(attacker.getDamage()));
-				//le pego y ya, no sigo con los demas
-				return 0;
-				
-				// en vez de esto se podria setear la unidad como target
-				// con un booleano que indique autoataque
-				// y que la actualizacion de ataque haga el resto
-			
-			}
-		
-		
-		}
-	}
-	
-	return 0;
-}
-/*
-int createActualize(unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count){
-	int new_u_code = u.checkCreating(time);
-	if (new_u_code != -1){
-		unit *n_u = new unit(u.getOwner(), new_u_code, u.getDestX(), u.getDestY());
-		units.insert(std::pair<int,unit*>(unit_id_count, n_u));
-		unit_id_count++;
-		std::cout << "new unit" <<std::endl;
-	}
-	return 0;
-}
-*/
-int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count, std::set<int> &dead_unit, std::set<int> &actualized_units){
-	//std::cout << "pasada---------------------------------------" << std::endl;
-	
-	
-	
-	move_h.moveActualize(u, mapa, 1);
-	/*
-	if (u.isMoving()) {
-		moveActualize(u, mapa, 1);
-	} 
-	
-	
-	if (u.isAttacking()){
-		attackActualize(u, time);
+int moveHandler::moveBulletActualize(unit &u, int time){
+	int x_unit = u.getX();
+	int y_unit = u.getY();
+	int x_dest = u.getDestX();
+	int y_dest = u.getDestY();
+	double speed = std::max(u.getSpeed(), 1);
+	double dist = sqrt(pow((x_unit - x_dest),2) + pow((y_unit - y_dest),2));
+	int new_x = x_unit + ((x_dest - x_unit) / dist ) * time * speed;
+	int new_y = y_unit + ((y_dest - y_unit) / dist ) * time * speed;
+	if (sqrt(pow((new_x - x_dest),2) + pow((new_y - y_dest),2)) < dist){
+		u.setPos(round(new_x), round(new_y));
 	} else {
-		autoAttackActualize(u, units, mapa, time);
+		u.setPos(x_dest, y_dest);
 	}
-	
-	//pendiente: chequear la cant de unidades antes de crear
-	
-	if (u.isCreating()){ 
-		createActualize(u, units, mapa, time, unit_id_count);
-	}
-	*/
-	
 	return 0;
-}
-
+ }

@@ -2,6 +2,7 @@
 #include <vector>
 #include "gameMap.h"
 #include <map>
+#include <set>
 #include <iostream>
 #include "actualizeUnit.h"
 #include <unistd.h>
@@ -142,11 +143,11 @@ void juego::run(){
 			
 			
 			//actualizo las undiades --- crear una func aparte!!!!!!
-			std::vector<int> dead_units;
-			std::vector<int> actualized_units;
+			std::set<int> dead_units;
+			std::set<int> actualized_units;
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u1 = it->second;
-				actualizer(*u1, units, mapa, 1, id_unit_counter);
+				actualizer(it->first, *u1, units, mapa, 200, id_unit_counter, dead_units, actualized_units);
 				sleep(1);
 				int xx = u1->getX();
 				int yy = u1->getY();
