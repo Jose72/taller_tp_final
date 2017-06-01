@@ -3,7 +3,7 @@
 #include "math.h"
 
 unit::unit(int owner, int unit_id, int x, int y): owner(owner), unit_id(unit_id), x(x), y(y), 
-dest_x(x), dest_y(y), attacking(nullptr) {
+dest_x(x), dest_y(y), target(nullptr) {
 	class_id = getClassCodeFromUnit(unit_id);
 	speed = getSpeedFromUnit(unit_id);
 	b_health = getHealthFromUnit(unit_id);
@@ -13,10 +13,10 @@ dest_x(x), dest_y(y), attacking(nullptr) {
 };
 
 unit::unit(int owner, int class_id, int unit_id, std::vector<int> &allies, 
-int x, int y, int health, int speed, int a_range, int base_damage, int base_time, int tech_level): owner(owner), 
+int x, int y, int health, int state, int speed, int a_range, int base_damage, int base_time, int tech_level): owner(owner), 
 allies(allies), class_id(class_id), unit_id(unit_id), x(x), y(y), 
-b_health(health), health(health), dest_x(x), dest_y(y) ,speed(speed), 
-attacking(nullptr), attack_range(a_range), base_damage(base_damage), base_time(base_time), 
+b_health(health), health(health), state(state), dest_x(x), dest_y(y) ,speed(speed), 
+target(nullptr), attack_range(a_range), base_damage(base_damage), base_time(base_time), 
 countdown(base_time), tech_level(tech_level) {};
 
 
@@ -41,13 +41,13 @@ void unit::setPos(int p_x, int p_y){
 //preguntar a los beaviours ???
 bool unit::isMoving(){
 	//pendiente: crear un moveBehaviour y chequear eso en vez del id de clase
-	if ((x != dest_x || y != dest_y) && (class_id == ROBOT || class_id == VEHICLE)) return true;
+	if ((x != dest_x || y != dest_y)) return true;
 	return false;
 };
 
 bool unit::isAttacking(){
 	//si tiene objetivo y ataq behaviour
-	if (attacking) return true;
+	if (target && this->isEnemy(*target)) return true;
 	return false;
 }
 
@@ -100,6 +100,7 @@ double unit::getRelativeDamage(){
 void unit::move(int d_x, int d_y){
 	dest_x = d_x;
 	dest_y = d_y;
+	state = MOVING;
 }
 
 void unit::stop(){
@@ -115,14 +116,17 @@ bool unit::isInRange(unit &u){
 }
 
 int unit::takeDamage(int dam){
-	if (health - dam < 0) return UNIT_DEAD;
+	if (health - dam < 0) {
+		health = 0;
+		state = DEAD;
+	}
 	else health = health - dam;
 	return DAMAGE_TAKEN;
 }
 
 void unit::setAttack(unit *u){
 	if (u->owner != this->owner){
-		attacking = u;
+		target = u;
 	}
 	
 }
@@ -136,7 +140,7 @@ double unit::getDamage(){
 }
 
 unit* unit::getTarget(){
-	return attacking;
+	return target;
 }
 
 void unit::printPosDest(){
@@ -164,7 +168,7 @@ int unit::getOwner(){
 }
 
 bool unit::isAlive(){
-	if (health > 0) return true;
+	if (health > 0 && state != DEAD) return true;
 	return false;
 }
 
@@ -186,4 +190,37 @@ void unit::actualizeTimer(int time){
 //reseteo el countdown si acabo de disparar
 void unit::resetTimer(){
 	countdown = base_time;
+}
+
+int unit::unitToCreate(){
+	return unit_code_to_create;
+}
+
+void unit::changeState(int s){
+	state = s;
+}
+
+bool unit::isInTargetRange(){
+	if (target) {
+		if (sqrt(pow((x - target->x),2) + pow((y - target->y),2)) <= this->attack_range) {
+		return true;
+		}
+	}
+	return false;
+}
+
+void unit::moveToTarget(){
+	if (target){
+		this->move(target->getX(), target->getY());
+		state = MOVING;
+	}
+}
+
+bool unit::targetIsEnemy(){
+	if (this->isEnemy(*target)) return true;
+	return false;
+}
+
+int unit::getState(){
+	return state;
 }

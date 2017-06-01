@@ -191,6 +191,30 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 		}
 
 		u.printPos();
+		
+		
+		////status check
+		if (u.isMoving()){
+		//si tengo target
+			if (u.getTarget()){
+				//si estoy en el rango
+				if (u.isInTargetRange()){
+					//si es enemigo
+					if (u.targetIsEnemy()){
+						//ataco
+						u.changeState(ATTACKING);
+					} else{
+						u.changeState(STANDING);
+					}
+					
+				} else {
+					u.moveToTarget();
+				}
+			} 
+		} else {//si llegue a destino
+			u.changeState(STANDING);
+		}
+		
 		return 0;
 }
 
@@ -208,5 +232,14 @@ int moveHandler::moveBulletActualize(unit &u, int time){
 	} else {
 		u.setPos(x_dest, y_dest);
 	}
+	
+	u.printPos();
+	//status check
+	if (!u.isMoving()){
+		u.changeState(ATTACKING);
+	}
+	
+	
 	return 0;
  }
+ 

@@ -7,6 +7,9 @@
 #include "terrain.h"
 #include "actualizeUnit.h"
 #include <vector>
+#include "unitBuilder.h"
+
+#include <unistd.h>
 /*
 int test_create_unit(){
 	int map_codes[100] = {0};
@@ -142,7 +145,7 @@ int test_create_map(){
 
 
 
-int test_units_in_range(){
+int test_bullet_attack(){
 	unit r1(1, GRUNT, 35, 18);
 	unit r2(2, GRUNT, 40, 18);
 	unit r3(3, GRUNT, 42, 18);
@@ -154,39 +157,35 @@ int test_units_in_range(){
 	std::cout << r1.isInRange(r5) << std::endl;
 	return 0;
 }
+*/
+
 
 int test_move_unit(){
-	actualizeUnit au;
-	std::vector<tile> casillas;
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
+	unitBuilder ub;
 	int unit_id_count = 1;
-	tile a(0, 0, TIERRA), b(1, 0, AGUA), c(2, 0, TIERRA), d(3, 0, TIERRA);
-	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-	a = tile(0, 1, TIERRA); b = tile(1, 1, AGUA); c = tile(2, 1, AGUA ); d = tile(3, 1, TIERRA);
-	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-	a = tile(0, 2, TIERRA); b = tile(1, 2, TIERRA); c = tile(2, 2, TIERRA); d = tile(3, 2, TIERRA);
-	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-	a = tile(0, 3, TIERRA); b = tile(1, 3, TIERRA); c = tile(2, 3, TIERRA); d = tile(3, 3, TIERRA);
-	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
+	std::set<int> d_units;
+	std::set<int> a_units;
 	
-	gameMap mapa(4, 4, casillas);
-	// x from 0 to 127
-	// y from 0 to 127
+	unit r1(1, GRUNT, 35, 18);
+	unit *r2 = ub.build(MISIL, 60, 60);
+	actualizeUnit au;
+	units.insert(std::pair<int,unit*>(1,&r1));
 	
-	//unit in (1,0), in  (35, 18)
-	// to (2,2), in (80, 70)
-	// to (3,3), in (108, 112)
+	r1.move(55, 67);
+	r2->move(123, 123);
+	for (int i = 0; i < 27; i++){
+		//au(1, r1, units, mapa, 1, unit_id_count, d_units, a_units);
+		au(1, *r2, units, mapa, 1, unit_id_count, d_units, a_units);
+		usleep(200000);
 	
-	unit r(1, GRUNT, 35, 18);
-	r.move(108, 112);
-	
-	while (r.isMoving()){
-		au(r, units,mapa, 1, unit_id_count);
 	}
-	
+	delete r2;
 	return 0;
 }
-*/
+
 
 int test_find_unit_tile(){
 	

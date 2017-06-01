@@ -241,7 +241,7 @@ int createActualize(unit &u, std::map<int, unit*> &units, gameMap &mapa, double 
 int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count, std::set<int> &dead_unit, std::set<int> &actualized_units){
 	//std::cout << "pasada---------------------------------------" << std::endl;
 	
-	
+	std::cout << "state: " << u.getState() << std::endl;
 	
 	move_h.moveActualize(u, mapa, 1);
 	/*

@@ -7,7 +7,7 @@
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
 
-
+enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, ATTACK_CREATING, DEAD, STANDING};
 
 class unit {
 	protected:
@@ -20,13 +20,15 @@ class unit {
 		int b_health;
 		int health;
 		
+		int state;
+		
 		//movimiento
 		int dest_x;
 		int dest_y;
 		int speed;
 		
 		//ataque
-		unit *attacking;
+		unit *target;
 		int attack_range;
 		int base_damage;
 		
@@ -50,7 +52,7 @@ class unit {
 	public:
 		unit(int owner, int unit_id, int x, int y);
 		unit(int owner, int class_id, int unit_id, std::vector<int> &allies, 
-int x, int y, int health, int speed, int a_range, int base_damage, int base_time, int tech_level);
+int x, int y, int health, int state, int speed, int a_range, int base_damage, int base_time, int tech_level);
 		void setPos(int p_x, int p_y);
 		bool isMoving();
 		bool isAttacking();
@@ -82,6 +84,12 @@ int x, int y, int health, int speed, int a_range, int base_damage, int base_time
 		bool canAttack();
 		void actualizeTimer(int time);
 		void resetTimer();
+		int unitToCreate();
+		void changeState(int state);
+		bool isInTargetRange();
+		void moveToTarget();
+		bool targetIsEnemy();
+		int getState();
 };
 
 #endif

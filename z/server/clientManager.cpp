@@ -76,7 +76,7 @@ void tClientManager::run(){
 		
 		//espero hasta que esten todos listos
 		while (!j->readyToStart() && !end_game){
-			usleep(200);
+			usleep(200000);
 		}
 		//si sali del loop porque se acaba el juego, salgo del manager
 		if (end_game) return;
@@ -98,7 +98,7 @@ void tClientManager::run(){
 			j->clientJoin(&cli_skt);
 			//espero a que todos esten listos
 			while (!j->readyToStart() && !end_game){
-				usleep(200);
+				usleep(200000);
 			}
 			if (end_game) return;
 		} else {
