@@ -35,7 +35,7 @@ file(GLOB SOURCE_FILES_SERVER
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 
-add_executable(clientGame ${SOURCE_FILES_CLIENT} client/TTF_Writter.cpp client/TTF_Writter.h client/Drawer.cpp client/Drawer.h client/ClickableButtonGrunt.cpp client/ClickableButtonGrunt.h client/ClickableButtonLaser.cpp client/ClickableButtonLaser.h client/Camera2.cpp client/Camera2.h)
+add_executable(clientGame ${SOURCE_FILES_CLIENT} client/TTF_Writter.cpp client/TTF_Writter.h client/Drawer.cpp client/Drawer.h client/ClickableButtonGrunt.cpp client/ClickableButtonGrunt.h client/ClickableButtonLaser.cpp client/ClickableButtonLaser.h client/Camera2.cpp client/Camera2.h client/Protocol.cpp client/Protocol.h)
 add_executable(serverGame ${SOURCE_FILES_SERVER})
 
 target_link_libraries(clientGame ${SDL_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${SDL_TTF_LIBRARIES})

@@ -14,3 +14,9 @@
 
 https://docs.google.com/document/d/178xBpWjOt6C_WLy_5Afi7Uj_ESmpFbSi_2EzSoe6g2U/edit?usp=sharing
 
+
+##Tareas Excel (Amarillo en progreso, verde terminado)
+
+https://docs.google.com/spreadsheets/d/1lKVSfriYyC2Hm9B8vytSQ1d8TUF7-tWs61WZqJSU0SQ/edit?usp=sharing
+
+
