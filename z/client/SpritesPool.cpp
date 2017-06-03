@@ -8,7 +8,9 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->load_sprites("client/sprites/robot1",BLUE_GRUNT,GREEN_GRUNT,RED_GRUNT,YELLOW_GRUNT);
     this->load_sprites("client/sprites/grunt_fire",FIRE_BLUE_GRUNT,FIRE_GREEN_GRUNT,FIRE_RED_GRUNT,FIRE_YELLOW_GRUNT);
     this->load_sprites("client/sprites/laser_fire",FIRE_LASER_BLUE,FIRE_LASER_GREEN,FIRE_LASER_RED,FIRE_LASER_YELLOW);
-
+    this->load_sprites("client/sprites/die",DIE_BLUE_GRUNT,DIE_GREEN_GRUNT,DIE_RED_GRUNT,DIE_YELLOW_GRUNT);
+    this->load_sprites("client/sprites/beer",BEER_BLUE,BEER_GREEN,BEER_RED,BEER_YELLOW);
+    this->load_sprites("client/sprites/celebrate",CELEBRATE_BLUE,CELEBRATE_GREEN,CELEBRATE_RED,CELEBRATE_YELLOW);
 
     //COLORLESS FLAG
 

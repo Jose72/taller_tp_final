@@ -24,7 +24,8 @@
 int main(int argc, char *argv[]){
     SDL_Surface *screen;
     std::vector<Unit*> u;
-    Units_Protected all_units(u);
+    std::map<int, Unit*>um;
+    Units_Protected all_units(um);
     bool running = true;
 
     bool waiting_server = true;
@@ -61,7 +62,6 @@ int main(int argc, char *argv[]){
     threads.push_back(new TClient_receive(socket,game_map,all_units,factory,waiting_server, running));
     threads[0]->start();
 
-
     int posx1 = 100;
     int posy1 = 100;
     int posx2 = 400;
@@ -70,14 +70,6 @@ int main(int argc, char *argv[]){
     int posCameraY = 200;
     SDL_Rect cameraRect = {0,0,640,480};
 
-    Unit *grunt = factory.createUnit(GREEN_GRUNT,posx1,posy1);
-    Unit *flag = factory.createUnit(COLORLESS_FLAG,posx2,posy2);
-    Unit *fort = factory.createUnit(FORT_SPRITE,posx1,posy2);
-    //all_units.add(grunt);
-    //all_units.push_back(flag);
-   // all_units.push_back(fort);
-
-    //game_map.set_screen(screen);
     SelectionHandler sHandler(socket);
     PlayerInterface playerInterface(screen,&sHandler,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
 
@@ -86,28 +78,7 @@ int main(int argc, char *argv[]){
 
     threads.push_back(new EventHandler(screen,playerInterface,all_units,socket, game_map, running,factory));
     threads[1]->start();
-/*
-    while(running == true){
-        int ticks =SDL_GetTicks();
-        /*
-        SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,0,0));
-        /*
-        //Una vez que se recibe se comenta la linea siguiente
-        sHandler.move_unit();
-        camera.set_camera_position(posCameraX,posCameraY);
-        camera.set_relative_position(all_units);
 
-        camera.show(all_units, game_map);
-        playerInterface.show();
-         */
-        /*
-        camera.show(all_units, game_map);
-        playerInterface.show();
-        SDL_Flip(screen);
-        */
-/*
-    }
-*/
     for (int i = 0; i <threads.size(); ++i) {
         threads[i]->join();
 

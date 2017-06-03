@@ -24,7 +24,6 @@ public:
     ~TClient_receive();
     void run();
     void stop();
-
 };
 
 

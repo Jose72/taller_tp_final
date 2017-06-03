@@ -8,12 +8,12 @@
 class Units_Protected {
 private:
     std::mutex mut;
-    std::vector<Unit*> &units;
+    std::map<int, Unit*> &units_map;
 
 public:
-    Units_Protected(std::vector<Unit*> &units);
+    Units_Protected(std::map<int, Unit*> &um);
     ~Units_Protected();
-    void add(Unit* unit);
+    void add(int cod_u, Unit* unit);
     Unit* operator [](int i);
     int size();
 

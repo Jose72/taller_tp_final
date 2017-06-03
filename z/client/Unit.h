@@ -17,20 +17,58 @@ enum Direction{
     SEVEN = 315
 };
 
+enum Attack_Direction{
+    ZERO_A = 0,
+    ONE_A = 45,
+    TWO_A = 90,
+    THREE_A = 135,
+    FOUR_A = 180,
+    FIVE_A = 225,
+    SIX_A = 270,
+    SEVEN_A = 315
+};
+
+enum State{
+    MOVING,
+    ATTACKING,
+    DEAD,
+    DRINKING,
+    CELEBRATE
+};
+
 class Unit {
 protected:
     int posx;
     int posy;
+    int cod_unit;
+    int health;
     int posxO;
     int posyO;
+    int posX_attack;
+    int posY_attack;
     int cameraPosX;
     int cameraPosY;
     Direction  direction;
-    int current_frame;
-    std::vector<Animation *> animation;
-public:
+    Attack_Direction attack_direction;
+    State state;
+    int current_frame_move;
+    int current_frame_attack;
+    int current_frame_die;
+    int current_frame_drink;
+    int current_frame_celebrate;
+    std::vector<Animation *> &animation;
+    std::vector<Animation *> &animation2;
+    std::vector<Animation *> &animation3;
+    std::vector<Animation *> &animation4;
+    std::vector<Animation *> &animation5;
 
-    Unit( std::vector<Animation *> animation, int posx, int posy);
+public:
+    Unit(std::vector<Animation *> &a0,
+         std::vector<Animation *> &a1,
+         std::vector<Animation *> &a2,
+         std::vector<Animation *> &a3,
+         std::vector<Animation *> &a4,
+         int cu, int posx, int posy);
     ~Unit();
     void animate(SDL_Rect &cameraRect);
     void set_pos(int x,int y);
@@ -39,11 +77,17 @@ public:
     int get_cameraPosY();
     int get_posx();
     int get_posy();
-
-
-
-
-
+    int get_unit_code();
+    void animate_move(SDL_Rect &cameraRect);
+    void animate_attack(SDL_Rect &cameraRect);
+    void animate_die(SDL_Rect &cameraRect);
+    void animate_drink(SDL_Rect &cameraRect);
+    void animate_celebrate(SDL_Rect &cameraRect);
+    void set_state(State s);
+    State get_state();
+    void set_health(int health);
+    int get_heatlh();
+    void set_attack(int posX, int posY);
 };
 
 
