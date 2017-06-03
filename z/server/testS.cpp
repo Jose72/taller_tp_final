@@ -8,6 +8,7 @@
 #include "actualizeUnit.h"
 #include <vector>
 #include "unitBuilder.h"
+#include "deathHandler.h"
 
 #include <unistd.h>
 /*
@@ -150,6 +151,7 @@ int test_bullet_attack(){
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
+	deathHandler dh;
 	int unit_id_count = 3;
 	std::set<int> d_units;
 	std::set<int> a_units;
@@ -170,6 +172,16 @@ int test_bullet_attack(){
 			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
 		}
 		
+		//limpio los fiambres
+		for (auto it = units.begin(); it != units.end(); ){
+			unit *u = it->second;
+			if (u->isDead()) {
+				dh.death(*u, units);
+				it = units.erase(it);
+			} else {
+				++it;
+			}
+		}
 		
 		//au(1, r1, units, mapa, 1, unit_id_count, d_units, a_units);
 		//au(1, *r2, units, mapa, 1, unit_id_count, d_units, a_units);

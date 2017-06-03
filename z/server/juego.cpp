@@ -7,6 +7,7 @@
 #include "actualizeUnit.h"
 #include <unistd.h>
 #include "unitBuilder.h"
+#include "deathHandler.h"
 
 
 juego::juego(int cant_players, tSocket* creator_skt, std::mutex &cli_m): 
@@ -114,6 +115,7 @@ void juego::run(){
 	//mapa codes de las casillas
 	
 	actualizeUnit actualizer;
+	deathHandler death_h;
 	
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
@@ -149,7 +151,6 @@ void juego::run(){
 				actualizer(it->first, *u, units, mapa, 200, id_unit_counter, dead_units, actualized_units);
 			}
 			
-			
 			usleep(200000);
 			
 			//envio a los clientes
@@ -162,13 +163,20 @@ void juego::run(){
 					s = (*it)->send((char*) &yy, sizeof(int));
 				}
 			}
-			/*
+			
 			//limpio los fiambres
-			for (auto it = units.begin(); it != units.end(); ++it){
-				unit *u1 = it->second;
+			for (auto it = units.begin(); it != units.end(); ){
+				unit *u = it->second;
+				if (u->isDead()) {
+					death_h.death(*u, units);//handler por si tiene q hacer algo
+					delete it->second; // libero mem
+					it = units.erase(it); // borro de la lista
+				} else {
+					++it;
+				}
 				
 			}
-			*/
+			
 	}
 	
 	

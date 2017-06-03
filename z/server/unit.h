@@ -96,6 +96,7 @@ class unit {
 		void setAllie(int a);
 		void setFollower(unit *u);
 		void removeTarget(unit *u);
+		bool isDead();
 };
 
 #endif

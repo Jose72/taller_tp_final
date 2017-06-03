@@ -138,7 +138,7 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 			return 0;
 		case ATTACKING:
 			std::cout << "attac" << std::endl;
-			attack_h.attackActualize(u, units, time);
+			attack_h.attackActualize(u, units, unit_id_count, time);
 			return 0;
 	}
 	

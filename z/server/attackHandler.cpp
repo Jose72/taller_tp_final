@@ -4,12 +4,12 @@
 #include "unitBuilder.h"
 #include <iostream>
 
-int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, int time){
+int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
 	int u_class = attacker.getClassId();
 	switch(u_class){
 		case ROBOT:
 		case VEHICLE:
-			return attackCommonActualize(attacker, units, time);
+			return attackCommonActualize(attacker, units, unit_id_c, time);
 		case BULLET:
 			return attackBulletActualize(attacker, time);
 		default:
@@ -19,7 +19,7 @@ int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, 
 }
 
 
-int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &units, int time){
+int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
 	unit *attacked = attacker.getTarget();
 	if (attacker.isInRange(*attacked)){
 			//actualiza el timer
@@ -31,7 +31,8 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 				unitBuilder ub;
 				unit *u = ub.build(attacker.unitToCreate(), attacker.getX(), attacker.getY());
 				u->attack(attacked);
-				units.insert(std::pair<int,unit*>(units.size()+1,u));
+				units.insert(std::pair<int,unit*>(unit_id_c,u));
+				unit_id_c++;//incremento id_units
 				//reseteo el timer
 				attacker.resetTimer();
 			} 

@@ -259,3 +259,8 @@ void unit::removeTarget(unit *u){
 		target = nullptr;
 	}
 }
+
+bool unit::isDead(){
+	if (state == DEAD) return true;
+	return false;
+}
