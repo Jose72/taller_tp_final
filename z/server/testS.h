@@ -2,6 +2,7 @@
 #define TESTS_CPP
 
 
+int test_death_of_target();
 int test_bullet_attack();
 int test_create_unit();
 int test_auto_attack_unit();

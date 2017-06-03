@@ -7,7 +7,7 @@
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
 
-enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, ATTACK_CREATING, DEAD, STANDING};
+enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING};
 
 class unit {
 	protected:
@@ -68,35 +68,50 @@ class unit {
 		void printPos();
 		int getSpeed();
 		double getRelativeDamage();
+		
+		
 		void move(int d_x, int d_y);
+		void moveToTarget();
 		void attack(unit *u);
 		void stop();
+		
+		void changeState(int state);
+		int getState();
+		
 		bool isInRange(unit &u);
+		bool isAlive();
+		bool isDead();
+		bool canAttack();
+		bool isEnemy(unit &u);
+
 		//double getDamage(double time); 
 		int takeDamage(int dam);
-		void setAttack(unit *u);
+		
 		double getDamage();
 		int attackRange();
 		unit* getTarget();
 		void printPosDest();
-		bool isEnemy(unit &u);
+		bool isInTargetRange();
+		bool targetIsEnemy();
+		
 		int checkCreating(double time);
 		void destroy();
 		int getOwner();
-		bool isAlive();
-		bool canAttack();
+		
+		//creacion-captura
 		void actualizeTimer(int time);
 		void resetTimer();
 		int unitToCreate();
-		void changeState(int state);
-		bool isInTargetRange();
-		void moveToTarget();
-		bool targetIsEnemy();
-		int getState();
+		
+		//targeting
 		void setAllie(int a);
 		void setFollower(unit *u);
+		void removeFollower(unit* u);
 		void removeTarget(unit *u);
-		bool isDead();
+		void setAttack(unit *u);
+		bool isFollowedBy(unit *u);
+		void noticeFollowersOfDeath();
+	
 };
 
 #endif

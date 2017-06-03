@@ -130,7 +130,6 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 	
 	std::cout << "start actu-----------" << std::endl;
 	int state = u.getState();
-	std::cout << "unit : " << unit_game_id << " state: " << state << std::endl;
 	switch(state){
 		case MOVING:
 			std::cout << "move" << std::endl;

@@ -7,8 +7,10 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units){
 	switch(class_unit){
 		case VEHICLE:
 		default:
-		return 0;
+			
+		break;
 	}
+	u.noticeFollowersOfDeath();
 	return 0;
 	
 }

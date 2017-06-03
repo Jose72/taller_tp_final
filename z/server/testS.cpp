@@ -105,47 +105,65 @@ int test_attack_unit_in_range(){
 	
 }
 
-int test_create_map(){
+*/
+
+
+
+int test_death_of_target(){
+	
+int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	unitBuilder ub;
+	deathHandler dh;
+	int unit_id_count = 3;
+	std::set<int> d_units;
+	std::set<int> a_units;
+	
+	
+	unit *r1 = ub.build(GRUNT, 1, 35, 18);
+	unit *r2 = ub.build(GRUNT, 2, 40, 18);
+	
+	units.insert(std::pair<int,unit*>(1,r1));
+	units.insert(std::pair<int,unit*>(2,r2));
+	r1->attack(r2);
 	
 	actualizeUnit au;
-	std::vector<int> tile_codes;
-	std::map<int, unit*> units;
-	int map_codes[100] = {0};
-	int unit_id_count = 1;
-	
-	map_codes[15] = 1;
-	map_codes[16] = 1;
-	map_codes[17] = 1;
-	map_codes[18] = 1;
-	map_codes[31] = 1;
-	map_codes[32] = 1;
-	map_codes[33] = 1;
-	map_codes[34] = 1;
-	map_codes[56] = 2;
-	map_codes[57] = 2;
-	map_codes[58] = 2;
 	for (int i = 0; i < 100; i++){
-		tile_codes.push_back(map_codes[i]);
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+		}
+		
+		//limpio los fiambres
+		for (auto it = units.begin(); it != units.end(); ){
+			unit *u = it->second;
+			if (u->isDead()) {
+				dh.death(*u, units);
+				it = units.erase(it);
+			} else {
+				++it;
+			}
+		}
+		
+		//au(1, r1, units, mapa, 1, unit_id_count, d_units, a_units);
+		//au(1, *r2, units, mapa, 1, unit_id_count, d_units, a_units);
+		std::cout << "cant u: " << units.size() << std::endl;
+		std::cout << "daño rel r2: " << r2->getRelativeDamage() << std::endl;
+		usleep(50000);
+	
 	}
 	
-	gameMap mapa(tile_codes);
-	std::cout << "mam" << std::endl;
-	mapa.printMap();
-	
-	
-	unit r(1, GRUNT, 200, 10);
-	r.move(200, 200);
-	
-	while (r.isMoving()){
-		au(r, units,mapa, 1, unit_id_count);
-	}
-	
+	delete r2;
+	delete r1;
+
 	return 0;
 }
 
 
 
-*/
+
 int test_bullet_attack(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);

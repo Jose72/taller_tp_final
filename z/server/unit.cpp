@@ -103,6 +103,11 @@ void unit::move(int d_x, int d_y){
 	dest_x = d_x;
 	dest_y = d_y;
 	state = MOVING;
+	//no sigo mas a mi target
+	if (target) {
+		target->removeFollower(this);
+		target = nullptr;
+	}
 }
 
 void unit::attack(unit *u){
@@ -112,7 +117,7 @@ void unit::attack(unit *u){
 		if (this->isInTargetRange()){
 			this->changeState(ATTACKING);
 		} else {
-			this->move(u->getX(), u->getY());
+			this->moveToTarget();
 		}
 	} 
 }
@@ -226,10 +231,15 @@ bool unit::isInTargetRange(){
 	return false;
 }
 
+//si tengo taget lo pongo como destino
+//sino me quedo quieto
 void unit::moveToTarget(){
 	if (target){
-		this->move(target->getX(), target->getY());
+		this->dest_x = target->getX();
+		this->dest_y = target->getY();
 		state = MOVING;
+	} else {
+		state = STANDING;
 	}
 }
 
@@ -249,6 +259,7 @@ void unit::setAllie(int a){
 //seteo a los que me estan siguiendo
 //para cuando muera les aviso
 void unit::setFollower(unit *u){
+	if (this->isFollowedBy(u)) return; //si ya lo tengo no hago nada
 	followers.push_back(u);
 }
 
@@ -263,4 +274,31 @@ void unit::removeTarget(unit *u){
 bool unit::isDead(){
 	if (state == DEAD) return true;
 	return false;
+}
+
+//true si u es uno de mis followers
+bool unit::isFollowedBy(unit *u){
+	for (auto it = followers.begin(); it != followers.end(); ++it){
+		if ((*it) == u){
+			return true;
+		}
+	}
+	return false;
+}
+
+//remuevo de mi lista de followers
+void unit::removeFollower(unit* u){
+	for (auto it = followers.begin(); it != followers.end(); ++it){
+		if ((*it) == u){
+			followers.erase(it);
+			return;
+		}
+	}
+}
+
+//le digo a mis followers que me mori, que seteen su target a null
+void unit::noticeFollowersOfDeath(){
+	for (auto it = followers.begin(); it != followers.end(); ++it){
+		(*it)->removeTarget(this);
+	}
 }
