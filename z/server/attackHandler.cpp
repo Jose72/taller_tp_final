@@ -2,13 +2,14 @@
 #include "attackHandler.h"
 #include "math.h"
 #include "unitBuilder.h"
+#include <iostream>
 
-int attackHandler::attackActualize(unit &attacker, int time){
+int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, int time){
 	int u_class = attacker.getClassId();
 	switch(u_class){
 		case ROBOT:
 		case VEHICLE:
-			return attackCommonActualize(attacker, time);
+			return attackCommonActualize(attacker, units, time);
 		case BULLET:
 			return attackBulletActualize(attacker, time);
 		default:
@@ -18,34 +19,26 @@ int attackHandler::attackActualize(unit &attacker, int time){
 }
 
 
-int attackHandler::attackCommonActualize(unit &attacker, int time){
+int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &units, int time){
 	unit *attacked = attacker.getTarget();
 	if (attacker.isInRange(*attacked)){
-			//si me estoy moviendo me detengo
-			//estaba siguiendo a la unidad para atacar
-			if (attacker.isMoving()) {
-				//std::cout << "me detuve" << std::endl;
-				attacker.stop();
-			}
-			
 			//actualiza el timer
 			attacker.actualizeTimer(time);
 			//si estoy en cond de atacar lo hago
 			if (attacker.canAttack()){
-				//que se haga en create
-				//set create bullet
-				//attacker.resetAttackTimer();
-				//unitBuilder ub;
-				//unit *u = ub.build(attacker.unitToCreate(), attacker.getX(), attacker.getY());
+				//creo una bullet y la inserto
+				std::cout << "crea bullet" << std::endl;
+				unitBuilder ub;
+				unit *u = ub.build(attacker.unitToCreate(), attacker.getX(), attacker.getY());
+				u->attack(attacked);
+				units.insert(std::pair<int,unit*>(units.size()+1,u));
+				//reseteo el timer
+				attacker.resetTimer();
 			} 
-		
-			//attacked->takeDamage(round(attacker.getDamage()));
 		} else {
 			//si no estoy en rango, seteo como destino a la unidad
 			//el target se puede estar moviendo por eso hay que hacer esto cada vez
-			//asi actualizar el destino
 			attacker.move(attacked->getX(), attacked->getY());
-			attacker.changeState(MOVING);
 		}
 		return 0;
 }

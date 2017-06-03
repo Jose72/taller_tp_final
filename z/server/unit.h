@@ -28,6 +28,7 @@ class unit {
 		int speed;
 		
 		//ataque
+		std::vector<unit*> followers;
 		unit *target;
 		int attack_range;
 		int base_damage;
@@ -51,8 +52,9 @@ class unit {
 		*/
 	public:
 		unit(int owner, int unit_id, int x, int y);
-		unit(int owner, int class_id, int unit_id, std::vector<int> &allies, 
-int x, int y, int health, int state, int speed, int a_range, int base_damage, int base_time, int tech_level);
+		unit(int owner, int class_id, int unit_id, int x, int y, 
+	int health, int state, int speed, int a_range, int base_damage, 
+	int base_time, int unit_to_c, int tech_level);
 		void setPos(int p_x, int p_y);
 		bool isMoving();
 		bool isAttacking();
@@ -67,6 +69,7 @@ int x, int y, int health, int state, int speed, int a_range, int base_damage, in
 		int getSpeed();
 		double getRelativeDamage();
 		void move(int d_x, int d_y);
+		void attack(unit *u);
 		void stop();
 		bool isInRange(unit &u);
 		//double getDamage(double time); 
@@ -90,6 +93,9 @@ int x, int y, int health, int state, int speed, int a_range, int base_damage, in
 		void moveToTarget();
 		bool targetIsEnemy();
 		int getState();
+		void setAllie(int a);
+		void setFollower(unit *u);
+		void removeTarget(unit *u);
 };
 
 #endif

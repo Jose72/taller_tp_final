@@ -82,10 +82,9 @@ void juego::sendInit(){
 	
 	
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
-	std::vector<int> all;
-	unit *u1 = builder.build(GRUNT, 1, all, 60, 15);
+	unit *u1 = builder.build(GRUNT, 1, 60, 15);
 	
-	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
+	units.insert(std::pair<int,unit*>((units.size()+1),u1));
 	id_unit_counter++;
 	
 	int unit_code = GRUNT;
@@ -142,13 +141,20 @@ void juego::run(){
 			cli_m.unlock();
 			
 			
-			//actualizo las undiades --- crear una func aparte!!!!!!
+			//actualizo las undiades (pendiente: crear una func aparte)
 			std::set<int> dead_units;
 			std::set<int> actualized_units;
 			for (auto it = units.begin(); it != units.end(); ++it){
+				unit *u = it->second;
+				actualizer(it->first, *u, units, mapa, 200, id_unit_counter, dead_units, actualized_units);
+			}
+			
+			
+			usleep(200000);
+			
+			//envio a los clientes
+			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u1 = it->second;
-				actualizer(it->first, *u1, units, mapa, 200, id_unit_counter, dead_units, actualized_units);
-				sleep(1);
 				int xx = u1->getX();
 				int yy = u1->getY();
 				for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
@@ -156,7 +162,13 @@ void juego::run(){
 					s = (*it)->send((char*) &yy, sizeof(int));
 				}
 			}
-			
+			/*
+			//limpio los fiambres
+			for (auto it = units.begin(); it != units.end(); ++it){
+				unit *u1 = it->second;
+				
+			}
+			*/
 	}
 	
 	

@@ -86,119 +86,6 @@ return 0;
 
 
 
-int moveActualize(unit &u, gameMap &mapa, double time){
-	
-		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
-	//necesito clse de unidad
-		int c_id = u.getClassId();
-		int x_unit = u.getX();
-		int y_unit = u.getY();
-		//saco casillas origen y destino 
-		tile *orig = mapa.getTilePFromUnit(x_unit, y_unit);
-		tile *dest = mapa.getTilePFromUnit(u.getDestX(), u.getDestY());
-		//orig->printTile();
-		//dest->printTile();
-		std::vector<tile*> camino;
-		
-		//corro el astart para obtener el camino
-		aStart(orig, dest, mapa, c_id, camino);
-		
-		/*
-		std::cout << "camnio" << std::endl;
-		for (unsigned int i = 0; i < camino.size(); i++){
-			camino[i]->printTile();
-		}
-		std::cout << "camnio end" << std::endl;
-		*/
-		
-		//se tiene que mover hasta el centro de la siguiente casilla del camino
-		//que seria la segunda guardada en camino (la primera en el origen)
-		//si no hay mas de 1 es el origen
-		//std::cout << camino.size() << std::endl;
-		if (camino.size() == 0) return 1;
-		tile *closer_tile = camino[camino.size() - 1];
-		if (camino.size() > 1){
-			closer_tile = camino[camino.size() - 2];
-			
-		}
-		
-		//std::cout << "closer tile" << std::endl;
-		//closer_tile->printTile();
-		
-		//conseguir el centro de la casilla (coord pixel)
-		int x_closer = 15 + 32 * closer_tile->getX();
-		int y_closer = 15 + 32 * closer_tile->getY(); 
-		//si hay una sola casilla (estas en la casilla destino)
-		//los yx que queres son los de destino, no el centro de la casilla
-		if (camino.size() == 1){
-			x_closer = u.getDestX(); 
-			y_closer = u.getDestY();
-		}
-		
-		//std::cout << "x_closer" << x_closer << std::endl;
-		//std::cout << "y_closer" << y_closer << std::endl;
-		
-		//distancia a esa coord (euclidea)
-		double dist = sqrt(pow((x_unit - x_closer),2) + pow((y_unit - y_closer),2));
-		//std::cout << x_unit - x_closer << std::endl;
-		//std::cout << y_unit - y_closer << std::endl;
-		
-		if (dist == 0) { //ya estas en el destino
-			return 0;
-		}
-		
-		//seteo velocidad
-		//multiplico por el factor de terreno de la casilla actual
-		//y por 
-		double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
-		//si es una unidad no movible hay un error
-		if (speed == 0) return 1; //no deberia suceder
-		
-		//calculo los nuevos xy
-		int new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
-		int new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
-		/*
-		std::cout << "time " << time << std::endl;
-		std::cout << "speed " << speed << std::endl;
-		std::cout << "dist " << dist << std::endl;
-		std::cout << "new_x " << new_x << std::endl;
-		std::cout << "new_y " << new_y << std::endl;
-		*/
-		//si la dist de los nuevos xy con el origen es mayor o igual
-		//a la del origen on el destno, seteo el destino como pos actual
-		//sino seteo los nuevos xy
-		
-		if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) < dist){
-			u.setPos(round(new_x), round(new_y));
-		} else {
-			u.setPos(x_closer, y_closer);
-		}
-
-		u.printPos();
-		return 0;
-}
-
-int attackActualize(unit &attacker, double time){
-	unit *attacked = attacker.getTarget();
-	if (attacker.isInRange(*attacked)){
-			//si me estoy moviendo me detengo
-			//estaba siguiendo a la unidad para atacar
-			if (attacker.isMoving()) {
-				//std::cout << "me detuve" << std::endl;
-				attacker.stop();
-			}
-			attacked->takeDamage(round(attacker.getDamage()));
-		} else {
-			//si no estoy en rango, seteo como destino a la unidad
-			//el target se puede estar moviendo por eso hay que hacer esto cada vez
-			//asi actualizar el destino
-			//hay que usar un bool para saber si es auto-ataque y no hacer esto
-			//std::cout << "seteo target como destino" << std::endl;
-			attacker.move(attacked->getX(), attacked->getY());
-		}
-		return 0;
-}
-
 int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &mapa, double time){
 	//si el atacante se mueve no hay autoataque
 	if (attacker.isMoving()) return 1;
@@ -241,28 +128,28 @@ int createActualize(unit &u, std::map<int, unit*> &units, gameMap &mapa, double 
 int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count, std::set<int> &dead_unit, std::set<int> &actualized_units){
 	//std::cout << "pasada---------------------------------------" << std::endl;
 	
-	std::cout << "state: " << u.getState() << std::endl;
-	
-	move_h.moveActualize(u, mapa, 1);
-	/*
-	if (u.isMoving()) {
-		moveActualize(u, mapa, 1);
-	} 
-	
-	
-	if (u.isAttacking()){
-		attackActualize(u, time);
-	} else {
-		autoAttackActualize(u, units, mapa, time);
+	std::cout << "start actu-----------" << std::endl;
+	int state = u.getState();
+	std::cout << "unit : " << unit_game_id << " state: " << state << std::endl;
+	switch(state){
+		case MOVING:
+			std::cout << "move" << std::endl;
+			move_h.moveActualize(u, mapa, 1);
+			return 0;
+		case ATTACKING:
+			std::cout << "attac" << std::endl;
+			attack_h.attackActualize(u, units, time);
+			return 0;
 	}
 	
+	/*
 	//pendiente: chequear la cant de unidades antes de crear
 	
 	if (u.isCreating()){ 
 		createActualize(u, units, mapa, time, unit_id_count);
 	}
 	*/
-	
+	std::cout << "end actu---------" << std::endl;
 	return 0;
 }
 

@@ -6,7 +6,7 @@
 
 class unitBuilder {
 	public:
-		unit* build(int unit_code, int owner, std::vector<int> &allies, int x, int y);
+		unit* build(int unit_code, int owner, int x, int y);
 		unit* build(int unit_code, int x, int y);
 		
 };

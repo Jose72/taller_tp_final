@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-	//test_move_unit();
+	//test_bullet_attack();
 	
 	char c = '0';
 	tServer server(atoi(argv[1]));

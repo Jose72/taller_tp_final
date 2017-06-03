@@ -12,12 +12,12 @@ dest_x(x), dest_y(y), target(nullptr) {
 	
 };
 
-unit::unit(int owner, int class_id, int unit_id, std::vector<int> &allies, 
-int x, int y, int health, int state, int speed, int a_range, int base_damage, int base_time, int tech_level): owner(owner), 
-allies(allies), class_id(class_id), unit_id(unit_id), x(x), y(y), 
+unit::unit(int owner, int class_id, int unit_id, 
+int x, int y, int health, int state, int speed, int a_range, int base_damage, int base_time, 
+int unit_to_c, int tech_level): owner(owner), class_id(class_id), unit_id(unit_id), x(x), y(y), 
 b_health(health), health(health), state(state), dest_x(x), dest_y(y) ,speed(speed), 
 target(nullptr), attack_range(a_range), base_damage(base_damage), base_time(base_time), 
-countdown(base_time), tech_level(tech_level) {};
+countdown(base_time), unit_code_to_create(unit_to_c), tech_level(tech_level) {};
 
 
 
@@ -80,6 +80,8 @@ int unit::getDestY(){
 	return dest_y;
 }
 
+
+
 void unit::printPos(){
 	std::cout << "unit--------" << std::endl;
 	//std::cout << "class_id: " << class_id << std::endl;
@@ -101,6 +103,18 @@ void unit::move(int d_x, int d_y){
 	dest_x = d_x;
 	dest_y = d_y;
 	state = MOVING;
+}
+
+void unit::attack(unit *u){
+	if (u) {
+		target = u;
+		u->setFollower(this);
+		if (this->isInTargetRange()){
+			this->changeState(ATTACKING);
+		} else {
+			this->move(u->getX(), u->getY());
+		}
+	} 
 }
 
 void unit::stop(){
@@ -183,7 +197,10 @@ bool unit::canAttack(){
 //resto el tiempo del time slice al countdown
 //el tiempo en milisegundos
 void unit::actualizeTimer(int time){
-	if (countdown - time == 0) return;
+	if (countdown - time < 0) {
+		countdown = 0;
+		return;
+	}
 	countdown = countdown - time;
 }
 
@@ -223,4 +240,22 @@ bool unit::targetIsEnemy(){
 
 int unit::getState(){
 	return state;
+}
+
+void unit::setAllie(int a){
+	allies.push_back(a);
+}
+
+//seteo a los que me estan siguiendo
+//para cuando muera les aviso
+void unit::setFollower(unit *u){
+	followers.push_back(u);
+}
+
+
+//si estaba targeteando a la unidad, no lo hago mas
+void unit::removeTarget(unit *u){
+	if (target == u){
+		target = nullptr;
+	}
 }

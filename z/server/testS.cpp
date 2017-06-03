@@ -144,20 +144,47 @@ int test_create_map(){
 
 
 
-
+*/
 int test_bullet_attack(){
-	unit r1(1, GRUNT, 35, 18);
-	unit r2(2, GRUNT, 40, 18);
-	unit r3(3, GRUNT, 42, 18);
-	unit r4(4, GRUNT, 43, 18);
-	unit r5(5, GRUNT, 35, 22);
-	std::cout << r1.isInRange(r2) << std::endl;
-	std::cout << r1.isInRange(r3) << std::endl;
-	std::cout << r1.isInRange(r4) << std::endl;
-	std::cout << r1.isInRange(r5) << std::endl;
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	unitBuilder ub;
+	int unit_id_count = 3;
+	std::set<int> d_units;
+	std::set<int> a_units;
+	
+	
+	unit *r1 = ub.build(GRUNT, 1, 35, 18);
+	unit *r2 = ub.build(GRUNT, 2, 40, 18);
+	
+	units.insert(std::pair<int,unit*>(1,r1));
+	units.insert(std::pair<int,unit*>(2,r2));
+	r1->attack(r2);
+	
+	actualizeUnit au;
+	for (int i = 0; i < 27; i++){
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+		}
+		
+		
+		//au(1, r1, units, mapa, 1, unit_id_count, d_units, a_units);
+		//au(1, *r2, units, mapa, 1, unit_id_count, d_units, a_units);
+		std::cout << "cant u: " << units.size() << std::endl;
+		std::cout << "daño rel r2: " << r2->getRelativeDamage() << std::endl;
+		usleep(200000);
+	
+	}
+	
+	delete r2;
+	delete r1;
+
 	return 0;
 }
-*/
+
 
 
 int test_move_unit(){
