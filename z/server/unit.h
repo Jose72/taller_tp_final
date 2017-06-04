@@ -11,10 +11,10 @@ enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING};
 
 class unit {
 	protected:
+		int unit_id;
+		int class_id;
 		int owner;
 		std::vector<int> allies;
-		int class_id;
-		int unit_id;
 		int x;
 		int y;
 		int b_health;
@@ -32,6 +32,7 @@ class unit {
 		unit *target;
 		int attack_range;
 		int base_damage;
+		bool auto_attack;
 		
 		//creacion o ataque
 		int base_time;
@@ -42,23 +43,13 @@ class unit {
 		//bandera
 		
 		
-		
-		/*
-		armament arma;
-		int shoot_freq; //en segundos
-		int range;
-		int fab_time; //en segundos
-		int min_tech_lvl;
-		*/
 	public:
-		unit(int owner, int unit_id, int x, int y);
-		unit(int owner, int class_id, int unit_id, int x, int y, 
+		unit(int unit_id, int owner, int x, int y);
+		unit(int unit_id, int class_id, int owner, int x, int y, 
 	int health, int state, int speed, int a_range, int base_damage, 
 	int base_time, int unit_to_c, int tech_level);
 		void setPos(int p_x, int p_y);
 		bool isMoving();
-		bool isAttacking();
-		bool isCreating();
 		int getUnitId();
 		int getClassId();
 		int getX();
@@ -83,6 +74,8 @@ class unit {
 		bool isDead();
 		bool canAttack();
 		bool isEnemy(unit &u);
+		bool canCreate();
+		bool autoAttackEnabled();
 
 		//double getDamage(double time); 
 		int takeDamage(int dam);
@@ -104,6 +97,7 @@ class unit {
 		int unitToCreate();
 		
 		//targeting
+		void setAutoAttack(unit *u);
 		void setAllie(int a);
 		void setFollower(unit *u);
 		void removeFollower(unit* u);

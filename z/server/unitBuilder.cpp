@@ -45,13 +45,13 @@ unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 		//EDIFICIOS
 		case FORT:
 			return new unit(unit_code, BUILDING, owner, x, y, 
-			BUILDING_HEALTH, CREATING, 0, 0, 0, 0, -1, 1);
+			BUILDING_HEALTH, CREATING, 0, 0, 0, GRUNT_F_TIME*1000, GRUNT, 1);
 		case VEHICLE_FACTORY:
 			return new unit(unit_code, BUILDING, owner, x, y, 
-			BUILDING_HEALTH, CREATING, 0, 0, 0, 0, -1, 1);
+			BUILDING_HEALTH, CREATING, 0, 0, 0, JEEP_F_TIME*1000, JEEP, 1);
 		case ROBOT_FACTORY:
 			return new unit(unit_code, BUILDING, owner, x, y, 
-			BUILDING_HEALTH, CREATING, 0, 0, 0, 0, -1, 1);
+			BUILDING_HEALTH, CREATING, 0, 0, 0, GRUNT_F_TIME*1000, GRUNT, 1);
 			
 			
 		default:

@@ -37,7 +37,16 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 				attacker.resetTimer();
 			} 
 		} else {
-			//si no estoy en rango, seteo como destino a la unidad
+			if (attacker.autoAttackEnabled()){
+				//si es un autoataque y me fui de rango
+				//remuevo el target y quedo en STANDING
+				//(autoataque sigue encendido)
+				std::cout << "disable autoptataq" << std::endl;
+				attacker.removeTarget(attacked);
+				attacker.changeState(STANDING);
+				attacker.resetTimer();
+			}
+			//si no estoy en rango(y no es autoataque), seteo como destino a la unidad
 			//el target se puede estar moviendo por eso hay que hacer esto cada vez
 			attacker.moveToTarget();
 		}

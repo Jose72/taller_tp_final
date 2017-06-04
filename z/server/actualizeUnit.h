@@ -7,6 +7,7 @@
 #include "tile.h"
 #include "moveHandler.h"
 #include "attackHandler.h"
+#include "createHandler.h"
 #include <map>
 #include <set>
 
@@ -16,6 +17,7 @@ std::vector<tile*> &path);
 class actualizeUnit: public behaviour {
 		moveHandler move_h;
 		attackHandler attack_h;
+		createHandler create_h;
 	public:
 		int operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, 
 		double time, int &unit_id_count, std::set<int> &dead_unit, std::set<int> &actualized_units);

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "math.h"
 
-unit::unit(int owner, int unit_id, int x, int y): owner(owner), unit_id(unit_id), x(x), y(y), 
+unit::unit(int unit_id, int owner, int x, int y): unit_id(unit_id), owner(owner), x(x), y(y), 
 dest_x(x), dest_y(y), target(nullptr) {
 	class_id = getClassCodeFromUnit(unit_id);
 	speed = getSpeedFromUnit(unit_id);
@@ -12,23 +12,15 @@ dest_x(x), dest_y(y), target(nullptr) {
 	
 };
 
-unit::unit(int owner, int class_id, int unit_id, 
-int x, int y, int health, int state, int speed, int a_range, int base_damage, int base_time, 
-int unit_to_c, int tech_level): owner(owner), class_id(class_id), unit_id(unit_id), x(x), y(y), 
-b_health(health), health(health), state(state), dest_x(x), dest_y(y) ,speed(speed), 
-target(nullptr), attack_range(a_range), base_damage(base_damage), base_time(base_time), 
-countdown(base_time), unit_code_to_create(unit_to_c), tech_level(tech_level) {};
+unit::unit(int unit_id, int class_id, int owner, int x, int y, 
+int health, int state, int speed, int a_range, int base_damage, 
+int base_time, int unit_to_c, int tech_level): unit_id(unit_id),   
+class_id(class_id), owner(owner),x(x), y(y), b_health(health), 
+health(health), state(state), dest_x(x), dest_y(y) ,speed(speed), 
+target(nullptr), attack_range(a_range), base_damage(base_damage), 
+auto_attack(false), base_time(base_time), countdown(base_time), 
+unit_code_to_create(unit_to_c), tech_level(tech_level) {}
 
-
-
-/*
-unit::unit(int class_id, int unit_id, int x, int y, int health, int speed): 
-class_id(class_id), unit_id(unit_id), x(x), y(y), dest_x(x), dest_y(y), 
-b_health(health), health(health), speed(speed), attacking(nullptr) {
-	attack_b = new attackBehaviour(unit_id);
-	create_b = new createBehaviour(unit_id);
-};	
-*/
 
 
 void unit::setPos(int p_x, int p_y){
@@ -37,24 +29,11 @@ void unit::setPos(int p_x, int p_y){
 }
 
 
-
-//preguntar a los beaviours ???
 bool unit::isMoving(){
-	//pendiente: crear un moveBehaviour y chequear eso en vez del id de clase
+	
 	if ((x != dest_x || y != dest_y)) return true;
 	return false;
 };
-
-bool unit::isAttacking(){
-	//si tiene objetivo y ataq behaviour
-	if (target && this->isEnemy(*target)) return true;
-	return false;
-}
-
-
-//////
-
-
 
 int unit::getUnitId(){
 	return unit_id;
@@ -81,7 +60,6 @@ int unit::getDestY(){
 }
 
 
-
 void unit::printPos(){
 	std::cout << "unit--------" << std::endl;
 	//std::cout << "class_id: " << class_id << std::endl;
@@ -99,9 +77,15 @@ double unit::getRelativeDamage(){
 	return ((b_health - health) / (double) b_health);
 }
 
+
+//////////////////////////////////////////////////
+////// EVENT METHODS /////////////////////////////
+//////////////////////////////////////////////////
+
 void unit::move(int d_x, int d_y){
 	dest_x = d_x;
 	dest_y = d_y;
+	auto_attack = false;
 	state = MOVING;
 	//no sigo mas a mi target
 	if (target) {
@@ -112,6 +96,7 @@ void unit::move(int d_x, int d_y){
 
 void unit::attack(unit *u){
 	if (u) {
+		auto_attack = false;
 		target = u;
 		u->setFollower(this);
 		if (this->isInTargetRange()){
@@ -121,6 +106,13 @@ void unit::attack(unit *u){
 		}
 	} 
 }
+
+
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
 
 void unit::stop(){
 	dest_x = x;
@@ -170,11 +162,13 @@ void unit::printPosDest(){
 bool unit::isEnemy(unit &u){
 	//pendiente: chequear si el owner es mageMap 
 	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
-	
 	if (this->owner != u.owner) {
 		for (auto it = allies.begin(); it != allies.end(); ++it){
-			if ((*it) == u.owner) return false;
+			if ((*it) == u.owner) {
+				return false;
+			}
 		}
+		
 		//if (0 == u.owner) return true; //es un objeto del mapa
 		return true;
 	}
@@ -301,4 +295,19 @@ void unit::noticeFollowersOfDeath(){
 	for (auto it = followers.begin(); it != followers.end(); ++it){
 		(*it)->removeTarget(this);
 	}
+}
+
+bool unit::canCreate(){
+	return (countdown == 0);
+}
+
+//setea target, pone en autoatacke y pasa al ataque
+void unit::setAutoAttack(unit *u){
+	target = u;
+	auto_attack = true;
+	state = ATTACKING;
+}
+
+bool unit::autoAttackEnabled(){
+	return auto_attack;
 }

@@ -87,68 +87,48 @@ return 0;
 
 
 int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &mapa, double time){
-	//si el atacante se mueve no hay autoataque
-	if (attacker.isMoving()) return 1;
+	int class_u = attacker.getClassId();
+	//si no es robot o vehiculo no hay autoataque (necesario????)
+	if (class_u != ROBOT && class_u != VEHICLE) return 1;
 	//recorro el vect de unidades
 	for (auto it = units.begin(); it != units.end(); ++it){
 		unit *target = it->second;
 		//chequeo quien es el dueño de la unidad
-		if (target->isEnemy(attacker)){
+		
+		if (target->isEnemy(attacker) && target->getClassId() != BULLET){
 			//si esta en rango
 			if (attacker.isInRange(*target)){
-			
-				target->takeDamage(round(attacker.getDamage()));
-				//le pego y ya, no sigo con los demas
+				attacker.setAutoAttack(target);
 				return 0;
-				
-				// en vez de esto se podria setear la unidad como target
-				// con un booleano que indique autoataque
-				// y que la actualizacion de ataque haga el resto
-			
 			}
-		
-		
 		}
 	}
-	
-	return 0;
+	return 1;
 }
-/*
-int createActualize(unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count){
-	int new_u_code = u.checkCreating(time);
-	if (new_u_code != -1){
-		unit *n_u = new unit(u.getOwner(), new_u_code, u.getDestX(), u.getDestY());
-		units.insert(std::pair<int,unit*>(unit_id_count, n_u));
-		unit_id_count++;
-		std::cout << "new unit" <<std::endl;
-	}
-	return 0;
-}
-*/
+
 int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count, std::set<int> &dead_unit, std::set<int> &actualized_units){
-	//std::cout << "pasada---------------------------------------" << std::endl;
-	
-	std::cout << "start actu-----------" << std::endl;
+	//std::cout << "start actu-----------" << std::endl;
 	int state = u.getState();
 	switch(state){
 		case MOVING:
-			std::cout << "move" << std::endl;
+			std::cout << "unit: " << unit_game_id << " move" << std::endl;
 			move_h.moveActualize(u, mapa, 1);
 			return 0;
 		case ATTACKING:
-			std::cout << "attac" << std::endl;
+			std::cout << "unit: " << unit_game_id << " attac" << std::endl;
 			attack_h.attackActualize(u, units, unit_id_count, time);
 			return 0;
+		case CREATING:
+			//pendiente: chequear la cant de unidades antes de crear
+			std::cout << "unit: " << unit_game_id << " creat" << std::endl;
+			create_h.createActualize(u, units, unit_id_count, time);
+			return 0;
+		case STANDING:
+			std::cout << "unit: " << unit_game_id << " stand" << std::endl;
+			autoAttackActualize(u, units, mapa, time);
+			return 0;
 	}
-	
-	/*
-	//pendiente: chequear la cant de unidades antes de crear
-	
-	if (u.isCreating()){ 
-		createActualize(u, units, mapa, time, unit_id_count);
-	}
-	*/
-	std::cout << "end actu---------" << std::endl;
+	//std::cout << "end actu---------" << std::endl;
 	return 0;
 }
 

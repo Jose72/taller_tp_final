@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-	//test_death_of_target();
+	//test_auto_attack_unit();
 	
 	char c = '0';
 	tServer server(atoi(argv[1]));

@@ -39,73 +39,85 @@ int test_create_unit(){
 	return 0;
 }
 
-
-int test_auto_attack_unit(){
-	int map_codes[100] = {0};
-	gameMap mapa(&map_codes[0], 100);
-	std::map<int, unit*> units;
-	int unit_id_count = 1;
-	
-	unit r1(1, GRUNT, 35, 18);
-	unit r2(2, GRUNT, 40, 18);
-	unit r3(3, GRUNT, 60, 18);
-	actualizeUnit au;
-	units.insert(std::pair<int,unit*>(1,&r1));
-	units.insert(std::pair<int,unit*>(2,&r2));
-	units.insert(std::pair<int,unit*>(3,&r3));
-	
-	r1.move(44, 22);
-	r3.setAttack(&r2);
-	for (int i = 0; i < 27; i++){
-		au(r1, units, mapa, 1, unit_id_count);
-		au(r2, units, mapa, 1, unit_id_count);
-		au(r3, units, mapa, 1, unit_id_count);
-		
-		std::cout << "daño rel r1: " << r1.getRelativeDamage() << std::endl;
-		std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
-		std::cout << "daño rel r3: " << r3.getRelativeDamage() << std::endl;
-	}
-
-	
-	return 0;
-	
-}
-
-
-int test_attack_unit_in_range(){
-	int map_codes[100] = {0};
-	gameMap mapa(&map_codes[0], 100);
-	std::map<int, unit*> units;
-	int unit_id_count = 1;
-	
-	unit r1(1,GRUNT, 35, 18);
-	unit r2(2,GRUNT, 40, 18);
-	unit r4(3,GRUNT, 35, 18);
-	unit r5(4,JEEP, 44, 18);
-	actualizeUnit au;
-	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
-	r1.setAttack(&r2);
-	au(r1, units, mapa, 1, unit_id_count);
-	std::cout << "daño rel r2: " << r2.getRelativeDamage() << std::endl;
-	
-	
-	r5.setAttack(&r4);
-	
-	r4.move(100, 18);
-	
-	for (int i = 0; i < 27; i++){
-		au(r4, units,mapa, 1, unit_id_count);
-		au(r5, units,mapa, 1, unit_id_count);
-		
-		std::cout << "daño rel r4: " << r4.getRelativeDamage() << std::endl;
-	}
-
-	
-	return 0;
-	
-}
-
 */
+int test_auto_attack_unit(){
+int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	unitBuilder ub;
+	int unit_id_count = 3;
+	std::set<int> d_units;
+	std::set<int> a_units;
+	
+	unit *r1 = ub.build(GRUNT, 1, 35, 18);
+	unit *r2 = ub.build(GRUNT, 2, 40, 18);
+	units.insert(std::pair<int,unit*>(1,r1));
+	units.insert(std::pair<int,unit*>(2,r2));
+
+	actualizeUnit au;
+	for (int i = 0; i < 30; i++){
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+		}
+		if (i == 21) {
+			std::cout << "-------------------------------" << std::endl;
+			r2->move(55,55);
+		}
+		std::cout << "rel dam r1: " << r1->getRelativeDamage() << std::endl;
+		std::cout << "rel dam r2: " << r2->getRelativeDamage() << std::endl;
+		//usleep(50000);
+	
+	}
+	for (auto it = units.begin(); it != units.end(); ++it){
+			delete it->second;
+		}
+	return 0;
+	
+}
+
+int test_create_unit(){
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	unitBuilder ub;
+	int unit_id_count = 2;
+	std::set<int> d_units;
+	std::set<int> a_units;
+	
+	
+	unit *r1 = ub.build(FORT, 1, 35, 18);
+	units.insert(std::pair<int,unit*>(1,r1));
+	
+	int t;
+	actualizeUnit au;
+	for (int i = 0; i < 3000; i++){
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+		}
+		if (units.size() > 1) {
+			t = i;
+			break;
+		}
+		std::cout << "cant u: " << units.size() << std::endl;
+		//usleep(50000);
+	
+	}
+	
+	std::cout << "t: " << t << std::endl;
+	
+	for (auto it = units.begin(); it != units.end(); ++it){
+			delete it->second;
+		}
+
+	return 0;
+	
+}
+
+
 
 
 
