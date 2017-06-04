@@ -6,7 +6,7 @@
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
 
-SelectionHandler::SelectionHandler(tSocket &s):socket(s){
+SelectionHandler::SelectionHandler(Protocol &p):protocol(p){
     this->unit_selected = false;
 }
 
@@ -21,7 +21,6 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
             if(BETWEEN(units[i]->get_posy(),dy1,dy2)){
                 this->unit_selected = true;
                 this->unit = units[i];
-                set_destiny(this->unit->get_posx(),this->unit->get_posy());
             }
         }
     }
@@ -57,14 +56,27 @@ bool SelectionHandler::unit_select() {
     return this->unit_selected;
 }
 
-void SelectionHandler::set_destiny(int destX, int destY) {
-    this->destinyX = destX;
-    this->destinyY = destY;
-    //int unit_id = this->unit->get_id();
-    //socket.send((char*)id,4);
-    socket.send((char*)destX,4);
-    socket.send((char*)destY,4);
+void SelectionHandler::set_objetive(int destX, int destY, Units_Protected &units) {
+    int dx1 = destX - SIZE_OF_DELTA;
+    int dx2 = destX + SIZE_OF_DELTA;
+    int dy1 = destY - SIZE_OF_DELTA;
+    int dy2 = destY + SIZE_OF_DELTA;
+    bool attack = false;
+    Unit * enemy;
 
+    for (int i = 0; i<units.size() ; ++i) {
+        if(BETWEEN(units[i]->get_posx(),dx1,dx2)){
+            if(BETWEEN(units[i]->get_posy(),dy1,dy2)){
+                enemy = units[i];
+                attack = true;
+            }
+        }
+    }
+    if(attack){
+        protocol.attackUnitCS(unit->get_unit_code(),enemy->get_unit_code());
+    } else {
+        protocol.moveUnitCS(unit->get_unit_code(),destX,destY);
+    }
 }
 
 

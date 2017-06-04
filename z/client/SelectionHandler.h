@@ -6,6 +6,7 @@
 #include "Unit.h"
 #include "Units_Protected.h"
 #include "../common/Socket.h"
+#include "Protocol.h"
 
 #define SELECTOR_D 20
 
@@ -15,13 +16,12 @@ private:
     int destinyY;
     bool unit_selected;
     Unit * unit;
-    tSocket &socket;
-
+    Protocol &protocol;
 
 public:
-    SelectionHandler(tSocket &s);
+    SelectionHandler(Protocol &p);
     void select_unit(std::vector<Unit*> &units);
-    void set_destiny(int destX, int destY);
+    void set_objetive(int destX, int destY, Units_Protected &units);
     void set_location(int posX, int posY,Units_Protected &units);
     void move_unit();
     bool unit_select();

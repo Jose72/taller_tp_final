@@ -15,6 +15,7 @@ private:
     bool &running;
     Factory_Units &factory;
 
+
 public:
     EventHandler(SDL_Surface *screen,PlayerInterface &p, Units_Protected &u, tSocket &s, Game_map &m, bool &b, Factory_Units &f);
     ~EventHandler();

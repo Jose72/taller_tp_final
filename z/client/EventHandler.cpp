@@ -16,17 +16,20 @@ EventHandler::EventHandler(SDL_Surface *screen,PlayerInterface &p, Units_Protect
 EventHandler::~EventHandler() {}
 
 void EventHandler::run() {
-    SelectionHandler sHandler(socket);
+    Protocol protocol(socket,units,gameMap,factory);
+    SelectionHandler sHandler(protocol);
     SDL_Event event;
     int posCameraX = 0;
     int posCameraY = 0;
     Camera2 camera2(posCameraX,posCameraY,480,240,WINDOW_W,WINDOW_H,factory);
     int destinoX, destinoY, seleccionX, seleccionY;
     while(running == true) {
+        //MOSTRAR
         camera2.set_position_cameraRect(posCameraX,posCameraY);
         camera2.draw(units,gameMap);
         playerInterface.show();
         SDL_Flip(screen);
+        //MOSTRAR
         if (SDL_PollEvent(&event)) {
             SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
             switch (event.type) {
@@ -73,7 +76,7 @@ void EventHandler::run() {
                         if (event.button.button == LEFT_BUTTON) {
                             destinoX = event.button.x;
                             destinoY = event.button.y;
-                            sHandler.set_destiny(destinoX, destinoY);
+                            sHandler.set_objetive(destinoX, destinoY,units);
                             break;
                             //SDL_Quit()
                         }
@@ -87,8 +90,6 @@ void EventHandler::run() {
             }
         }
         //camera2.update_pos();
-        sHandler.move_unit();
-
     }
 }
 

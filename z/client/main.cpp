@@ -61,6 +61,7 @@ int main(int argc, char *argv[]){
     std::vector<tThread*> threads;
     threads.push_back(new TClient_receive(socket,game_map,all_units,factory,waiting_server, running));
     threads[0]->start();
+    Protocol protocol(socket,all_units,game_map,factory);
 
     int posx1 = 100;
     int posy1 = 100;
@@ -70,7 +71,7 @@ int main(int argc, char *argv[]){
     int posCameraY = 200;
     SDL_Rect cameraRect = {0,0,640,480};
 
-    SelectionHandler sHandler(socket);
+    SelectionHandler sHandler(protocol);
     PlayerInterface playerInterface(screen,&sHandler,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
 
     while(waiting_server){}
