@@ -56,6 +56,7 @@ class unit {
 		int getY();
 		int getDestX();
 		int getDestY();
+		int getHealth();
 		void printPos();
 		int getSpeed();
 		double getRelativeDamage();

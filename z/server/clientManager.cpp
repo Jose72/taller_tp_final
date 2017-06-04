@@ -117,6 +117,22 @@ void tClientManager::run(){
 	 
 	*/
 	
+	/*
+	int s = 1;
+	while (s > 0) {
+		int x_dest = 0;
+		int y_dest = 0;
+		s = cli_skt.receive((char*) &x_dest, sizeof(int));
+		s = cli_skt.receive((char*) &y_dest, sizeof(int));
+		if (s > 0) {
+			Event e(1, 1,x_dest, y_dest);
+			tLock l(mmm);
+			//mmm.lock();
+			j->take_event(e);
+			//mmm.unlock();
+		}
+	}
+	*/
 	
 	int s = 1;
 	while (s > 0) {

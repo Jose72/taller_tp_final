@@ -59,6 +59,10 @@ int unit::getDestY(){
 	return dest_y;
 }
 
+int unit::getHealth(){
+	return health;
+}
+
 
 void unit::printPos(){
 	std::cout << "unit--------" << std::endl;
