@@ -1,5 +1,5 @@
 #include "EventHandler.h"
-#include "../server/gameMap.h"
+
 #include "Camera2.h"
 
 #define LEFT_BUTTON 3

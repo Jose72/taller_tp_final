@@ -13,6 +13,8 @@
 #include "ClickableButton.h"
 #include "PlayerInterface.h"
 #include "EventHandler.h"
+#include <gtkmm.h>
+
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
 
 #define LEFT_BUTTON 3
@@ -21,7 +23,11 @@
 #define WINDOW_W 600
 #define PLAYER_INTERFACE_W 300
 
-int main(int argc, char *argv[]){
+
+
+void on_jugar_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]){
+
+
     SDL_Surface *screen;
     std::vector<Unit*> u;
     std::map<int, Unit*>um;
@@ -32,19 +38,19 @@ int main(int argc, char *argv[]){
     //INICIA SDL Y CREA LA PANTALLA
     if(SDL_Init(SDL_INIT_VIDEO)<0){
         std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
-        return 1;
+        return void();
     }
 
     //Initialize PNG loading
     int imgFlags = IMG_INIT_PNG;
     if( !( IMG_Init( imgFlags ) & imgFlags ) ){
         std::cout<< "No se pudo iniciar SDL_image Error:" << IMG_GetError() << std::endl;
-        return 2;
+        return void();
     }
 
     if(TTF_Init()==-1) {
         std::cout<< "No se pudo iniciar TTF_Init:" << TTF_GetError() << std::endl;
-        return 3;
+        return void();
     }
 
     screen = SDL_SetVideoMode(WINDOW_W + PLAYER_INTERFACE_W, WINDOW_H, 32,SDL_HWSURFACE);
@@ -86,5 +92,35 @@ int main(int argc, char *argv[]){
     }
     TTF_Quit();
     IMG_Quit();
+}
+
+void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
+    std::cout << "Chau!" << std::endl;
+    app->quit();
+}
+
+int main(int argc, char *argv[]){
+
+    auto app = Gtk::Application::create();
+
+    Gtk::Window ventana;
+    ventana.set_default_size(700, 360);
+    Gtk::Box box;
+
+    Gtk::Button jugar("Jugar");
+    Gtk::Button salir("Salir");
+
+    jugar.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_jugar_clicked), app,argc,argv));
+    salir.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
+
+    Gtk::Image* image = new Gtk::Image("client/splash/splash.jpg");
+
+    box.add(jugar);
+    box.add(*Gtk::manage(image));
+    box.add(salir);
+    ventana.add(box);
+    ventana.show_all();
+
+    return app->run(ventana);
 
 }
