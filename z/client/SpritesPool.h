@@ -31,6 +31,14 @@ enum FlagsUnitType{
     CELEBRATE_RED,
     CELEBRATE_YELLOW,
     COLORLESS_FLAG,
+    BLUE_FLAG,
+    GREEN_FLAG,
+    RED_FLAG,
+    YELLOW_FLAG,
+    MISILE_LAUNCHER_BLUE,
+    MISILE_LAUNCHER_GREEN,
+    MISILE_LAUNCHER_RED,
+    MISILE_LAUNCHER_YELLOW,
     FORT_SPRITE
 };
 
@@ -42,8 +50,26 @@ private:
 public:
     SpritesPool(SDL_Surface *screen);
     std::vector<Animation*> get_animations(FlagsUnitType flag);
-    void load_fire_grunt();
-    void load_sprites(char* path,FlagsUnitType blue, FlagsUnitType green, FlagsUnitType red, FlagsUnitType yellow);
+    void load_sprites(char* path,
+                      FlagsUnitType blue,
+                      FlagsUnitType green,
+                      FlagsUnitType red,
+                      FlagsUnitType yellow);
+
+    void load_sprites_with_null(char* path,
+                                FlagsUnitType null,
+                                FlagsUnitType blue,
+                                FlagsUnitType green,
+                                FlagsUnitType red,
+                                FlagsUnitType yellow);
+
+    void load_sprites_with_dim(char* path,
+                               FlagsUnitType blue,
+                               FlagsUnitType green,
+                               FlagsUnitType red,
+                               FlagsUnitType yellow,
+                               int dimensions);
+
 
 };
 

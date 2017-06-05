@@ -33,7 +33,13 @@ enum State{
     ATTACKING,
     DEAD,
     DRINKING,
-    CELEBRATE
+    CELEBRATE,
+    COLORLESS,
+    BLUE,
+    GREEN,
+    RED,
+    YELLOW,
+    ROLLING
 };
 
 class Unit {
@@ -51,11 +57,7 @@ protected:
     Direction  direction;
     Attack_Direction attack_direction;
     State state;
-    int current_frame_move;
-    int current_frame_attack;
-    int current_frame_die;
-    int current_frame_drink;
-    int current_frame_celebrate;
+    int current_frame;
     std::vector<Animation *> &animation;
     std::vector<Animation *> &animation2;
     std::vector<Animation *> &animation3;
@@ -69,6 +71,13 @@ public:
          std::vector<Animation *> &a3,
          std::vector<Animation *> &a4,
          int cu, int posx, int posy);
+
+    Unit(std::vector<Animation *> &a0,
+         std::vector<Animation *> &a1,
+         std::vector<Animation *> &a2,
+         std::vector<Animation *> &a3,
+         std::vector<Animation *> &a4,
+         int cu, int posx, int posy, State state);
     ~Unit();
     void animate(SDL_Rect &cameraRect);
     void set_pos(int x,int y);
@@ -78,11 +87,10 @@ public:
     int get_posx();
     int get_posy();
     int get_unit_code();
-    void animate_move(SDL_Rect &cameraRect);
+    void animate_static(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
+    void animate_moving(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
+    void animate_attacking(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
     void animate_attack(SDL_Rect &cameraRect);
-    void animate_die(SDL_Rect &cameraRect);
-    void animate_drink(SDL_Rect &cameraRect);
-    void animate_celebrate(SDL_Rect &cameraRect);
     void set_state(State s);
     State get_state();
     void set_health(int health);

@@ -39,9 +39,29 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             animation5 = this->pool.get_animations(CELEBRATE_YELLOW);
             return new Unit(animation,animation2,animation3,animation4,animation5,unit_code,posx,posy);
 
+        case MISILE_LAUNCHER_BLUE:
+            animation = this->pool.get_animations(MISILE_LAUNCHER_BLUE);
+            return new Unit(animation,animation,animation,animation,animation,unit_code,posx,posy,ROLLING);
+
+        case MISILE_LAUNCHER_GREEN:
+            animation = this->pool.get_animations(MISILE_LAUNCHER_GREEN);
+            return new Unit(animation,animation,animation,animation,animation,unit_code,posx,posy,ROLLING);
+
+        case MISILE_LAUNCHER_RED:
+            animation = this->pool.get_animations(MISILE_LAUNCHER_RED);
+            return new Unit(animation,animation,animation,animation,animation,unit_code,posx,posy,ROLLING);
+
+        case MISILE_LAUNCHER_YELLOW:
+            animation = this->pool.get_animations(MISILE_LAUNCHER_YELLOW);
+            return new Unit(animation,animation,animation,animation,animation,unit_code,posx,posy,ROLLING);
+
         case COLORLESS_FLAG:
-        animation = this->pool.get_animations(COLORLESS_FLAG);
-            return new Unit(animation,animation,animation,animation,animation,unit_code,posx,posy);
+            animation  = this->pool.get_animations(COLORLESS_FLAG);
+            animation2 = this->pool.get_animations(BLUE_FLAG);
+            animation3 = this->pool.get_animations(RED_FLAG);
+            animation4 = this->pool.get_animations(GREEN_FLAG);
+            animation5 = this->pool.get_animations(YELLOW_FLAG);
+            return new Unit(animation,animation2,animation3,animation4,animation5,unit_code,posx,posy,COLORLESS);
         case FORT_SPRITE:
             animation = this->pool.get_animations(FORT_SPRITE);
             return new Unit(animation,animation,animation,animation,animation,unit_code,posx,posy);

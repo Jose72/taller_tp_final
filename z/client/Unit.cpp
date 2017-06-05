@@ -1,10 +1,13 @@
 #include "Unit.h"
 
-#define FRAME_LIMIT_S1 3
-#define FRAME_LIMIT_S2 4
-#define FRAME_LIMIT_S3 9
-#define FRAME_LIMIT_S4 9
-#define FRAME_LIMIT_S5 3
+
+#define FRAME_LIMIT_2 2
+#define FRAME_LIMIT_DEAD 9
+#define FRAME_LIMIT_DRINK 9
+#define FRAME_LIMIT_CELEBRATE 3
+#define FRAME_LIMIT_FLAG 3
+#define FRAME_LIMIT_MOVE_GRUNT 3
+#define FRAME_LIMIT_ATTACK_GRUNT 4
 
 Unit::Unit(std::vector<Animation*> &a0,
            std::vector<Animation*> &a1,
@@ -16,14 +19,25 @@ Unit::Unit(std::vector<Animation*> &a0,
            int posy):
         animation(a0),animation2(a1),animation3(a2),animation4(a3),animation5(a4),posx(posx),posy(posy) {
 
-    this->current_frame_move = 0;
-    this->current_frame_attack = 0;
-    this->current_frame_die = 0;
-    this->current_frame_drink = 0;
-    this->current_frame_celebrate = 0;
     this->cod_unit = cu;
     state = DRINKING;
 }
+
+Unit::Unit(std::vector<Animation*> &a0,
+           std::vector<Animation*> &a1,
+           std::vector<Animation*> &a2,
+           std::vector<Animation*> &a3,
+           std::vector<Animation*> &a4,
+           int cu,
+           int posx,
+           int posy,
+           State state):
+        animation(a0),animation2(a1),animation3(a2),animation4(a3),animation5(a4),posx(posx),posy(posy) {
+
+    this->cod_unit = cu;
+    this->state = state;
+}
+
 
 Unit::~Unit() {
     for (int i = 0; i <animation.size() ; ++i) {
@@ -33,23 +47,47 @@ Unit::~Unit() {
 void Unit::animate(SDL_Rect &cameraRect) {
     switch(state){
         case MOVING:
-            animate_move(cameraRect);
+            animate_moving(cameraRect,animation,FRAME_LIMIT_MOVE_GRUNT);
             break;
 
         case ATTACKING:
-            animate_attack(cameraRect);
+            animate_attacking(cameraRect,animation2,FRAME_LIMIT_ATTACK_GRUNT);
             break;
 
         case DEAD:
-            animate_die(cameraRect);
+            animate_static(cameraRect,animation3,FRAME_LIMIT_DEAD);
             break;
 
         case DRINKING:
-            animate_drink(cameraRect);
+            animate_static(cameraRect,animation4,FRAME_LIMIT_DRINK);
             break;
 
         case CELEBRATE:
-            animate_celebrate(cameraRect);
+            animate_static(cameraRect,animation5,FRAME_LIMIT_CELEBRATE);
+            break;
+
+        case COLORLESS:
+            animate_static(cameraRect,animation,FRAME_LIMIT_FLAG);
+            break;
+
+        case BLUE:
+            animate_static(cameraRect,animation2,FRAME_LIMIT_FLAG);
+            break;
+
+        case GREEN:
+            animate_static(cameraRect,animation3, FRAME_LIMIT_FLAG);
+            break;
+
+        case RED:
+            animate_static(cameraRect,animation4,FRAME_LIMIT_FLAG);
+            break;
+
+        case YELLOW:
+            animate_static(cameraRect,animation5, FRAME_LIMIT_FLAG);
+            break;
+
+        case ROLLING:
+            animate_moving(cameraRect,animation,FRAME_LIMIT_2);
             break;
     }
 }
@@ -128,120 +166,130 @@ int Unit::get_unit_code() {
     return  this->cod_unit;
 }
 
-void Unit::animate_move(SDL_Rect &cameraRect) {
-    if(current_frame_move< FRAME_LIMIT_S1){
-        ++current_frame_move;
+void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
+    if(current_frame < max_frame){
+        current_frame ++;
     } else{
-        current_frame_move = 0;
+        current_frame = 0;
+    }
+    a[current_frame]->animate(posx,posy,cameraRect);
+}
+
+void Unit::animate_moving(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
+    int framePos = max_frame+1;
+    if(current_frame< max_frame){
+        ++current_frame;
+    } else{
+        current_frame = 0;
     }
     switch (direction){
         case ZERO:
             if((posx == posxO) && (posy == posyO)){
                 animation[0]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame_move]->animate(posx,posy,cameraRect);
+                animation[current_frame]->animate(posx,posy,cameraRect);
             }
             break;
 
         case ONE:
             if((posx == posxO) && (posy == posyO)){
-                animation[4]->animate(posx,posy,cameraRect);
+                animation[framePos]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame_move + 4]->animate(posx,posy,cameraRect);
+                animation[current_frame + framePos]->animate(posx,posy,cameraRect);
             }
             break;
 
         case TWO:
             if((posx == posxO) && (posy == posyO)){
-                animation[8]->animate(posx,posy,cameraRect);
+                animation[(2*framePos)]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame_move + 8]->animate(posx,posy,cameraRect);
+                animation[current_frame + (2*framePos) ]->animate(posx,posy,cameraRect);
             }
             break;
 
         case THREE:
             if((posx == posxO) && (posy == posyO)){
-                animation[12]->animate(posx,posy,cameraRect);
+                animation[(3*framePos)]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame_move + 12]->animate(posx,posy,cameraRect);
+                animation[current_frame + (3*framePos)]->animate(posx,posy,cameraRect);
             }
             break;
 
         case FOUR:
             if((posx == posxO) && (posy == posyO)) {
-                animation[16]->animate(posx,posy,cameraRect);
+                animation[(4*framePos)]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame_move + 16]->animate(posx,posy,cameraRect);
+                animation[current_frame + (4*framePos)]->animate(posx,posy,cameraRect);
             }
             break;
 
         case FIVE:
             if((posx == posxO) && (posy == posyO)) {
-                animation[20]->animate(posx,posy,cameraRect);
+                animation[(5*framePos)]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame_move + 20]->animate(posx,posy,cameraRect);
+                animation[current_frame + (5*framePos)]->animate(posx,posy,cameraRect);
             }
             break;
 
         case SIX:
             if((posx == posxO) && (posy == posyO)) {
-                animation[24]->animate(posx,posy,cameraRect);
+                animation[(6*framePos)]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame_move + 24]->animate(posx,posy,cameraRect);
+                animation[current_frame + (6*framePos)]->animate(posx,posy,cameraRect);
             }
             break;
 
         case SEVEN:
             if((posx == posxO) && (posy == posyO)) {
-                animation[28]->animate(posx,posy,cameraRect);
+                animation[(7*framePos)]->animate(posx,posy,cameraRect);
             }else{
-                animation[current_frame_move + 28]->animate(posx,posy,cameraRect);
+                animation[current_frame + (7*framePos)]->animate(posx,posy,cameraRect);
             }
             break;
         default:
             animation[0]->animate(posx,posy,cameraRect);
             break;
     }
-
 }
 
-void Unit::animate_attack(SDL_Rect &cameraRect) {
-    if(current_frame_attack< FRAME_LIMIT_S2){
-        ++current_frame_attack;
+void Unit::animate_attacking(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
+    int framePos = max_frame +1;
+    if(current_frame< max_frame){
+        ++current_frame;
     } else{
-        current_frame_attack = 0;
+        current_frame = 0;
     }
     switch (attack_direction){
         case ZERO_A:
-            animation2[current_frame_attack]->animate(posx,posy,cameraRect);
+            animation2[current_frame]->animate(posx,posy,cameraRect);
             break;
 
         case ONE_A:
-            animation2[current_frame_attack + 5]->animate(posx,posy,cameraRect);
+            animation2[current_frame + framePos]->animate(posx,posy,cameraRect);
             break;
 
         case TWO_A:
-            animation2[current_frame_attack + 9]->animate(posx,posy,cameraRect);
+            animation2[current_frame + (2*framePos)]->animate(posx,posy,cameraRect);
             break;
 
         case THREE_A:
-            animation2[current_frame_attack + 13]->animate(posx,posy,cameraRect);
+            animation2[current_frame + (3*framePos)]->animate(posx,posy,cameraRect);
             break;
 
         case FOUR_A:
-            animation2[current_frame_attack + 17]->animate(posx,posy,cameraRect);
+            animation2[current_frame + (4*framePos)]->animate(posx,posy,cameraRect);
             break;
 
         case FIVE_A:
-            animation2[current_frame_attack + 21]->animate(posx,posy,cameraRect);
+            animation2[current_frame + (5*framePos)]->animate(posx,posy,cameraRect);
             break;
 
         case SIX_A:
-            animation2[current_frame_attack + 25]->animate(posx,posy,cameraRect);
+            animation2[current_frame + (6*framePos)]->animate(posx,posy,cameraRect);
             break;
 
         case SEVEN_A:
-            animation2[current_frame_attack + 29]->animate(posx,posy,cameraRect);
+            animation2[current_frame + (7*framePos)]->animate(posx,posy,cameraRect);
             break;
 
         default:
@@ -250,32 +298,6 @@ void Unit::animate_attack(SDL_Rect &cameraRect) {
     }
 }
 
-void Unit::animate_die(SDL_Rect &cameraRect) {
-    if(current_frame_die < FRAME_LIMIT_S3){
-        current_frame_die ++;
-    } else{
-        current_frame_die = FRAME_LIMIT_S3;
-    }
-    animation3[current_frame_die]->animate(posx,posy,cameraRect);
-}
-
-void Unit::animate_drink(SDL_Rect &cameraRect) {
-    if(current_frame_drink < FRAME_LIMIT_S4){
-        current_frame_drink ++;
-    } else{
-        current_frame_drink = 0;
-    }
-    animation4[current_frame_drink]->animate(posx,posy,cameraRect);
-}
-
-void Unit::animate_celebrate(SDL_Rect &cameraRect) {
-    if(current_frame_celebrate < FRAME_LIMIT_S5){
-        current_frame_celebrate ++;
-    } else{
-        current_frame_celebrate = 0;
-    }
-    animation5[current_frame_celebrate]->animate(posx,posy,cameraRect);
-}
 
 void Unit::set_state(State s) {
     this->state = s;
