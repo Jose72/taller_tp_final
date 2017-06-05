@@ -13,8 +13,8 @@
 
 int main(int argc, char **argv)
 {
-	flag_capture();
-	/*
+	//flag_capture();
+	
 	char c = '0';
 	tServer server(atoi(argv[1]));
 	server.start();
@@ -25,6 +25,6 @@ int main(int argc, char **argv)
 	server.join();
 	
 	return 0;
-	*/
+	
 
 }
