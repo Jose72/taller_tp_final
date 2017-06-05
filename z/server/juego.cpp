@@ -10,9 +10,8 @@
 #include "deathHandler.h"
 
 
-juego::juego(int cant_players, tSocket* creator_skt, std::mutex &cli_m): 
-max_players(cant_players), cli_m(cli_m), running(false){
-	cli_skts.push_back(creator_skt);
+juego::juego(int cant_players): 
+max_players(cant_players), running(false){
 	id_unit_counter = 1; //se empieza contando desde 1
 }
 
@@ -33,7 +32,7 @@ void juego::stop(){
 }
 
 void juego::take_event(Event &e){
-	//tLock l(game_m);//lockeo
+	tLock l(game_m);//lockeo
 	std::cout << "event push" << std::endl;
 	event_list.push(e);
 	return;
@@ -45,9 +44,10 @@ bool juego::readyToStart(){
 	return false;
 }
 
-int juego::clientJoin(tSocket *cli_s){
+int juego::clientJoin(int cli_id, tSocket *cli_s){
 	if (cli_skts.size() < (unsigned int) max_players){
 		cli_skts.push_back(cli_s);
+		players_info.push_back(infoPlayer(cli_id));
 		return 0;
 	}
 	return 1;
@@ -123,7 +123,7 @@ void juego::run(){
 	while(s > 0){
 			//std::cout << "loop juego" << std::endl;
 			//lockeo cola de evntos
-			cli_m.lock();
+			game_m.lock();
 			if (!event_list.empty()){
 				Event e = event_list.front();
 				event_list.pop();
@@ -140,7 +140,7 @@ void juego::run(){
 				}
 			}
 			//deslockeo
-			cli_m.unlock();
+			game_m.unlock();
 			
 			
 			//actualizo las undiades (pendiente: crear una func aparte)

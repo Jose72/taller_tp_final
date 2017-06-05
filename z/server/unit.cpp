@@ -103,7 +103,7 @@ void unit::attack(unit *u){
 		auto_attack = false;
 		target = u;
 		u->setFollower(this);
-		if (this->isInTargetRange()){
+		if (this->targetIsInRange()){
 			this->changeState(ATTACKING);
 		} else {
 			this->moveToTarget();
@@ -166,6 +166,7 @@ void unit::printPosDest(){
 bool unit::isEnemy(unit &u){
 	//pendiente: chequear si el owner es mageMap 
 	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
+	if (u.owner == 0) return false;
 	if (this->owner != u.owner) {
 		for (auto it = allies.begin(); it != allies.end(); ++it){
 			if ((*it) == u.owner) {
@@ -220,7 +221,7 @@ void unit::changeState(int s){
 	state = s;
 }
 
-bool unit::isInTargetRange(){
+bool unit::targetIsInRange(){
 	if (target) {
 		if (sqrt(pow((x - target->x),2) + pow((y - target->y),2)) <= this->attack_range) {
 		return true;
@@ -314,4 +315,45 @@ void unit::setAutoAttack(unit *u){
 
 bool unit::autoAttackEnabled(){
 	return auto_attack;
+}
+
+void unit::setTarget(unit *u){
+	target = u;
+}
+
+bool unit::sameOwner(unit *u){
+	if (this->owner == u->owner) return true;
+	return false;
+}
+
+bool unit::sameOwnerAsTarget(){
+	if (this->owner == target->owner) return true;
+	return false;
+}
+
+bool unit::timerIsZero(){
+	if (countdown == 0) return true;
+	return false;
+}
+
+
+void unit::changeOwnerForTargetOwner(){
+	owner = target->owner;
+}
+
+int unit::getTargetOwner(){
+	if (target) return target->getOwner();
+	return -1;
+}
+
+void unit::decreaseTechLvl(){
+	tech_level--;
+}
+
+void unit::increaseTechLvl(){
+	tech_level++;
+}
+
+int unit::getTechLvl(){
+	return tech_level;
 }

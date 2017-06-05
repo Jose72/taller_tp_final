@@ -69,7 +69,8 @@ void tClientManager::run(){
 	if (id_client == 1) {
 		//creo el juego
 		//hardcodeado cant jugadores
-		j = new juego(1, &cli_skt, mmm);
+		j = new juego(1);
+		j->clientJoin(id_client, &cli_skt);
 		//pusheo en el vector
 		juegos.push_back(j);
 	
@@ -95,7 +96,7 @@ void tClientManager::run(){
 		//HARDOCDEADO
 		if (juegos.size() > 0){ //si hay juegos
 			j = juegos[0];
-			j->clientJoin(&cli_skt);
+			j->clientJoin(id_client, &cli_skt);
 			//espero a que todos esten listos
 			while (!j->readyToStart() && !end_game){
 				usleep(200000);
@@ -142,10 +143,8 @@ void tClientManager::run(){
 		s = cli_skt.receive((char*) &y_dest, sizeof(int));
 		if (s > 0) {
 			Event e(1, 1,x_dest, y_dest);
-			tLock l(mmm);
-			//mmm.lock();
+			//el jeugo tiene el mutex
 			j->take_event(e);
-			//mmm.unlock();
 		}
 	}
 	

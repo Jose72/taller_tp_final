@@ -95,7 +95,7 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 		unit *target = it->second;
 		//chequeo quien es el dueño de la unidad
 		
-		if (target->isEnemy(attacker) && target->getClassId() != BULLET){
+		if (attacker.isEnemy(*target) && (target->getClassId() == ROBOT || target->getClassId() == VEHICLE)){
 			//si esta en rango
 			if (attacker.isInRange(*target)){
 				attacker.setAutoAttack(target);
@@ -107,7 +107,7 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 }
 
 int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count, std::set<int> &dead_unit, std::set<int> &actualized_units){
-	//std::cout << "start actu-----------" << std::endl;
+	std::cout << "start actu-----------" << std::endl;
 	int state = u.getState();
 	switch(state){
 		case MOVING:
@@ -126,6 +126,10 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 		case STANDING:
 			std::cout << "unit: " << unit_game_id << " stand" << std::endl;
 			autoAttackActualize(u, units, mapa, time);
+			return 0;
+		case CHECKING_CAPTURE:
+			std::cout << "unit: " << unit_game_id << " check_capt" << std::endl;
+			capture_h.checkingCaptureActualize(u, units, time);
 			return 0;
 	}
 	//std::cout << "end actu---------" << std::endl;

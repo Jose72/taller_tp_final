@@ -11,37 +11,53 @@
 #include "deathHandler.h"
 
 #include <unistd.h>
-/*
-int test_create_unit(){
+
+int flag_capture(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
-	int unit_id_count = 1;
+	unitBuilder ub;
+	int unit_id_count = 6;
+	std::set<int> d_units;
+	std::set<int> a_units;
 	
-	unit *r1 = new unit(1, ROBOT_FACTORY, 35, 18);
-	units.insert(std::pair<int,unit*>(unit_id_count,r1));
-	unit_id_count++;
-	
+	unit *r1 = ub.build(GRUNT, 1, 35, 18);
+	unit *r2 = ub.build(FLAG, 40, 18);
+	unit *r3 = ub.build(FORT, 1, 70, 70);
+	unit *r4 = ub.build(GRUNT, 2, 45, 18);
+	unit *r5 = ub.build(FORT, 2, 120, 120);
+	units.insert(std::pair<int,unit*>(1,r1));
+	units.insert(std::pair<int,unit*>(2,r2));
+	units.insert(std::pair<int,unit*>(3,r3));
+	units.insert(std::pair<int,unit*>(4,r4));
+	units.insert(std::pair<int,unit*>(5,r5));
+
 	actualizeUnit au;
-	for (int i = 0; i < 1200; i++){
-		au(*r1, units, mapa, 1, unit_id_count);
+	for (int i = 0; i < 460; i++){
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+		}
+		
+		if (i == 230) {
+			r4->move(90, 18);
+		}
 		
 	}
-	std::cout << units.size() << std::endl;
+	
+	std::cout << "owner r2: " << r2->getOwner() << std::endl;
+	std::cout << "tech_lvl r3: " << r3->getTechLvl() << std::endl;
+	std::cout << "tech_lvl r5: " << r5->getTechLvl() << std::endl;
 	
 	for (auto it = units.begin(); it != units.end(); ++it){
-		unit* h = it->second;
-		std::cout << "owner: " << h->getOwner() << std::endl;
-		std::cout << "unit id: " << h->getUnitId() << std::endl;
-		delete it->second;
-	}
-	
+			delete it->second;
+		}
 	return 0;
 }
 
-*/
 int test_auto_attack_unit(){
-int map_codes[100] = {0};
+	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;

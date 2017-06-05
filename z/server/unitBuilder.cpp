@@ -64,8 +64,8 @@ unit* unitBuilder::build(int unit_code, int x, int y){
 	switch (unit_code){
 		//BANDERA
 		case FLAG:
-			return new unit(unit_code, FLAG, 0, x, y, 
-			0, NO_STATE, 0, FLAG_RANGE, 0, 0, -1, 0);
+			return new unit(unit_code, FLAG_C, 0, x, y, 
+			0, CHECKING_CAPTURE, 0, FLAG_RANGE, 0, FLAG_CAPTURE_TIME, -1, 0);
 			
 			
 		//BALAS

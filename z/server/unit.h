@@ -7,7 +7,7 @@
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
 
-enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING};
+enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE};
 
 class unit {
 	protected:
@@ -59,17 +59,25 @@ class unit {
 		int getHealth();
 		void printPos();
 		int getSpeed();
+		int getOwner();
+		int getTechLvl();
+		int getState();
 		double getRelativeDamage();
+		int getTargetOwner();
 		
+		//seters
+		void changeState(int state);
+		void changeOwnerForTargetOwner();
+		void decreaseTechLvl();
+		void increaseTechLvl();
 		
+		//events
 		void move(int d_x, int d_y);
 		void moveToTarget();
 		void attack(unit *u);
 		void stop();
 		
-		void changeState(int state);
-		int getState();
-		
+		//checks
 		bool isInRange(unit &u);
 		bool isAlive();
 		bool isDead();
@@ -77,6 +85,8 @@ class unit {
 		bool isEnemy(unit &u);
 		bool canCreate();
 		bool autoAttackEnabled();
+		bool timerIsZero();
+		bool targetIsInRange();
 
 		//double getDamage(double time); 
 		int takeDamage(int dam);
@@ -85,12 +95,12 @@ class unit {
 		int attackRange();
 		unit* getTarget();
 		void printPosDest();
-		bool isInTargetRange();
 		bool targetIsEnemy();
+		bool sameOwner(unit *u);
+		bool sameOwnerAsTarget();
 		
 		int checkCreating(double time);
 		void destroy();
-		int getOwner();
 		
 		//creacion-captura
 		void actualizeTimer(int time);
@@ -98,6 +108,7 @@ class unit {
 		int unitToCreate();
 		
 		//targeting
+		void setTarget(unit *u);
 		void setAutoAttack(unit *u);
 		void setAllie(int a);
 		void setFollower(unit *u);
