@@ -23,10 +23,12 @@
 #define WINDOW_W 600
 #define PLAYER_INTERFACE_W 300
 
+void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],Gtk::Entry *entry) {
+    std::cout << "TODO: Enviar al server creacion partida " << entry->get_text() << std::endl;
+}
 
-
-void on_jugar_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]){
-
+void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[], Gtk::ComboBoxText* combo){
+    std::cout << "TODO: Enviar al server unirse a partida " << combo->get_active_text() << std::endl;
 
     SDL_Surface *screen;
     std::vector<Unit*> u;
@@ -102,25 +104,40 @@ void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
 int main(int argc, char *argv[]){
 
     auto app = Gtk::Application::create();
-
     Gtk::Window ventana;
     ventana.set_default_size(700, 360);
-    Gtk::Box box;
-
-    Gtk::Button jugar("Jugar");
+    Gtk::Box box(Gtk::ORIENTATION_VERTICAL, 0);
+    Gtk::Button unirse("Unirse");
+    Gtk::Button crear("Crear");
     Gtk::Button salir("Salir");
 
-    jugar.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_jugar_clicked), app,argc,argv));
-    salir.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
+    Gtk::ComboBoxText combo;
+    combo.append("pepito");
+    combo.append("foo");
+    combo.append("bar");
+    combo.set_name("partidas");
 
+    Gtk::Entry entry;
+    entry.set_max_length(50);
+    entry.set_placeholder_text("Nombre de la partida a crear");
+
+    Gtk::Entry nombre;
+    nombre.set_max_length(50);
+    nombre.set_placeholder_text("Nombre del usuario");
+
+    unirse.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv, &combo));
+    crear.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,&entry));
+    salir.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
     Gtk::Image* image = new Gtk::Image("client/splash/splash.jpg");
 
-    box.add(jugar);
+    box.add(nombre);
+    box.add(entry);
+    box.add(crear);
     box.add(*Gtk::manage(image));
+    box.add(combo);
+    box.add(unirse);
     box.add(salir);
     ventana.add(box);
     ventana.show_all();
-
     return app->run(ventana);
-
 }
