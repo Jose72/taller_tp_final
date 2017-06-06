@@ -33,6 +33,7 @@ class tile{
 		tile(int x, int y, int terrain_id);
 		int getX();
 		int getY();
+		int getTerrainCode();
 		tile* getParent();
 		void setParent(tile *p);
 		double gValue();                   //hacer gValue, hValue por fuera de tiles !!!!!!!

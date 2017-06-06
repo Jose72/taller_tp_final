@@ -13,6 +13,7 @@
 #include "unit.h"
 #include "unitBuilder.h"
 #include "infoPlayer.h"
+#include "Protocol.h"
 
 class juego: public tThread{
 	private:
@@ -25,6 +26,7 @@ class juego: public tThread{
 		std::queue<Event> event_list; //cola de eventos
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
+		std::vector<serverProtocol> protocols; 
 		std::vector<infoPlayer> players_info;
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
 		std::mutex game_m; //proteger eventos

@@ -35,6 +35,7 @@ class terrain{
 		void construct(int t_type, bool pb_robot, bool pb_vehicle, double t_factor);
 		bool isPassable(int unit_code);
 		double getTerrainFactor();
+		int getTerrainCode();
 };
 
 /*

@@ -115,3 +115,7 @@ bool tile::isDiagonal(tile &t){
 double tile::getTerrainFactor(){
 	return terr.getTerrainFactor();
 }
+
+int tile::getTerrainCode(){
+	return terr.getTerrainCode();
+}

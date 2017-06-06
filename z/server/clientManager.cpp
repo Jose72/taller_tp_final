@@ -8,6 +8,7 @@
 #include <mutex>
 #include <unistd.h>
 #include "../common/Lock.h"
+#include "Protocol.h"
 
 #include "juego.h"
 
@@ -58,7 +59,7 @@ void tClientManager::stop(){
 void tClientManager::run(){
 	std::string player_name;
 	std::mutex mmm;
-	
+	serverProtocol protocolo(cli_skt);
 	
 	//primero recibir datos de usuario
 	//enviar datos partida
@@ -141,8 +142,14 @@ void tClientManager::run(){
 		int y_dest = 0;
 		s = cli_skt.receive((char*) &x_dest, sizeof(int));
 		s = cli_skt.receive((char*) &y_dest, sizeof(int));
+		Event e(1, 1,x_dest, y_dest);
+		
+		/*
+		//protocol
+		protocolo.receive_event(e);
+		*/
+		
 		if (s > 0) {
-			Event e(1, 1,x_dest, y_dest);
 			//el jeugo tiene el mutex
 			j->take_event(e);
 		}

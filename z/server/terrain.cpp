@@ -70,6 +70,11 @@ double terrain::getTerrainFactor(){
 	return terrain_factor;
 }
 
+int terrain::getTerrainCode(){
+	return t_type;
+}
+
+
 /*
 //codigo viejo, guardado por las dudas
 //constructores de los terrenos

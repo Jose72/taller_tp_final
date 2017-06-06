@@ -9,6 +9,8 @@
 #include "unitBuilder.h"
 #include "deathHandler.h"
 
+#include "Protocol.h"
+
 
 juego::juego(int cant_players): 
 max_players(cant_players), running(false){
@@ -47,6 +49,10 @@ bool juego::readyToStart(){
 int juego::clientJoin(int cli_id, tSocket *cli_s){
 	if (cli_skts.size() < (unsigned int) max_players){
 		cli_skts.push_back(cli_s);
+		
+		// protocolos
+		protocols.push_back(serverProtocol(*cli_s));
+		
 		players_info.push_back(infoPlayer(cli_id));
 		return 0;
 	}
@@ -103,6 +109,15 @@ void juego::sendInit(){
 		(*it)->send((char*) &xx, sizeof(int));
 		(*it)->send((char*) &yy, sizeof(int));
 	}
+	
+	/*
+	//protocol
+	std::vector<int> t_c = mapa.getTilesCodes();
+	for (auto it = protocols.begin(); it != protocols.end(); ++it){
+		it->send_map(t_c);
+		it->send_units_game(units);
+	}
+	*/
 	
 	
 	

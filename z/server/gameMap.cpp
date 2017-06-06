@@ -86,3 +86,12 @@ void gameMap::printMap(){
 		casillas[i].printTile();
 	}
 }
+
+
+std::vector<int> gameMap::getTilesCodes(){
+	std::vector<int> codes;
+	for (auto it = casillas.begin(); it != casillas.end(); ++it){
+		codes.push_back(it->getTerrainCode());
+	}
+	return codes;
+}
