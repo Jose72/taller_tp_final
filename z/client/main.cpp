@@ -14,134 +14,17 @@
 #include "PlayerInterface.h"
 #include "EventHandler.h"
 #include "ProtocolMenu.h"
+#include "MainWindow.h"
 #include <gtkmm.h>
 
-#define IMAGEPATH "client/sprites/robot1/1.bmp"
-
-#define LEFT_BUTTON 3
-#define RIGHT_BUTTON 1
-#define WINDOW_H 800
-#define WINDOW_W 600
-#define PLAYER_INTERFACE_W 300
-
-void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],Gtk::Entry *entry) {
-    std::cout << "TODO: Enviar al server creacion partida " << entry->get_text() << std::endl;
-}
-
-void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[], Gtk::ComboBoxText* combo, tSocket *socket){
-    std::cout << "TODO: Enviar al server unirse a partida " << combo->get_active_text() << std::endl;
-
-    SDL_Surface *screen;
-    std::vector<Unit*> u;
-    std::map<int, Unit*>um;
-    Units_Protected all_units(um);
-    bool running = true;
-
-    bool waiting_server = true;
-    //INICIA SDL Y CREA LA PANTALLA
-    if(SDL_Init(SDL_INIT_VIDEO)<0){
-        std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
-        return void();
-    }
-
-    //Initialize PNG loading
-    int imgFlags = IMG_INIT_PNG;
-    if( !( IMG_Init( imgFlags ) & imgFlags ) ){
-        std::cout<< "No se pudo iniciar SDL_image Error:" << IMG_GetError() << std::endl;
-        return void();
-    }
-
-    if(TTF_Init()==-1) {
-        std::cout<< "No se pudo iniciar TTF_Init:" << TTF_GetError() << std::endl;
-        return void();
-    }
-
-    screen = SDL_SetVideoMode(WINDOW_W + PLAYER_INTERFACE_W, WINDOW_H, 32,SDL_HWSURFACE);
-    if(screen == NULL){
-        std::cout<<"No se puede inicializar el modo grafico\n" <<SDL_GetError();
-    }
-    atexit(SDL_Quit);
-    SpritesPool pool(screen);
-    Factory_Units factory(pool);
-    Game_map game_map(screen);
 
 
-    std::vector<tThread*> threads;
-    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running));
-    threads[0]->start();
-    Protocol protocol(*socket,all_units,game_map,factory);
-
-    int posx1 = 100;
-    int posy1 = 100;
-    int posx2 = 400;
-    int posy2 = 400;
-    int posCameraX = 200;
-    int posCameraY = 200;
-    SDL_Rect cameraRect = {0,0,640,480};
-
-    SelectionHandler sHandler(protocol);
-    PlayerInterface playerInterface(screen,&sHandler,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
-
-    while(waiting_server){}
-    //main application loop
-
-    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory));
-    threads[1]->start();
-
-    for (int i = 0; i <threads.size(); ++i) {
-        threads[i]->join();
-
-    }
-    TTF_Quit();
-    IMG_Quit();
-}
-
-void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
-    std::cout << "Chau!" << std::endl;
-    app->quit();
-}
 
 int main(int argc, char *argv[]){
     tSocket socket;
     int port_number = atoi(argv[2]);
     socket.connect(argv[1],port_number);
-    ProtocolMenu protocolMenu(socket);
-
     auto app = Gtk::Application::create();
-    Gtk::Window ventana;
-    ventana.set_default_size(700, 360);
-    Gtk::Box box(Gtk::ORIENTATION_VERTICAL, 0);
-    Gtk::Button unirse("Unirse");
-    Gtk::Button crear("Crear");
-    Gtk::Button salir("Salir");
-
-    std::vector<std::string> games = protocolMenu.fetchGames();
-    Gtk::ComboBoxText combo;
-    for (int i = 0; i < games.size(); ++i) {
-        combo.append(games[i]);
-    }
-
-    Gtk::Entry entry;
-    entry.set_max_length(50);
-    entry.set_placeholder_text("Nombre de la partida a crear");
-
-    Gtk::Entry nombre;
-    nombre.set_max_length(50);
-    nombre.set_placeholder_text("Nombre del usuario");
-
-    unirse.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv, &combo, &socket));
-    crear.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,&entry));
-    salir.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
-    Gtk::Image* image = new Gtk::Image("client/splash/splash.jpg");
-
-    box.add(nombre);
-    box.add(entry);
-    box.add(crear);
-    box.add(*Gtk::manage(image));
-    box.add(combo);
-    box.add(unirse);
-    box.add(salir);
-    ventana.add(box);
-    ventana.show_all();
-    return app->run(ventana);
+    MainWindow mainWindow(socket, argc, argv, app);
+    return app->run(mainWindow);
 }
