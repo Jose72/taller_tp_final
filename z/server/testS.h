@@ -1,6 +1,8 @@
 #ifndef TESTS_CPP
 #define TESTS_CPP
 
+
+int test_unit_driving();
 int flag_capture();
 int test_death_of_target();
 int test_bullet_attack();

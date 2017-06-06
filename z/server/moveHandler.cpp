@@ -204,7 +204,12 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 						//ataco
 						u.changeState(ATTACKING);
 					} else{
-						u.changeState(STANDING);
+						//si puedo conducir al target lo ahgo
+						if (u.canDriveTarget()){
+							u.driveTarget();
+						} else {
+							u.changeState(STANDING);
+						}
 					}
 					
 				} else {

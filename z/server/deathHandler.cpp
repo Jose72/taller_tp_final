@@ -10,7 +10,7 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units){
 			
 		break;
 	}
-	u.noticeFollowersOfDeath();
+	u.stopFollowers();
 	return 0;
 	
 }

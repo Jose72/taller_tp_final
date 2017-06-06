@@ -12,6 +12,45 @@
 
 #include <unistd.h>
 
+int test_unit_driving(){
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	unitBuilder ub;
+	int unit_id_count = 4;
+	std::set<int> d_units;
+	std::set<int> a_units;
+	
+	unit *r1 = ub.build(GRUNT, 1, 27, 18);
+	unit *r2 = ub.build(JEEP, 1, 45, 18);
+	unit *r3 = ub.build(GRUNT, 2, 37, 18);
+	units.insert(std::pair<int,unit*>(1,r1));
+	units.insert(std::pair<int,unit*>(2,r2));
+	
+	units.insert(std::pair<int,unit*>(3,r3));
+	
+	r1->drive(r2);
+	r3->attack(r1);
+	
+	actualizeUnit au;
+	for (int i = 0; i < 10; i++){
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+		}
+	}
+	
+	std::cout << "rel dam r1: " << r1->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r2: " << r2->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r3: " << r3->getRelativeDamage() << std::endl;
+	
+	for (auto it = units.begin(); it != units.end(); ++it){
+			delete it->second;
+		}
+	return 0;
+}
+
 int flag_capture(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);

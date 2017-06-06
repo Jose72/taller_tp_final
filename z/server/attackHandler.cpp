@@ -26,15 +26,20 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 			attacker.actualizeTimer(time);
 			//si estoy en cond de atacar lo hago
 			if (attacker.canAttack()){
-				//creo una bullet y la inserto
-				std::cout << "crea bullet" << std::endl;
-				unitBuilder ub;
-				unit *u = ub.build(attacker.unitToCreate(), attacker.getX(), attacker.getY());
-				u->attack(attacked);
-				units.insert(std::pair<int,unit*>(unit_id_c,u));
-				unit_id_c++;//incremento id_units
-				//reseteo el timer
-				attacker.resetTimer();
+				//si usa balas, es instantaneo
+				//sino, creo una bullet y la inserto
+				if (attacker.unitToCreate() == BALAS){
+					attacked->takeDamage(round(attacker.getDamage()));
+				} else {
+					std::cout << "crea bullet" << std::endl;
+					unitBuilder ub;
+					unit *u = ub.build(attacker.unitToCreate(), attacker.getX(), attacker.getY());
+					u->attack(attacked);
+					units.insert(std::pair<int,unit*>(unit_id_c,u));
+					unit_id_c++;//incremento id_units
+					//reseteo el timer
+					attacker.resetTimer();
+				}
 			} 
 		} else {
 			if (attacker.autoAttackEnabled()){

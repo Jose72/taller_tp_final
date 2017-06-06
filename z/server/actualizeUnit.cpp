@@ -95,7 +95,9 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 		unit *target = it->second;
 		//chequeo quien es el dueño de la unidad
 		
-		if (attacker.isEnemy(*target) && (target->getClassId() == ROBOT || target->getClassId() == VEHICLE)){
+		if (attacker.isEnemy(*target) && 
+		(target->getClassId() == ROBOT || target->getClassId() == VEHICLE) && 
+		!target->isDriving()){
 			//si esta en rango
 			if (attacker.isInRange(*target)){
 				attacker.setAutoAttack(target);
@@ -130,6 +132,9 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 		case CHECKING_CAPTURE:
 			std::cout << "unit: " << unit_game_id << " check_capt" << std::endl;
 			capture_h.checkingCaptureActualize(u, units, time);
+			return 0;
+		case DRIVING:
+			std::cout << "unit: " << unit_game_id << " driving" << std::endl;
 			return 0;
 	}
 	//std::cout << "end actu---------" << std::endl;

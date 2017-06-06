@@ -27,6 +27,9 @@ class unit {
 		int dest_y;
 		int speed;
 		
+		//conduccion
+		unit *driver;
+		
 		//ataque
 		std::vector<unit*> followers;
 		unit *target;
@@ -76,6 +79,8 @@ class unit {
 		void moveToTarget();
 		void attack(unit *u);
 		void stop();
+		void drive(unit *vehicle);
+		void driveTarget();
 		
 		//checks
 		bool isInRange(unit &u);
@@ -87,6 +92,8 @@ class unit {
 		bool autoAttackEnabled();
 		bool timerIsZero();
 		bool targetIsInRange();
+		bool canDriveTarget();
+		bool isDriving();
 
 		//double getDamage(double time); 
 		int takeDamage(int dam);
@@ -116,7 +123,7 @@ class unit {
 		void removeTarget(unit *u);
 		void setAttack(unit *u);
 		bool isFollowedBy(unit *u);
-		void noticeFollowersOfDeath();
+		void stopFollowers();
 	
 };
 

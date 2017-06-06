@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-	//flag_capture();
+	//test_unit_driving();
 	
 	char c = '0';
 	tServer server(atoi(argv[1]));

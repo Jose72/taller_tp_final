@@ -53,10 +53,12 @@ HEAVY_TANK_TL = 4, MML_TL = 5 };
 
 #define FLAG_CAPTURE_TIME 30000 //30 segs
 
+
+//pixeles (tendria que ser otra cosa, es muy corto)
 enum range {GRUNT_RANGE = 7, PSYCHO_RANGE = 7, TOUGHT_RANGE = 5, 
 PYRO_RANGE = 6, SNIPER_RANGE = 10, LAZER_RANGE = 7, JEEP_RANGE = 6, 
 MEDIUM_TANK_RANGE = 7, LIGHT_TANK_RANGE = 6, HEAVY_TANK_RANGE = 8, 
-MML_RANGE = 8, FLAG_RANGE = 32};
+MML_RANGE = 8, FLAG_RANGE = 8};
 
 #endif
 

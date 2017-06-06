@@ -17,9 +17,10 @@ int health, int state, int speed, int a_range, int base_damage,
 int base_time, int unit_to_c, int tech_level): unit_id(unit_id),   
 class_id(class_id), owner(owner),x(x), y(y), b_health(health), 
 health(health), state(state), dest_x(x), dest_y(y) ,speed(speed), 
-target(nullptr), attack_range(a_range), base_damage(base_damage), 
-auto_attack(false), base_time(base_time), countdown(base_time), 
-unit_code_to_create(unit_to_c), tech_level(tech_level) {}
+driver(nullptr), target(nullptr), attack_range(a_range), 
+base_damage(base_damage), auto_attack(false), base_time(base_time), 
+countdown(base_time), unit_code_to_create(unit_to_c), 
+tech_level(tech_level) {}
 
 
 
@@ -111,6 +112,17 @@ void unit::attack(unit *u){
 	} 
 }
 
+void unit::drive(unit *vehicle){
+	//si tenia target le digo que no lo sigo y targetteo vehiculo
+	if (target) target->removeFollower(this);
+	target = vehicle;
+	//si estoy en rango lo conduzco, sino me pongo en moving
+	if (this->targetIsInRange() && this->canDriveTarget()){
+		this->driveTarget();
+	} else {
+		this->moveToTarget();
+	}
+}
 
 
 //////////////////////////////////////////////////
@@ -295,11 +307,13 @@ void unit::removeFollower(unit* u){
 	}
 }
 
-//le digo a mis followers que me mori, que seteen su target a null
-void unit::noticeFollowersOfDeath(){
+//le digo a mis followers que np me sigan, que seteen su target a null
+void unit::stopFollowers(){
 	for (auto it = followers.begin(); it != followers.end(); ++it){
 		(*it)->removeTarget(this);
 	}
+	//limpio el vector
+	followers.clear();
 }
 
 bool unit::canCreate(){
@@ -356,4 +370,28 @@ void unit::increaseTechLvl(){
 
 int unit::getTechLvl(){
 	return tech_level;
+}
+
+
+bool unit::canDriveTarget(){
+	//mismo dueño  
+	//target es vehiculo
+	//el vehiculo no tiene conductor
+	//unidad es robot
+	if (target->owner == this->owner && 
+	target->class_id == VEHICLE && !target->driver
+	 &&this->class_id == ROBOT) return true;
+	return false;
+	
+}
+
+void unit::driveTarget(){
+	this->stopFollowers();
+	target->driver = this;
+	state = DRIVING;
+}
+
+bool unit::isDriving(){
+	if (state == DRIVING) return true;
+	return false;
 }
