@@ -13,6 +13,7 @@
 #include "ClickableButton.h"
 #include "PlayerInterface.h"
 #include "EventHandler.h"
+#include "ProtocolMenu.h"
 #include <gtkmm.h>
 
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
@@ -27,7 +28,7 @@ void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],
     std::cout << "TODO: Enviar al server creacion partida " << entry->get_text() << std::endl;
 }
 
-void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[], Gtk::ComboBoxText* combo){
+void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[], Gtk::ComboBoxText* combo, tSocket *socket){
     std::cout << "TODO: Enviar al server unirse a partida " << combo->get_active_text() << std::endl;
 
     SDL_Surface *screen;
@@ -62,14 +63,13 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
     atexit(SDL_Quit);
     SpritesPool pool(screen);
     Factory_Units factory(pool);
-    tSocket socket;
     Game_map game_map(screen);
-    int port_number = atoi(argv[2]);
-    socket.connect(argv[1],port_number);
+
+
     std::vector<tThread*> threads;
-    threads.push_back(new TClient_receive(socket,game_map,all_units,factory,waiting_server, running));
+    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running));
     threads[0]->start();
-    Protocol protocol(socket,all_units,game_map,factory);
+    Protocol protocol(*socket,all_units,game_map,factory);
 
     int posx1 = 100;
     int posy1 = 100;
@@ -85,7 +85,7 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
     while(waiting_server){}
     //main application loop
 
-    threads.push_back(new EventHandler(screen,playerInterface,all_units,socket, game_map, running,factory));
+    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory));
     threads[1]->start();
 
     for (int i = 0; i <threads.size(); ++i) {
@@ -102,6 +102,10 @@ void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
 }
 
 int main(int argc, char *argv[]){
+    tSocket socket;
+    int port_number = atoi(argv[2]);
+    socket.connect(argv[1],port_number);
+    ProtocolMenu protocolMenu(socket);
 
     auto app = Gtk::Application::create();
     Gtk::Window ventana;
@@ -111,11 +115,11 @@ int main(int argc, char *argv[]){
     Gtk::Button crear("Crear");
     Gtk::Button salir("Salir");
 
+    std::vector<std::string> games = protocolMenu.fetchGames();
     Gtk::ComboBoxText combo;
-    combo.append("pepito");
-    combo.append("foo");
-    combo.append("bar");
-    combo.set_name("partidas");
+    for (int i = 0; i < games.size(); ++i) {
+        combo.append(games[i]);
+    }
 
     Gtk::Entry entry;
     entry.set_max_length(50);
@@ -125,7 +129,7 @@ int main(int argc, char *argv[]){
     nombre.set_max_length(50);
     nombre.set_placeholder_text("Nombre del usuario");
 
-    unirse.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv, &combo));
+    unirse.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv, &combo, &socket));
     crear.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,&entry));
     salir.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
     Gtk::Image* image = new Gtk::Image("client/splash/splash.jpg");
