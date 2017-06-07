@@ -36,7 +36,7 @@ std::vector<Animation*> & SpritesPool::get_animations(FlagsUnitType flag) {
     return this->pool[flag];
 }
 
-void SpritesPool::load_sprites(char *path,
+void SpritesPool::load_sprites(std::string path,
                                FlagsUnitType blue,
                                FlagsUnitType green,
                                FlagsUnitType red,
@@ -47,7 +47,8 @@ void SpritesPool::load_sprites(char *path,
     std::vector<Animation*> b_grunt,g_grunt,r_grunt,y_grunt;
     std::vector<std::string> list_dir;
     std::string mother(path);
-    if ((dir = opendir (path)) != NULL) {
+    const char * path2 = path.c_str();
+    if ((dir = opendir (path2)) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
             std::string name(ent->d_name);
             list_dir.push_back(name);
@@ -76,8 +77,6 @@ void SpritesPool::load_sprites(char *path,
         full_dir.append(list_dir[j]);
         char * full_dirNoConst = const_cast<char*> (full_dir.c_str());
         Animation *robot_move = new Animation(this->screen,full_dirNoConst,16,16);
-        if(robot_move == NULL)
-            exit(-4);
         if(list_dir[j].find("blue") != std::string::npos){
             b_grunt.push_back(robot_move);
         }else if(list_dir[j].find("green") != std::string::npos){
@@ -94,7 +93,7 @@ void SpritesPool::load_sprites(char *path,
     this->pool[yellow] = y_grunt;
 }
 
-void SpritesPool::load_sprites_with_null(char *path,
+void SpritesPool::load_sprites_with_null(std::string path,
                                          FlagsUnitType null,
                                          FlagsUnitType blue,
                                          FlagsUnitType green,
@@ -106,7 +105,8 @@ void SpritesPool::load_sprites_with_null(char *path,
     std::vector<Animation*> n_grunt,b_grunt,g_grunt,r_grunt,y_grunt;
     std::vector<std::string> list_dir;
     std::string mother(path);
-    if ((dir = opendir (path)) != NULL) {
+    const char * path2 = path.c_str();
+    if ((dir = opendir (path2)) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
             std::string name(ent->d_name);
             list_dir.push_back(name);
@@ -154,7 +154,7 @@ void SpritesPool::load_sprites_with_null(char *path,
     this->pool[null] = n_grunt;
 }
 
-void SpritesPool::load_sprites_with_dim(char *path,
+void SpritesPool::load_sprites_with_dim(std::string path,
                                         FlagsUnitType blue,
                                         FlagsUnitType green,
                                         FlagsUnitType red,
@@ -165,7 +165,8 @@ void SpritesPool::load_sprites_with_dim(char *path,
     std::vector<Animation*> b_grunt,g_grunt,r_grunt,y_grunt;
     std::vector<std::string> list_dir;
     std::string mother(path);
-    if ((dir = opendir (path)) != NULL) {
+    const char * path2 = path.c_str();
+    if ((dir = opendir (path2)) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
             std::string name(ent->d_name);
             list_dir.push_back(name);

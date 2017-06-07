@@ -2,6 +2,7 @@
 #define CLIENT_ANIMATION_H
 
 #include <SDL.h>
+#include <string>
 
 class Animation {
 private:
@@ -9,8 +10,9 @@ private:
     SDL_Surface *image;
     SDL_Rect frame;
 
+
 public:
-   Animation(SDL_Surface *screen,char *imagepath, int frame_w, int frame_h);
+   Animation(SDL_Surface *screen,std::string imagepath, int frame_w, int frame_h);
 
     ~Animation();
     void animate_static(int posx, int posy);

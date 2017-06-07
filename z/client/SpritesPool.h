@@ -50,20 +50,20 @@ private:
 public:
     SpritesPool(SDL_Surface *screen);
     std::vector<Animation*> &get_animations(FlagsUnitType flag);
-    void load_sprites(char* path,
+    void load_sprites(std::string path,
                       FlagsUnitType blue,
                       FlagsUnitType green,
                       FlagsUnitType red,
                       FlagsUnitType yellow);
 
-    void load_sprites_with_null(char* path,
+    void load_sprites_with_null(std::string path,
                                 FlagsUnitType null,
                                 FlagsUnitType blue,
                                 FlagsUnitType green,
                                 FlagsUnitType red,
                                 FlagsUnitType yellow);
 
-    void load_sprites_with_dim(char* path,
+    void load_sprites_with_dim(std:: string path,
                                FlagsUnitType blue,
                                FlagsUnitType green,
                                FlagsUnitType red,

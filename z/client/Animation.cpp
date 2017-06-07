@@ -1,10 +1,11 @@
 #include "Animation.h"
 
-Animation::Animation(SDL_Surface *screen,char *imagepath, int frame_w, int frame_h) {
+Animation::Animation(SDL_Surface *screen,std::string imagepath, int frame_w, int frame_h) {
     this->screen = screen;
 
     SDL_Surface *loadedImage;
-    loadedImage = SDL_LoadBMP(imagepath);
+    const char * imagepath2 = imagepath.c_str();
+    loadedImage = SDL_LoadBMP(imagepath2);
     this->image = SDL_DisplayFormat(loadedImage);
     SDL_FreeSurface(loadedImage);
     this->frame.w = frame_w;
