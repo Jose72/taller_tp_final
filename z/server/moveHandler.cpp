@@ -105,10 +105,13 @@ int moveHandler::moveActualize(unit &u, gameMap &mapa, int time){
 int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 	
 		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
-	//necesito clse de unidad
+		std::cout << "moving" << std::endl;
+		//necesito clse de unidad
 		int c_id = u.getClassId();
 		int x_unit = u.getX();
 		int y_unit = u.getY();
+		//std::cout << "dest_x: " << u.getDestX() << std::endl;
+		//std::cout << "dest_y: " << u.getDestY() << std::endl;
 		//saco casillas origen y destino 
 		tile *orig = mapa.getTilePFromUnit(x_unit, y_unit);
 		tile *dest = mapa.getTilePFromUnit(u.getDestX(), u.getDestY());
@@ -131,7 +134,19 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 		//que seria la segunda guardada en camino (la primera en el origen)
 		//si no hay mas de 1 es el origen
 		//std::cout << camino.size() << std::endl;
-		if (camino.size() == 0) return 1;
+		std::cout << "moving 1.4" << std::endl;
+
+		if (camino.size() == 0) {
+			//si no hay camino (selecione lava por ej)
+			//me quedo donde estoy y paso a standing
+			u.stop();
+			u.changeState(STANDING);
+			return 1;
+		}
+
+
+		std::cout << "moving 1.5" << std::endl;
+
 		tile *closer_tile = camino[camino.size() - 1];
 		if (camino.size() > 1){
 			closer_tile = camino[camino.size() - 2];
@@ -159,37 +174,34 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 		//std::cout << x_unit - x_closer << std::endl;
 		//std::cout << y_unit - y_closer << std::endl;
 		
-		if (dist == 0) { //ya estas en el destino
-			return 0;
-		}
-		
-		//seteo velocidad
-		//multiplico por el factor de terreno de la casilla actual
-		//y por 
-		double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
-		//si es una unidad no movible hay un error
-		if (speed == 0) return 1; //no deberia suceder
-		
-		//calculo los nuevos xy
-		int new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
-		int new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
-		/*
-		std::cout << "time " << time << std::endl;
-		std::cout << "speed " << speed << std::endl;
-		std::cout << "dist " << dist << std::endl;
-		std::cout << "new_x " << new_x << std::endl;
-		std::cout << "new_y " << new_y << std::endl;
-		*/
-		//si la dist de los nuevos xy con el origen es mayor o igual
-		//a la del origen on el destno, seteo el destino como pos actual
-		//sino seteo los nuevos xy
-		
-		if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) < dist){
-			u.setPos(round(new_x), round(new_y));
-		} else {
-			u.setPos(x_closer, y_closer);
-		}
+		if (dist != 0) { // si no  estoy en el destino
+			//seteo velocidad
+			//multiplico por el factor de terreno de la casilla actual
+			//y por
+			double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
+			//si es una unidad no movible hay un error
+			if (speed == 0) return 1; //no deberia suceder
+			std::cout << "moving3" << std::endl;
+			//calculo los nuevos xy
+			int new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
+			int new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
+			/*
+			std::cout << "time " << time << std::endl;
+			std::cout << "speed " << speed << std::endl;
+			std::cout << "dist " << dist << std::endl;
+			std::cout << "new_x " << new_x << std::endl;
+			std::cout << "new_y " << new_y << std::endl;
+			*/
+			//si la dist de los nuevos xy con el origen es mayor o igual
+			//a la del origen on el destno, seteo el destino como pos actual
+			//sino seteo los nuevos xy
 
+			if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) < dist){
+				u.setPos(round(new_x), round(new_y));
+			} else {
+				u.setPos(x_closer, y_closer);
+			}
+		}
 		u.printPos();
 		
 		
