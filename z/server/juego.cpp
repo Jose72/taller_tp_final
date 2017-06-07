@@ -90,29 +90,13 @@ void juego::sendInit(){
 	
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
 	unit *u1 = builder.build(GRUNT, 1, 60, 15);
-	
 	units.insert(std::pair<int,unit*>((units.size()+1),u1));
 	id_unit_counter++;
 
+	unit *u2 = builder.build(GRUNT, 2, 160, 15);
+	units.insert(std::pair<int,unit*>((units.size()+1),u2));
+	id_unit_counter++;
 
-	/*
-	int unit_code = GRUNT;
-	int xx = u1->getX();
-	int yy = u1->getY();
-	int unit_cant = 1;
-
-	
-	//paso el mapa y unidades a todos
-
-	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-		(*it)->send((char*) &sss, sizeof(int));
-		(*it)->send((char*) &map_codes, sizeof(int) * sss);
-		(*it)->send((char*) &unit_cant, sizeof(int));
-		(*it)->send((char*) &unit_code, sizeof(int));
-		(*it)->send((char*) &xx, sizeof(int));
-		(*it)->send((char*) &yy, sizeof(int));
-	}
-     */
 	
 
 	//protocol
@@ -223,6 +207,7 @@ void juego::run(){
 				unit *u = it->second;
 				if (u->isDead()) {
 					death_h.death(*u, units);//handler por si tiene q hacer algo
+					std::cout << "unit " << it->first << " dead" << std::endl;
 					delete it->second; // libero mem
 					it = units.erase(it); // borro de la lista
 				} else {
