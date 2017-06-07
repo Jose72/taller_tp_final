@@ -63,7 +63,7 @@ void tClientManager::run(){
 	
 	//primero recibir datos de usuario
 	//enviar datos partida
-	std::cout << id_client << "\n";
+	std::cout << "cleitne: " << id_client << "\n";
 
 
 	//si seleccione nuevo juego
@@ -84,7 +84,7 @@ void tClientManager::run(){
 		if (end_game) return;
 		
 	
-		//que el juego envio datos iniciales
+		//que el juego envie datos iniciales
 		j->sendInit();
 		
 		//empiezo el juego
@@ -111,12 +111,24 @@ void tClientManager::run(){
 	
 	int s = 1;
 	while (s > 0) {
-		//int x_dest = 0;
-		//int y_dest = 0;
-		//s = cli_skt.receive((char*) &x_dest, sizeof(int));
-		//s = cli_skt.receive((char*) &y_dest, sizeof(int));
-		//Event e(1, 1,x_dest, y_dest);
-		
+		/*
+		std::cout << "start taking event: " << std::endl;
+
+		int op = -1;
+		int unit = 0;
+		int x_dest = 0;
+		int y_dest = 0;
+
+		s = cli_skt.receive((char*) &op, 4);
+		std::cout << "op_code: " << ntohl(op) << std::endl;
+		s = cli_skt.receive((char*) &unit, 4);
+		std::cout << "unit_code: " << ntohl(unit) << std::endl;
+		s = cli_skt.receive((char*) &x_dest, 4);
+		std::cout << "x_code: " << ntohl(x_dest) << std::endl;
+		s = cli_skt.receive((char*) &y_dest, 4);
+		std::cout << "y_code: " << ntohl(y_dest) << std::endl;
+		Event e(ntohl(op), ntohl(unit),ntohl(x_dest),ntohl(y_dest));
+		*/
 		
 		Event e;
 		s = protocolo.receive_event(e);

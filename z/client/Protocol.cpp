@@ -12,25 +12,29 @@ Protocol::~Protocol() {}
 
 
 void Protocol::moveUnitCS(int cod_unit, int posX, int posY) {
-    std::cout << cod_unit << posX<<posY << "\n";
+    std::cout << "cod unit: " << cod_unit << " x: " << posX << " y: " << posY << "\n";
     int CO_to_send = htonl(CODE_MOVE_UNIT);
     int CU_to_send = htonl(cod_unit);
     int PX_to_send = htonl(posX);
     int PY_to_send = htonl((posY));
-    socket.send((char*)CO_to_send,sizeof(int));
-    socket.send((char*)CU_to_send,sizeof(int));
-    socket.send((char*)PX_to_send,sizeof(int));
-    socket.send((char*)PY_to_send,sizeof(int));
+    socket.send((char*) &CO_to_send,sizeof(int));
+    //std::cout << "cod op: " << CODE_MOVE_UNIT <<"\n";
+    socket.send((char*) &CU_to_send,sizeof(int));
+    //std::cout << "cod unit: " << cod_unit << "\n";
+    socket.send((char*) &PX_to_send,sizeof(int));
+    //std::cout << " x: " << posX << "\n";
+    socket.send((char*) &PY_to_send,sizeof(int));
+    //std::cout <<" y: " << posY << "\n";
 }
 
 void Protocol::attackUnitCS(int cod_unit, int cod_objective) {
     int CO_to_send = htonl(CODE_ATTACK);
     int CU_to_send = htonl(cod_unit);
     int O_to_send = htonl(cod_objective);
-    socket.send((char*)CO_to_send,sizeof(int));
-    socket.send((char*)CU_to_send,sizeof(int));
-    socket.send((char*)O_to_send,sizeof(int));
-    socket.send((char*)O_to_send,sizeof(int));
+    socket.send((char*) &CO_to_send,sizeof(int));
+    socket.send((char*) &CU_to_send,sizeof(int));
+    socket.send((char*) &O_to_send,sizeof(int));
+    socket.send((char*) &O_to_send,sizeof(int));
 }
 
 void Protocol::create_map() {
@@ -83,7 +87,7 @@ void Protocol::set_units_game() {
 
 void Protocol::confirm_server() {
     int confirm = 280;
-    int confirm_CS = confirm;
+    int confirm_CS = htonl(confirm);
     socket.send((char*)&confirm_CS,4);
     socket.send((char*)&confirm_CS,4);
 }

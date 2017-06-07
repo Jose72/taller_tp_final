@@ -109,7 +109,7 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 }
 
 int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count, std::set<int> &dead_unit, std::set<int> &actualized_units){
-	std::cout << "start actu-----------" << std::endl;
+	//std::cout << "start actu-----------" << std::endl;
 	int state = u.getState();
 	switch(state){
 		case MOVING:

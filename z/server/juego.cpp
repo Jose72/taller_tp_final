@@ -93,7 +93,9 @@ void juego::sendInit(){
 	
 	units.insert(std::pair<int,unit*>((units.size()+1),u1));
 	id_unit_counter++;
-	
+
+
+	/*
 	int unit_code = GRUNT;
 	int xx = u1->getX();
 	int yy = u1->getY();
@@ -101,7 +103,7 @@ void juego::sendInit(){
 
 	
 	//paso el mapa y unidades a todos
-    /*
+
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->send((char*) &sss, sizeof(int));
 		(*it)->send((char*) &map_codes, sizeof(int) * sss);
@@ -114,7 +116,6 @@ void juego::sendInit(){
 	
 
 	//protocol
-	std::vector<int> t_c = mapa.getTilesCodes();
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		it->send_map((int*)&map_codes,100);
 		it->send_units_game(units);
@@ -199,10 +200,11 @@ void juego::run(){
 			}
 			
 			usleep(200000);
-
+			
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = it->sendActualization(units);
             }
+			//std::cout << "actualize finished " << std::endl;
             /*
 			//envio a los clientes
 			for (auto it = units.begin(); it != units.end(); ++it){
@@ -216,6 +218,7 @@ void juego::run(){
 			}
 			*/
 			//limpio los fiambres
+			//std::cout << "units clean " << std::endl;
 			for (auto it = units.begin(); it != units.end(); ){
 				unit *u = it->second;
 				if (u->isDead()) {
