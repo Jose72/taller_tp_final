@@ -109,33 +109,6 @@ void tClientManager::run(){
 		
 	}
 	
-	/*
-	 * 
-	o espero confimacion del cliente cuando le envio el mapa y todo?
-	int ready = 0;
-	receive((char*) &ready, sizeof(int));
-	
-	if (!ready) return;
-	 
-	*/
-	
-	/*
-	int s = 1;
-	while (s > 0) {
-		int x_dest = 0;
-		int y_dest = 0;
-		s = cli_skt.receive((char*) &x_dest, sizeof(int));
-		s = cli_skt.receive((char*) &y_dest, sizeof(int));
-		if (s > 0) {
-			Event e(1, 1,x_dest, y_dest);
-			tLock l(mmm);
-			//mmm.lock();
-			j->take_event(e);
-			//mmm.unlock();
-		}
-	}
-	*/
-	
 	int s = 1;
 	while (s > 0) {
 		//int x_dest = 0;
@@ -143,15 +116,13 @@ void tClientManager::run(){
 		//s = cli_skt.receive((char*) &x_dest, sizeof(int));
 		//s = cli_skt.receive((char*) &y_dest, sizeof(int));
 		//Event e(1, 1,x_dest, y_dest);
-		Event e;
 		
-
-		//protocol
-		protocolo.receive_event(e);
-
+		
+		Event e;
+		s = protocolo.receive_event(e);
 		
 		if (s > 0) {
-			//el jeugo tiene el mutex
+			//el juego tiene el mutex
 			j->take_event(e);
 		}
 	}

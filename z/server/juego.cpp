@@ -126,6 +126,30 @@ void juego::sendInit(){
 	
 }
 
+
+void juego::eventHandle(Event &e, std::map<int,unit*> &units){
+	std::map<int,unit*>::iterator it;
+	it = units.find(e.getUnitId());
+	
+	if (it->first != e.getUnitId()) return; //no encontro a la unidad
+	
+	switch (e.getOpCode()){
+		case 0:
+			//moverse
+			(it->second)->move(e.getX(),e.getY());
+			return;
+		case 1:
+			//ataque
+			std::map<int,unit*>::iterator it2;
+			it2 = units.find(e.getX());
+			
+			if (it2->first != e.getX()) return; //no encontro a la unidad
+			
+			(it->second)->attack(it2->second);
+			return;
+	}
+}
+
 void juego::run(){
 	
 	running = true;
@@ -144,6 +168,8 @@ void juego::run(){
 			if (!event_list.empty()){
 				Event e = event_list.front();
 				event_list.pop();
+				
+				/*
 				//esto esta harcodeado, tendria que llamar a una funcion
 				//que identifique la op y ejecute (handler)
 				std::map<int,unit*>::iterator it;
@@ -153,8 +179,12 @@ void juego::run(){
 				//hay que chequear que devolvio correctamente
 				if (it->first == e.getId()){
 					unit *u1 = it->second;
+					eventHandle()
 					u1->move(e.getX(), e.getY()); //hay que hacer un handler
 				}
+				*/
+				
+				eventHandle(e, units);
 			}
 			//deslockeo
 			game_m.unlock();
@@ -171,7 +201,7 @@ void juego::run(){
 			usleep(200000);
 
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
-                it->sendActualization(units);
+                 s = it->sendActualization(units);
             }
             /*
 			//envio a los clientes

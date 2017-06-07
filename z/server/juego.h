@@ -31,6 +31,8 @@ class juego: public tThread{
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
 		std::mutex game_m; //proteger eventos
 		bool running;
+		
+		void eventHandle(Event &e, std::map<int, unit*> &units);
 	
 	public:
 		juego(int cant_players);

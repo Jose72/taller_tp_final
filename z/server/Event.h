@@ -12,7 +12,8 @@ class Event {
 	Event();
 		int getX();
 		int getY();
-		int getId();
+		int getUnitId();
+		int getOpCode();
 };
 
 
