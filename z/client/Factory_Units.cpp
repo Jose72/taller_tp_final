@@ -10,12 +10,11 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
     std::vector<Animation*> animation5;
     switch (unit){
         case BLUE_GRUNT:
-            animation  = this->pool.get_animations(BLUE_GRUNT);
-            animation2 = this->pool.get_animations(FIRE_BLUE_GRUNT);
-            animation3 = this->pool.get_animations(DIE_BLUE_GRUNT);
-            animation4 = this->pool.get_animations(BEER_BLUE);
-            animation5 = this->pool.get_animations(CELEBRATE_BLUE);
-            return new Unit(animation,animation2,animation3,animation4,animation5,unit_code,posx,posy);
+            return new Unit(this->pool.get_animations(BLUE_GRUNT),
+                            this->pool.get_animations(FIRE_BLUE_GRUNT),
+                            this->pool.get_animations(DIE_BLUE_GRUNT),
+                            this->pool.get_animations(BEER_BLUE),
+                            this->pool.get_animations(CELEBRATE_BLUE),unit_code,posx,posy);
         case GREEN_GRUNT:
             animation  = this->pool.get_animations(GREEN_GRUNT);
             animation2 = this->pool.get_animations(FIRE_GREEN_GRUNT);

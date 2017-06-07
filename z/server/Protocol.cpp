@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Protocol.h"
 #include "Event.h"
 
@@ -5,13 +6,15 @@ serverProtocol::serverProtocol(tSocket &s):socket(s) {}
 
 serverProtocol::~serverProtocol() {}
 
-void serverProtocol::send_map(std::vector<int> &tiles) {
-    int map_size = htonl(tiles.size());
+void serverProtocol::send_map(int * map_s,int size) {
+    int map_size = htonl(size);
     socket.send((char*) &map_size,4);
 
-    for (unsigned int i = 0; i < tiles.size() ; ++i) {
-        int tile = htonl(tiles[i]);
+
+    for (unsigned int i = 0; i < size ; ++i) {
+        int tile = htonl(*(map_s+ i));
         socket.send((char*) &tile,4);
+        std::cout<< *(map_s+ i) << "\n";
     }
 }
 
@@ -65,8 +68,8 @@ int serverProtocol::receive_event(Event &e) {
 }
 
 int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
-	int units_size = htonl(map_units.size());
-    socket.send((char*) &units_size,4);
+	//int units_size = htonl(map_units.size());
+    //socket.send((char*) &units_size,4);
     for (auto it = map_units.begin(); it != map_units.end() ; ++it) {
 		//codigo de estado
 		int state_code = htonl(it->second->getState());
@@ -74,6 +77,8 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 		//codigo unico de unidad en el juego
         int game_unit_id = htonl(it->first);
         socket.send((char*) &game_unit_id,sizeof(int));
+        std::cout <<game_unit_id << "\n";
+        std::cout<< it->first << "\n";
 		/*
 		//codigo de unidad
 		int unit_id = htonl(it->second->getUnitId());

@@ -46,15 +46,15 @@ Unit::~Unit() {
 }
 void Unit::animate(SDL_Rect &cameraRect) {
     switch(state){
-        case MOVING:
+        case MOVING1:
             animate_moving(cameraRect,animation,FRAME_LIMIT_MOVE_GRUNT);
             break;
 
-        case ATTACKING:
+        case ATTACKING1:
             animate_attacking(cameraRect,animation2,FRAME_LIMIT_ATTACK_GRUNT);
             break;
 
-        case DEAD:
+        case DEAD1:
             animate_static(cameraRect,animation3,FRAME_LIMIT_DEAD);
             break;
 
@@ -167,7 +167,7 @@ int Unit::get_unit_code() {
 }
 
 void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
-    if(current_frame < max_frame){
+    if(current_frame < max_frame-1){
         current_frame ++;
     } else{
         current_frame = 0;

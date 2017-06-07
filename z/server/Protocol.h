@@ -19,7 +19,7 @@ public:
     //SIGO LO QUE ESTA EN EL DOC, COMO LO PROCESAS Y ESO FIJATE VOS
 
     //ENVIAR
-    void send_map(std::vector<int> &tiles);
+    void send_map(int * map_s, int size);
     void send_units_game(std::map<int,unit*> &map_units);
     void confirm_client(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
 	int sendActualization(std::map<int,unit*> &map_units);

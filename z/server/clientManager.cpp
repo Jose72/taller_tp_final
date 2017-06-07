@@ -138,16 +138,17 @@ void tClientManager::run(){
 	
 	int s = 1;
 	while (s > 0) {
-		int x_dest = 0;
-		int y_dest = 0;
-		s = cli_skt.receive((char*) &x_dest, sizeof(int));
-		s = cli_skt.receive((char*) &y_dest, sizeof(int));
-		Event e(1, 1,x_dest, y_dest);
+		//int x_dest = 0;
+		//int y_dest = 0;
+		//s = cli_skt.receive((char*) &x_dest, sizeof(int));
+		//s = cli_skt.receive((char*) &y_dest, sizeof(int));
+		//Event e(1, 1,x_dest, y_dest);
+		Event e;
 		
-		/*
+
 		//protocol
 		protocolo.receive_event(e);
-		*/
+
 		
 		if (s > 0) {
 			//el jeugo tiene el mutex

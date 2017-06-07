@@ -49,7 +49,7 @@ private:
 
 public:
     SpritesPool(SDL_Surface *screen);
-    std::vector<Animation*> get_animations(FlagsUnitType flag);
+    std::vector<Animation*> &get_animations(FlagsUnitType flag);
     void load_sprites(char* path,
                       FlagsUnitType blue,
                       FlagsUnitType green,

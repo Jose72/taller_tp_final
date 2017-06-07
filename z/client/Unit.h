@@ -29,9 +29,10 @@ enum Attack_Direction{
 };
 
 enum State{
-    MOVING,
-    ATTACKING,
-    DEAD,
+    BULLSHIT,
+    MOVING1,
+    ATTACKING1,
+    DEAD1,
     DRINKING,
     CELEBRATE,
     COLORLESS,

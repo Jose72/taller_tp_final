@@ -54,7 +54,7 @@ void tSocket::connect(char *ip_address, int &port_number) {
         serv.sin_port = port_number;
 	int s = ::connect(skt , (struct sockaddr *)&serv , sizeof(serv));
 	if (s == -1) {
-		std::cout << "tSocket: error connect" << std::endl;
+		std::cout << "tSocket: error connect: "<< strerror(errno) << std::endl;
 		throw 1;}
 }
 

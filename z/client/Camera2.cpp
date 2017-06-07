@@ -39,11 +39,12 @@ void Camera2::draw(Units_Protected &units, Game_map &game_map) {
     int limitXR = cameraRect.x + (cameraW/2);
     int limitYU = cameraRect.y - (cameraH/2);
     int limitYD = cameraRect.y + (cameraH/2);
-    Unit *flag = factory.createUnit(COLORLESS_FLAG,1000,cameraRect.x,cameraRect.y);
-    flag->set_pos_camera(cameraRect.x,cameraRect.y);
-    flag->animate(cameraRect);
+   // Unit *flag = factory.createUnit(COLORLESS_FLAG,1000,cameraRect.x,cameraRect.y);
+   // flag->set_pos_camera(cameraRect.x,cameraRect.y);
+    //flag->animate(cameraRect);
     game_map.draw_map(limitXL,limitXR,limitYU,limitYD,cameraRect);
-    for (int i = 0; i <units.size() ; ++i) {
+
+    for (int i = 1; i <=units.size() ; ++i) {
         if(BETWEEN(units[i]->get_posx(),limitXL,limitXR)){
             if(BETWEEN(units[i]->get_posy(),limitYU,limitYD)){
                 units[i]->animate(cameraRect);

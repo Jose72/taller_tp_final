@@ -9,6 +9,7 @@ class Event {
 		int y;
 	public:
 		Event(int op, int u_id, int x, int y);
+	Event();
 		int getX();
 		int getY();
 		int getId();

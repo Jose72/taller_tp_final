@@ -16,7 +16,7 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     int dy1 = posY - SIZE_OF_DELTA;
     int dy2 = posY + SIZE_OF_DELTA;
 
-    for (int i = 0; i<units.size() ; ++i) {
+    for (int i = 1; i<=units.size() ; ++i) {
         if(BETWEEN(units[i]->get_posx(),dx1,dx2)){
             if(BETWEEN(units[i]->get_posy(),dy1,dy2)){
                 this->unit_selected = true;
@@ -64,18 +64,20 @@ void SelectionHandler::set_objetive(int destX, int destY, Units_Protected &units
     bool attack = false;
     Unit * enemy;
 
-    for (int i = 0; i<units.size() ; ++i) {
-        if(BETWEEN(units[i]->get_posx(),dx1,dx2)){
-            if(BETWEEN(units[i]->get_posy(),dy1,dy2)){
-                enemy = units[i];
-                attack = true;
+    if(unit_selected) {
+        for (int i = 1; i <= units.size(); ++i) {
+            if (BETWEEN(units[i]->get_posx(), dx1, dx2)) {
+                if (BETWEEN(units[i]->get_posy(), dy1, dy2)) {
+                    enemy = units[i];
+                    attack = true;
+                }
             }
         }
-    }
-    if(attack){
-        protocol.attackUnitCS(unit->get_unit_code(),enemy->get_unit_code());
-    } else {
-        protocol.moveUnitCS(unit->get_unit_code(),destX,destY);
+        if (attack) {
+            protocol.attackUnitCS(unit->get_unit_code(), enemy->get_unit_code());
+        } else {
+            protocol.moveUnitCS(unit->get_unit_code(), destX, destY);
+        }
     }
 }
 

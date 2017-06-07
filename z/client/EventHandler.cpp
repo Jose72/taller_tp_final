@@ -1,9 +1,9 @@
 #include "EventHandler.h"
-
+#include "../server/gameMap.h"
 #include "Camera2.h"
 
-#define LEFT_BUTTON 3
-#define RIGHT_BUTTON 1
+#define LEFT_BUTTON 1
+#define RIGHT_BUTTON 3
 #define WINDOW_H 800
 #define WINDOW_W 600
 

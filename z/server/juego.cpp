@@ -101,6 +101,7 @@ void juego::sendInit(){
 
 	
 	//paso el mapa y unidades a todos
+    /*
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 		(*it)->send((char*) &sss, sizeof(int));
 		(*it)->send((char*) &map_codes, sizeof(int) * sss);
@@ -109,15 +110,16 @@ void juego::sendInit(){
 		(*it)->send((char*) &xx, sizeof(int));
 		(*it)->send((char*) &yy, sizeof(int));
 	}
+     */
 	
-	/*
+
 	//protocol
 	std::vector<int> t_c = mapa.getTilesCodes();
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
-		it->send_map(t_c);
+		it->send_map((int*)&map_codes,100);
 		it->send_units_game(units);
 	}
-	*/
+
 	
 	
 	
@@ -167,7 +169,11 @@ void juego::run(){
 			}
 			
 			usleep(200000);
-			
+
+            for (auto it = protocols.begin(); it != protocols.end(); ++it){
+                it->sendActualization(units);
+            }
+            /*
 			//envio a los clientes
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u1 = it->second;
@@ -178,7 +184,7 @@ void juego::run(){
 					s = (*it)->send((char*) &yy, sizeof(int));
 				}
 			}
-			
+			*/
 			//limpio los fiambres
 			for (auto it = units.begin(); it != units.end(); ){
 				unit *u = it->second;

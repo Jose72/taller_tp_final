@@ -15,7 +15,7 @@ void TClient_receive::run() {
     protocol_client_server.set_units_game();
 
     done = false;
-    protocol_client_server.confirm_server();
+   // protocol_client_server.confirm_server();
 
     while (running){
        protocol_client_server.process_message();

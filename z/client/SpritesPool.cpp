@@ -32,7 +32,7 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
 
 
 
-std::vector<Animation*> SpritesPool::get_animations(FlagsUnitType flag) {
+std::vector<Animation*> & SpritesPool::get_animations(FlagsUnitType flag) {
     return this->pool[flag];
 }
 
@@ -76,6 +76,8 @@ void SpritesPool::load_sprites(char *path,
         full_dir.append(list_dir[j]);
         char * full_dirNoConst = const_cast<char*> (full_dir.c_str());
         Animation *robot_move = new Animation(this->screen,full_dirNoConst,16,16);
+        if(robot_move == NULL)
+            exit(-4);
         if(list_dir[j].find("blue") != std::string::npos){
             b_grunt.push_back(robot_move);
         }else if(list_dir[j].find("green") != std::string::npos){
