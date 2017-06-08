@@ -121,17 +121,39 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 	switch (e.getOpCode()){
 		case 0:
 			//moverse
+			//solo robots o vehiculos
+			
+			//if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
 			(it->second)->move(e.getX(),e.getY());
+			//}
 			return;
+			
 		case 1:
 			//ataque
+			//moverse
 			std::map<int,unit*>::iterator it2;
 			it2 = units.find(e.getX());
 			
 			if (it2->first != e.getX()) return; //no encontro a la unidad
 			
+			//solo robots o vehiculos
+			//if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
 			(it->second)->attack(it2->second);
+			//}
 			return;
+		/*
+		case 2: //crear
+			(it->second)->create(e.getX());
+			return;
+		case 3: //conducir
+			//busco la unidad destino
+			std::map<int,unit*>::iterator it2;
+			it2 = units.find(e.getX());
+			if (it2->first != e.getX()) return; //no encontro a la unidad
+			(it->second)->drive(it2->second);
+			return;
+			
+		*/
 	}
 }
 
@@ -188,19 +210,7 @@ void juego::run(){
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = it->sendActualization(units);
             }
-			//std::cout << "actualize finished " << std::endl;
-            /*
-			//envio a los clientes
-			for (auto it = units.begin(); it != units.end(); ++it){
-				unit *u1 = it->second;
-				int xx = u1->getX();
-				int yy = u1->getY();
-				for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-					s = (*it)->send((char*) &xx, sizeof(int));
-					s = (*it)->send((char*) &yy, sizeof(int));
-				}
-			}
-			*/
+			
 			//limpio los fiambres
 			//std::cout << "units clean " << std::endl;
 			for (auto it = units.begin(); it != units.end(); ){

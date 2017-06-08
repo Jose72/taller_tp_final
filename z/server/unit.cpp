@@ -143,9 +143,10 @@ bool unit::isInRange(unit &u){
 }
 
 int unit::takeDamage(int dam){
-	if (health - dam < 0) {
+	if (health - dam <= 0) {
 		health = 0;
 		state = DEAD;
+		this->stopFollowers();
 	}
 	else health = health - dam;
 	return DAMAGE_TAKEN;
@@ -323,6 +324,7 @@ bool unit::canCreate(){
 //setea target, pone en autoatacke y pasa al ataque
 void unit::setAutoAttack(unit *u){
 	target = u;
+	u->setFollower(this);
 	auto_attack = true;
 	state = ATTACKING;
 }

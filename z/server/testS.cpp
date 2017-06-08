@@ -110,7 +110,7 @@ int test_auto_attack_unit(){
 	units.insert(std::pair<int,unit*>(2,r2));
 
 	actualizeUnit au;
-	for (int i = 0; i < 30; i++){
+	for (int i = 0; i < 35; i++){
 		for (auto it = units.begin(); it != units.end(); ++it){
 			int id = it->first;
 			unit *u = it->second;
@@ -118,16 +118,27 @@ int test_auto_attack_unit(){
 		}
 		if (i == 21) {
 			std::cout << "-------------------------------" << std::endl;
-			r2->move(55,55);
+			//r2->move(55,55);
 		}
 		std::cout << "rel dam r1: " << r1->getRelativeDamage() << std::endl;
 		std::cout << "rel dam r2: " << r2->getRelativeDamage() << std::endl;
+		
+		std::cout << "targetr1: " << r1->getTarget() << std::endl;
 		//usleep(50000);
+		for (auto it = units.begin(); it != units.end(); ){
+			unit *u = it->second;
+			if (u->isDead()) {
+				delete it->second; // libero mem
+				it = units.erase(it); // borro de la lista
+				std::cout << "reased----------" << std::endl;
+			} else {
+				++it;
+			}
+		}
 	
 	}
-	for (auto it = units.begin(); it != units.end(); ++it){
-			delete it->second;
-		}
+	
+	
 	return 0;
 	
 }

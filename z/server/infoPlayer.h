@@ -2,10 +2,12 @@
 #define INFOPLAYER_H
 
 #include <vector>
+#include "unit.h"
 
 class infoPlayer {
 	private:
 		int player_id;
+		unit *fort;
 		std::vector<int> allies;
 		int current_tech_lvl;
 	public:
