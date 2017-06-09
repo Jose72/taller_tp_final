@@ -2,8 +2,8 @@
 #include "../server/gameMap.h"
 #include "Camera2.h"
 
-#define LEFT_BUTTON 1
-#define RIGHT_BUTTON 3
+#define LEFT_BUTTON 3
+#define RIGHT_BUTTON 1
 #define WINDOW_H 800
 #define WINDOW_W 600
 
@@ -21,7 +21,7 @@ void EventHandler::run() {
     SDL_Event event;
     int posCameraX = 0;
     int posCameraY = 0;
-    Camera2 camera2(posCameraX,posCameraY,480,240,WINDOW_W,WINDOW_H,factory);
+    Camera2 camera2(screen,posCameraX,posCameraY,480,240,WINDOW_W,WINDOW_H,factory);
     int destinoX, destinoY, seleccionX, seleccionY;
     while(running == true) {
         //MOSTRAR
@@ -29,9 +29,10 @@ void EventHandler::run() {
         camera2.draw(units,gameMap);
         playerInterface.show();
         SDL_Flip(screen);
+
         //MOSTRAR
         if (SDL_PollEvent(&event)) {
-            SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
+
             switch (event.type) {
                 case SDL_QUIT:
                     SDL_Quit();
@@ -89,10 +90,18 @@ void EventHandler::run() {
                     }
             }
         }
+        checkDead();
         //camera2.update_pos();
     }
 }
 
 void EventHandler::stop() {
     socket.shutdown(SHUT_WR);
+}
+
+void EventHandler::checkDead() {
+    unsigned int ticks = SDL_GetTicks();
+    if((ticks %600) == 0){
+        units.cleanDeadUnits();
+    }
 }

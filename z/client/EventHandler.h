@@ -22,6 +22,9 @@ public:
     void run();
     void stop();
 
+private:
+    void checkDead();
+
 
 
 };

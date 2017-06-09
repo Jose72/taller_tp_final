@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Unit.h"
 
 
@@ -56,6 +57,12 @@ void Unit::animate(SDL_Rect &cameraRect) {
 
         case DEAD1:
             animate_static(cameraRect,animation3,FRAME_LIMIT_DEAD);
+            if(current_frame == FRAME_LIMIT_DEAD){
+                this->set_state(DEAD2);
+            }
+            break;
+
+        case DEAD2:
             break;
 
         case DRINKING:
@@ -122,21 +129,25 @@ void Unit::set_pos(int x, int y) {
 void Unit::set_attack(int posX, int posY) {
     this->posX_attack = posX;
     this->posY_attack = posY;
-    if((posx > posX_attack) && (posy == posY_attack)){
+    std::cout<< posX_attack << "\n";
+    std::cout<< posY_attack << "\n";
+    std::cout<< posx << "\n";
+    std::cout<< posy << "\n";
+    if((posx < posX_attack) && (posy == posY_attack)){
         this->attack_direction = ZERO_A;
-    } else if((posx > posX_attack) && (posy < posY_attack)){
-        this->attack_direction = ONE_A;
-    } else if((posx == posX_attack) && (posy < posY_attack)){
-        this->attack_direction = TWO_A;
-    } else if((posx < posX_attack) && (posy < posY_attack)){
-        this->attack_direction = THREE_A;
-    } else if((posx < posX_attack) && (posy == posY_attack)){
-        this->attack_direction = FOUR_A;
     } else if((posx < posX_attack) && (posy > posY_attack)){
-        this->attack_direction = FIVE_A;
+        this->attack_direction = ONE_A;
     } else if((posx == posX_attack) && (posy > posY_attack)){
-        this->attack_direction = SIX_A;
+        this->attack_direction = TWO_A;
     } else if((posx > posX_attack) && (posy > posY_attack)){
+        this->attack_direction = THREE_A;
+    } else if((posx > posX_attack) && (posy == posY_attack)){
+        this->attack_direction = FOUR_A;
+    } else if((posx > posX_attack) && (posy < posY_attack)){
+        this->attack_direction = FIVE_A;
+    } else if((posx == posX_attack) && (posy < posY_attack)){
+        this->attack_direction = SIX_A;
+    } else if((posx < posX_attack) && (posy < posY_attack)){
         this->attack_direction = SEVEN_A;
     }
 
@@ -167,7 +178,7 @@ int Unit::get_unit_code() {
 }
 
 void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
-    if(current_frame < max_frame-1){
+    if(current_frame < max_frame){
         current_frame ++;
     } else{
         current_frame = 0;
@@ -176,7 +187,7 @@ void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int
 }
 
 void Unit::animate_moving(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
-    int framePos = max_frame+1;
+    int framePos = max_frame;
     if(current_frame< max_frame){
         ++current_frame;
     } else{
@@ -253,7 +264,7 @@ void Unit::animate_moving(SDL_Rect &cameraRect, std::vector<Animation *> &a, int
 }
 
 void Unit::animate_attacking(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
-    int framePos = max_frame +1;
+    int framePos = max_frame;
     if(current_frame< max_frame){
         ++current_frame;
     } else{

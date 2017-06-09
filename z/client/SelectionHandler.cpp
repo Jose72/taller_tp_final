@@ -15,15 +15,8 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     int dx2 = posX + SIZE_OF_DELTA;
     int dy1 = posY - SIZE_OF_DELTA;
     int dy2 = posY + SIZE_OF_DELTA;
+    unit = units.selectUnit(dx1,dx2,dy1,dy2,unit_selected);
 
-    for (int i = 1; i<=units.size() ; ++i) {
-        if(BETWEEN(units[i]->get_posx(),dx1,dx2)){
-            if(BETWEEN(units[i]->get_posy(),dy1,dy2)){
-                this->unit_selected = true;
-                this->unit = units[i];
-            }
-        }
-    }
 }
 
 Unit* SelectionHandler::getUnit(){
@@ -35,7 +28,7 @@ void SelectionHandler::move_unit() {
         int unit_posX = this->unit->get_posx();
         int unit_posY = this->unit->get_posy();
         Uint32 ticks =  SDL_GetTicks();
-        if ((ticks % 10) == 0) {
+       // if ((ticks % 10) == 0) {
             if (unit_posX < this->destinyX) {
                 unit_posX += 1;
             }
@@ -48,7 +41,7 @@ void SelectionHandler::move_unit() {
             if (unit_posY > this->destinyY) {
                 unit_posY -= 1;
             }
-        }
+      //  }
         this->unit->set_pos(unit_posX,unit_posY);
     }
 }
@@ -65,19 +58,14 @@ void SelectionHandler::set_objetive(int destX, int destY, Units_Protected &units
     Unit * enemy;
 
     if(unit_selected) {
-        for (int i = 1; i <= units.size(); ++i) {
-            if (BETWEEN(units[i]->get_posx(), dx1, dx2)) {
-                if (BETWEEN(units[i]->get_posy(), dy1, dy2)) {
-                    enemy = units[i];
-                    attack = true;
+        enemy = units.selectUnit(dx1,dx2,dy1,dy2,attack);
+            if (attack) {
+                if((enemy->get_state() != DEAD2) && (enemy->get_state() != DEAD1)) {
+                    protocol.attackUnitCS(unit->get_unit_code(), enemy->get_unit_code());
                 }
+            } else {
+                protocol.moveUnitCS(unit->get_unit_code(), destX, destY);
             }
-        }
-        if (attack) {
-            protocol.attackUnitCS(unit->get_unit_code(), enemy->get_unit_code());
-        } else {
-            protocol.moveUnitCS(unit->get_unit_code(), destX, destY);
-        }
     }
 }
 

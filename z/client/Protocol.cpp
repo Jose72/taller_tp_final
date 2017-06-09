@@ -5,6 +5,8 @@
 #define CODE_SET_POS 1
 #define CODE_SET_ATTACK 2
 #define CODE_CREATE_UNIT 3
+#define CODE_DIE 5
+#define CODE_STAND 6
 Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f):
         socket(s), units(u), game_map(g),factory(f) {}
 
@@ -41,12 +43,12 @@ void Protocol::create_map() {
     int tamanio_map;
     socket.receive((char*)&tamanio_map,4);
     int tamanio_map_SC = ntohl(tamanio_map);
-    std::cout<< tamanio_map_SC << "\n";
+    //std::cout<< tamanio_map_SC << "\n";
     for (int i = 0; i <tamanio_map_SC ; ++i) {
         int tile;
         socket.receive((char*)&tile,4);
         int tile_SC = ntohl(tile);
-        std::cout<< tile_SC <<"\n";
+        //std::cout<< tile_SC <<"\n";
         game_map.add_tile(tile_SC);
     }
 }
@@ -63,10 +65,10 @@ void Protocol::set_units_game() {
         int posY;
         socket.receive((char*)&unit_code,4);
         int unit_code_SC = ntohl(unit_code);
-        std::cout<< unit_code_SC << "\n";
+        //std::cout<< unit_code_SC << "\n";
         socket.receive((char*)&unit_code_config,4);
         int unit_code_config_SC = ntohl(unit_code_config);
-        std::cout << unit_code_config_SC <<"\n";
+        //std::cout << unit_code_config_SC <<"\n";
         socket.receive((char*)&owner,4);
         int owner_SC = ntohl(owner);
         socket.receive((char*)&posX,4);
@@ -101,7 +103,7 @@ void Protocol::process_message() {
     int cod_unit;
     socket.receive((char*)&cod_unit,4);
     int cod_unit_SC = ntohl(cod_unit);
-    std::cout<< cod_act_SC <<"\n";
+
 
     int cod_unit_owner;
     socket.receive((char*)&cod_unit_owner,4);
@@ -118,6 +120,17 @@ void Protocol::process_message() {
     int posY;
     socket.receive((char*)&posY,4);
     int posY_SC = ntohl(posY);
+    /*
+
+    std::cout<<"Codigo de actualizacion " << cod_act_SC <<"\n";
+    std::cout<<"Codigo de unidad " << cod_unit_SC <<"\n";
+    std::cout<< "Codigo de duenio "<< cod_unit_owner_SC <<"\n";
+    std::cout<<"Mensaje 4 " <<message4_SC <<"\n";
+    std::cout << "x: " << posX_SC << std::endl;
+    std::cout << "y: " << posY_SC << std::endl;
+     */
+
+
 
     if(units[cod_unit_SC]->get_state() != DEAD1) {
         switch (cod_act_SC) {
@@ -125,24 +138,22 @@ void Protocol::process_message() {
                 units[cod_unit_SC]->set_state(MOVING1);
                 units[cod_unit_SC]->set_health(message4_SC);
                 units[cod_unit_SC]->set_pos(posX_SC, posY_SC);
-                std::cout << "x: " << posX_SC << std::endl;
-                std::cout << "y: " << posY_SC << std::endl;
                 break;
             case CODE_SET_ATTACK:
                 units[cod_unit_SC]->set_attack(posX_SC,posY_SC);
                 units[cod_unit_SC]->set_state(ATTACKING1);
                 units[cod_unit_SC]->set_health(message4_SC);
                 break;
+            case CODE_DIE:
+                units[cod_unit_SC]->set_state(DEAD1);
+                break;
+            case CODE_STAND:
+                units[cod_unit_SC]->set_state(DRINKING);
+                break;
             case CODE_CREATE_UNIT:
                 Unit* new_unit = factory.createUnit((FlagsUnitType)cod_unit_SC,message4_SC,posX_SC,posY_SC);
                 units.add(message4_SC,new_unit);
                 break;
-        }
-    }
-
-    for (int i = 1; i <=units.size() ; ++i) {
-        if(units[i]->get_heatlh() == 0){
-            units[i]->set_state(DEAD1);
         }
     }
 

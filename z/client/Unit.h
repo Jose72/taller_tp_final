@@ -35,6 +35,7 @@ enum State{
     CELEBRATE,
     DRINKING,
     DEAD1,
+    DEAD2,
     COLORLESS,
     BLUE,
     GREEN,
