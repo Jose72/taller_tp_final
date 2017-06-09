@@ -17,7 +17,6 @@
 class PlayerInterface {
 private:
     SDL_Surface * screen;
-    SelectionHandler* selectionHandler;
     int gameWidth;
     int gameHeight;
     int width;
@@ -26,12 +25,11 @@ private:
     std::vector<ClickableButton*> buttons;
 public:
     PlayerInterface(SDL_Surface* screen,
-                    SelectionHandler* selectionHandler,
                         int gameWidth,
                         int gameHeight,
                         int width);
 
-    void show();
+    void show(SelectionHandler &selectionHandler);
 
     virtual ~PlayerInterface();
 

@@ -11,12 +11,10 @@
 
 
 PlayerInterface::PlayerInterface(SDL_Surface* screen,
-                                 SelectionHandler* selectionHandler,
                                  int gameWidth,
                                  int gameHeight,
                                  int width){
     this->screen = screen;
-    this->selectionHandler = selectionHandler;
     this->gameWidth = gameWidth;
     this->gameHeight = gameHeight;
     this->width = width;
@@ -37,7 +35,7 @@ bool PlayerInterface::checkClickedButtons(int x, int y){
     return result;
 }
 
-void PlayerInterface::show() {
+void PlayerInterface::show(SelectionHandler& selectionHandler) {
     bool locked = SDL_MUSTLOCK(screen);
     if(locked)
         SDL_LockSurface(screen);
@@ -46,9 +44,9 @@ void PlayerInterface::show() {
     drawer.drawLine(screen,gameWidth);
     drawer.drawImage(screen,"client/sprites/portraits/grunt_blue/SHEADBI2_0002.png", getCol(2,1,32), 80);//hacer funcion calcule posicion
     drawer.drawText(screen,"Z",getCol(2,1,0),0);
-    if(selectionHandler->unit_select()){
-        drawer.drawText(screen,std::to_string(selectionHandler->getUnit()->get_posx()),getCol(2,1,0),150);
-        drawer.drawText(screen,std::to_string(selectionHandler->getUnit()->get_posy()),getCol(2,1,0),170);
+    if(selectionHandler.unit_select()){
+        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posx()),getCol(2,1,0),150);
+        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posy()),getCol(2,1,0),170);
     } else {
         drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),150);;
     }

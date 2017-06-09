@@ -85,7 +85,7 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
     SDL_Rect cameraRect = {0,0,640,480};
 
     SelectionHandler sHandler(protocol);
-    PlayerInterface playerInterface(screen,&sHandler,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
+    PlayerInterface playerInterface(screen,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
 
     while(waiting_server){}
     //main application loop

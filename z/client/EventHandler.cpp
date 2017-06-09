@@ -27,7 +27,7 @@ void EventHandler::run() {
         //MOSTRAR
         camera2.set_position_cameraRect(posCameraX,posCameraY);
         camera2.draw(units,gameMap);
-        playerInterface.show();
+        playerInterface.show(sHandler);
         SDL_Flip(screen);
 
         //MOSTRAR
