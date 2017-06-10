@@ -224,13 +224,31 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
                             this->pool.get_animations(GREEN_FLAG),
                             this->pool.get_animations(YELLOW_FLAG),
                             unit_code,posx,posy,COLORLESS, COLORLESS_FLAG);
-        case FORT_SPRITE:
-            return new Unit(this->pool.get_animations(FORT_SPRITE),
-                            this->pool.get_animations(FORT_SPRITE),
-                            this->pool.get_animations(FORT_SPRITE),
-                            this->pool.get_animations(FORT_SPRITE),
-                            this->pool.get_animations(FORT_SPRITE),
-                            unit_code,posx,posy,DRINKING,FORT_SPRITE);
+        case FORT_ALIVE:
+            return new Unit(this->pool.get_animations(FORT_ALIVE),
+                            this->pool.get_animations(FORT_ALIVE),
+                            this->pool.get_animations(FORT_DEAD),
+                            this->pool.get_animations(FORT_ALIVE),
+                            this->pool.get_animations(FORT_ALIVE),
+                            unit_code,posx,posy,DRINKING,FORT_ALIVE);
+
+        case FACTORY_VEHICLES_ALIVE:
+            return new Unit(this->pool.get_animations(FACTORY_VEHICLES_ALIVE),
+                            this->pool.get_animations(FACTORY_VEHICLES_ALIVE),
+                            this->pool.get_animations(FACTORY_VEHICLES_DEAD),
+                            this->pool.get_animations(FACTORY_VEHICLES_ALIVE),
+                            this->pool.get_animations(FACTORY_VEHICLES_ALIVE),
+                            unit_code,posx,posy,DRINKING,FACTORY_VEHICLES_ALIVE);
+
+        case FACTORY_ROBOTS_ALIVE:
+            return new Unit(this->pool.get_animations(FACTORY_ROBOTS_ALIVE),
+                            this->pool.get_animations(FACTORY_ROBOTS_ALIVE),
+                            this->pool.get_animations(FACTORY_ROBOTS_DEAD),
+                            this->pool.get_animations(FACTORY_ROBOTS_ALIVE),
+                            this->pool.get_animations(FACTORY_ROBOTS_ALIVE),
+                            unit_code,posx,posy,DRINKING,FACTORY_ROBOTS_ALIVE);
+
+
         case LASER_BULLET:
             return new Unit(this->pool.get_animations(LASER_BULLET),
                             this->pool.get_animations(LASER_BULLET),

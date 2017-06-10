@@ -42,7 +42,7 @@ Unit::~Unit() {
 void Unit::animate(SDL_Rect &cameraRect) {
     switch(state){
         case MOVING1:
-            animate_moving(cameraRect,animation,maxFrame1);
+            animate_moving(cameraRect, animation, maxFrame1);
             break;
         case ATTACKING1:
             if(unitType != LASER_BULLET){

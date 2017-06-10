@@ -75,7 +75,12 @@ enum FlagsUnitType{
     MISILE_LAUNCHER_GREEN,
     MISILE_LAUNCHER_RED,
     MISILE_LAUNCHER_YELLOW,
-    FORT_SPRITE,
+    FORT_ALIVE,
+    FORT_DEAD,
+    FACTORY_ROBOTS_ALIVE,
+    FACTORY_ROBOTS_DEAD,
+    FACTORY_VEHICLES_ALIVE,
+    FACTORY_VEHICLES_DEAD,
     LASER_BULLET,
     PYRO_BULLET,
     TOUGHT_BULLET,
@@ -112,8 +117,8 @@ public:
 
     void load_sprite(std::string path,
                      FlagsUnitType blue,
-                     std::string keyword
-                      );
+                     std::string keyword,
+                     int x, int y);
 
 
 };

@@ -120,12 +120,7 @@ void Protocol::process_message() {
     int posY_SC = ntohl(posY);
 
     units.createIsNotExist(cod_unit_SC,unit_type_SC,cod_unit_owner_SC,posX_SC,posY_SC,factory);
-   // std::cout<<"Codigo de actualizacion " << cod_act_SC <<"\n";
-   //std::cout<<"Codigo de unidad " << cod_unit_SC <<"\n";
-   // std::cout<< "Codigo de duenio "<< cod_unit_owner_SC <<"\n";
-   // std::cout<<"Mensaje 4 " <<message4_SC <<"\n";
-    //std::cout << "x: " << posX_SC << std::endl;
-    //std::cout << "y: " << posY_SC << std::endl;
+
 
     if(units[cod_unit_SC]->get_state() != DEAD1) {
         switch (cod_act_SC) {

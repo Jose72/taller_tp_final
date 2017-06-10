@@ -101,6 +101,19 @@ void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_LASER,GREEN_LASER,RED_LASER,YELLOW_LASER);
                 break;
+
+            case FORT:
+                units_map[cod_unit] = factory.createUnit(FORT_ALIVE,cod_unit,posX,posY);
+                break;
+
+            case ROBOT_FACTORY:
+                units_map[cod_unit] = factory.createUnit(FACTORY_ROBOTS_ALIVE,cod_unit,posX,posY);
+                break;
+
+            case VEHICLE_FACTORY:
+                units_map[cod_unit] = factory.createUnit(FACTORY_VEHICLES_ALIVE,cod_unit,posX,posY);
+                break;
+
             case LASER:
                 units_map[cod_unit] = factory.createUnit(LASER_BULLET,cod_unit,posX,posY);
                 break;
