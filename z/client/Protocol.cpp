@@ -121,7 +121,7 @@ void Protocol::process_message() {
 
     units.createIsNotExist(cod_unit_SC,unit_type_SC,cod_unit_owner_SC,posX_SC,posY_SC,factory);
    // std::cout<<"Codigo de actualizacion " << cod_act_SC <<"\n";
-   std::cout<<"Codigo de unidad " << cod_unit_SC <<"\n";
+   //std::cout<<"Codigo de unidad " << cod_unit_SC <<"\n";
    // std::cout<< "Codigo de duenio "<< cod_unit_owner_SC <<"\n";
    // std::cout<<"Mensaje 4 " <<message4_SC <<"\n";
     //std::cout << "x: " << posX_SC << std::endl;

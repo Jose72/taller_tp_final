@@ -29,7 +29,6 @@ enum Attack_Direction{
 };
 
 enum State{
-    BULLETTIME,
     MOVING1,
     ATTACKING1,
     CELEBRATE,
@@ -40,8 +39,7 @@ enum State{
     BLUE,
     GREEN,
     RED,
-    YELLOW,
-    ROLLING
+    YELLOW
 };
 
 class Unit {
@@ -60,6 +58,11 @@ protected:
     Attack_Direction attack_direction;
     State state;
     int current_frame;
+    int maxFrame1;
+    int maxFrame2;
+    int maxFrame3;
+    int maxFrame4;
+    int maxFrame5;
     std::vector<Animation *> &animation;
     std::vector<Animation *> &animation2;
     std::vector<Animation *> &animation3;

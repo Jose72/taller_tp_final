@@ -9,6 +9,7 @@
 #define FRAME_LIMIT_FLAG 3
 #define FRAME_LIMIT_MOVE_GRUNT 3
 #define FRAME_LIMIT_ATTACK_GRUNT 4
+#define CANT_ANI 8
 
 Unit::Unit(std::vector<Animation*> &a0,
            std::vector<Animation*> &a1,
@@ -25,6 +26,11 @@ Unit::Unit(std::vector<Animation*> &a0,
     this->cod_unit = cu;
     this->state = state;
     this->unitType = unitType;
+    this->maxFrame1 = (animation.size()/CANT_ANI);
+    this->maxFrame2 = (animation2.size()/CANT_ANI);
+    this->maxFrame3 = (animation3.size()-1);
+    this->maxFrame4 = (animation4.size()-1);
+    this->maxFrame5 = (animation5.size() -1);
 }
 
 
@@ -35,22 +41,16 @@ Unit::~Unit() {
 }
 void Unit::animate(SDL_Rect &cameraRect) {
     switch(state){
-        case BULLETTIME:
-            animate_moving(cameraRect,animation,FRAME_LIMIT_BULLET);
-            break;
-
         case MOVING1:
-            animate_moving(cameraRect,animation,FRAME_LIMIT_MOVE_GRUNT);
+            animate_moving(cameraRect,animation,maxFrame1);
             break;
-
         case ATTACKING1:
             if(unitType != LASER_BULLET){
-                animate_attacking(cameraRect,animation2,FRAME_LIMIT_ATTACK_GRUNT);
+                animate_attacking(cameraRect,animation2,maxFrame2);
             }
             break;
-
         case DEAD1:
-            animate_static(cameraRect,animation3,FRAME_LIMIT_DEAD);
+            animate_static(cameraRect,animation3,maxFrame3);
             if((current_frame == FRAME_LIMIT_DEAD)){
                 this->set_state(DEAD2);
             }
@@ -60,11 +60,11 @@ void Unit::animate(SDL_Rect &cameraRect) {
             break;
 
         case DRINKING:
-            animate_static(cameraRect,animation4,FRAME_LIMIT_DRINK);
+            animate_static(cameraRect,animation4,maxFrame4);
             break;
 
         case CELEBRATE:
-            animate_static(cameraRect,animation5,FRAME_LIMIT_CELEBRATE);
+            animate_static(cameraRect,animation5,maxFrame5);
             break;
 
         case COLORLESS:
@@ -87,9 +87,6 @@ void Unit::animate(SDL_Rect &cameraRect) {
             animate_static(cameraRect,animation5, FRAME_LIMIT_FLAG);
             break;
 
-        case ROLLING:
-            animate_moving(cameraRect,animation,FRAME_LIMIT_2);
-            break;
     }
 }
 

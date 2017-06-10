@@ -104,6 +104,11 @@ void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
             case LASER:
                 units_map[cod_unit] = factory.createUnit(LASER_BULLET,cod_unit,posX,posY);
                 break;
+            case LLAMAS:
+                units_map[cod_unit] = factory.createUnit(PYRO_BULLET,cod_unit,posX,posY);
+                break;
+            case MISIL:
+                units_map[cod_unit] = factory.createUnit(TOUGHT_BULLET,cod_unit,posX,posY);
         }
 
     }

@@ -8,13 +8,19 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->load_sprites("client/sprites/robot1",BLUE_GRUNT,GREEN_GRUNT,RED_GRUNT,YELLOW_GRUNT);
     this->load_sprites("client/sprites/grunt_fire",FIRE_BLUE_GRUNT,FIRE_GREEN_GRUNT,FIRE_RED_GRUNT,FIRE_YELLOW_GRUNT);
     this->load_sprites("client/sprites/laser_fire",FIRE_LASER_BLUE,FIRE_LASER_GREEN,FIRE_LASER_RED,FIRE_LASER_YELLOW);
+    this->load_sprites("client/sprites/psycho_fire", FIRE_PSYCHO_BLUE,FIRE_PSYCHO_GREEN,FIRE_PSYCHO_RED,FIRE_PSYCHO_YELLOW);
+    this->load_sprites("client/sprites/pyro_fire",FIRE_PYRO_BLUE,FIRE_PYRO_GREEN,FIRE_PYRO_RED,FIRE_PYRO_YELLOW);
+    this->load_sprites("client/sprites/sniper_fire",FIRE_SNIPER_BLUE,FIRE_SNIPER_GREEN,FIRE_SNIPER_RED,FIRE_SNIPER_YELLOW);
+    this->load_sprites("client/sprites/tought_fire", FIRE_TOUGHT_BLUE,FIRE_TOUGHT_GREEN,FIRE_TOUGHT_RED,FIRE_TOUGHT_YELLOW);
     this->load_sprites("client/sprites/die",DIE_BLUE_GRUNT,DIE_GREEN_GRUNT,DIE_RED_GRUNT,DIE_YELLOW_GRUNT);
     this->load_sprites("client/sprites/beer",BEER_BLUE,BEER_GREEN,BEER_RED,BEER_YELLOW);
     this->load_sprites("client/sprites/celebrate",CELEBRATE_BLUE,CELEBRATE_GREEN,CELEBRATE_RED,CELEBRATE_YELLOW);
     this->load_sprites_with_null("client/sprites/flags",COLORLESS_FLAG,BLUE_FLAG,GREEN_FLAG,RED_FLAG,YELLOW_FLAG);
     this->load_sprites_with_dim("client/sprites/missile_launcher", MISILE_LAUNCHER_BLUE,MISILE_LAUNCHER_GREEN,MISILE_LAUNCHER_RED,MISILE_LAUNCHER_YELLOW,32);
     this->load_sprite("client/sprites/laserBullet",LASER_BULLET,"laser");
-    this->load_sprite("client/sprites/fire", BULLET_DEAD_JOSE_WAY,"fire");
+    this->load_sprite("client/sprites/pyroBullet",PYRO_BULLET,"bullet");
+    this->load_sprite("client/sprites/toughtBullet", TOUGHT_BULLET,"bullet");
+    this->load_sprite("client/sprites/fire", BULLET_DEAD,"fire");
 
 
 
