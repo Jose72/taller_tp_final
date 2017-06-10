@@ -13,12 +13,12 @@ dest_x(x), dest_y(y), target(nullptr) {
 };
 
 unit::unit(int unit_id, int class_id, int owner, int x, int y, 
-int health, int state, int speed, int a_range, int base_damage, 
+int health, int state, int speed, int a_range, int base_damage, bool explosive, 
 int base_time, int unit_to_c, int tech_level): unit_id(unit_id),   
 class_id(class_id), owner(owner),x(x), y(y), b_health(health), 
 health(health), state(state), dest_x(x), dest_y(y) ,speed(speed), 
 driver(nullptr), target(nullptr), attack_range(a_range), 
-base_damage(base_damage), auto_attack(false), base_time(base_time), 
+base_damage(base_damage), explosive_damage(explosive), auto_attack(false), base_time(base_time), 
 countdown(base_time), unit_code_to_create(unit_to_c), 
 tech_level(tech_level) {}
 
@@ -142,13 +142,15 @@ bool unit::isInRange(unit &u){
 	return false;
 }
 
-int unit::takeDamage(int dam){
+int unit::takeDamage(int dam, bool explosive){
+	if (class_id == BUILDING && !explosive) return 0;
 	if (health - dam <= 0) {
 		health = 0;
 		state = DEAD;
 		this->stopFollowers();
+	} else {
+		health = health - dam;
 	}
-	else health = health - dam;
 	return DAMAGE_TAKEN;
 }
 
@@ -396,4 +398,8 @@ void unit::driveTarget(){
 bool unit::isDriving(){
 	if (state == DRIVING) return true;
 	return false;
+}
+
+bool unit::isExplosiveDamage(){
+	return explosive_damage;
 }

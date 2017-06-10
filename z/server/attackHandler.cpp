@@ -39,7 +39,7 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 				//si usa balas, es instantaneo
 				//sino, creo una bullet y la inserto
 				if (attacker.unitToCreate() == BALAS){
-					attacked->takeDamage(round(attacker.getDamage()));
+					attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 				} else {
 					std::cout << "crea bullet" << std::endl;
 					unitBuilder ub;
@@ -71,7 +71,7 @@ int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*
 				//si usa balas, es instantaneo
 				//sino, creo una bullet y la inserto
 				if (attacker.unitToCreate() == BALAS){
-					attacked->takeDamage(round(attacker.getDamage()));
+					attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 				} else {
 					std::cout << "crea bullet" << std::endl;
 					unitBuilder ub;
@@ -104,7 +104,7 @@ int attackHandler::attackBulletActualize(unit &attacker, int time){
 	//si el taget enta en rango
 	//recibe daño
 	if (attacker.targetIsInRange()){
-			attacked->takeDamage(round(attacker.getDamage()));
+			attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 	}
 	
 	//la bala muere caundoa ataca

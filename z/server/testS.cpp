@@ -104,7 +104,7 @@ int test_auto_attack_unit(){
 	std::set<int> d_units;
 	std::set<int> a_units;
 	
-	unit *r1 = ub.build(GRUNT, 1, 35, 18);
+	unit *r1 = ub.build(GRUNT, 1, 37, 18);
 	unit *r2 = ub.build(GRUNT, 2, 40, 18);
 	units.insert(std::pair<int,unit*>(1,r1));
 	units.insert(std::pair<int,unit*>(2,r2));

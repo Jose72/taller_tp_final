@@ -20,6 +20,7 @@ class unit {
 		int b_health;
 		int health;
 		
+		//estado
 		int state;
 		
 		//movimiento
@@ -35,9 +36,10 @@ class unit {
 		unit *target;
 		int attack_range;
 		int base_damage;
+		bool explosive_damage;
 		bool auto_attack;
 		
-		//creacion o ataque
+		//creacion/ataque
 		int base_time;
 		int countdown;
 		int unit_code_to_create;
@@ -49,7 +51,7 @@ class unit {
 	public:
 		unit(int unit_id, int owner, int x, int y);
 		unit(int unit_id, int class_id, int owner, int x, int y, 
-	int health, int state, int speed, int a_range, int base_damage, 
+	int health, int state, int speed, int a_range, int base_damage, bool explosive, 
 	int base_time, int unit_to_c, int tech_level);
 		void setPos(int p_x, int p_y);
 		bool isMoving();
@@ -67,6 +69,7 @@ class unit {
 		int getState();
 		double getRelativeDamage();
 		int getTargetOwner();
+		bool isExplosiveDamage();
 		
 		//seters
 		void changeState(int state);
@@ -96,7 +99,7 @@ class unit {
 		bool isDriving();
 
 		//double getDamage(double time); 
-		int takeDamage(int dam);
+		int takeDamage(int dam, bool explosive);
 		
 		double getDamage();
 		int attackRange();
