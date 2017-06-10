@@ -1,7 +1,7 @@
 #ifndef TESTS_CPP
 #define TESTS_CPP
 
-
+int test_info_players();
 int test_unit_driving();
 int flag_capture();
 int test_death_of_target();

@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include "../common/Lock.h"
 #include "Protocol.h"
+#include "infoPlayer.h"
 
 #include "juego.h"
 
@@ -60,17 +61,15 @@ void tClientManager::run(){
 	std::string player_name;
 	std::mutex mmm;
 	serverProtocol protocolo(cli_skt);
-	
-	//primero recibir datos de usuario
-	//enviar datos partida
-	std::cout << "cleitne: " << id_client << "\n";
 
+	//enviar id cliente;
+	//cli_skt.send((char*) &id_client, 4);
 
 	//si seleccione nuevo juego
 	if (id_client == 1) {
 		//creo el juego
 		//hardcodeado cant jugadores
-		j = new juego(1);
+		j = new juego(1, DEATHMATCH, 0);
 		j->clientJoin(id_client, &cli_skt);
 		//pusheo en el vector
 		juegos.push_back(j);
@@ -113,21 +112,6 @@ void tClientManager::run(){
 	while (s > 0) {
 		/*
 		std::cout << "start taking event: " << std::endl;
-
-		int op = -1;
-		int unit = 0;
-		int x_dest = 0;
-		int y_dest = 0;
-
-		s = cli_skt.receive((char*) &op, 4);
-		std::cout << "op_code: " << ntohl(op) << std::endl;
-		s = cli_skt.receive((char*) &unit, 4);
-		std::cout << "unit_code: " << ntohl(unit) << std::endl;
-		s = cli_skt.receive((char*) &x_dest, 4);
-		std::cout << "x_code: " << ntohl(x_dest) << std::endl;
-		s = cli_skt.receive((char*) &y_dest, 4);
-		std::cout << "y_code: " << ntohl(y_dest) << std::endl;
-		Event e(ntohl(op), ntohl(unit),ntohl(x_dest),ntohl(y_dest));
 		*/
 		
 		Event e;

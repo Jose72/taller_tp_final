@@ -8,17 +8,25 @@
 #include <unistd.h>
 #include "unitBuilder.h"
 #include "deathHandler.h"
+#include "infoPlayer.h"
 
 #include "Protocol.h"
 
-
-juego::juego(int cant_players): 
-max_players(cant_players), running(false){
+//cant jugadores
+//tipo de juego(deathmatch o equipos)
+//cant equipos
+juego::juego(int cant_players, int game_t, int cant_teams): 
+max_players(cant_players), p_info(infoPlayers(cant_players, 
+game_t, cant_teams)), running(false) {
 	id_unit_counter = 1; //se empieza contando desde 1
 }
 
 bool juego::isRunning(){
 	return running;
+}
+
+void juego::checkVictory(){
+	//p_info.checkVictoryConditions();
 }
 
 void juego::stop(){
@@ -52,8 +60,9 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 		
 		// protocolos
 		protocols.push_back(serverProtocol(*cli_s));
-		
 		players_info.push_back(infoPlayer(cli_id));
+		
+		p_info.addNewPlayer(cli_id);
 		return 0;
 	}
 	return 1;

@@ -9,8 +9,122 @@
 #include <vector>
 #include "unitBuilder.h"
 #include "deathHandler.h"
+#include "infoPlayer.h"
 
 #include <unistd.h>
+
+int test_info_players(){
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	unitBuilder ub;
+	deathHandler death_h;
+	int unit_id_count = 9;
+	std::set<int> d_units;
+	std::set<int> a_units;
+	
+	
+	infoPlayers ip(2,DEATHMATCH,0);
+	ip.addNewPlayer(1);
+	ip.addNewPlayer(2);
+	/*
+	//se le murieron tdas la unidades
+	unit *r1 = ub.build(FORT, 1, 40, 40);
+	unit *r2 = ub.build(GRUNT, 1, 70, 40);
+	unit *r3 = ub.build(GRUNT, 1, 77, 40);
+	unit *r4 = ub.build(GRUNT, 1, 84, 30);
+	unit *r5 = ub.build(FORT, 2, 160, 160);
+	unit *r6 = ub.build(GRUNT, 2, 70, 55);
+	unit *r7 = ub.build(GRUNT, 2, 77, 55);
+	unit *r8 = ub.build(GRUNT, 2, 84, 55);
+	*/
+	
+	//se le murio el fuerte
+	unit *r1 = ub.build(FORT, 1, 40, 40);
+	unit *r2 = ub.build(TOUGHT, 1, 145, 150);
+	unit *r3 = ub.build(TOUGHT, 1, 150, 150);
+	unit *r4 = ub.build(TOUGHT, 1, 140, 150);
+	
+	unit *r5 = ub.build(FORT, 2, 160, 160);
+	unit *r6 = ub.build(PYRO, 2, 50, 50);
+	unit *r7 = ub.build(PYRO, 2, 55, 50);
+	unit *r8 = ub.build(PYRO, 2, 45, 50);
+	
+	ip.initializePlayer(1, r1, 3);
+	ip.initializePlayer(2, r5, 3);
+	
+	units.insert(std::pair<int,unit*>(1,r1));
+	units.insert(std::pair<int,unit*>(2,r2));
+	units.insert(std::pair<int,unit*>(3,r3));
+	units.insert(std::pair<int,unit*>(4,r4));
+	units.insert(std::pair<int,unit*>(5,r5));
+	units.insert(std::pair<int,unit*>(6,r6));
+	units.insert(std::pair<int,unit*>(7,r7));
+	units.insert(std::pair<int,unit*>(8,r8));
+
+	
+	actualizeUnit au;
+	for (int i = 0; i < 47; i++){
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+		}
+		//std::cout << "units clean " << std::endl;
+		for (auto it = units.begin(); it != units.end(); ){
+			unit *u = it->second;
+			if (u->isDead()) {
+				death_h.death(*u, units);//handler por si tiene q hacer algo
+				ip.decrementUnitsCount(u->getOwner());
+				std::cout << "unit " << it->first << " dead" << std::endl;
+				delete it->second; // libero mem
+				it = units.erase(it); // borro de la lista
+			} else {
+				++it;
+			}
+		}
+		
+		if (DEFEAT == ip.checkVictoryConditions(1)){
+			for (auto it = units.begin(); it != units.end(); ++it){
+				unit *u = it->second;
+				if (u->getOwner() == 1){
+					u->changeState(DEFEATED);
+				}
+			}
+		}
+		
+		if (DEFEAT == ip.checkVictoryConditions(2)){
+			for (auto it = units.begin(); it != units.end(); ++it){
+				unit *u = it->second;
+				if (u->getOwner() == 2){
+					u->changeState(DEFEATED);
+				}
+			}
+			
+		}
+		
+	}
+	
+	std::cout << "rel dam r1: " << r1->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r2: " << r2->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r3: " << r3->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r4: " << r4->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r5: " << r5->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r6: " << r6->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r7: " << r7->getRelativeDamage() << std::endl;
+	std::cout << "rel dam r8: " << r8->getRelativeDamage() << std::endl;
+	
+	
+	for (auto it = units.begin(); it != units.end(); ++it){
+			delete it->second;
+		}
+	
+	//std::cout << "rel dam r8: " << r8->getRelativeDamage() << std::endl;
+	//std::cout << "rel dam r8: " << r8->getRelativeDamage() << std::endl;
+	
+	return 0;
+	return 0;
+}
 
 int test_unit_driving(){
 	int map_codes[100] = {0};

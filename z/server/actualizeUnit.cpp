@@ -136,6 +136,9 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 		case DRIVING:
 			std::cout << "unit: " << unit_game_id << " driving" << std::endl;
 			return 0;
+		case DEFEATED:
+			std::cout << "unit: " << unit_game_id << " defeated" << std::endl;
+			return 0;
 	}
 	//std::cout << "end actu---------" << std::endl;
 	return 0;

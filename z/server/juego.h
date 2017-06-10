@@ -28,14 +28,16 @@ class juego: public tThread{
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
 		std::vector<serverProtocol> protocols; 
 		std::vector<infoPlayer> players_info;
+		infoPlayers p_info;
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
 		std::mutex game_m; //proteger eventos
 		bool running;
 		
 		void eventHandle(Event &e, std::map<int, unit*> &units);
+		void checkVictory();
 	
 	public:
-		juego(int cant_players);
+		juego(int cant_players, int game_t, int cant_teams);
 		void run() override;
 		void stop();
 		void take_event(Event &e); //para apsarle los eventos desde los clientManager
