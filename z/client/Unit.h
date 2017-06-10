@@ -29,7 +29,7 @@ enum Attack_Direction{
 };
 
 enum State{
-    BULLSHIT,
+    BULLETTIME,
     MOVING1,
     ATTACKING1,
     CELEBRATE,
@@ -65,6 +65,7 @@ protected:
     std::vector<Animation *> &animation3;
     std::vector<Animation *> &animation4;
     std::vector<Animation *> &animation5;
+    FlagsUnitType unitType;
 
 public:
     Unit(std::vector<Animation *> &a0,
@@ -72,14 +73,9 @@ public:
          std::vector<Animation *> &a2,
          std::vector<Animation *> &a3,
          std::vector<Animation *> &a4,
-         int cu, int posx, int posy);
-
-    Unit(std::vector<Animation *> &a0,
-         std::vector<Animation *> &a1,
-         std::vector<Animation *> &a2,
-         std::vector<Animation *> &a3,
-         std::vector<Animation *> &a4,
-         int cu, int posx, int posy, State state);
+         int cu, int posx, int posy,
+         State state,
+         FlagsUnitType unitType);
     ~Unit();
     void animate(SDL_Rect &cameraRect);
     void set_pos(int x,int y);
@@ -92,12 +88,12 @@ public:
     void animate_static(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
     void animate_moving(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
     void animate_attacking(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
-    void animate_attack(SDL_Rect &cameraRect);
     void set_state(State s);
     State get_state();
     void set_health(int health);
     int get_heatlh();
     void set_attack(int posX, int posY);
+    FlagsUnitType get_type();
 };
 
 

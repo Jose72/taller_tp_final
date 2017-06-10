@@ -13,6 +13,9 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->load_sprites("client/sprites/celebrate",CELEBRATE_BLUE,CELEBRATE_GREEN,CELEBRATE_RED,CELEBRATE_YELLOW);
     this->load_sprites_with_null("client/sprites/flags",COLORLESS_FLAG,BLUE_FLAG,GREEN_FLAG,RED_FLAG,YELLOW_FLAG);
     this->load_sprites_with_dim("client/sprites/missile_launcher", MISILE_LAUNCHER_BLUE,MISILE_LAUNCHER_GREEN,MISILE_LAUNCHER_RED,MISILE_LAUNCHER_YELLOW,32);
+    this->load_sprite("client/sprites/laserBullet",LASER_BULLET,"laser");
+    this->load_sprite("client/sprites/fire", BULLET_DEAD_JOSE_WAY,"fire");
+
 
 
     //FORT
@@ -210,4 +213,51 @@ void SpritesPool::load_sprites_with_dim(std::string path,
     this->pool[green] = g_grunt;
     this->pool[yellow] = y_grunt;
 
+}
+
+void SpritesPool::load_sprite(std::string path,
+                              FlagsUnitType flag,
+                              std::string keyword) {
+
+    DIR *dir;
+    struct dirent *ent;
+    std::vector<Animation*> aAnimation;
+    std::vector<std::string> list_dir;
+    std::string mother(path);
+    const char * path2 = path.c_str();
+    if ((dir = opendir (path2)) != NULL) {
+        while ((ent = readdir (dir)) != NULL) {
+            std::string name(ent->d_name);
+            list_dir.push_back(name);
+        }
+        closedir (dir);
+    } else {
+        /* could not open directory */
+        perror ("");
+        //return EXIT_FAILURE;
+    }
+    std::string temp;
+    for (int i = 0; i <list_dir.size(); ++i) {
+        for (int j = 0; j <list_dir.size(); ++j) {
+
+            if (list_dir[i] < list_dir[j]) {
+                temp = list_dir[j];
+                list_dir[j] = list_dir[i];
+                list_dir[i] = temp;
+            }
+        }
+    }
+    for (int j = 2; j <list_dir.size() ; ++j) {
+        std::string full_dir;
+        full_dir.append(mother);
+        full_dir.append("/");
+        full_dir.append(list_dir[j]);
+        char * full_dirNoConst = const_cast<char*> (full_dir.c_str());
+        Animation *robot_move = new Animation(this->screen,full_dirNoConst,16,16);
+        if(list_dir[j].find(keyword) != std::string::npos){
+            aAnimation.push_back(robot_move);
+
+        }
+    }
+    this->pool[flag] = aAnimation;
 }

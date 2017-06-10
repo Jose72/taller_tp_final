@@ -10,6 +10,10 @@ enum FlagsUnitType{
     GREEN_GRUNT,
     RED_GRUNT,
     YELLOW_GRUNT,
+    BLUE_LASER,
+    GREEN_LASER,
+    RED_LASER,
+    YELLOW_LASER,
     FIRE_BLUE_GRUNT,
     FIRE_GREEN_GRUNT,
     FIRE_RED_GRUNT,
@@ -39,7 +43,9 @@ enum FlagsUnitType{
     MISILE_LAUNCHER_GREEN,
     MISILE_LAUNCHER_RED,
     MISILE_LAUNCHER_YELLOW,
-    FORT_SPRITE
+    FORT_SPRITE,
+    LASER_BULLET,
+    BULLET_DEAD_JOSE_WAY
 };
 
 class SpritesPool {
@@ -69,6 +75,11 @@ public:
                                FlagsUnitType red,
                                FlagsUnitType yellow,
                                int dimensions);
+
+    void load_sprite(std::string path,
+                     FlagsUnitType blue,
+                     std::string keyword
+                      );
 
 
 };

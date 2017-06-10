@@ -78,10 +78,18 @@ void Protocol::set_units_game() {
         //AGREGAR SWITCH
         switch (unit_code_config_SC){
             case 0:
-            std::cout <<"Se crea un grunt"<< "\n";
+            {
                 Unit* grunt = factory.createUnit(BLUE_GRUNT,unit_code_SC,posX_SC,posY_SC);
                 units.add(unit_code_SC,grunt);
                 break;
+            }
+            case 5:
+            {
+                Unit* laser = factory.createUnit(RED_LASER,unit_code_SC,posX_SC,posY_SC);
+                units.add(unit_code_SC,laser);
+                break;
+            }
+
         }
 
     }
@@ -104,6 +112,10 @@ void Protocol::process_message() {
     socket.receive((char*)&cod_unit,4);
     int cod_unit_SC = ntohl(cod_unit);
 
+    int unit_type;
+    socket.receive((char*)&unit_type,4);
+    int unit_type_SC = ntohl(unit_type);
+
 
     int cod_unit_owner;
     socket.receive((char*)&cod_unit_owner,4);
@@ -120,17 +132,14 @@ void Protocol::process_message() {
     int posY;
     socket.receive((char*)&posY,4);
     int posY_SC = ntohl(posY);
-    /*
 
-    std::cout<<"Codigo de actualizacion " << cod_act_SC <<"\n";
-    std::cout<<"Codigo de unidad " << cod_unit_SC <<"\n";
-    std::cout<< "Codigo de duenio "<< cod_unit_owner_SC <<"\n";
-    std::cout<<"Mensaje 4 " <<message4_SC <<"\n";
-    std::cout << "x: " << posX_SC << std::endl;
-    std::cout << "y: " << posY_SC << std::endl;
-     */
-
-
+    units.createIsNotExist(cod_unit_SC,unit_type_SC,cod_unit_owner_SC,posX_SC,posY_SC,factory);
+   // std::cout<<"Codigo de actualizacion " << cod_act_SC <<"\n";
+   // std::cout<<"Codigo de unidad " << cod_unit_SC <<"\n";
+   // std::cout<< "Codigo de duenio "<< cod_unit_owner_SC <<"\n";
+   // std::cout<<"Mensaje 4 " <<message4_SC <<"\n";
+    //std::cout << "x: " << posX_SC << std::endl;
+    //std::cout << "y: " << posY_SC << std::endl;
 
     if(units[cod_unit_SC]->get_state() != DEAD1) {
         switch (cod_act_SC) {
@@ -149,10 +158,6 @@ void Protocol::process_message() {
                 break;
             case CODE_STAND:
                 units[cod_unit_SC]->set_state(DRINKING);
-                break;
-            case CODE_CREATE_UNIT:
-                Unit* new_unit = factory.createUnit((FlagsUnitType)cod_unit_SC,message4_SC,posX_SC,posY_SC);
-                units.add(message4_SC,new_unit);
                 break;
         }
     }

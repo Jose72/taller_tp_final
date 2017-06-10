@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Unit.h"
 
-
+#define FRAME_LIMIT_BULLET 1
 #define FRAME_LIMIT_2 2
 #define FRAME_LIMIT_DEAD 9
 #define FRAME_LIMIT_DRINK 9
@@ -17,26 +17,14 @@ Unit::Unit(std::vector<Animation*> &a0,
            std::vector<Animation*> &a4,
            int cu,
            int posx,
-           int posy):
-        animation(a0),animation2(a1),animation3(a2),animation4(a3),animation5(a4),posx(posx),posy(posy) {
-
-    this->cod_unit = cu;
-    state = DRINKING;
-}
-
-Unit::Unit(std::vector<Animation*> &a0,
-           std::vector<Animation*> &a1,
-           std::vector<Animation*> &a2,
-           std::vector<Animation*> &a3,
-           std::vector<Animation*> &a4,
-           int cu,
-           int posx,
            int posy,
-           State state):
+           State state,
+           FlagsUnitType unitType):
         animation(a0),animation2(a1),animation3(a2),animation4(a3),animation5(a4),posx(posx),posy(posy) {
 
     this->cod_unit = cu;
     this->state = state;
+    this->unitType = unitType;
 }
 
 
@@ -47,17 +35,23 @@ Unit::~Unit() {
 }
 void Unit::animate(SDL_Rect &cameraRect) {
     switch(state){
+        case BULLETTIME:
+            animate_moving(cameraRect,animation,FRAME_LIMIT_BULLET);
+            break;
+
         case MOVING1:
             animate_moving(cameraRect,animation,FRAME_LIMIT_MOVE_GRUNT);
             break;
 
         case ATTACKING1:
-            animate_attacking(cameraRect,animation2,FRAME_LIMIT_ATTACK_GRUNT);
+            if(unitType != LASER_BULLET){
+                animate_attacking(cameraRect,animation2,FRAME_LIMIT_ATTACK_GRUNT);
+            }
             break;
 
         case DEAD1:
             animate_static(cameraRect,animation3,FRAME_LIMIT_DEAD);
-            if(current_frame == FRAME_LIMIT_DEAD){
+            if((current_frame == FRAME_LIMIT_DEAD)){
                 this->set_state(DEAD2);
             }
             break;
@@ -324,5 +318,9 @@ State Unit::get_state() {
 
 int Unit::get_heatlh() {
     return this->health;
+}
+
+FlagsUnitType Unit::get_type() {
+    return  this->unitType;
 }
 
