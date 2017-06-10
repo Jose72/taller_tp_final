@@ -27,7 +27,7 @@ class juego: public tThread{
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
 		std::vector<serverProtocol> protocols; 
-		std::vector<infoPlayer> players_info;
+		//std::vector<infoPlayer> players_info;
 		infoPlayers p_info;
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
 		std::mutex game_m; //proteger eventos
@@ -35,6 +35,8 @@ class juego: public tThread{
 		
 		void eventHandle(Event &e, std::map<int, unit*> &units);
 		void checkVictory();
+		void unit_cleaner();
+		void unitGameCreate();
 	
 	public:
 		juego(int cant_players, int game_t, int cant_teams);

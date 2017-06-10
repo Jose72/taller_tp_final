@@ -7,7 +7,7 @@
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
 
-enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE, DEFEATED};
+enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE, DEFEATED, DESTROYED};
 
 class unit {
 	protected:
@@ -41,7 +41,7 @@ class unit {
 		
 		//creacion/ataque
 		int base_time;
-		int countdown;
+		double countdown;
 		int unit_code_to_create;
 		int tech_level;
 		
@@ -84,6 +84,7 @@ class unit {
 		void stop();
 		void drive(unit *vehicle);
 		void driveTarget();
+		void create(int u_id, int time);
 		
 		//checks
 		bool isInRange(unit &u);
@@ -114,6 +115,7 @@ class unit {
 		
 		//creacion-captura
 		void actualizeTimer(int time);
+		void updateCreationTimer(int time);
 		void resetTimer();
 		int unitToCreate();
 		

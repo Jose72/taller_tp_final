@@ -124,6 +124,15 @@ void unit::drive(unit *vehicle){
 	}
 }
 
+//chequear tiempo correcto
+//chequear techlevl correcto
+void unit::create(int u_id, int time){
+	if (class_id != BUILDING) return;
+	unit_code_to_create = u_id;
+	base_time = time;
+	this->resetTimer();
+}
+
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
@@ -402,4 +411,12 @@ bool unit::isDriving(){
 
 bool unit::isExplosiveDamage(){
 	return explosive_damage;
+}
+
+void unit::updateCreationTimer(int time){
+	if (countdown - time < 0){
+		countdown = 0;
+	} else {
+		countdown -=(time / tech_level) / (sqrt(1-this->getRelativeDamage()));
+	}
 }

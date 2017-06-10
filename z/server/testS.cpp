@@ -13,6 +13,45 @@
 
 #include <unistd.h>
 
+int test_create_units(){
+	int map_codes[100] = {0};
+	gameMap mapa(&map_codes[0], 100);
+	std::map<int, unit*> units;
+	unitBuilder ub;
+	int unit_id_count = 4;
+	std::set<int> d_units;
+	std::set<int> a_units;
+	
+	//se le murio el fuerte
+	unit *r1 = ub.build(FORT, 1, 40, 40);
+	unit *r2 = ub.build(VEHICLE_FACTORY, 1, 145, 150);
+	unit *r3 = ub.build(ROBOT_FACTORY, 1, 177, 100);
+	
+	units.insert(std::pair<int,unit*>(1,r1));
+	units.insert(std::pair<int,unit*>(2,r2));
+	units.insert(std::pair<int,unit*>(3,r3));
+
+	r1->create(PYRO, 5000);
+	r2->create(MML, 5000);
+	r3->create(LAZER, 5000);
+	
+	actualizeUnit au;
+	for (int i = 0; i < 30; i++){
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			std::cout << "unit: " << id << " type: " << u->getUnitId() << std::endl;
+			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+		}
+	}
+	
+	for (auto it = units.begin(); it != units.end(); ++it){
+			delete it->second;
+		}
+
+	return 0;
+}
+
 int test_info_players(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);

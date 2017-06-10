@@ -26,7 +26,18 @@ bool juego::isRunning(){
 }
 
 void juego::checkVictory(){
-	//p_info.checkVictoryConditions();
+	//para cada cliente chequeo condiciones de vict
+	for (auto it = cli_ids.begin(); it != cli_ids.end(); ++it){
+		if (DEFEAT == p_info.checkVictoryConditions(*it)){
+			//si fue derrotado, busco sus unidades y las seteo en DEFEATED
+			for (auto it2 = units.begin(); it2 != units.end(); ++it2){
+				unit *u = (it2->second);
+				if (u->getOwner() == (*it)){
+					u->changeState(DEFEATED);
+				}
+			}
+		}
+	}
 }
 
 void juego::stop(){
@@ -39,6 +50,21 @@ void juego::stop(){
 	
 	std::cout << "juego stop out" << std::endl;	
 	
+}
+
+void juego::unit_cleaner(){
+	deathHandler death_h;
+	for (auto it = units.begin(); it != units.end(); ){
+		unit *u = it->second;
+		if (u->isDead()) {
+			death_h.death(*u, units);//handler por si tiene q hacer algo
+			std::cout << "unit " << it->first << " dead" << std::endl;
+			delete it->second; // libero mem
+			it = units.erase(it); // borro de la lista
+		} else {
+			++it;
+		}
+	}
 }
 
 void juego::take_event(Event &e){
@@ -60,8 +86,10 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 		
 		// protocolos
 		protocols.push_back(serverProtocol(*cli_s));
-		players_info.push_back(infoPlayer(cli_id));
 		
+		//players_info.push_back(infoPlayer(cli_id));
+		
+		cli_ids.push_back(cli_id);
 		p_info.addNewPlayer(cli_id);
 		return 0;
 	}
@@ -129,15 +157,19 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 	
 	switch (e.getOpCode()){
 		case 0:
+			{
 			//moverse
 			//solo robots o vehiculos
 			
 			//if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
 			(it->second)->move(e.getX(),e.getY());
 			//}
+			
+			}
 			return;
 			
 		case 1:
+			{
 			//ataque
 			//moverse
 			std::map<int,unit*>::iterator it2;
@@ -149,11 +181,20 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			//if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
 			(it->second)->attack(it2->second);
 			//}
+			}
 			return;
+		
+		case 2: 
+			{
+			//crear
+			int u_to_create = e.getX();
+			//si el tech level no le da salgo
+			if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
+			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*1000);
+			}
+			return;
+			
 		/*
-		case 2: //crear
-			(it->second)->create(e.getX());
-			return;
 		case 3: //conducir
 			//busco la unidad destino
 			std::map<int,unit*>::iterator it2;
@@ -172,7 +213,6 @@ void juego::run(){
 	//mapa codes de las casillas
 	
 	actualizeUnit actualizer;
-	deathHandler death_h;
 	
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
@@ -221,20 +261,7 @@ void juego::run(){
             }
 			
 			//limpio los fiambres
-			//std::cout << "units clean " << std::endl;
-			for (auto it = units.begin(); it != units.end(); ){
-				unit *u = it->second;
-				if (u->isDead()) {
-					death_h.death(*u, units);//handler por si tiene q hacer algo
-					std::cout << "unit " << it->first << " dead" << std::endl;
-					delete it->second; // libero mem
-					it = units.erase(it); // borro de la lista
-				} else {
-					++it;
-				}
-				
-			}
-			
+			unit_cleaner();
 	}
 	
 	

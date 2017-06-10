@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-	//test_info_players();
+	//test_create_units();
 	
 	char c = '0';
 	tServer server(atoi(argv[1]));
@@ -25,6 +25,5 @@ int main(int argc, char **argv)
 	server.join();
 	
 	return 0;
-	
 
 }
