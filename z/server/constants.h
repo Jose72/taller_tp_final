@@ -53,7 +53,7 @@ HEAVY_TANK_TL = 4, MML_TL = 5 };
 #define HEAVY_TANK_SF 2000
 #define MML_SF 500
 
-#define FLAG_CAPTURE_TIME 30000 //30 segs
+#define FLAG_CAPTURE_TIME 3000 //30 segs
 
 
 //pixeles (tendria que ser otra cosa, es muy corto)

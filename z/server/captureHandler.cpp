@@ -1,7 +1,8 @@
 #include "captureHandler.h"
+#include <iostream>
 
 
-void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &units, int time){
+void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &units, int time, infoPlayers &ip){
 	if (!u.getTarget()){
 		//chequeo por unidad cercana
 		for (auto it = units.begin(); it != units.end(); ++it){
@@ -12,7 +13,7 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 				if (target->getClassId() == ROBOT || target->getClassId() == VEHICLE){
 					//la seteo como target
 					//reseteo el timer
-					u.setTarget(target);
+					u.setFlagTarget(target);
 					u.resetTimer();
 				}
 			}
@@ -29,7 +30,8 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 				//si se cumplio el tiempo, es capturada
 				if (u.timerIsZero()){
 					//actualizo tech levels de las fabricas
-					this->captureActualize(u.getOwner(), u.getTargetOwner(), units);
+					std::cout << "---------------flga captured by: "<< u.getTargetOwner() << std::endl;
+					this->captureActualize(u.getOwner(), u.getTargetOwner(), units, ip);
 					//seteo el owner nuevo
 					u.changeOwnerForTargetOwner();
 				}
@@ -42,18 +44,22 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 }
 
 
-void captureHandler::captureActualize(int old_owner, int new_owner, std::map<int, unit*> &units){
+void captureHandler::captureActualize(int old_owner, int new_owner, std::map<int, unit*> &units, infoPlayers &ip){
+	//actualizo player info
+	ip.updateTechLevels(old_owner,new_owner);
+	int tech_lvl_old = ip.getPlayerTechLevel(old_owner);
+	int tech_lvl_new = ip.getPlayerTechLevel(new_owner);
 	//recorro unidades
 	for (auto it = units.begin(); it != units.end(); ++it){
 		unit *u = it->second;
 		if (u->getClassId() == BUILDING){
 			//si es de viejo owner decremento tech lvlv
-			if (u->getOwner() == old_owner){
-				u->decreaseTechLvl();
+			if (u->getOwner() == old_owner && old_owner != 0){
+				u->setTechLvl(tech_lvl_old);
 			}
 			//si es de nuevo owner incremento tech lvlv
 			if (u->getOwner() == new_owner){
-				u->increaseTechLvl();
+				u->setTechLvl(tech_lvl_new);
 			}
 		}
 	}

@@ -420,3 +420,12 @@ void unit::updateCreationTimer(int time){
 		countdown -=(time / tech_level) / (sqrt(1-this->getRelativeDamage()));
 	}
 }
+
+void unit::setTechLvl(int tl){
+	tech_level = tl;
+}
+
+void unit::setFlagTarget(unit *u){
+	target = u;
+	u->setFollower(this);
+}

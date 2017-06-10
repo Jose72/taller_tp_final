@@ -11,6 +11,7 @@
 #include "captureHandler.h"
 #include <map>
 #include <set>
+#include "infoPlayer.h"
 
 int aStart(tile *orig, tile *dest, gameMap &gmap, int unit_code, 
 std::vector<tile*> &path);
@@ -22,7 +23,7 @@ class actualizeUnit: public behaviour {
 		captureHandler capture_h;
 	public:
 		int operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, 
-		double time, int &unit_id_count, std::set<int> &dead_unit, std::set<int> &actualized_units);
+		double time, int &unit_id_count, infoPlayers &ip);
 };
 
 #endif

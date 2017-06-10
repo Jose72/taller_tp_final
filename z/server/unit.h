@@ -76,6 +76,7 @@ class unit {
 		void changeOwnerForTargetOwner();
 		void decreaseTechLvl();
 		void increaseTechLvl();
+		void setTechLvl(int tl);
 		
 		//events
 		void move(int d_x, int d_y);
@@ -129,6 +130,7 @@ class unit {
 		void setAttack(unit *u);
 		bool isFollowedBy(unit *u);
 		void stopFollowers();
+		void setFlagTarget(unit *);
 	
 };
 

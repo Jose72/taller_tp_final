@@ -213,7 +213,7 @@ void juego::run(){
 	//mapa codes de las casillas
 	
 	actualizeUnit actualizer;
-	
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
@@ -251,7 +251,7 @@ void juego::run(){
 			std::set<int> actualized_units;
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
-				actualizer(it->first, *u, units, mapa, 200, id_unit_counter, dead_units, actualized_units);
+				actualizer(it->first, *u, units, mapa, 200, id_unit_counter, p_info);
 			}
 			
 			usleep(200000);

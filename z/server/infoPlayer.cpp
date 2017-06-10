@@ -19,7 +19,8 @@ void infoPlayers::addNewPlayer(int id_p){
 void infoPlayers::updateTechLevels(int id_old, int id_new){
 	std::map<int,infoPlayer>::iterator it;
 	it = players_info.find(id_old);
-	(it->second).decrementTechLvl();
+	if (id_old == it->first)
+		(it->second).decrementTechLvl();
 	it = players_info.find(id_new);
 	(it->second).incrementTechLvl();
 }
@@ -28,7 +29,8 @@ void infoPlayers::updateTechLevels(int id_old, int id_new){
 void infoPlayers::initializePlayer(int id_p, unit *fort, int units_count){
 	std::map<int,infoPlayer>::iterator it;
 	it = players_info.find(id_p);
-	(it->second).initialize(fort, units_count);
+	if (id_p == it->first)
+		(it->second).initialize(fort, units_count);
 }
 
 int infoPlayers::checkVictoryConditions(int id_p){

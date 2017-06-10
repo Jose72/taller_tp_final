@@ -18,6 +18,7 @@ int test_create_units(){
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	int unit_id_count = 4;
 	std::set<int> d_units;
 	std::set<int> a_units;
@@ -41,7 +42,7 @@ int test_create_units(){
 			int id = it->first;
 			unit *u = it->second;
 			std::cout << "unit: " << id << " type: " << u->getUnitId() << std::endl;
-			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+			au(id, *u, units, mapa, 200, unit_id_count, p_info);
 		}
 	}
 	
@@ -57,6 +58,7 @@ int test_info_players(){
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	deathHandler death_h;
 	int unit_id_count = 9;
 	std::set<int> d_units;
@@ -107,7 +109,7 @@ int test_info_players(){
 		for (auto it = units.begin(); it != units.end(); ++it){
 			int id = it->first;
 			unit *u = it->second;
-			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+			au(id, *u, units, mapa, 200, unit_id_count, p_info);
 		}
 		//std::cout << "units clean " << std::endl;
 		for (auto it = units.begin(); it != units.end(); ){
@@ -170,6 +172,7 @@ int test_unit_driving(){
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	int unit_id_count = 4;
 	std::set<int> d_units;
 	std::set<int> a_units;
@@ -190,7 +193,7 @@ int test_unit_driving(){
 		for (auto it = units.begin(); it != units.end(); ++it){
 			int id = it->first;
 			unit *u = it->second;
-			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+			au(id, *u, units, mapa, 200, unit_id_count, p_info);
 		}
 	}
 	
@@ -210,8 +213,8 @@ int flag_capture(){
 	std::map<int, unit*> units;
 	unitBuilder ub;
 	int unit_id_count = 6;
-	std::set<int> d_units;
-	std::set<int> a_units;
+	infoPlayers p_info(4, DEATHMATCH, 0);
+	
 	
 	unit *r1 = ub.build(GRUNT, 1, 35, 18);
 	unit *r2 = ub.build(FLAG, 40, 18);
@@ -223,17 +226,27 @@ int flag_capture(){
 	units.insert(std::pair<int,unit*>(3,r3));
 	units.insert(std::pair<int,unit*>(4,r4));
 	units.insert(std::pair<int,unit*>(5,r5));
+	p_info.addNewPlayer(1);
+	p_info.initializePlayer(1, r3,2);
+	p_info.addNewPlayer(2);
+	p_info.initializePlayer(2, r5,2);
+
 
 	actualizeUnit au;
-	for (int i = 0; i < 460; i++){
+	for (int i = 0; i < 100; i++){
 		for (auto it = units.begin(); it != units.end(); ++it){
 			int id = it->first;
 			unit *u = it->second;
-			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+			au(id, *u, units, mapa, 200, unit_id_count, p_info);
 		}
-		
-		if (i == 230) {
-			r4->move(90, 18);
+		if (i == 50) {
+			r4->move(200,200);
+			/*
+			std::map<int,unit*>::iterator it;
+			it = units.find(4);
+			(it->second)->stopFollowers();
+			units.erase(4);
+			*/
 		}
 		
 	}
@@ -254,8 +267,7 @@ int test_auto_attack_unit(){
 	std::map<int, unit*> units;
 	unitBuilder ub;
 	int unit_id_count = 3;
-	std::set<int> d_units;
-	std::set<int> a_units;
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	
 	unit *r1 = ub.build(GRUNT, 1, 37, 18);
 	unit *r2 = ub.build(GRUNT, 2, 40, 18);
@@ -267,7 +279,7 @@ int test_auto_attack_unit(){
 		for (auto it = units.begin(); it != units.end(); ++it){
 			int id = it->first;
 			unit *u = it->second;
-			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+			au(id, *u, units, mapa, 200, unit_id_count, p_info);
 		}
 		if (i == 21) {
 			std::cout << "-------------------------------" << std::endl;
@@ -302,8 +314,7 @@ int test_create_unit(){
 	std::map<int, unit*> units;
 	unitBuilder ub;
 	int unit_id_count = 2;
-	std::set<int> d_units;
-	std::set<int> a_units;
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	
 	
 	unit *r1 = ub.build(FORT, 1, 35, 18);
@@ -315,7 +326,7 @@ int test_create_unit(){
 		for (auto it = units.begin(); it != units.end(); ++it){
 			int id = it->first;
 			unit *u = it->second;
-			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+			au(id, *u, units, mapa, 200, unit_id_count, p_info);
 		}
 		if (units.size() > 1) {
 			t = i;
@@ -348,8 +359,7 @@ int map_codes[100] = {0};
 	unitBuilder ub;
 	deathHandler dh;
 	int unit_id_count = 3;
-	std::set<int> d_units;
-	std::set<int> a_units;
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	
 	
 	unit *r1 = ub.build(GRUNT, 1, 35, 18);
@@ -364,7 +374,7 @@ int map_codes[100] = {0};
 		for (auto it = units.begin(); it != units.end(); ++it){
 			int id = it->first;
 			unit *u = it->second;
-			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+			au(id, *u, units, mapa, 200, unit_id_count, p_info);
 		}
 		
 		//limpio los fiambres
@@ -402,8 +412,7 @@ int test_bullet_attack(){
 	unitBuilder ub;
 	deathHandler dh;
 	int unit_id_count = 3;
-	std::set<int> d_units;
-	std::set<int> a_units;
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	
 	
 	unit *r1 = ub.build(GRUNT, 1, 35, 18);
@@ -418,7 +427,7 @@ int test_bullet_attack(){
 		for (auto it = units.begin(); it != units.end(); ++it){
 			int id = it->first;
 			unit *u = it->second;
-			au(id, *u, units, mapa, 200, unit_id_count, d_units, a_units);
+			au(id, *u, units, mapa, 200, unit_id_count, p_info);
 		}
 		
 		//limpio los fiambres
@@ -454,8 +463,7 @@ int test_move_unit(){
 	std::map<int, unit*> units;
 	unitBuilder ub;
 	int unit_id_count = 1;
-	std::set<int> d_units;
-	std::set<int> a_units;
+	infoPlayers p_info(4, DEATHMATCH, 0);
 	
 	unit r1(1, GRUNT, 35, 18);
 	unit *r2 = ub.build(MISIL, 60, 60);
@@ -466,7 +474,7 @@ int test_move_unit(){
 	r2->move(123, 123);
 	for (int i = 0; i < 27; i++){
 		//au(1, r1, units, mapa, 1, unit_id_count, d_units, a_units);
-		au(1, *r2, units, mapa, 1, unit_id_count, d_units, a_units);
+		au(1, *r2, units, mapa, 1, unit_id_count, p_info);
 		usleep(200000);
 	
 	}
@@ -502,43 +510,3 @@ int test_find_unit_tile(){
 	return 0;
 }
 
-int test_astart_solo_tierra(){
-	
-	//MAPA 4x4 casillas
-	
-	//seteo casilleros
-	//TIERRA, TIERRA, TIERRA, TIERRA
-	//TIERRA, TIERRA, TIERRA, TIERRA
-	//TIERRA, TIERRA, TIERRA, TIERRA
-	//TIERRA, TIERRA, TIERRA, TIERRA
-	
-	std::vector<tile> casillas;
-	tile a(0, 0, TIERRA), b(1, 0, TIERRA), c(2, 0, LAVA ), d(3, 0, TIERRA);
-	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-	a = tile(0, 1, TIERRA); b = tile(1, 1, LAVA); c = tile(2, 1, TIERRA ); d = tile(3, 1, TIERRA);
-	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-	a = tile(0, 2, TIERRA); b = tile(1, 2, LAVA); c = tile(2, 2, TIERRA); d = tile(3, 2, TIERRA);
-	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-	a = tile(0, 3, TIERRA); b = tile(1, 3, TIERRA); c = tile(2, 3, TIERRA); d = tile(3, 3, TIERRA);
-	casillas.push_back(a);casillas.push_back(b);casillas.push_back(c);casillas.push_back(d);
-
-	/*
-	for (auto it = casillas.begin(); it != casillas.end(); ++it){
-		it->printTile();
-	}
-	*/
-	
-	gameMap mapa(4, 4, casillas);
-	
-	tile *orig = mapa.getTileP(0,0);
-	tile *dest = mapa.getTileP(3,3);
-	std::vector<tile*> camino;
-	
-	
-	aStart(orig, dest, mapa, ROBOT, camino);
-	std::cout << "camino" << std::endl;
-	for (auto it = camino.begin(); it != camino.end(); ++it){
-		(*it)->printTile();
-	}
-	return 0;
-}
