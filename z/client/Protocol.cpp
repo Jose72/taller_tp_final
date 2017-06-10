@@ -65,7 +65,7 @@ void Protocol::set_units_game() {
         int posY;
         socket.receive((char*)&unit_code,4);
         int unit_code_SC = ntohl(unit_code);
-        //std::cout<< unit_code_SC << "\n";
+        std::cout<< unit_code_SC << "\n";
         socket.receive((char*)&unit_code_config,4);
         int unit_code_config_SC = ntohl(unit_code_config);
         //std::cout << unit_code_config_SC <<"\n";
@@ -76,21 +76,7 @@ void Protocol::set_units_game() {
         socket.receive((char*)&posY,4);
         int posY_SC = ntohl(posY);
         //AGREGAR SWITCH
-        switch (unit_code_config_SC){
-            case 0:
-            {
-                Unit* grunt = factory.createUnit(BLUE_GRUNT,unit_code_SC,posX_SC,posY_SC);
-                units.add(unit_code_SC,grunt);
-                break;
-            }
-            case 5:
-            {
-                Unit* laser = factory.createUnit(RED_LASER,unit_code_SC,posX_SC,posY_SC);
-                units.add(unit_code_SC,laser);
-                break;
-            }
-
-        }
+        units.createIsNotExist(unit_code_SC,unit_code_config_SC,owner_SC,posX_SC,posY_SC,factory);
 
     }
 }
@@ -135,7 +121,7 @@ void Protocol::process_message() {
 
     units.createIsNotExist(cod_unit_SC,unit_type_SC,cod_unit_owner_SC,posX_SC,posY_SC,factory);
    // std::cout<<"Codigo de actualizacion " << cod_act_SC <<"\n";
-   // std::cout<<"Codigo de unidad " << cod_unit_SC <<"\n";
+   std::cout<<"Codigo de unidad " << cod_unit_SC <<"\n";
    // std::cout<< "Codigo de duenio "<< cod_unit_owner_SC <<"\n";
    // std::cout<<"Mensaje 4 " <<message4_SC <<"\n";
     //std::cout << "x: " << posX_SC << std::endl;

@@ -35,6 +35,126 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
                             this->pool.get_animations(CELEBRATE_YELLOW),
                             unit_code,posx,posy, DRINKING, YELLOW_GRUNT);
 
+        case BLUE_TOUGHT:
+            return new Unit(this->pool.get_animations(BLUE_GRUNT),
+                            this->pool.get_animations(FIRE_BLUE_GRUNT),
+                            this->pool.get_animations(DIE_BLUE_GRUNT),
+                            this->pool.get_animations(BEER_BLUE),
+                            this->pool.get_animations(CELEBRATE_BLUE),
+                            unit_code,posx,posy,DRINKING,BLUE_TOUGHT);
+        case GREEN_TOUGHT:
+            return new Unit (this->pool.get_animations(GREEN_GRUNT),
+                             this->pool.get_animations(FIRE_GREEN_GRUNT),
+                             this->pool.get_animations(DIE_GREEN_GRUNT),
+                             this->pool.get_animations(BEER_GREEN),
+                             this->pool.get_animations(CELEBRATE_GREEN),
+                             unit_code,posx,posy, DRINKING,GREEN_TOUGHT);
+        case RED_TOUGHT:
+            return new Unit(this->pool.get_animations(RED_GRUNT),
+                            this->pool.get_animations(FIRE_RED_GRUNT),
+                            this->pool.get_animations(DIE_RED_GRUNT),
+                            this->pool.get_animations(BEER_RED),
+                            this->pool.get_animations(CELEBRATE_RED),
+                            unit_code,posx,posy, DRINKING, RED_TOUGHT);
+
+        case YELLOW_TOUGHT:
+            return new Unit(this->pool.get_animations(YELLOW_GRUNT),
+                            this->pool.get_animations(FIRE_YELLOW_GRUNT),
+                            this->pool.get_animations(DIE_YELLOW_GRUNT),
+                            this->pool.get_animations(BEER_YELLOW),
+                            this->pool.get_animations(CELEBRATE_YELLOW),
+                            unit_code,posx,posy, DRINKING, YELLOW_TOUGHT);
+
+        case BLUE_PYRO:
+            return new Unit(this->pool.get_animations(BLUE_GRUNT),
+                            this->pool.get_animations(FIRE_BLUE_GRUNT),
+                            this->pool.get_animations(DIE_BLUE_GRUNT),
+                            this->pool.get_animations(BEER_BLUE),
+                            this->pool.get_animations(CELEBRATE_BLUE),
+                            unit_code,posx,posy,DRINKING,BLUE_PYRO);
+        case GREEN_PYRO:
+            return new Unit (this->pool.get_animations(GREEN_GRUNT),
+                             this->pool.get_animations(FIRE_GREEN_GRUNT),
+                             this->pool.get_animations(DIE_GREEN_GRUNT),
+                             this->pool.get_animations(BEER_GREEN),
+                             this->pool.get_animations(CELEBRATE_GREEN),
+                             unit_code,posx,posy, DRINKING,GREEN_PYRO);
+        case RED_PYRO:
+            return new Unit(this->pool.get_animations(RED_GRUNT),
+                            this->pool.get_animations(FIRE_RED_GRUNT),
+                            this->pool.get_animations(DIE_RED_GRUNT),
+                            this->pool.get_animations(BEER_RED),
+                            this->pool.get_animations(CELEBRATE_RED),
+                            unit_code,posx,posy, DRINKING, RED_PYRO);
+
+        case YELLOW_PYRO:
+            return new Unit(this->pool.get_animations(YELLOW_GRUNT),
+                            this->pool.get_animations(FIRE_YELLOW_GRUNT),
+                            this->pool.get_animations(DIE_YELLOW_GRUNT),
+                            this->pool.get_animations(BEER_YELLOW),
+                            this->pool.get_animations(CELEBRATE_YELLOW),
+                            unit_code,posx,posy, DRINKING, YELLOW_PYRO);
+
+        case BLUE_PSYCHO:
+            return new Unit(this->pool.get_animations(BLUE_GRUNT),
+                            this->pool.get_animations(FIRE_BLUE_GRUNT),
+                            this->pool.get_animations(DIE_BLUE_GRUNT),
+                            this->pool.get_animations(BEER_BLUE),
+                            this->pool.get_animations(CELEBRATE_BLUE),
+                            unit_code,posx,posy,DRINKING,BLUE_PSYCHO);
+        case GREEN_PSYCHO:
+            return new Unit (this->pool.get_animations(GREEN_GRUNT),
+                             this->pool.get_animations(FIRE_GREEN_GRUNT),
+                             this->pool.get_animations(DIE_GREEN_GRUNT),
+                             this->pool.get_animations(BEER_GREEN),
+                             this->pool.get_animations(CELEBRATE_GREEN),
+                             unit_code,posx,posy, DRINKING,GREEN_PSYCHO);
+        case RED_PSYCHO:
+            return new Unit(this->pool.get_animations(RED_GRUNT),
+                            this->pool.get_animations(FIRE_RED_GRUNT),
+                            this->pool.get_animations(DIE_RED_GRUNT),
+                            this->pool.get_animations(BEER_RED),
+                            this->pool.get_animations(CELEBRATE_RED),
+                            unit_code,posx,posy, DRINKING, RED_PSYCHO);
+
+        case YELLOW_PSYCHO:
+            return new Unit(this->pool.get_animations(YELLOW_GRUNT),
+                            this->pool.get_animations(FIRE_YELLOW_GRUNT),
+                            this->pool.get_animations(DIE_YELLOW_GRUNT),
+                            this->pool.get_animations(BEER_YELLOW),
+                            this->pool.get_animations(CELEBRATE_YELLOW),
+                            unit_code,posx,posy, DRINKING, YELLOW_PSYCHO);
+
+        case BLUE_SNIPER:
+            return new Unit(this->pool.get_animations(BLUE_GRUNT),
+                            this->pool.get_animations(FIRE_BLUE_GRUNT),
+                            this->pool.get_animations(DIE_BLUE_GRUNT),
+                            this->pool.get_animations(BEER_BLUE),
+                            this->pool.get_animations(CELEBRATE_BLUE),
+                            unit_code,posx,posy,DRINKING,BLUE_SNIPER);
+        case GREEN_SNIPER:
+            return new Unit (this->pool.get_animations(GREEN_GRUNT),
+                             this->pool.get_animations(FIRE_GREEN_GRUNT),
+                             this->pool.get_animations(DIE_GREEN_GRUNT),
+                             this->pool.get_animations(BEER_GREEN),
+                             this->pool.get_animations(CELEBRATE_GREEN),
+                             unit_code,posx,posy, DRINKING,GREEN_SNIPER);
+        case RED_SNIPER:
+            return new Unit(this->pool.get_animations(RED_GRUNT),
+                            this->pool.get_animations(FIRE_RED_GRUNT),
+                            this->pool.get_animations(DIE_RED_GRUNT),
+                            this->pool.get_animations(BEER_RED),
+                            this->pool.get_animations(CELEBRATE_RED),
+                            unit_code,posx,posy, DRINKING, RED_SNIPER);
+
+        case YELLOW_SNIPER:
+            return new Unit(this->pool.get_animations(YELLOW_GRUNT),
+                            this->pool.get_animations(FIRE_YELLOW_GRUNT),
+                            this->pool.get_animations(DIE_YELLOW_GRUNT),
+                            this->pool.get_animations(BEER_YELLOW),
+                            this->pool.get_animations(CELEBRATE_YELLOW),
+                            unit_code,posx,posy, DRINKING, YELLOW_SNIPER);
+
         case BLUE_LASER:
             return new Unit(this->pool.get_animations(BLUE_GRUNT),
                             this->pool.get_animations(FIRE_LASER_BLUE),

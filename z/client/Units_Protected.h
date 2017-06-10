@@ -23,6 +23,11 @@ public:
     int size();
 
 
+private:
+    void createUnit(int cod_unit,int unit_owner,int posX, int posY, Factory_Units &factory,
+                    FlagsUnitType blue, FlagsUnitType green, FlagsUnitType red, FlagsUnitType yellow);
+
+
 };
 
 

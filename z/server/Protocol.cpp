@@ -83,11 +83,11 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 		//codigo unico de unidad en el juego
         int game_unit_id = htonl(it->first);
         s = socket.send((char*) &game_unit_id,sizeof(int));
-		/*
+		
 		//codigo de unidad
 		int unit_id = htonl(it->second->getUnitId());
         socket.send((char*) &unit_id,sizeof(int));
-		*/
+		
 		//dueño de la unidad
         int owner_id = htonl(it->second->getOwner());
 		s = socket.send((char*) &owner_id,sizeof(int));

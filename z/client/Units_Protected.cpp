@@ -1,6 +1,11 @@
 #include "Units_Protected.h"
 #include "../common/Lock.h"
 
+#define OWNER_BLUE 1
+#define OWNER_GREEN 2
+#define OWNER_RED 3
+#define OWNER_YELLOW 4
+
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
 
 Units_Protected::Units_Protected(std::map<int, Unit*> &um): units_map(um){}
@@ -68,14 +73,57 @@ enum units {
     FLAG = 14,
     LLAMAS = 15, HCP = 16, LASER = 17, MISIL = 18, BALAS = 19};
 
-
 void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY, Factory_Units &factory) {
     tLock(this->mut);
     if(units_map.find(cod_unit) == units_map.end()){
         switch (unit_type){
+            case GRUNT:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           BLUE_GRUNT,GREEN_GRUNT,RED_GRUNT,YELLOW_GRUNT);
+                break;
+            case PSYCHO:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           BLUE_PSYCHO,GREEN_PSYCHO,RED_PSYCHO,YELLOW_PSYCHO);
+                break;
+            case TOUGHT:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           BLUE_TOUGHT,GREEN_TOUGHT,RED_TOUGHT,YELLOW_TOUGHT);
+                break;
+            case PYRO:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           BLUE_PYRO,GREEN_PYRO,RED_PYRO,YELLOW_PYRO);
+                break;
+            case SNIPER:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           BLUE_SNIPER,GREEN_SNIPER,RED_SNIPER,YELLOW_SNIPER);
+                break;
+            case LAZER:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           BLUE_LASER,GREEN_LASER,RED_LASER,YELLOW_LASER);
+                break;
             case LASER:
                 units_map[cod_unit] = factory.createUnit(LASER_BULLET,cod_unit,posX,posY);
+                break;
         }
 
+    }
+}
+
+void Units_Protected::createUnit(int cod_unit, int unit_owner, int posX, int posY, Factory_Units &factory,
+                                 FlagsUnitType blue, FlagsUnitType green, FlagsUnitType red, FlagsUnitType yellow) {
+
+    switch(unit_owner){
+        case OWNER_BLUE:
+            units_map[cod_unit]= factory.createUnit(blue,cod_unit,posX,posY);
+            break;
+        case OWNER_GREEN:
+            units_map[cod_unit] = factory.createUnit(green,cod_unit,posX,posY);
+            break;
+        case OWNER_RED:
+            units_map[cod_unit] = factory.createUnit(red,cod_unit,posX,posY);
+            break;
+        case OWNER_YELLOW:
+            units_map[cod_unit] = factory.createUnit(yellow,cod_unit,posX,posY);
+            break;
     }
 }
