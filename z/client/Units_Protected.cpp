@@ -103,25 +103,28 @@ void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                 break;
 
             case FORT:
-                units_map[cod_unit] = factory.createUnit(FORT_ALIVE,cod_unit,posX,posY);
+                units_map[cod_unit] = factory.createUnit(FORT_ALIVE,cod_unit,posX,posY, unit_owner);
                 break;
 
             case ROBOT_FACTORY:
-                units_map[cod_unit] = factory.createUnit(FACTORY_ROBOTS_ALIVE,cod_unit,posX,posY);
+                units_map[cod_unit] = factory.createUnit(FACTORY_ROBOTS_ALIVE,cod_unit,posX,posY, unit_owner);
                 break;
 
             case VEHICLE_FACTORY:
-                units_map[cod_unit] = factory.createUnit(FACTORY_VEHICLES_ALIVE,cod_unit,posX,posY);
+                units_map[cod_unit] = factory.createUnit(FACTORY_VEHICLES_ALIVE,cod_unit,posX,posY,unit_owner);
                 break;
 
             case LASER:
-                units_map[cod_unit] = factory.createUnit(LASER_BULLET,cod_unit,posX,posY);
+                units_map[cod_unit] = factory.createUnit(LASER_BULLET,cod_unit,posX,posY,unit_owner);
                 break;
             case LLAMAS:
-                units_map[cod_unit] = factory.createUnit(PYRO_BULLET,cod_unit,posX,posY);
+                units_map[cod_unit] = factory.createUnit(PYRO_BULLET,cod_unit,posX,posY, unit_owner);
                 break;
             case MISIL:
-                units_map[cod_unit] = factory.createUnit(TOUGHT_BULLET,cod_unit,posX,posY);
+                units_map[cod_unit] = factory.createUnit(TOUGHT_BULLET,cod_unit,posX,posY, unit_owner);
+
+            case FLAG:
+                units_map[cod_unit] = factory.createUnit(COLORLESS_FLAG,cod_unit,posX,posY, unit_owner);
         }
 
     }
@@ -132,16 +135,16 @@ void Units_Protected::createUnit(int cod_unit, int unit_owner, int posX, int pos
 
     switch(unit_owner){
         case OWNER_BLUE:
-            units_map[cod_unit]= factory.createUnit(blue,cod_unit,posX,posY);
+            units_map[cod_unit]= factory.createUnit(blue,cod_unit,posX,posY,unit_owner);
             break;
         case OWNER_GREEN:
-            units_map[cod_unit] = factory.createUnit(green,cod_unit,posX,posY);
+            units_map[cod_unit] = factory.createUnit(green,cod_unit,posX,posY,unit_owner);
             break;
         case OWNER_RED:
-            units_map[cod_unit] = factory.createUnit(red,cod_unit,posX,posY);
+            units_map[cod_unit] = factory.createUnit(red,cod_unit,posX,posY,unit_owner);
             break;
         case OWNER_YELLOW:
-            units_map[cod_unit] = factory.createUnit(yellow,cod_unit,posX,posY);
+            units_map[cod_unit] = factory.createUnit(yellow,cod_unit,posX,posY,unit_owner);
             break;
     }
 }

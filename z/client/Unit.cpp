@@ -20,17 +20,19 @@ Unit::Unit(std::vector<Animation*> &a0,
            int posx,
            int posy,
            State state,
-           FlagsUnitType unitType):
+           FlagsUnitType unitType, int owner):
         animation(a0),animation2(a1),animation3(a2),animation4(a3),animation5(a4),posx(posx),posy(posy) {
 
     this->cod_unit = cu;
     this->state = state;
     this->unitType = unitType;
+    this->owner = owner;
     this->maxFrame1 = (animation.size()/CANT_ANI);
     this->maxFrame2 = (animation2.size()/CANT_ANI);
-    this->maxFrame3 = (animation3.size()-1);
-    this->maxFrame4 = (animation4.size()-1);
-    this->maxFrame5 = (animation5.size() -1);
+    this->maxFrame3 = (animation3.size());
+    this->maxFrame4 = (animation4.size());
+    this->maxFrame5 = (animation5.size());
+    this->current_frame = 0;
 }
 
 
@@ -68,23 +70,22 @@ void Unit::animate(SDL_Rect &cameraRect) {
             break;
 
         case COLORLESS:
-            animate_static(cameraRect,animation,FRAME_LIMIT_FLAG);
-            break;
-
-        case BLUE:
-            animate_static(cameraRect,animation2,FRAME_LIMIT_FLAG);
-            break;
-
-        case GREEN:
-            animate_static(cameraRect,animation3, FRAME_LIMIT_FLAG);
-            break;
-
-        case RED:
-            animate_static(cameraRect,animation4,FRAME_LIMIT_FLAG);
-            break;
-
-        case YELLOW:
-            animate_static(cameraRect,animation5, FRAME_LIMIT_FLAG);
+            switch (owner){
+                case 1:
+                    animate_static(cameraRect,animation2,FRAME_LIMIT_FLAG);
+                    break;
+                case 2:
+                    animate_static(cameraRect,animation3,FRAME_LIMIT_FLAG);
+                    break;
+                case 3:
+                    animate_static(cameraRect,animation4,FRAME_LIMIT_FLAG);
+                    break;
+                case 4:
+                    animate_static(cameraRect,animation5,FRAME_LIMIT_FLAG);
+                    break;
+                default:
+                    animate_static(cameraRect,animation,FRAME_LIMIT_FLAG);
+            }
             break;
 
     }
@@ -120,10 +121,6 @@ void Unit::set_pos(int x, int y) {
 void Unit::set_attack(int posX, int posY) {
     this->posX_attack = posX;
     this->posY_attack = posY;
-    std::cout<< posX_attack << "\n";
-    std::cout<< posY_attack << "\n";
-    std::cout<< posx << "\n";
-    std::cout<< posy << "\n";
     if((posx < posX_attack) && (posy == posY_attack)){
         this->attack_direction = ZERO_A;
     } else if((posx < posX_attack) && (posy > posY_attack)){
@@ -169,7 +166,7 @@ int Unit::get_unit_code() {
 }
 
 void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
-    if(current_frame < max_frame){
+    if(current_frame < max_frame-1){
         current_frame ++;
     } else{
         current_frame = 0;
@@ -319,5 +316,13 @@ int Unit::get_heatlh() {
 
 FlagsUnitType Unit::get_type() {
     return  this->unitType;
+}
+
+int Unit::get_owner() {
+    return this->owner;
+}
+
+void Unit::set_owner(int owner) {
+    this->owner = owner;
 }
 

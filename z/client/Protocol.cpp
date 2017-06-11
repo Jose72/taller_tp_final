@@ -7,6 +7,7 @@
 #define CODE_CREATE_UNIT 3
 #define CODE_DIE 5
 #define CODE_STAND 6
+#define CODE_CHECKING_CAPTURE 8
 Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f):
         socket(s), units(u), game_map(g),factory(f) {}
 
@@ -140,6 +141,8 @@ void Protocol::process_message() {
             case CODE_STAND:
                 units[cod_unit_SC]->set_state(DRINKING);
                 break;
+            case CODE_CHECKING_CAPTURE:
+                units[cod_unit_SC]->set_owner(cod_unit_owner_SC);
         }
     }
 

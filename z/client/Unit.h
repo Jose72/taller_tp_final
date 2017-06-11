@@ -36,10 +36,6 @@ enum State{
     DEAD1,
     DEAD2,
     COLORLESS,
-    BLUE,
-    GREEN,
-    RED,
-    YELLOW
 };
 
 class Unit {
@@ -54,6 +50,7 @@ protected:
     int posY_attack;
     int cameraPosX;
     int cameraPosY;
+    int owner;
     Direction  direction;
     Attack_Direction attack_direction;
     State state;
@@ -78,7 +75,7 @@ public:
          std::vector<Animation *> &a4,
          int cu, int posx, int posy,
          State state,
-         FlagsUnitType unitType);
+         FlagsUnitType unitType, int owner);
     ~Unit();
     void animate(SDL_Rect &cameraRect);
     void set_pos(int x,int y);
@@ -96,6 +93,8 @@ public:
     void set_health(int health);
     int get_heatlh();
     void set_attack(int posX, int posY);
+    int get_owner();
+    void set_owner(int owner);
     FlagsUnitType get_type();
 };
 
