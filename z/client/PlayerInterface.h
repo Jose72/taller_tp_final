@@ -38,6 +38,18 @@ public:
     int getCol(int division, int offset, int sizeElement);
 
     bool checkClickedButtons(int x, int y);
+
+    void loadButtons(FlagsUnitType type);
+
+    void loadButtons(FlagsUnitType type, int tech);
+
+    int loadRobotsButtons(int pos, int tech);
+
+    int loadVehicleButtons(int pos, int tech);
+
+    int loadVehiclesButtons(int pos, int tech);
+
+    void cleanButtons();
 };
 
 

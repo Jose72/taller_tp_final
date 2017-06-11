@@ -23,7 +23,7 @@ public:
     drawText(SDL_Surface *screen, std::string msj, int x, int y);
 
 
-    int drawImage(SDL_Surface *surface, char *image_path, int x_pos, int y_pos);
+    int drawImage(SDL_Surface *surface, const char *image_path, int x_pos, int y_pos);
 
     void drawButton(SDL_Surface *screen,ClickableButton *&pButton);
 };

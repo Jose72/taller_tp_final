@@ -140,8 +140,20 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>((units.size()+1),u3));
 	id_unit_counter++;
 
-	unit *u4 = builder.build(GRUNT, 2,280, 280);
+	/**unit *u4 = builder.build(GRUNT, 2,280, 280);
 	units.insert(std::pair<int,unit*>((units.size()+1),u4));
+	id_unit_counter++;*/
+
+	unit *u5 = builder.build(ROBOT_FACTORY, 1,0, 200);
+	units.insert(std::pair<int,unit*>((units.size()+1),u5));
+	id_unit_counter++;
+
+	unit *u6 = builder.build(VEHICLE_FACTORY, 1,100, 200);
+	units.insert(std::pair<int,unit*>((units.size()+1),u6));
+	id_unit_counter++;
+
+	unit *u7 = builder.build(FORT, 1,200, 200);
+	units.insert(std::pair<int,unit*>((units.size()+1),u7));
 	id_unit_counter++;
 
 	//protocol
