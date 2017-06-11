@@ -10,10 +10,11 @@
 #include "../common/Lock.h"
 #include "Protocol.h"
 #include "infoPlayer.h"
+#include "gameList.h"
 
 #include "juego.h"
 
-tClientManager::tClientManager(int id, tSocket cli_s, std::vector<juego*> & jgs, 
+tClientManager::tClientManager(int id, tSocket cli_s, gameList &jgs, 
 std::mutex &manager_m): id_client(id), cli_skt(std::move(cli_s)), 
 manager_m(manager_m), juegos(jgs), end_game(false), j(nullptr) {}
 
@@ -47,7 +48,134 @@ int sendMessage(tSocket &skt_cli, std::string &msg_to_send){
 	return s;
 }
 
+int tClientManager::gameSelection(){
+	serverProtocol prot(cli_skt);
 
+	int code = -1;
+	cli_skt.receive((char*)&code, 4);
+	code = ntohl(code);
+
+	if (code == CREATE_GAME) {
+		//envio confirmacion
+		int confirm = htonl(0);
+		cli_skt.send((char*)&confirm, 4);
+
+		//recibo datos
+		int cant_p = -1;
+		cli_skt.receive((char*)&code, 4);
+		cant_p = ntohl(cant_p);
+
+		int type_game = -1;
+		cli_skt.receive((char*)&code, 4);
+		type_game = ntohl(type_game);
+
+		int teams = -1;
+		cli_skt.receive((char*)&code, 4);
+		teams = ntohl(teams);
+
+
+		//creo el juego
+		//harcodeo
+		j = new juego(id_client, cant_p, DEATHMATCH, teams);
+		j->clientJoin(id_client, &cli_skt);
+		//pusheo en el vector
+		juegos.push_back(j);
+
+		//envio confirmacion
+		cli_skt.send((char*)&confirm, 4);
+
+
+		//espero hasta que esten todos listos
+		while (!j->readyToStart() && !end_game){
+			usleep(200000);
+		}
+		//si sali del loop porque se acaba el juego, salgo del manager
+		if (end_game) return -1;
+
+
+		//que el juego envie datos iniciales
+		j->sendInit();
+
+		//empiezo el juego
+		j->start();
+		return 0;
+
+	}
+	if (code == JOIN_GAME){ //si seleccione unirme
+
+		//envio confirmacion
+		int confirm = htonl(0);
+		cli_skt.send((char*)&confirm, 4);
+
+
+		
+		int cant_games;
+		std::vector<int> des;
+		juegos.descriptionGames(des, cant_games);
+		
+		//envio cant juegos
+		cant_games = htonl(juegos.size());
+		cli_skt.send((char*)&cant_games, 4);
+		
+		//loop envio descripcion de juegos
+		for (auto it = des.begin(); it != des.end(); ++it){
+			int id_creat = (*it);
+			it = des.erase(it);
+			int max_p = (*it);
+			it = des.erase(it);
+			int cant_p = (*it);
+			it = des.erase(it);
+			int game_t = (*it);
+			it = des.erase(it);
+			int teams = (*it);
+			it = des.erase(it);
+			
+			id_creat = htonl(id_creat);
+			cli_skt.send((char*)&id_creat, 4);
+			max_p = htonl(max_p);
+			cli_skt.send((char*)&max_p, 4);
+			cant_p = htonl(cant_p);
+			cli_skt.send((char*)&cant_p, 4);
+			game_t = htonl(game_t);
+			cli_skt.send((char*)&game_t, 4);
+			teams = htonl(teams);
+			cli_skt.send((char*)&teams, 4);
+		}
+		
+		//recibir codigo
+		int g_to_join;
+		cli_skt.send((char*)&g_to_join, 4);
+		g_to_join = ntohl(g_to_join);
+		
+
+		if (0 == juegos.joinGame(id_client, &cli_skt, j, g_to_join)){ 
+			
+			//envio confirmacion de que me uni
+			int confirm = htonl(0);
+			cli_skt.send((char*)&confirm, 4);
+			
+			//espero a que todos esten listos
+			while (!j->readyToStart() && !end_game){
+				usleep(200000);
+			}
+			
+			//si hubo error salgo
+			if (end_game) return -1;
+			
+		} else {
+			//envio que salio mal
+			int confirm = htonl(1);
+			cli_skt.send((char*)&confirm, 4);
+			
+			return 1; 
+		}
+		return 0;
+	}
+	
+	int confirm = htonl(1);
+	cli_skt.send((char*)&confirm, 4);
+	return 1;
+}
 
 
 void tClientManager::stop(){
@@ -63,14 +191,30 @@ void tClientManager::run(){
 	serverProtocol protocolo(cli_skt);
 
 	//enviar id cliente;
-	//cli_skt.send((char*) &id_client, 4);
 	protocolo.send_id_client(id_client);
-
+	
+	///////////////////////////////////////////////////////////
+	////PROTOCOLO NUEVO
+	
+	/*
+	bool ok = false;
+	while (!ok){
+		int i = this->gameSelection();
+		if (i == 0) ok = true; //todo bien
+		if (i == -1) return -1; //se rompio algo y hay que salir del manager
+	}
+	*/
+	
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	//HARDCODEO DE COMUNICACION APRA CREAR O UNISE (LO VIEJO)
+	
 	//si seleccione nuevo juego
 	if (id_client == 1) {
 		//creo el juego
 		//hardcodeado cant jugadores
-		j = new juego(1, DEATHMATCH, 0);
+		j = new juego(id_client, 1, DEATHMATCH, 0);
 		j->clientJoin(id_client, &cli_skt);
 		//pusheo en el vector
 		juegos.push_back(j);
@@ -95,9 +239,7 @@ void tClientManager::run(){
 		//busco en el vector de juegos
 		
 		//HARDOCDEADO
-		if (juegos.size() > 0){ //si hay juegos
-			j = juegos[0];
-			j->clientJoin(id_client, &cli_skt);
+		if (0 == juegos.joinGame(id_client, &cli_skt, j, 1)){ //si hay juegos
 			//espero a que todos esten listos
 			while (!j->readyToStart() && !end_game){
 				usleep(200000);
@@ -108,6 +250,9 @@ void tClientManager::run(){
 		}
 		
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
 	
 	int s = 1;
 	while (s > 0) {

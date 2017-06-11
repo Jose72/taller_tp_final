@@ -14,23 +14,26 @@
 #include "unitBuilder.h"
 #include "infoPlayer.h"
 #include "Protocol.h"
+#include <string>
 
 class juego: public tThread{
 	private:
 		int id_creator;
 		std::string creator; //creador del mapa
 		int max_players;  //cant de jugadores
+		int teams;
+		int game_type;
 		gameMap mapa; //mapa
 		unitBuilder builder;
 		int id_unit_counter;
 		std::queue<Event> event_list; //cola de eventos
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
-		std::vector<serverProtocol> protocols; 
-		//std::vector<infoPlayer> players_info;
+		std::vector<serverProtocol> protocols;
 		infoPlayers p_info;
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
-		std::mutex game_m; //proteger eventos
+		std::mutex event_m; //proteger eventos
+		std::mutex game_m;
 		bool running;
 		
 		void eventHandle(Event &e, std::map<int, unit*> &units);
@@ -39,7 +42,7 @@ class juego: public tThread{
 		void unitGameCreate();
 	
 	public:
-		juego(int cant_players, int game_t, int cant_teams);
+		juego(int creator, int cant_players, int game_t, int cant_teams);
 		void run() override;
 		void stop();
 		void take_event(Event &e); //para apsarle los eventos desde los clientManager
@@ -47,6 +50,8 @@ class juego: public tThread{
 		bool readyToStart();
 		int clientJoin(int cli_id, tSocket *cli_s);
 		bool isRunning();
+		void getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int &cant_t);
+		bool isCreator(int c);
 };
 
 #endif
