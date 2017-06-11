@@ -179,7 +179,7 @@ void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int
 
 void Unit::animate_moving(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
     int framePos = max_frame;
-    if(current_frame< max_frame){
+    if(current_frame< max_frame-1){
         ++current_frame;
     } else{
         current_frame = 0;
@@ -197,7 +197,7 @@ void Unit::animate_moving(SDL_Rect &cameraRect, std::vector<Animation *> &a, int
             if((posx == posxO) && (posy == posyO)){
                 animation[framePos]->animate(posx,posy,cameraRect);
             }else {
-                animation[current_frame + framePos]->animate(posx,posy,cameraRect);
+                animation[current_frame + (framePos)]->animate(posx,posy,cameraRect);
             }
             break;
 
@@ -256,7 +256,7 @@ void Unit::animate_moving(SDL_Rect &cameraRect, std::vector<Animation *> &a, int
 
 void Unit::animate_attacking(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
     int framePos = max_frame;
-    if(current_frame< max_frame){
+    if(current_frame< max_frame-1){
         ++current_frame;
     } else{
         current_frame = 0;
