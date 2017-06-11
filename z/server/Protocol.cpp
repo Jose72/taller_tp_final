@@ -51,23 +51,22 @@ int serverProtocol::receive_event(Event &e) {
     int cod_operation;
     s = socket.receive((char*)&cod_operation,sizeof(int));
     int cod_operation_CS = ntohl(cod_operation);
-	std::cout << "op_code: " << cod_operation_CS << std::endl;
 
     int cod_unit;
     s = socket.receive((char*)&cod_unit,sizeof(int));
     int cod_unit_CS = ntohl(cod_unit);
-    std::cout << "unit_code: " << cod_unit_CS << std::endl;
 
     int posX;
     s = socket.receive((char*)&posX,sizeof(int));
     int posX_CS = ntohl(posX);
-    std::cout << "x_code: " << posX_CS << std::endl;
 
     int posY;
     s = socket.receive((char*)&posY,sizeof(int));
     int posY_CS = ntohl(posY);
-    std::cout << "y_code: " << posY_CS << std::endl;
 
+
+    std::cout << "op_code: " << cod_operation_CS << " unit_code: " << cod_unit_CS <<
+              " x_code: " << posX_CS << " y_code: " << posY_CS << std::endl;
 	e = Event(cod_operation_CS, cod_unit_CS, posX_CS, posY_CS);
 	return s;
 }

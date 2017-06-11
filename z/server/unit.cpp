@@ -429,3 +429,19 @@ void unit::setFlagTarget(unit *u){
 	target = u;
 	u->setFollower(this);
 }
+
+void unit::releaseDriver(){
+	if (driver){
+		driver->x = this->x;
+		driver->y = this->y;
+		driver->target = nullptr;
+		driver->state = STANDING;
+	}
+}
+
+void unit::releaseFlag(){
+	if (driver){
+		driver->target = nullptr;
+		driver->state = CHECKING_CAPTURE;
+	}
+}

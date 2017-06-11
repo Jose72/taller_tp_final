@@ -105,7 +105,6 @@ int moveHandler::moveActualize(unit &u, gameMap &mapa, int time){
 int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 	
 		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
-		std::cout << "moving" << std::endl;
 		//necesito clse de unidad
 		int c_id = u.getClassId();
 		int x_unit = u.getX();
@@ -134,7 +133,6 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 		//que seria la segunda guardada en camino (la primera en el origen)
 		//si no hay mas de 1 es el origen
 		//std::cout << camino.size() << std::endl;
-		std::cout << "moving 1.4" << std::endl;
 
 		if (camino.size() == 0) {
 			//si no hay camino (selecione lava por ej)
@@ -144,8 +142,6 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 			return 1;
 		}
 
-
-		std::cout << "moving 1.5" << std::endl;
 
 		tile *closer_tile = camino[camino.size() - 1];
 		if (camino.size() > 1){
@@ -181,7 +177,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 			double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
 			//si es una unidad no movible hay un error
 			if (speed == 0) return 1; //no deberia suceder
-			std::cout << "moving3" << std::endl;
+
 			//calculo los nuevos xy
 			int new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
 			int new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
@@ -250,7 +246,7 @@ int moveHandler::moveBulletActualize(unit &u, int time){
 		u.setPos(x_dest, y_dest);
 	}
 	
-	u.printPos();
+	//u.printPos();
 	//status check
 	if (!u.isMoving()){
 		u.changeState(ATTACKING);

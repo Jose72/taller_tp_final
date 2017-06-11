@@ -120,6 +120,10 @@ class unit {
 		void resetTimer();
 		int unitToCreate();
 		
+		//driving
+		void releaseDriver();
+		void releaseFlag();
+		
 		//targeting
 		void setTarget(unit *u);
 		void setAutoAttack(unit *u);

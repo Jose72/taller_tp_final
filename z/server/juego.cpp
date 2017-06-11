@@ -58,7 +58,7 @@ void juego::unit_cleaner(){
 		unit *u = it->second;
 		if (u->isDead()) {
 			death_h.death(*u, units);//handler por si tiene q hacer algo
-			std::cout << "unit " << it->first << " dead" << std::endl;
+			//std::cout << "unit " << it->first << " dead" << std::endl;
 			delete it->second; // libero mem
 			it = units.erase(it); // borro de la lista
 		} else {
@@ -69,7 +69,7 @@ void juego::unit_cleaner(){
 
 void juego::take_event(Event &e){
 	tLock l(game_m);//lockeo
-	std::cout << "event push" << std::endl;
+	//std::cout << "event push" << std::endl;
 	event_list.push(e);
 	return;
 }
@@ -97,7 +97,7 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 }
 
 void juego::sendInit(){
-	int map_codes[100] = {0};
+	int map_codes[200] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
 	map_codes[17] = 1;
@@ -119,26 +119,36 @@ void juego::sendInit(){
 	map_codes[57] = 2;
 	map_codes[58] = 2;
 
-	int sss = 100;
+	int sss = 200;
 	
 	//cargo mi mapa
 	mapa = gameMap(map_codes, sss);
 	
 	
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
-	unit *u1 = builder.build(GRUNT, 1, 60, 15);
+	unit *u1 = builder.build(GRUNT, 1, 70, 15);
 	units.insert(std::pair<int,unit*>((units.size()+1),u1));
 	id_unit_counter++;
 
+
+
 	unit *u2 = builder.build(GRUNT, 2, 160, 15);
 	units.insert(std::pair<int,unit*>((units.size()+1),u2));
+	id_unit_counter++;
+
+	unit *u3 = builder.build(GRUNT, 1,40, 40);
+	units.insert(std::pair<int,unit*>((units.size()+1),u3));
+	id_unit_counter++;
+
+	unit *u4 = builder.build(GRUNT, 2,280, 280);
+	units.insert(std::pair<int,unit*>((units.size()+1),u4));
 	id_unit_counter++;
 
 	
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
-		it->send_map((int*)&map_codes,100);
+		it->send_map((int*)&map_codes,sss);
 		it->send_units_game(units);
 	}
 
@@ -160,7 +170,8 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			{
 			//moverse
 			//solo robots o vehiculos
-			
+			std::cout << "move order" << std::endl;
+            std::cout << "move u: " << it->first << " x: " << e.getX() << " y: " << e.getY() << std::endl;
 			//if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
 			(it->second)->move(e.getX(),e.getY());
 			//}
@@ -171,6 +182,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 		case 1:
 			{
 			//ataque
+            std::cout << "ataq order" << std::endl;
 			//moverse
 			std::map<int,unit*>::iterator it2;
 			it2 = units.find(e.getX());
@@ -187,6 +199,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 		case 2: 
 			{
 			//crear
+            std::cout << "create order" << std::endl;
 			int u_to_create = e.getX();
 			//si el tech level no le da salgo
 			if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
@@ -221,27 +234,23 @@ void juego::run(){
 			//std::cout << "loop juego" << std::endl;
 			//lockeo cola de evntos
 			game_m.lock();
+            int c = 0;
+            while (!event_list.empty() && c<13){
+                Event e = event_list.front();
+                event_list.pop();
+                eventHandle(e, units);
+                c++;
+            }
+             /*
 			if (!event_list.empty()){
 				Event e = event_list.front();
 				event_list.pop();
 				
-				/*
-				//esto esta harcodeado, tendria que llamar a una funcion
-				//que identifique la op y ejecute (handler)
-				std::map<int,unit*>::iterator it;
-				it = units.find(e.getId());
-				//find devuelte el iterador del elemento 
-				//o el ultimo si no existe la key
-				//hay que chequear que devolvio correctamente
-				if (it->first == e.getId()){
-					unit *u1 = it->second;
-					eventHandle()
-					u1->move(e.getX(), e.getY()); //hay que hacer un handler
-				}
-				*/
+
 				
 				eventHandle(e, units);
 			}
+            */
 			//deslockeo
 			game_m.unlock();
 			
@@ -251,10 +260,10 @@ void juego::run(){
 			std::set<int> actualized_units;
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
-				actualizer(it->first, *u, units, mapa, 200, id_unit_counter, p_info);
+				actualizer(it->first, *u, units, mapa, 100, id_unit_counter, p_info);
 			}
 			
-			usleep(200000);
+			usleep(100000);
 			
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = it->sendActualization(units);

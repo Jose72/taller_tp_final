@@ -6,7 +6,8 @@
 
 class deathHandler{
 	private:
-		int deathVehicle(unit &ur, std::map<int, unit*> &units);
+		int deathVehicle(unit &u, std::map<int, unit*> &units);
+		int deathBuilding(unit &u, std::map<int, unit*> &units);
 	public:
 		int death(unit &u, std::map<int, unit*> &units);
 };
