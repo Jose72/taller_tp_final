@@ -6,7 +6,7 @@
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
 
-SelectionHandler::SelectionHandler(Protocol &p):protocol(p){
+SelectionHandler::SelectionHandler(Protocol &p, int &id):protocol(p), id_client(id){
     this->unit_selected = false;
 }
 
@@ -15,7 +15,7 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     int dx2 = posX + SIZE_OF_DELTA;
     int dy1 = posY - SIZE_OF_DELTA;
     int dy2 = posY + SIZE_OF_DELTA;
-    unit = units.selectUnit(dx1,dx2,dy1,dy2,unit_selected);
+    unit = units.selectUnit(dx1,dx2,dy1,dy2,unit_selected, id_client);
 
 }
 
@@ -58,7 +58,7 @@ void SelectionHandler::set_objetive(int destX, int destY, Units_Protected &units
     Unit * enemy;
 
     if(unit_selected) {
-        enemy = units.selectUnit(dx1,dx2,dy1,dy2,attack);
+        enemy = units.selectEnemy(dx1,dx2,dy1,dy2,attack, id_client);
             if (attack) {
                 if((enemy->get_state() != DEAD2) && (enemy->get_state() != DEAD1)) {
                     protocol.attackUnitCS(unit->get_unit_code(), enemy->get_unit_code());

@@ -13,6 +13,12 @@ Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f
 
 Protocol::~Protocol() {}
 
+int Protocol::receive_id_client() {
+    int id_c;
+    socket.receive((char*)&id_c,4);
+    int id_c_SC =ntohl(id_c);
+    return id_c_SC;
+}
 
 void Protocol::moveUnitCS(int cod_unit, int posX, int posY) {
     std::cout << "cod unit: " << cod_unit << " x: " << posX << " y: " << posY << "\n";

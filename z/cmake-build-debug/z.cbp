@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="z"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/matias/Escritorio/TPRUN/z/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/matias/Escritorio/TPRUN/z/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/matias/Escritorio/TPRUN/z/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="serverGame">
+				<Option output="/home/matias/Escritorio/TPRUN/z/serverGame" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/matias/Escritorio/TPRUN/z"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/gtkmm-3.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/gtkmm-3.0/include"/>
+					<Add directory="/usr/include/atkmm-1.6"/>
+					<Add directory="/usr/include/gtk-3.0/unix-print"/>
+					<Add directory="/usr/include/gdkmm-3.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/gdkmm-3.0/include"/>
+					<Add directory="/usr/include/giomm-2.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/giomm-2.4/include"/>
+					<Add directory="/usr/include/pangomm-1.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/pangomm-1.4/include"/>
+					<Add directory="/usr/include/glibmm-2.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glibmm-2.4/include"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircommon"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/cairomm-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/cairomm-1.0/include"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/sigc++-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/sigc++-2.0/include"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/SDL"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 serverGame"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="serverGame/fast">
+				<Option output="/home/matias/Escritorio/TPRUN/z/serverGame" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/matias/Escritorio/TPRUN/z"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/gtkmm-3.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/gtkmm-3.0/include"/>
+					<Add directory="/usr/include/atkmm-1.6"/>
+					<Add directory="/usr/include/gtk-3.0/unix-print"/>
+					<Add directory="/usr/include/gdkmm-3.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/gdkmm-3.0/include"/>
+					<Add directory="/usr/include/giomm-2.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/giomm-2.4/include"/>
+					<Add directory="/usr/include/pangomm-1.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/pangomm-1.4/include"/>
+					<Add directory="/usr/include/glibmm-2.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glibmm-2.4/include"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircommon"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/cairomm-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/cairomm-1.0/include"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/sigc++-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/sigc++-2.0/include"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/SDL"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 serverGame/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="clientGame">
+				<Option output="/home/matias/Escritorio/TPRUN/z/clientGame" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/matias/Escritorio/TPRUN/z"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/gtkmm-3.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/gtkmm-3.0/include"/>
+					<Add directory="/usr/include/atkmm-1.6"/>
+					<Add directory="/usr/include/gtk-3.0/unix-print"/>
+					<Add directory="/usr/include/gdkmm-3.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/gdkmm-3.0/include"/>
+					<Add directory="/usr/include/giomm-2.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/giomm-2.4/include"/>
+					<Add directory="/usr/include/pangomm-1.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/pangomm-1.4/include"/>
+					<Add directory="/usr/include/glibmm-2.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glibmm-2.4/include"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircommon"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/cairomm-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/cairomm-1.0/include"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/sigc++-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/sigc++-2.0/include"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/SDL"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clientGame"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="clientGame/fast">
+				<Option output="/home/matias/Escritorio/TPRUN/z/clientGame" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/matias/Escritorio/TPRUN/z"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/gtkmm-3.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/gtkmm-3.0/include"/>
+					<Add directory="/usr/include/atkmm-1.6"/>
+					<Add directory="/usr/include/gtk-3.0/unix-print"/>
+					<Add directory="/usr/include/gdkmm-3.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/gdkmm-3.0/include"/>
+					<Add directory="/usr/include/giomm-2.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/giomm-2.4/include"/>
+					<Add directory="/usr/include/pangomm-1.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/pangomm-1.4/include"/>
+					<Add directory="/usr/include/glibmm-2.4"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glibmm-2.4/include"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircommon"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/cairomm-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/cairomm-1.0/include"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/sigc++-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/sigc++-2.0/include"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/SDL"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clientGame/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/matias/Escritorio/TPRUN/z/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Animation.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Animation.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Camera2.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Camera2.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Casillas.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Casillas.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/ClickableButton.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/ClickableButton.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/ClickableButtonGrunt.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/ClickableButtonGrunt.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/ClickableButtonLaser.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/ClickableButtonLaser.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Drawer.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Drawer.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/EventHandler.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/EventHandler.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Factory_Units.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Factory_Units.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Game_map.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Game_map.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/MainWindow.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/MainWindow.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/PlayerInterface.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/PlayerInterface.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Protocol.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Protocol.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/ProtocolMenu.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/ProtocolMenu.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/SelectionHandler.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/SelectionHandler.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/SpritesPool.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/SpritesPool.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/TClient_receive.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/TClient_receive.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/TTF_Writter.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/TTF_Writter.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/T_Client.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/T_Client.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Unit.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Unit.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Units_Protected.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/Units_Protected.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/client.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/client.h">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/client/main.cpp">
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/common/Lock.cpp">
+			<Option target="serverGame"/>
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/common/Lock.h">
+			<Option target="serverGame"/>
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/common/Socket.cpp">
+			<Option target="serverGame"/>
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/common/Socket.h">
+			<Option target="serverGame"/>
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/common/Thread.cpp">
+			<Option target="serverGame"/>
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/common/Thread.h">
+			<Option target="serverGame"/>
+			<Option target="clientGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/Event.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/Event.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/Protocol.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/Protocol.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/actualizeUnit.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/actualizeUnit.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/armament.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/armament.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/attackHandler.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/attackHandler.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/behaviour.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/behaviour.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/captureHandler.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/captureHandler.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/clientManager.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/clientManager.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/constants.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/constants.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/createBehaviour.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/createBehaviour.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/createHandler.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/createHandler.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/deathHandler.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/deathHandler.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/gameMap.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/gameMap.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/infoPlayer.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/infoPlayer.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/juego.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/juego.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/main.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/moveHandler.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/moveHandler.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/server.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/server.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/terrain.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/terrain.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/testS.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/testS.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/tile.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/tile.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/tilesListCost.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/tilesListCost.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/unit.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/unit.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/unitBuilder.cpp">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/server/unitBuilder.h">
+			<Option target="serverGame"/>
+		</Unit>
+		<Unit filename="/home/matias/Escritorio/TPRUN/z/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

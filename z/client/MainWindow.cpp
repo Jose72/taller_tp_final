@@ -37,6 +37,7 @@ void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],
 
 void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[], Gtk::ComboBoxText* combo, tSocket *socket){
     SDL_Surface *screen;
+    int id_client = 0;
     std::vector<Unit*> u;
     std::map<int, Unit*>um;
     Units_Protected all_units(um);
@@ -72,7 +73,7 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
     int port_number = atoi(argv[2]);
     //socket->connect(argv[1],port_number);
     std::vector<tThread*> threads;
-    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running));
+    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running, id_client));
     threads[0]->start();
     Protocol protocol(*socket,all_units,game_map,factory);
 
@@ -84,13 +85,12 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
     int posCameraY = 200;
     SDL_Rect cameraRect = {0,0,640,480};
 
-    SelectionHandler sHandler(protocol);
     PlayerInterface playerInterface(screen,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
 
     while(waiting_server){}
     //main application loop
 
-    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory));
+    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory,id_client));
     threads[1]->start();
 
     for (int i = 0; i <threads.size(); ++i) {

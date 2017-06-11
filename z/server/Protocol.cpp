@@ -6,6 +6,12 @@ serverProtocol::serverProtocol(tSocket &s):socket(s) {}
 
 serverProtocol::~serverProtocol() {}
 
+
+void serverProtocol::send_id_client(int id_client) {
+    int id = htonl(id_client);
+    socket.send((char*)&id, 4);
+}
+
 void serverProtocol::send_map(int * map_s, unsigned int size) {
     int map_size = htonl(size);
     socket.send((char*) &map_size,4);

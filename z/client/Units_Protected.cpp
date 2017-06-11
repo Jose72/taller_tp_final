@@ -39,7 +39,7 @@ void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD
     }
 }
 
-Unit* Units_Protected::selectUnit(int dx1, int dx2, int dy1, int dy2, bool &found) {
+Unit* Units_Protected::selectUnit(int dx1, int dx2, int dy1, int dy2, bool &found, int id_client) {
     tLock(this->mut);
     Unit *unitSelected;
     found = false;
@@ -47,12 +47,32 @@ Unit* Units_Protected::selectUnit(int dx1, int dx2, int dy1, int dy2, bool &foun
     for (it = units_map.begin();it != units_map.end() ; ++it) {
         if (BETWEEN(it->second->get_posx(), dx1, dx2)) {
             if (BETWEEN(it->second->get_posy(), dy1, dy2)) {
-                unitSelected = it->second;
-                found = true;
+                if(it->second->get_owner() == id_client){
+                    unitSelected = it->second;
+                    found = true;
+                }
             }
         }
     }
     return unitSelected;
+}
+
+Unit* Units_Protected::selectEnemy(int dx1, int dx2, int dy1, int dy2, bool &found, int id_client) {
+    tLock(this->mut);
+    Unit *enemy;
+    found = false;
+    std::map<int, Unit*>::iterator it;
+    for (it = units_map.begin();it != units_map.end() ; ++it) {
+        if (BETWEEN(it->second->get_posx(), dx1, dx2)) {
+            if (BETWEEN(it->second->get_posy(), dy1, dy2)) {
+                if(it->second->get_owner() != id_client){
+                    enemy = it->second;
+                    found = true;
+                }
+            }
+        }
+    }
+    return enemy;
 }
 
 void Units_Protected::cleanDeadUnits() {

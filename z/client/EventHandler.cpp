@@ -8,8 +8,8 @@
 #define WINDOW_W 600
 
 
-EventHandler::EventHandler(SDL_Surface *screen,PlayerInterface &p, Units_Protected &u, tSocket &s, Game_map &m, bool &b, Factory_Units &f):
-        playerInterface(p),units(u),socket(s), gameMap(m),running(b), factory(f){
+EventHandler::EventHandler(SDL_Surface *screen,PlayerInterface &p, Units_Protected &u, tSocket &s, Game_map &m, bool &b, Factory_Units &f, int &id):
+        playerInterface(p),units(u),socket(s), gameMap(m),running(b), factory(f), id_client(id){
     this->screen = screen;
 }
 
@@ -17,7 +17,7 @@ EventHandler::~EventHandler() {}
 
 void EventHandler::run() {
     Protocol protocol(socket,units,gameMap,factory);
-    SelectionHandler sHandler(protocol);
+    SelectionHandler sHandler(protocol,id_client);
     SDL_Event event;
     int posCameraX = 0;
     int posCameraY = 0;

@@ -64,6 +64,7 @@ void tClientManager::run(){
 
 	//enviar id cliente;
 	//cli_skt.send((char*) &id_client, 4);
+	protocolo.send_id_client(id_client);
 
 	//si seleccione nuevo juego
 	if (id_client == 1) {

@@ -14,10 +14,11 @@ private:
     Game_map &gameMap;
     bool &running;
     Factory_Units &factory;
+    int &id_client;
 
 
 public:
-    EventHandler(SDL_Surface *screen,PlayerInterface &p, Units_Protected &u, tSocket &s, Game_map &m, bool &b, Factory_Units &f);
+    EventHandler(SDL_Surface *screen,PlayerInterface &p, Units_Protected &u, tSocket &s, Game_map &m, bool &b, Factory_Units &f, int &id_client);
     ~EventHandler();
     void run();
     void stop();
