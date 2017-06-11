@@ -33,7 +33,9 @@ void tServer::stop(){
 			if (juegos[j]->isRunning()) juegos[j]->join();
 			delete juegos[j];
 		}
-
+		
+		g_list.stopGames();
+		g_list.cleanGames();
 		std::cout << "server stop out" << std::endl;	
 }
 
@@ -51,7 +53,7 @@ int tServer::processClient(){
 				//std::cout << "new client" << std::endl;
 				
 				tClientManager *cli_man = new tClientManager(client_id_count, std::move(new_skt),
-				juegos, m); //paso al manager
+				g_list, m); //paso al manager
 				client_id_count++;
 				client_mngrs.push_back(cli_man);
 				cli_man->start();

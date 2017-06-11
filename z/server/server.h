@@ -10,6 +10,7 @@
 #include "../common/Thread.h"
 #include "clientManager.h"
 #include "juego.h"
+#include "gameList.h"
 
 class tServer: public tThread{
 	private:
@@ -18,6 +19,7 @@ class tServer: public tThread{
 		bool acepter_open;
 		std::vector<tClientManager*> client_mngrs;
 		std::vector<juego*> juegos;
+		gameList g_list;
 		std::mutex m;
 	public:
 		tServer(int port);
