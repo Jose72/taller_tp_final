@@ -11,6 +11,7 @@ class gameMap {
 		int height;
 		int width;
 		std::vector<tile> casillas;
+		std::vector<bool> pasables;
 	public:
 		gameMap();
 		gameMap(int *casilla, int size);

@@ -15,8 +15,8 @@ class unit {
 		int class_id;
 		int owner;
 		std::vector<int> allies;
-		int x;
-		int y;
+		double x;
+		double y;
 		int b_health;
 		int health;
 		
@@ -53,12 +53,14 @@ class unit {
 		unit(int unit_id, int class_id, int owner, int x, int y, 
 	int health, int state, int speed, int a_range, int base_damage, bool explosive, 
 	int base_time, int unit_to_c, int tech_level);
-		void setPos(int p_x, int p_y);
+		void setPos(double p_x, double p_y);
 		bool isMoving();
 		int getUnitId();
 		int getClassId();
 		int getX();
+		double getX_D();
 		int getY();
+		double getY_D();
 		int getDestX();
 		int getDestY();
 		int getHealth();

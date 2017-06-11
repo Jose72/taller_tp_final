@@ -9,7 +9,7 @@
 #include "unitBuilder.h"
 #include "deathHandler.h"
 #include "infoPlayer.h"
-
+#include <ctime>
 #include "Protocol.h"
 
 //cant jugadores
@@ -97,7 +97,7 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 }
 
 void juego::sendInit(){
-	int map_codes[200] = {0};
+	int map_codes[100] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
 	map_codes[17] = 1;
@@ -119,7 +119,7 @@ void juego::sendInit(){
 	map_codes[57] = 2;
 	map_codes[58] = 2;
 
-	int sss = 200;
+	int sss = 100;
 	
 	//cargo mi mapa
 	mapa = gameMap(map_codes, sss);
@@ -143,8 +143,6 @@ void juego::sendInit(){
 	unit *u4 = builder.build(GRUNT, 2,280, 280);
 	units.insert(std::pair<int,unit*>((units.size()+1),u4));
 	id_unit_counter++;
-
-	
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -233,26 +231,33 @@ void juego::run(){
 	while(s > 0){
 			//std::cout << "loop juego" << std::endl;
 			//lockeo cola de evntos
-			game_m.lock();
-            int c = 0;
-            while (!event_list.empty() && c<13){
+
+
+            int c = event_list.size();
+			int i = 0;
+            while (!event_list.empty() && i < c) {
+                game_m.lock();
                 Event e = event_list.front();
                 event_list.pop();
+                game_m.unlock();
                 eventHandle(e, units);
-                c++;
+                i++;
+
             }
-             /*
+            /*
 			if (!event_list.empty()){
+
 				Event e = event_list.front();
 				event_list.pop();
 				
 
 				
 				eventHandle(e, units);
+
 			}
             */
 			//deslockeo
-			game_m.unlock();
+
 			
 			
 			//actualizo las undiades (pendiente: crear una func aparte)
@@ -270,6 +275,7 @@ void juego::run(){
             }
 			
 			//limpio los fiambres
+            //std::cout << "units clean" << std::endl;
 			unit_cleaner();
 	}
 	

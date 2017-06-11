@@ -8,10 +8,10 @@
 
 class moveHandler{
 	private:
-		int moveBulletActualize(unit &u, int time);
-		int moveCommonActualize(unit &u, gameMap &mapa, int time);
+		int moveBulletActualize(unit &u, double time);
+		int moveCommonActualize(unit &u, gameMap &mapa, double time);
 	public:
-		int moveActualize(unit &u, gameMap &mapa, int time);
+		int moveActualize(unit &u, gameMap &mapa, double time);
 };
 
 #endif

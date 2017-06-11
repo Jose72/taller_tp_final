@@ -86,7 +86,7 @@ return 0;
 }
 
 
-int moveHandler::moveActualize(unit &u, gameMap &mapa, int time){
+int moveHandler::moveActualize(unit &u, gameMap &mapa, double time){
 	int u_class = u.getClassId();
 	switch(u_class){
 		case ROBOT:
@@ -102,13 +102,13 @@ int moveHandler::moveActualize(unit &u, gameMap &mapa, int time){
 
 
 
-int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
+int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 	
 		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
 		//necesito clse de unidad
 		int c_id = u.getClassId();
-		int x_unit = u.getX();
-		int y_unit = u.getY();
+		double x_unit = u.getX_D();
+		double y_unit = u.getY_D();
 		//std::cout << "dest_x: " << u.getDestX() << std::endl;
 		//std::cout << "dest_y: " << u.getDestY() << std::endl;
 		//saco casillas origen y destino 
@@ -139,6 +139,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 			//me quedo donde estoy y paso a standing
 			u.stop();
 			u.changeState(STANDING);
+            std::cout << "mo camino" << std::endl;
 			return 1;
 		}
 
@@ -179,8 +180,8 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 			if (speed == 0) return 1; //no deberia suceder
 
 			//calculo los nuevos xy
-			int new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
-			int new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
+			double new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
+			double new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
 			/*
 			std::cout << "time " << time << std::endl;
 			std::cout << "speed " << speed << std::endl;
@@ -193,7 +194,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 			//sino seteo los nuevos xy
 
 			if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) < dist){
-				u.setPos(round(new_x), round(new_y));
+				u.setPos(new_x, new_y);
 			} else {
 				u.setPos(x_closer, y_closer);
 			}
@@ -231,17 +232,17 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, int time){
 		return 0;
 }
 
-int moveHandler::moveBulletActualize(unit &u, int time){
-	int x_unit = u.getX();
-	int y_unit = u.getY();
+int moveHandler::moveBulletActualize(unit &u, double time){
+	double x_unit = u.getX_D();
+    double y_unit = u.getY_D();
 	int x_dest = u.getDestX();
 	int y_dest = u.getDestY();
 	double speed = std::max(u.getSpeed(), 1);
 	double dist = sqrt(pow((x_unit - x_dest),2) + pow((y_unit - y_dest),2));
-	int new_x = x_unit + ((x_dest - x_unit) / dist ) * time * speed;
-	int new_y = y_unit + ((y_dest - y_unit) / dist ) * time * speed;
+	double new_x = x_unit + ((x_dest - x_unit) / dist ) * time * speed;
+    double new_y = y_unit + ((y_dest - y_unit) / dist ) * time * speed;
 	if (sqrt(pow((new_x - x_dest),2) + pow((new_y - y_dest),2)) < dist){
-		u.setPos(round(new_x), round(new_y));
+		u.setPos(new_x, new_y);
 	} else {
 		u.setPos(x_dest, y_dest);
 	}

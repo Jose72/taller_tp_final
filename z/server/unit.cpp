@@ -24,7 +24,7 @@ tech_level(tech_level) {}
 
 
 
-void unit::setPos(int p_x, int p_y){
+void unit::setPos(double p_x, double p_y){
 	x = p_x;
 	y = p_y;
 }
@@ -45,11 +45,11 @@ int unit::getClassId(){
 }
 
 int unit::getX(){
-	return x;
+	return round(x);
 }
 
 int unit::getY(){
-	return y;
+	return round(y);
 }
 
 int unit::getDestX(){
@@ -58,6 +58,14 @@ int unit::getDestX(){
 
 int unit::getDestY(){
 	return dest_y;
+}
+
+double unit::getX_D(){
+	return x;
+}
+		
+double unit::getY_D(){
+	return y;
 }
 
 int unit::getHealth(){
