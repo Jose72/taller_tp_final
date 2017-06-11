@@ -4,14 +4,14 @@
 
 #include <iostream>
 #include "ClickableButton.h"
+#include "Protocol.h"
 
-ClickableButton::ClickableButton(int x, int y, int width, int height, std::string text):text(std::move(text)) {
+ClickableButton::ClickableButton(int x, int y, int width, int height, std::string text,int idUnit):text(std::move(text)) {
     this->x = x;
     this->y = y;
-
+    this->idUnit = idUnit;
     this->width = width;
     this->height = height;
-
     this->next = 0;
 }
 
@@ -19,10 +19,10 @@ ClickableButton::~ClickableButton() {
 
 }
 
-bool ClickableButton::checkBounds(int posX, int posY) {
+bool ClickableButton::checkBounds(int posX, int posY, Protocol aProtocol) {
     if ( posX >= x && posX <= x+width) {
         if ( posY >= y && posY <= y+height) {
-            click();
+            click(aProtocol);
             return true;
         }
     }

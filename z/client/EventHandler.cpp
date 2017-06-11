@@ -79,7 +79,7 @@ void EventHandler::run() {
                     break;
                      */
                 case SDL_MOUSEBUTTONDOWN:
-                    if (!playerInterface.checkClickedButtons(event.button.x, event.button.y)) {
+                    if (!playerInterface.checkClickedButtons(event.button.x, event.button.y,protocol)) {
                         if (event.button.button == LEFT_BUTTON) {
                             destinoX = event.button.x + camera2.getPosCameraX();
                             destinoY = event.button.y + camera2.getPosCameraY();

@@ -10,9 +10,9 @@
 #include <string>
 class ClickableButtonGrunt : public ClickableButton {
 public:
-    ClickableButtonGrunt(int x, int y, int width, int height, std::string text);
+    ClickableButtonGrunt(int x, int y, int width, int height, std::string text,int idUnit);
 
-    void click();
+    void click(Protocol aProtocol);
 };
 
 

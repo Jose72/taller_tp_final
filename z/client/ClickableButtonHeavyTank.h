@@ -10,9 +10,9 @@
 
 class ClickableButtonHeavyTank : public ClickableButton {
 public:
-    ClickableButtonHeavyTank(int x, int y, int width, int height, std::string text);
+    ClickableButtonHeavyTank(int x, int y, int width, int height, std::string text,int idUnit);
 
-    void click();
+    void click(Protocol aProtocol);
 };
 
 

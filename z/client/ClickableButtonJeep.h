@@ -10,8 +10,8 @@
 
 class ClickableButtonJeep : public ClickableButton {
 public:
-    ClickableButtonJeep(int x, int y, int width, int height, std::string text);
-    void click();
+    ClickableButtonJeep(int x, int y, int width, int height, std::string text,int idUnit);
+    void click(Protocol aProtocol);
 };
 
 

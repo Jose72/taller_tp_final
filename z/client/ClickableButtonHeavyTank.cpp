@@ -6,11 +6,11 @@
 #include "ClickableButtonHeavyTank.h"
 #include "ClickableButton.h"
 
-ClickableButtonHeavyTank::ClickableButtonHeavyTank(int x, int y, int width, int height, std::string text)
-        : ClickableButton(x, y, width, height, text) {
+ClickableButtonHeavyTank::ClickableButtonHeavyTank(int x, int y, int width, int height, std::string text,int idUnit)
+        : ClickableButton(x, y, width, height, text,idUnit) {
 
 }
 
-void ClickableButtonHeavyTank::click(){
+void ClickableButtonHeavyTank::click(Protocol aProtocol) {
     std::cout << "Crear Heavy Tank (Mensaje al server)" << std::endl;
 }

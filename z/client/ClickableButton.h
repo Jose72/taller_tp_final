@@ -6,6 +6,7 @@
 #define Z_CLICKABLEBUTTON_H
 
 #include <string>
+#include "Protocol.h"
 
 class ClickableButton {
     private:
@@ -14,11 +15,13 @@ class ClickableButton {
         int width;
         int height;
         std::string text;
+    protected:
+        int idUnit;
     public:
-        ClickableButton(int x, int y, int width, int height, std::string text);
+        ClickableButton(int x, int y, int width, int height, std::string text,int idUnit);
         ~ClickableButton();
 
-        bool checkBounds(int posX, int posY);
+        bool checkBounds(int posX, int posY, Protocol aProtocol);
 
     int getX() const;
 
@@ -30,7 +33,7 @@ class ClickableButton {
 
     const std::string &getText() const;
 
-    virtual void click() = 0;
+    virtual void click(Protocol aProtocol) = 0;
     ClickableButton* next;
 };
 

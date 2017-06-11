@@ -26,6 +26,7 @@ public:
     void process_message();
 
 
+    void create_unit(int i, int i1);
 };
 
 

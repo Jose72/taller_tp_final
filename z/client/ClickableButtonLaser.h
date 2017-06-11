@@ -10,8 +10,8 @@
 
 class ClickableButtonLaser : public ClickableButton {
 public:
-    ClickableButtonLaser(int x, int y, int width, int height, const std::string &text);
-    void click();
+    ClickableButtonLaser(int x, int y, int width, int height, const std::string &text ,int idUnit);
+    void click(Protocol aProtocol);
 };
 
 

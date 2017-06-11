@@ -50,6 +50,14 @@ public:
     int loadVehiclesButtons(int pos, int tech);
 
     void cleanButtons();
+
+    bool checkClickedButtons(int x, int y, Protocol protocol);
+
+    int loadRobotsButtons(int pos, int unitCode, int tech);
+
+    int loadVehiclesButtons(int pos, int unitCode, int tech);
+
+    void loadButtons(FlagsUnitType type, int unitCode, int tech);
 };
 
 

@@ -5,9 +5,9 @@
 #include <iostream>
 #include "ClickableButtonLaser.h"
 
-ClickableButtonLaser::ClickableButtonLaser(int x, int y, int width, int height, const std::string &text)
-        : ClickableButton(x, y, width, height, text) {}
+ClickableButtonLaser::ClickableButtonLaser(int x, int y, int width, int height, const std::string &text ,int idUnit)
+        : ClickableButton(x, y, width, height, text,idUnit) {}
 
-void ClickableButtonLaser::click() {
+void ClickableButtonLaser::click(Protocol aProtocol) {
     std::cout << "Crear Laser (Mensaje al server)" << std::endl;
 }

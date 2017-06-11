@@ -27,10 +27,10 @@ int PlayerInterface::getCol(int division,int offset,int sizeElement){
     return gameWidth + (width/division) * offset - sizeElement;
 }
 
-bool PlayerInterface::checkClickedButtons(int x, int y){
+bool PlayerInterface::checkClickedButtons(int x, int y,Protocol protocol){
     bool result = false;
     for(int i = 0; i != buttons.size(); i++) {
-        result = result || buttons[i]->checkBounds(x,y);
+        result = result || buttons[i]->checkBounds(x, y, protocol);
     }
     return result;
 }
@@ -60,26 +60,26 @@ std::string getUnitPortrait(FlagsUnitType type){
     return path;
 }
 
-int PlayerInterface::loadRobotsButtons(int pos, int tech){
+int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
     if(tech > 0){
-        buttons.push_back(new ClickableButtonGrunt(getCol(3,1,100),pos,50,30,"Grunt"));
+        buttons.push_back(new ClickableButtonGrunt(getCol(3,1,100),pos,50,30,"Grunt",unitCode));
     }
 
     if(tech > 3){
-        buttons.push_back(new ClickableButtonLaser(getCol(3,2,100),pos,50,30,"Laser"));
+        buttons.push_back(new ClickableButtonLaser(getCol(3,2,100),pos,50,30,"Laser",unitCode));
     }
 
     pos += 50;
     return pos;
 }
 
-int PlayerInterface::loadVehiclesButtons(int pos, int tech){
+int PlayerInterface::loadVehiclesButtons(int pos,int unitCode, int tech){
     if(tech > 0){
-        buttons.push_back(new ClickableButtonJeep(getCol(3,1,100),pos,50,30,"Jeep"));
+        buttons.push_back(new ClickableButtonJeep(getCol(3,1,100),pos,50,30,"Jeep",unitCode));
     }
 
     if(tech > 3){
-        buttons.push_back(new ClickableButtonHeavyTank(getCol(3,2,100),pos,50,30,"Tank"));
+        buttons.push_back(new ClickableButtonHeavyTank(getCol(3,2,100),pos,50,30,"Tank",unitCode));
     }
 
     pos += 50;
@@ -93,18 +93,18 @@ void PlayerInterface::cleanButtons(){
     buttons.clear();
 }
 
-void PlayerInterface::loadButtons(FlagsUnitType type, int tech){
+void PlayerInterface::loadButtons(FlagsUnitType type, int unitCode, int tech){
     int initialYPos = 300;
     switch (type){
         case FACTORY_ROBOTS_ALIVE:
-            loadRobotsButtons(initialYPos,tech);
+            loadRobotsButtons(initialYPos,unitCode,tech);
             break;
         case FACTORY_VEHICLES_ALIVE:
-            loadVehiclesButtons(initialYPos,tech);
+            loadVehiclesButtons(initialYPos,unitCode,tech);
             break;
         case FORT_ALIVE:
-            int newYpos = loadRobotsButtons(initialYPos,tech);
-            loadVehiclesButtons(newYpos,tech);
+            int newYpos = loadRobotsButtons(initialYPos,unitCode,tech);
+            loadVehiclesButtons(newYpos,unitCode,tech);
             break;
     }
 
@@ -119,7 +119,7 @@ void PlayerInterface::show(SelectionHandler& selectionHandler) {
     drawer.drawLine(screen,gameWidth);
     drawer.drawText(screen,"Z",getCol(2,1,0),0);
     if(selectionHandler.unit_select()){
-        loadButtons(selectionHandler.getUnit()->get_type(),100);//reemplazar 100 por el tech de la unidad
+        loadButtons(selectionHandler.getUnit()->get_type(),selectionHandler.getUnit()->get_unit_code(),100);//reemplazar 100 por el tech de la unidad
         drawer.drawImage(screen,getUnitPortrait(selectionHandler.getUnit()->get_type()).c_str(), getCol(2,1,32), 50);
         drawer.drawText(screen,"Pos X: ",getCol(3,1,0),150);
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posx()),getCol(3,2,0),150);

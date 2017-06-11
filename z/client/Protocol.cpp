@@ -4,7 +4,7 @@
 #define CODE_ATTACK 1
 #define CODE_SET_POS 1
 #define CODE_SET_ATTACK 2
-#define CODE_CREATE_UNIT 3
+#define CODE_CREATE_UNIT 2
 #define CODE_DIE 5
 #define CODE_STAND 6
 #define CODE_CHECKING_CAPTURE 8
@@ -152,4 +152,15 @@ void Protocol::process_message() {
         }
     }
 
+}
+
+void Protocol::create_unit(int idCreator, int idCreation) {
+    int CO_to_send = htonl(CODE_CREATE_UNIT);
+    int idCreator_to_send = htonl(idCreator);
+    int idCreation_to_send = htonl(idCreation);
+    int extra_to_send = htonl(0);
+    socket.send((char*) &CO_to_send,sizeof(int));
+    socket.send((char*) &idCreator_to_send,sizeof(int));
+    socket.send((char*) &idCreation_to_send,sizeof(int));
+    socket.send((char*) &extra_to_send,sizeof(int));
 }
