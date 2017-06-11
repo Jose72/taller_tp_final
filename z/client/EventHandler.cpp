@@ -1,3 +1,4 @@
+#include <iostream>
 #include "EventHandler.h"
 #include "../server/gameMap.h"
 #include "Camera2.h"
@@ -17,15 +18,18 @@ EventHandler::~EventHandler() {}
 
 void EventHandler::run() {
     Protocol protocol(socket,units,gameMap,factory);
-    SelectionHandler sHandler(protocol,id_client);
+
     SDL_Event event;
     int posCameraX = 0;
     int posCameraY = 0;
     Camera2 camera2(screen,posCameraX,posCameraY,480,240,WINDOW_W,WINDOW_H,factory);
+    SelectionHandler sHandler(protocol,id_client,camera2);
     int destinoX, destinoY, seleccionX, seleccionY;
     while(running == true) {
         //MOSTRAR
         camera2.set_position_cameraRect(posCameraX,posCameraY);
+        posCameraX = camera2.getPosCameraX();
+        posCameraY = camera2.getPosCameraY();
         camera2.draw(units,gameMap);
         playerInterface.show(sHandler);
         SDL_Flip(screen);
@@ -55,6 +59,7 @@ void EventHandler::run() {
                             break;
                     }
                     break;
+                    /*
                 case SDL_KEYUP:
                     switch (event.key.keysym.sym) {
                         case SDLK_LEFT:
@@ -72,18 +77,21 @@ void EventHandler::run() {
                             break;
                     }
                     break;
+                     */
                 case SDL_MOUSEBUTTONDOWN:
                     if (!playerInterface.checkClickedButtons(event.button.x, event.button.y)) {
                         if (event.button.button == LEFT_BUTTON) {
-                            destinoX = event.button.x;
-                            destinoY = event.button.y;
+                            destinoX = event.button.x + camera2.getPosCameraX();
+                            destinoY = event.button.y + camera2.getPosCameraY();
+                            std::cout << "X: "<< destinoX << " Y: " << destinoY <<"\n";
                             sHandler.set_objetive(destinoX, destinoY,units);
                             break;
                             //SDL_Quit()
                         }
                         if (event.button.button == RIGHT_BUTTON) {
-                            seleccionX = event.button.x;
-                            seleccionY = event.button.y;
+                            seleccionX = event.button.x + camera2.getPosCameraX();
+                            seleccionY = event.button.y + camera2.getPosCameraY();
+                            std::cout << "X: "<< seleccionX << " Y: " << seleccionY <<"\n";
                             sHandler.set_location(seleccionX, seleccionY, units);
                             break;
                         }

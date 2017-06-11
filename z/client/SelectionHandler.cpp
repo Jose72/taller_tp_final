@@ -6,7 +6,7 @@
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
 
-SelectionHandler::SelectionHandler(Protocol &p, int &id):protocol(p), id_client(id){
+SelectionHandler::SelectionHandler(Protocol &p, int &id, Camera2 &cam):protocol(p), id_client(id), cam(cam){
     this->unit_selected = false;
 }
 
@@ -64,7 +64,7 @@ void SelectionHandler::set_objetive(int destX, int destY, Units_Protected &units
                     protocol.attackUnitCS(unit->get_unit_code(), enemy->get_unit_code());
                 }
             } else {
-                protocol.moveUnitCS(unit->get_unit_code(), destX, destY);
+                protocol.moveUnitCS(unit->get_unit_code(),destX,destY);
             }
     }
 }

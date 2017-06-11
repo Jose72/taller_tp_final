@@ -29,6 +29,8 @@ public:
     ~Camera2();
     void set_position_cameraRect(int posX, int posY);
     void draw(Units_Protected &units, Game_map &game_map);
+    int getPosCameraX();
+    int getPosCameraY();
 
 
 

@@ -19,23 +19,19 @@ Camera2::Camera2(SDL_Surface *screen,int posX, int posY, int W, int H, int lW, i
 Camera2::~Camera2() {}
 
 void Camera2::set_position_cameraRect(int posX, int posY) {
-    unsigned int ticks = SDL_GetTicks();
-    if((ticks % 10 ) == 0) {
-        this->cameraRect.x = posX - (cameraW / 2);
-        this->cameraRect.y = posY - (cameraH / 2);
-
-        if (cameraRect.x < 0) {
-            cameraRect.x = 0;
-        }
-        if (cameraRect.y < 0) {
-            cameraRect.y = 0;
-        }
-        if ((cameraRect.x + cameraRect.w) >= (levelWidth)) {
-            cameraRect.x = levelWidth - cameraW;
-        }
-        if ((cameraRect.y + cameraRect.h) >= (levelHeight)) {
-            cameraRect.y = levelHeight - cameraH;
-        }
+    this->cameraRect.x = posX;// - (cameraW / 2);
+    this->cameraRect.y = posY;// - (cameraH / 2);
+    if (cameraRect.x < 0) {
+        cameraRect.x = 0;
+    }
+    if (cameraRect.y < 0) {
+        cameraRect.y = 0;
+    }
+    if ((cameraRect.x + cameraRect.w) >= (levelWidth)) {
+        cameraRect.x = levelWidth - cameraW;
+    }
+    if ((cameraRect.y + cameraRect.h) >= (levelHeight)) {
+        cameraRect.y = levelHeight - cameraH;
     }
 }
 
@@ -50,4 +46,12 @@ void Camera2::draw(Units_Protected &units, Game_map &game_map) {
         game_map.draw_map(limitXL, limitXR, limitYU, limitYD, cameraRect);
         units.animate(limitXL, limitXR, limitYU, limitYD, cameraRect);
     }
+}
+
+int Camera2::getPosCameraX() {
+    return cameraRect.x;
+}
+
+int Camera2::getPosCameraY() {
+    return cameraRect.y;
 }

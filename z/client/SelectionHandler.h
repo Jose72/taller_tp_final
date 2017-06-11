@@ -7,6 +7,7 @@
 #include "Units_Protected.h"
 #include "../common/Socket.h"
 #include "Protocol.h"
+#include "Camera2.h"
 
 #define SELECTOR_D 20
 
@@ -18,9 +19,10 @@ private:
     Unit * unit;
     Protocol &protocol;
     int &id_client;
+    Camera2 &cam;
 
 public:
-    SelectionHandler(Protocol &p, int &id);
+    SelectionHandler(Protocol &p, int &id, Camera2 &cam);
     void select_unit(std::vector<Unit*> &units);
     void set_objetive(int destX, int destY, Units_Protected &units);
     void set_location(int posX, int posY,Units_Protected &units);
