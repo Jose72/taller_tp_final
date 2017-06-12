@@ -5,9 +5,10 @@
 
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 1
-#define WINDOW_H 800
-#define WINDOW_W 600
-
+#define WINDOW_H 8000
+#define WINDOW_W 800
+#define CAMERADX 1000
+#define CAMERADY 1000
 
 EventHandler::EventHandler(SDL_Surface *screen,
                            PlayerInterface &p,
@@ -29,7 +30,7 @@ void EventHandler::run() {
     SDL_Event event;
     int posCameraX = 0;
     int posCameraY = 0;
-    Camera2 camera2(screen,posCameraX,posCameraY,480,240,WINDOW_W,WINDOW_H,factory);
+    Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,WINDOW_W,WINDOW_H,factory);
     SelectionHandler sHandler(protocol,id_client,camera2);
     int destinoX, destinoY, seleccionX, seleccionY;
     while(running == true) {
