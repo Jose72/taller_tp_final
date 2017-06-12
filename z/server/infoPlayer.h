@@ -53,7 +53,9 @@ class infoPlayers{
 		int game_type;
 		int teams_count;
 		std::map<int,infoPlayer> players_info;
-		//tener vetcore por cada equipo
+		
+		
+		//tener vector por cada equipo
 		std::map<int,infoPlayer> team_1_info;
 		std::map<int,infoPlayer> team_2_info;
 		std::map<int,infoPlayer> team_3_info;

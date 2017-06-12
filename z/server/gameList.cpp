@@ -1,5 +1,6 @@
 #include "gameList.h"
 #include "../common/Lock.h"
+#include <iostream>
 
 
 gameList::gameList(){}
@@ -24,6 +25,7 @@ void gameList::stopGames(){
 void gameList::cleanGames(){
 	tLock l(m);
 	for (auto it = juegos.begin(); it != juegos.end(); ++it){
+		//std::cout << "clean game" << std::endl;
 		if ((*it)->isRunning()) (*it)->join();
 		delete (*it);
 	}

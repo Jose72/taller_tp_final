@@ -18,6 +18,7 @@ int &unit_id_c, int time, infoPlayers &ip){
 		creator.getX(), creator.getY()+32);
 		units.insert(std::pair<int,unit*>(unit_id_c,u));
 		unit_id_c++;//incremento id_units
+		ip.incrementUnitsCount(creator.getOwner()); //incremento cant unidades player
 		//reseteo el timer
 		creator.resetTimer();
 	}

@@ -24,16 +24,7 @@ void tServer::stop(){
 			client_mngrs[j]->join();
 			delete client_mngrs[j];
 		}
-		
-		for (unsigned int j = 0; j < juegos.size(); j++){
-			//paro y joineo los juegos
-			juegos[j]->stop();
-			//si arranco el juego hay que joinera
-			//puede haberse roto todo antes de arrancar
-			if (juegos[j]->isRunning()) juegos[j]->join();
-			delete juegos[j];
-		}
-		
+
 		g_list.stopGames();
 		g_list.cleanGames();
 		std::cout << "server stop out" << std::endl;	

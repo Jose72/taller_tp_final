@@ -62,18 +62,21 @@ int tClientManager::gameSelection(){
 
 		//recibo datos
 		int cant_p = -1;
-		cli_skt.receive((char*)&code, 4);
+		cli_skt.receive((char*)&cant_p, 4);
 		cant_p = ntohl(cant_p);
 
 		int type_game = -1;
-		cli_skt.receive((char*)&code, 4);
+		cli_skt.receive((char*)&type_game, 4);
 		type_game = ntohl(type_game);
 
 		int teams = -1;
-		cli_skt.receive((char*)&code, 4);
+		cli_skt.receive((char*)&teams, 4);
 		teams = ntohl(teams);
 
-
+		//std::cout << "cant p: " << cant_p << std::endl;
+		//std::cout << "gem: " << type_game << std::endl;
+		//std::cout << "tcant eq: " << teams << std::endl;
+		
 		//creo el juego
 		//harcodeo
 		j = new juego(id_client, cant_p, DEATHMATCH, teams);
@@ -201,7 +204,7 @@ void tClientManager::run(){
 	while (!ok){
 		int i = this->gameSelection();
 		if (i == 0) ok = true; //todo bien
-		if (i == -1) return -1; //se rompio algo y hay que salir del manager
+		if (i == -1) return; //se rompio algo y hay que salir del manager
 	}
 	*/
 	
@@ -209,7 +212,7 @@ void tClientManager::run(){
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	//HARDCODEO DE COMUNICACION APRA CREAR O UNISE (LO VIEJO)
-
+	
 	//si seleccione nuevo juego
 	if (id_client == 1) {
 		//creo el juego
@@ -250,7 +253,7 @@ void tClientManager::run(){
 		}
 
 	}
-
+	
 	//////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	

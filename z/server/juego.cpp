@@ -59,7 +59,8 @@ int juego::checkVictory(){
 	int winner = p_info.checkForWinner();
 	if (winner != NO_WINNER){
 		std::cout << "winner: " << winner<< std::endl;
-		//hay que enviarles a todos que termino la artida
+		//p_info.sendVictoryMessages(winner);
+		//hay que enviarles a todos que termino la partida
 	}
 	return winner;
 }
@@ -85,8 +86,10 @@ void juego::unit_cleaner(){
 			death_h.death(*u, units);//handler por si tiene q hacer algo
 			//si no es un edificio lo elimino
 			if (edificio){
+				p_info.decrementUnitsCount(u->getOwner()); //decremento cant unidadades player
 				delete it->second; // libero mem
 				it = units.erase(it); // borro de la lista
+				
 			}
 		} else {
 			++it;
@@ -172,6 +175,7 @@ void juego::sendInit(){
 	
 	//hay que inicilizar la info de cada jugador
 	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
+	//cant de unidades es solo robots y vehiculos, edificios no cuentan
 	p_info.initializePlayer(1, u3, 1);
 	p_info.initializePlayer(2,nullptr, 2);
 
@@ -229,7 +233,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			int u_to_create = e.getX();
 			//si el tech level no le da salgo
 			if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
-			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*10);
+			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*100);
 			}
 			return;
 			
@@ -255,7 +259,7 @@ void juego::run(){
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
-	while(s > 0){
+	while(s > 0 && running){
             int c = event_list.size();
 			int i = 0;
             while (!event_list.empty() && i < c) {
@@ -299,8 +303,11 @@ void juego::run(){
 			unit_cleaner();
 			
 			//check si gano alguien, o si perdio
-			//checkVictory())
-			
+			/*
+			if (NO_WINNER != checkVictory()){}
+				running = false;
+			}
+			*/
 	}
 	
 	//limpio unidades al final del juego

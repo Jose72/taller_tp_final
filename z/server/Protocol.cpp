@@ -77,6 +77,24 @@ int serverProtocol::receive_event(Event &e) {
 	return s;
 }
 
+int serverProtocol::sendVictory(){
+	int s = 1;
+	int code = 40;
+	//codigo de actualizacion
+	int state_code = htonl(code);
+	s = socket.send((char*) &state_code,sizeof(int));
+	//basura
+	int trash = htonl(0);
+	s = socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash,sizeof(int));
+    //std::cout << "finish act - s: " << s << std::endl;
+	return s;
+}
+
 int serverProtocol::sendUpdateTechLvl(int tech_lvl){
 	int s = 1;
 	int code = 35;

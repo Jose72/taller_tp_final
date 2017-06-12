@@ -18,7 +18,6 @@ class tServer: public tThread{
 		tSocket serv_skt;
 		bool acepter_open;
 		std::vector<tClientManager*> client_mngrs;
-		std::vector<juego*> juegos;
 		gameList g_list;
 		std::mutex m;
 	public:
