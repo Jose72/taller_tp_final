@@ -120,7 +120,15 @@ int tClientManager::gameSelection(){
 		cant_games = htonl(juegos.size());
 		cli_skt.send((char*)&cant_games, 4);
 		
+		std::cout << "llego: " << std::endl;
+		
 		//loop envio descripcion de juegos
+		for (auto it = des.begin(); it != des.end(); ++it){
+			int i = (*it);
+			i = htonl(i);
+			cli_skt.send((char*)&i, 4);
+		}
+		/*
 		for (auto it = des.begin(); it != des.end(); ++it){
 			int id_creat = (*it);
 			it = des.erase(it);
@@ -132,7 +140,7 @@ int tClientManager::gameSelection(){
 			it = des.erase(it);
 			int teams = (*it);
 			it = des.erase(it);
-			
+			std::cout << "llego: " << std::endl;
 			id_creat = htonl(id_creat);
 			cli_skt.send((char*)&id_creat, 4);
 			max_p = htonl(max_p);
@@ -144,10 +152,12 @@ int tClientManager::gameSelection(){
 			teams = htonl(teams);
 			cli_skt.send((char*)&teams, 4);
 		}
+		*/
+		
 		
 		//recibir codigo
 		int g_to_join;
-		cli_skt.send((char*)&g_to_join, 4);
+		cli_skt.receive((char*)&g_to_join, 4);
 		g_to_join = ntohl(g_to_join);
 		
 
@@ -167,6 +177,7 @@ int tClientManager::gameSelection(){
 			
 		} else {
 			//envio que salio mal
+			std::cout << "no joineo: " << std::endl;
 			int confirm = htonl(1);
 			cli_skt.send((char*)&confirm, 4);
 			
@@ -199,20 +210,20 @@ void tClientManager::run(){
 	///////////////////////////////////////////////////////////
 	////PROTOCOLO NUEVO
 	
-	/*
+	
 	bool ok = false;
-	while (!ok){
+	while (!ok && !end_game){
 		int i = this->gameSelection();
 		if (i == 0) ok = true; //todo bien
 		if (i == -1) return; //se rompio algo y hay que salir del manager
 	}
-	*/
+	
 	
 	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	//HARDCODEO DE COMUNICACION APRA CREAR O UNISE (LO VIEJO)
-	
+	/*
 	//si seleccione nuevo juego
 	if (id_client == 1) {
 		//creo el juego
@@ -253,7 +264,7 @@ void tClientManager::run(){
 		}
 
 	}
-	
+	*/
 	//////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	

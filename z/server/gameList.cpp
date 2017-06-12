@@ -57,6 +57,14 @@ int gameList::joinGame(int my_id, tSocket *s, juego* j, int creator){
 void gameList::descriptionGames(std::vector<int> &des, int &c){
 	tLock l(m);
 	c = juegos.size();
+	/*
+	if (c == 0){
+		for (int i = 0; i < 5; ++i){
+			des.push_back(0);
+		}
+		return;
+	}
+	*/
 	for (auto it = juegos.begin(); it != juegos.end(); ++it){
 		int a,b,c,d,e;
 		(*it)->getDescription(a,b,c,d,e);
