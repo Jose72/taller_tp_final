@@ -23,41 +23,6 @@ void Game_map::add_tile(int tile) {
    map_des.push_back(tile);
 }
 
-void Game_map::draw_map(SDL_Rect &cameraRect) {
-    int i,j,x,y,t;
-    //dibujar escenario
-    for (i=0 ; i<10 ; i++) {
-        for (j=0 ; j<10 ; j++) {
-            int pos = ((i*10)+(j));
-            t = this->map_des[pos];
-            // calculo de la posición del tile
-            x = j*32;
-            y = i*32;
-            switch (t) {
-                case 0:
-                    this->tex0->animate(x, y, cameraRect);
-                    break;
-                case 1:
-                    this->tex1->animate(x, y, cameraRect);
-                    break;
-                case 2:
-                    this->tex2->animate(x, y,cameraRect);
-                    break;
-                case 3:
-                    this->tex3->animate(x, y,cameraRect);
-                    break;
-                case 4:
-                    this->tex4->animate(x, y,cameraRect);
-                    break;
-                case 5:
-                    this->tex5->animate(x,y,cameraRect);
-                default:
-                    break;
-            }
-        }
-    }
-}
-
 void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD, SDL_Rect &cameraRect) {
 
     int x,y,t;
@@ -91,6 +56,12 @@ void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD, SDL_
                             case 5:
                                 this->tex5->animate(x, y,cameraRect);
                                 break;
+                            case 6:
+                                this->tex6->animate(x, y,cameraRect);
+                                break;
+                            case 7:
+                                this->tex7->animate(x, y,cameraRect);
+                                break;
                             default:
                                 break;
                         }
@@ -102,12 +73,14 @@ void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD, SDL_
 
 }
 
-// 1.BMP PASTO
+// 1.BMP PRADERA
 // 2.BMP AGUA
 // 3.BMP LAVA
 // 4.BMP NIEVE
 // 5.BMP RUTA
-// 6.bmp ARENA
+// 6.bmp PANTANO
+// 7.bmp TIERRA
+// 8.BMP CARRETERA
 void Game_map::load_tex() {
     this->tex0 = new Animation(this->screen,"client/sprites/tiles/1.bmp",32,32);
     this->tex1 = new Animation(this->screen,"client/sprites/tiles/2.bmp",32,32);
@@ -115,6 +88,8 @@ void Game_map::load_tex() {
     this->tex3 = new Animation(this->screen,"client/sprites/tiles/4.bmp",32,32);
     this->tex4 = new Animation(this->screen,"client/sprites/tiles/5.bmp",32,32);
     this->tex5 = new Animation(this->screen,"client/sprites/tiles/6.bmp",32,32);
+    this->tex6 = new Animation(this->screen,"client/sprites/tiles/7.bmp",32,32);
+    this->tex7 = new Animation(this->screen,"client/sprites/tiles/8.bmp",32,32);
 
 }
 
