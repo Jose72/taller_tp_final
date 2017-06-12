@@ -15,10 +15,17 @@ private:
     bool &running;
     Factory_Units &factory;
     int &id_client;
+    TechLevelProtected &techLevel;
 
 
 public:
-    EventHandler(SDL_Surface *screen,PlayerInterface &p, Units_Protected &u, tSocket &s, Game_map &m, bool &b, Factory_Units &f, int &id_client);
+    EventHandler(SDL_Surface *screen,
+                 PlayerInterface &p,
+                 Units_Protected &u,
+                 tSocket &s,
+                 Game_map &m, bool &b,
+                 Factory_Units &f,
+                 int &id_client, TechLevelProtected &tech);
     ~EventHandler();
     void run();
     void stop();

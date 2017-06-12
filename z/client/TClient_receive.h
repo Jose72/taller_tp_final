@@ -9,6 +9,7 @@
 #include "Unit.h"
 #include "Factory_Units.h"
 #include "Units_Protected.h"
+#include "TechLevelProtected.h"
 
 class TClient_receive: public tThread {
 private:
@@ -19,9 +20,15 @@ private:
     bool &done;
     bool &running;
     int &id_client;
+    TechLevelProtected &techLevel;
 
 public:
-    TClient_receive(tSocket &s, Game_map &game_map,Units_Protected &u, Factory_Units &f, bool &done, bool &r, int &id_c);
+    TClient_receive(tSocket &s,
+                    Game_map &game_map,
+                    Units_Protected &u,
+                    Factory_Units &f,
+                    bool &done, bool &r, int &id_c,
+                    TechLevelProtected &tech);
     ~TClient_receive();
     void run();
     void stop();

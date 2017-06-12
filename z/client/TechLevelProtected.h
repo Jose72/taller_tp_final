@@ -1,7 +1,3 @@
-//
-// Created by matias on 11/06/17.
-//
-
 #ifndef Z_TECHLEVELPROTECTED_H
 #define Z_TECHLEVELPROTECTED_H
 

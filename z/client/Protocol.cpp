@@ -8,8 +8,8 @@
 #define CODE_DIE 5
 #define CODE_STAND 6
 #define CODE_CHECKING_CAPTURE 8
-Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f):
-        socket(s), units(u), game_map(g),factory(f) {}
+Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech):
+        socket(s), units(u), game_map(g),factory(f), techLevel(tech) {}
 
 Protocol::~Protocol() {}
 
