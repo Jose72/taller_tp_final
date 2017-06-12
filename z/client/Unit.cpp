@@ -58,6 +58,10 @@ void Unit::animate(SDL_Rect &cameraRect) {
             }
             break;
 
+        case DESTROYED1:
+            animate_static(cameraRect,animation3,maxFrame3);
+            break;
+
         case DEAD2:
             break;
 
