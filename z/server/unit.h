@@ -13,8 +13,8 @@ class unit {
 	protected:
 		int unit_id;
 		int class_id;
+		int team;
 		int owner;
-		std::vector<int> allies;
 		double x;
 		double y;
 		int b_health;
@@ -112,6 +112,7 @@ class unit {
 		bool targetIsEnemy();
 		bool sameOwner(unit *u);
 		bool sameOwnerAsTarget();
+		bool sameTeam(unit *u);
 		
 		int checkCreating(double time);
 		void destroy();

@@ -199,13 +199,7 @@ bool unit::isEnemy(unit &u){
 	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
 	if (u.owner == 0) return false;
 	if (this->owner != u.owner) {
-		for (auto it = allies.begin(); it != allies.end(); ++it){
-			if ((*it) == u.owner) {
-				return false;
-			}
-		}
-		
-		//if (0 == u.owner) return true; //es un objeto del mapa
+		if (this->sameTeam(&u)) return false;
 		return true;
 	}
 	return false;
@@ -280,10 +274,6 @@ bool unit::targetIsEnemy(){
 
 int unit::getState(){
 	return state;
-}
-
-void unit::setAllie(int a){
-	allies.push_back(a);
 }
 
 //seteo a los que me estan siguiendo
@@ -424,9 +414,8 @@ void unit::updateCreationTimer(int time){
 	if (countdown - time < 0){
 		countdown = 0;
 	} else {
-		countdown -=(time / tech_level) / (sqrt(1-this->getRelativeDamage()));
+		countdown -=(time / tech_level) / (sqrt(1-(this->getRelativeDamage())));
 	}
-	std::cout << countdown << std::endl;
 }
 
 void unit::setTechLvl(int tl){
@@ -452,4 +441,8 @@ void unit::releaseFlag(){
 		driver->target = nullptr;
 		driver->state = CHECKING_CAPTURE;
 	}
+}
+
+bool unit::sameTeam(unit *u){
+	return (this->team == u->team);
 }

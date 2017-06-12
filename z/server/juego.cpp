@@ -144,13 +144,13 @@ void juego::sendInit(){
 	
 	
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
-	unit *u1 = builder.build(GRUNT, 1, 70, 50);
+	unit *u1 = builder.build(GRUNT, 1, 15, 15);
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u1));
 	id_unit_counter++;
 
 
 
-	unit *u2 = builder.build(GRUNT, 2, 160, 15);
+	unit *u2 = builder.build(GRUNT, 2, 200, 15);
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u2));
 	id_unit_counter++;
 
@@ -158,7 +158,7 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u3));
 	id_unit_counter++;
 
-	unit *u4 = builder.build(GRUNT, 2,280, 280);
+	unit *u4 = builder.build(GRUNT ,2,280, 280);
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u4));
 	id_unit_counter++;
 
@@ -216,7 +216,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			int u_to_create = e.getX();
 			//si el tech level no le da salgo
 			if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
-			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*1000);
+			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*10);
 			}
 			return;
 			

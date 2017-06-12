@@ -42,6 +42,11 @@ class infoPlayers{
 		int game_type;
 		int teams_count;
 		std::map<int,infoPlayer> players_info;
+		//tener vetcore por cada equipo
+		std::map<int,infoPlayer> team_1_info;
+		std::map<int,infoPlayer> team_2_info;
+		std::map<int,infoPlayer> team_3_info;
+		std::map<int,infoPlayer> team_4_info;
 	public:
 		infoPlayers(int max_p, int game_type, int teams);
 		void initializePlayer(int id_p, unit *fort, int units_count);

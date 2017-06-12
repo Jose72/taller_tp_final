@@ -18,11 +18,17 @@ void infoPlayers::addNewPlayer(int id_p){
 
 void infoPlayers::updateTechLevels(int id_old, int id_new){
 	std::map<int,infoPlayer>::iterator it;
+	std::map<int,infoPlayer>::iterator it2;
 	it = players_info.find(id_old);
-	if (id_old == it->first)
+	if (id_old == it->first){
 		(it->second).decrementTechLvl();
-	it = players_info.find(id_new);
-	(it->second).incrementTechLvl();
+		}
+	it2 = players_info.find(id_new);
+		if (id_old == it2->first){
+			std::cout << "n t: " << (it2->second).getCurrentTechLvl() << std::endl;
+			(it->second).incrementTechLvl();
+			std::cout << "n t: " << (it2->second).getCurrentTechLvl() << std::endl;
+		}
 }
 
 
