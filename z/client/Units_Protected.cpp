@@ -86,12 +86,7 @@ void Units_Protected::cleanDeadUnits() {
 
 }
 
-enum units {
-    GRUNT = 0, PSYCHO = 1, TOUGHT = 2, PYRO = 3, SNIPER = 4, LAZER = 5,
-    JEEP = 6, MEDIUM_TANK = 7, LIGHT_TANK = 8, HEAVY_TANK = 9, MML = 10,
-    FORT = 11, ROBOT_FACTORY = 12, VEHICLE_FACTORY = 13,
-    FLAG = 14,
-    LLAMAS = 15, HCP = 16, LASER = 17, MISIL = 18, BALAS = 19};
+
 
 void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY, Factory_Units &factory) {
     tLock(this->mut);

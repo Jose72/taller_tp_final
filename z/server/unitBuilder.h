@@ -2,7 +2,7 @@
 #define UNITBUILDER_H
 
 #include "unit.h"
-#include "constants.h"
+#include "../common/constants.h"
 
 class unitBuilder {
 	public:

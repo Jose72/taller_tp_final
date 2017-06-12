@@ -20,6 +20,7 @@ public:
     void infoJoinGame();
     int joinGame(int idCreator);
     std::vector<InfoGameSelection*> infoGames;
+    int receive_id_client();
 
 private:
     tSocket &socket;
@@ -27,7 +28,6 @@ private:
 
 
     void cleanInfoGames();
-
 
 
 

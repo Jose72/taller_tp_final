@@ -38,7 +38,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     pWindow->hide();
     tSocket* socket = pWindow->getSocket();
     SDL_Surface *screen;
-    int id_client = 0;
+    int id_client = pWindow->id_client;
     std::vector<Unit*> u;
     std::map<int, Unit*>um;
     Units_Protected all_units(um);
@@ -211,6 +211,8 @@ void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *arg
 
 MainWindow::MainWindow(tSocket *socketParam, int argc, char *argv[], Glib::RefPtr<Gtk::Application> app) {
     socket = socketParam;
+    ProtocolMenu protocolMenu(*socket);
+    id_client = protocolMenu.receive_id_client();
     createBox();
     initial(app, argc, argv);
 }

@@ -1,7 +1,7 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include "constants.h"
+#include "../common/constants.h"
 #include "armament.h"
 #include <vector>
 #define DAMAGE_TAKEN 0

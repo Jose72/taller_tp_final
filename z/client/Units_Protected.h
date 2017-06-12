@@ -5,6 +5,7 @@
 #include <mutex>
 #include "Unit.h"
 #include "Factory_Units.h"
+#include "../common/constants.h"
 
 class Units_Protected {
 private:

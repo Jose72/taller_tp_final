@@ -19,7 +19,6 @@ private:
 public:
     Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech);
     ~Protocol();
-    int receive_id_client();
     void moveUnitCS(int cod_unit, int posX, int posY);
     void attackUnitCS(int cod_unit, int cod_objective);
     void create_map();

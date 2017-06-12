@@ -130,14 +130,14 @@ occ := $(CC)
 ocxx := $(CXX)
 orm := $(RM)
 old := $(LD)
-ifdef verbose
+#ifdef verbose
 RM := $(RM) -v
-else
-CC =  @echo "  CC  $@"; $(occ)
-CXX = @echo "  CXX $@"; $(ocxx)
-RM =  @echo "  CLEAN"; $(orm)
-LD =  @echo "  LD  $@"; $(old)
-endif
+#else
+#CC =  @echo "  CC  $@"; $(occ)
+#CXX = @echo "  CXX $@"; $(ocxx)
+#RM =  @echo "  CLEAN"; $(orm)
+#LD =  @echo "  LD  $@"; $(old)
+#endif
 
 
 # REGLAS

@@ -1,7 +1,7 @@
 #ifndef ARMAMENT_H
 #define ARMAMENT_H
 
-#include "constants.h"
+#include "../common/constants.h"
 
 
 

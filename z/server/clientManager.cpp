@@ -209,7 +209,7 @@ void tClientManager::run(){
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	//HARDCODEO DE COMUNICACION APRA CREAR O UNISE (LO VIEJO)
-	
+
 	//si seleccione nuevo juego
 	if (id_client == 1) {
 		//creo el juego
@@ -218,26 +218,26 @@ void tClientManager::run(){
 		j->clientJoin(id_client, &cli_skt);
 		//pusheo en el vector
 		juegos.push_back(j);
-	
-		
+
+
 		//espero hasta que esten todos listos
 		while (!j->readyToStart() && !end_game){
 			usleep(200000);
 		}
 		//si sali del loop porque se acaba el juego, salgo del manager
 		if (end_game) return;
-		
-	
+
+
 		//que el juego envie datos iniciales
 		j->sendInit();
-		
+
 		//empiezo el juego
 		j->start();
-		
+
 	} else { //si seleccione unirme
 		//enviar lista de los juegos
 		//busco en el vector de juegos
-		
+
 		//HARDOCDEADO
 		if (0 == juegos.joinGame(id_client, &cli_skt, j, 1)){ //si hay juegos
 			//espero a que todos esten listos
@@ -248,9 +248,9 @@ void tClientManager::run(){
 		} else {
 			return; //si no hay juegos salgo
 		}
-		
+
 	}
-	
+
 	//////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	

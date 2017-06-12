@@ -18,6 +18,13 @@
 
 ProtocolMenu::ProtocolMenu(tSocket &socket) : socket(socket) {}
 
+int ProtocolMenu::receive_id_client() {
+    int id_c;
+    socket.receive((char*)&id_c,4);
+    int id_c_SC =ntohl(id_c);
+    return id_c_SC;
+}
+
 int ProtocolMenu::initCreateGame() {
     int CO_to_send = htonl(CREATE_GAME);
     socket.send((char*) &CO_to_send,sizeof(int));
@@ -53,6 +60,8 @@ int ProtocolMenu::joinGame(int idCreator) {
     socket.receive((char*)&response,4);
     return ntohl(response);
 }
+
+
 
 void ProtocolMenu::infoJoinGame(){
     cleanInfoGames();

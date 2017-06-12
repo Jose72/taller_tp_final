@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "ClickableButtonGrunt.h"
+#include "../common/constants.h"
 
 ClickableButtonGrunt::ClickableButtonGrunt(int x, int y, int width, int height, std::string text,int idUnit)
         : ClickableButton(x, y, width, height, text, idUnit) {
@@ -11,6 +12,6 @@ ClickableButtonGrunt::ClickableButtonGrunt(int x, int y, int width, int height, 
 }
 
 void ClickableButtonGrunt::click(Protocol aProtocol) {
-    aProtocol.create_unit(idUnit,0);
+    aProtocol.create_unit(idUnit,GRUNT);
     std::cout << "Crear Grunt (Mensaje al server)" << std::endl;
 }

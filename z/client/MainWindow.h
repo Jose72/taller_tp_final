@@ -27,6 +27,7 @@ public:
     Gtk::ComboBoxText *combo;
     tSocket* socket;
     std::vector<Gtk::Button*> buttons;
+    int id_client;
 
 public:
 
