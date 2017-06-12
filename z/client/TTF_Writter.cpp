@@ -17,7 +17,7 @@ TTF_Writter::~TTF_Writter() {
     font=NULL;
 }
 
-void TTF_Writter::drawText(SDL_Surface* screen,std::string mensaje,int x,int y) {
+void TTF_Writter::drawText(SDL_Surface *screen, std::string mensaje, Sint16 x, Sint16 y) {
     SDL_Color color={255,255,255};
     SDL_Surface *text_surface;
     if(!(text_surface=TTF_RenderText_Blended(font,mensaje.c_str(),color))) {

@@ -14,7 +14,7 @@ private:
 public:
     TTF_Writter();
 
-    void drawText(SDL_Surface *screen, std::string mensaje, int x, int y);
+    void drawText(SDL_Surface *screen, std::string mensaje, Sint16 x, Sint16 y);
 
     virtual ~TTF_Writter();
 };

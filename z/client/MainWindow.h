@@ -19,10 +19,14 @@ public:
     Gtk::Button* unirse;
     Gtk::Button* crear;
     Gtk::Button* salir;
-    Gtk::Entry entry;
+    Gtk::Button* siguiente;
+    Gtk::Entry *entry;
+    Gtk::Entry *entry2;
+    Gtk::Image* image;
     Gtk::Entry nombre;
-    Gtk::ComboBoxText combo;
+    Gtk::ComboBoxText *combo;
     tSocket* socket;
+    std::vector<Gtk::Button*> buttons;
 
 public:
 
@@ -42,6 +46,10 @@ public:
     void cleanBox();
 
     virtual ~MainWindow();
+
+    void createBox();
+
+    void deleteBox();
 };
 
 

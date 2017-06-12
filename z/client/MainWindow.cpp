@@ -7,6 +7,7 @@
 #include <gtkmm/application.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/comboboxtext.h>
+#include <cstring>
 #include "SDL.h"
 #include "Animation.h"
 #include "Game_map.h"
@@ -33,21 +34,8 @@
 #define PLAYER_INTERFACE_W 300
 #define INITIAL_TECH_LEVEL 1
 
-
-void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
-    std::cout << "Chau!" << std::endl;
-    app->quit();
-}
-
-void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow) {
-    pWindow->cleanBox();
-    pWindow->salir->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
-    pWindow->box->add(*(pWindow->salir));
-    pWindow->add(*(pWindow->box));
-    pWindow->show_all();
-}
-
-void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
+void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
+    pWindow->hide();
     tSocket* socket = pWindow->getSocket();
     SDL_Surface *screen;
     int id_client = 0;
@@ -111,39 +99,111 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
         threads[i]->join();
 
     }
+    pWindow->show();
     TTF_Quit();
     IMG_Quit();
 
 }
 
 
+void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
+    std::cout << "Chau!" << std::endl;
+    app->quit();
+}
 
-void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *argv[]) {
-    /**ProtocolMenu protocolMenu(socket);
-    std::vector<std::string> games = protocolMenu.fetchGames();
-    for (int i = 0; i < games.size(); ++i) {
-        combo.append(games[i]);
+void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow) {
+    ProtocolMenu protocolMenu(*(pWindow->socket));
+    int numPlayers = atoi(pWindow->entry->get_text().data());
+    int typeGame = 0;
+    if( std::strcmp(pWindow->combo->get_active_text().data(), "TEAM_GAME") == 0){
+        typeGame = 1;
+    }
+    int numTeams = atoi(pWindow->entry2->get_text().data());
+    int response = protocolMenu.createGame(numPlayers,typeGame,numTeams);
+    if(response == RESPONSE_PROTOCOL_MENU_OK){
+        jugar(app,argc,argv,pWindow);
+    } else {
+        std::cout << "Crear juego: " << response << std::endl;
+        //pWindow->initial(app,argc,argv,pWindow);
+    }
+}
+
+void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow) {
+    ProtocolMenu protocolMenu(*(pWindow->socket));
+    int response = protocolMenu.initCreateGame();
+    if( response == RESPONSE_PROTOCOL_MENU_OK){
+        pWindow->cleanBox();
+        pWindow->entry->set_max_length(2);
+        pWindow->entry->set_placeholder_text("Cantidad de jugadores");
+
+        pWindow->combo->append("DEATHMATCH");
+        pWindow->combo->append("TEAM_GAME");
+
+        pWindow->entry2->set_max_length(2);
+        pWindow->entry2->set_placeholder_text("Cantidad de equipos");
+
+        pWindow->siguiente->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_siguiente_crear_clicked), app,argc,argv,pWindow));
+
+        pWindow->box->add(*(pWindow->entry));
+        pWindow->box->add(*(pWindow->combo));
+        pWindow->box->add(*(pWindow->entry2));
+        pWindow->box->add(*(pWindow->siguiente));
+        pWindow->box->add(*(pWindow->image));
+        pWindow->add(*(pWindow->box));
+        pWindow->show_all();
+    } else {
+        std::cout << "Respuesta server iniciar creacion " << response <<std::endl;
     }
 
+}
 
-    entry.set_max_length(50);
-    entry.set_placeholder_text("Nombre de la partida a crear");
+void on_siguiente_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow,int idCreator){
+    ProtocolMenu protocolMenu(*(pWindow->socket));
+    int response = protocolMenu.joinGame(idCreator);
+    if(response == RESPONSE_PROTOCOL_MENU_OK){
+        jugar(app,argc,argv,pWindow);
+    } else {
+        std::cout << "siguiente unirse join game " << response << std::endl;
+    }
+}
+
+void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
+    ProtocolMenu protocolMenu(*(pWindow->socket));
+    int response = protocolMenu.initJoinGame();
+    if( response == RESPONSE_PROTOCOL_MENU_OK){
+        Gtk::Button* buttonJoin; //= new Gtk::Button("Unirse");
+        protocolMenu.infoJoinGame();
+        pWindow->cleanBox();
+        for(int i = 0; i < protocolMenu.infoGames.size(); i++){
+            std::string buttonName = std::to_string(protocolMenu.infoGames[i]->idCreator);
+            buttonJoin = new Gtk::Button(buttonName);
+            buttonJoin->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_siguiente_unirse_clicked), app,argc,argv,pWindow,protocolMenu.infoGames[i]->idCreator));
+            pWindow->box->add(*buttonJoin);
+            pWindow->buttons.push_back(buttonJoin);
+            std::cout << protocolMenu.infoGames[i]->idCreator << std::endl;
+        }
+        pWindow->box->add(*(pWindow->image));
+        pWindow->add(*(pWindow->box));
+        pWindow->show_all();
+    } else{
+        std::cout << "respuesta init unirse "<< response << std::endl;
+    }
+}
 
 
-    nombre.set_max_length(50);
-    nombre.set_placeholder_text("Nombre del usuario");*/
+
+void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *argv[]) {
+
+    cleanBox();
     set_default_size(700, 360);
     unirse->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv,this));
     crear->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,this));
     salir->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
-    Gtk::Image* image = new Gtk::Image("client/splash/splash.jpg");
-
-    // box.add(nombre);
-    // box.add(entry);
+    siguiente->signal_clicked().connect(sigc::bind(sigc::ptr_fun(jugar), app,argc,argv,this)); // todo borrar cuando no se use mas el protocolo viejo
     box->add(*crear);
-    box->add(*Gtk::manage(image));
-    //   box.add(combo);
+    box->add(*image);
     box->add(*unirse);
+    box->add(*siguiente);// todo borrar cuando no se use mas el protocolo viejo
     box->add(*salir);
     add(*box);
     show_all();
@@ -151,10 +211,7 @@ void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *arg
 
 MainWindow::MainWindow(tSocket *socketParam, int argc, char *argv[], Glib::RefPtr<Gtk::Application> app) {
     socket = socketParam;
-    box = new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0);
-    unirse = new Gtk::Button("Unirse");
-    crear = new Gtk::Button("Crear");
-    salir = new Gtk::Button("Salir");
+    createBox();
     initial(app, argc, argv);
 }
 
@@ -166,20 +223,41 @@ Gtk::Box * MainWindow::getBox() {
     return box;
 }
 
-void MainWindow::cleanBox(){
-    delete box;
-    delete unirse;
-    delete crear;
-    delete salir;
+void MainWindow::createBox(){
     box = new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0);
     unirse = new Gtk::Button("Unirse");
     crear = new Gtk::Button("Crear");
     salir = new Gtk::Button("Salir");
+    siguiente = new Gtk::Button("Siguiente");
+    combo = new Gtk::ComboBoxText();
+    entry = new Gtk::Entry();
+    entry2 = new Gtk::Entry();
+    image = new Gtk::Image("client/splash/splash.jpg");
 }
 
-MainWindow::~MainWindow() {
+void MainWindow::deleteBox(){
     delete box;
+    delete siguiente;
     delete unirse;
     delete crear;
     delete salir;
+    delete combo;
+    delete entry;
+    delete entry2;
+    delete image;
+
+    for (int i = 0; i < buttons.size(); i++){
+        delete buttons[i];
+    }
+    buttons.clear();
+
+}
+
+void MainWindow::cleanBox(){
+    deleteBox();
+    createBox();
+}
+
+MainWindow::~MainWindow() {
+    deleteBox();
 }

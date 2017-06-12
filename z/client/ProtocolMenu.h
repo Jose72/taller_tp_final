@@ -7,13 +7,28 @@
 
 
 #include "../common/Socket.h"
+#include "InfoGameSelection.h"
 
+#define RESPONSE_PROTOCOL_MENU_OK 0
 class ProtocolMenu {
 public:
     ProtocolMenu(tSocket &socket);
-    std::vector<std::string> fetchGames();
+    int initCreateGame();
+    virtual ~ProtocolMenu();
+    int createGame(int numPlayers, int typeGame, int numTeams);
+    int initJoinGame();
+    void infoJoinGame();
+    int joinGame(int idCreator);
+    std::vector<InfoGameSelection*> infoGames;
+
 private:
     tSocket &socket;
+
+
+
+    void cleanInfoGames();
+
+
 
 
 };

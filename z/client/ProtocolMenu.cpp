@@ -6,26 +6,100 @@
 #include <string>
 #include <iostream>
 #include "ProtocolMenu.h"
+#include "InfoGameSelection.h"
 
-#define CODE_FETCH_GAMES 1000
+#define CREATE_GAME 0
+#define JOIN_GAME 1
+#define DEATHMATCH 0
+#define TEAM_GAME 1
+
+
+
 
 ProtocolMenu::ProtocolMenu(tSocket &socket) : socket(socket) {}
 
-std::vector<std::string> ProtocolMenu::fetchGames(){
-    std::vector<std::string> vectorGames;
-    /** int CO_to_send = htonl(CODE_FETCH_GAMES);
-     socket.send((char*)CO_to_send,sizeof(int));
+int ProtocolMenu::initCreateGame() {
+    int CO_to_send = htonl(CREATE_GAME);
+    socket.send((char*) &CO_to_send,sizeof(int));
+    int response;
+    socket.receive((char*)&response,4);
+    return ntohl(response);
+}
 
-     int sizeGames;
-     socket.receive((char*)&sizeGames,4);
-     int sizeGames_SC = ntohl(sizeGames);
+int ProtocolMenu::createGame(int numPlayers,int typeGame,int numTeams) {
+    int numPlayers_to_send = htonl(numPlayers);
+    socket.send((char*) &numPlayers_to_send,sizeof(int));
+    int typeGame_to_send = htonl(typeGame);
+    socket.send((char*) &typeGame_to_send,sizeof(int));
+    int numTeams_to_send = htonl(numTeams);
+    socket.send((char*) &numTeams_to_send,sizeof(int));
+    int response;
+    socket.receive((char*)&response,4);
+    return ntohl(response);
+}
 
-     char games[sizeGames_SC];
-     socket.receive((char*)&games,sizeGames_SC);
+int ProtocolMenu::initJoinGame() {
+    int CO_to_send = htonl(JOIN_GAME);
+    socket.send((char*) &CO_to_send,sizeof(int));
+    int response;
+    socket.receive((char*)&response,4);
+    return ntohl(response);
+}
 
-     std::cout << games << std::endl;*/
-    vectorGames.push_back("pepito");
-    vectorGames.push_back("foo");
-    vectorGames.push_back("bar"); //todo recibir esto del server
-    return vectorGames;
+int ProtocolMenu::joinGame(int idCreator) {
+    int idCreator_to_send = htonl(idCreator);
+    socket.send((char*) &idCreator_to_send,sizeof(int));
+    int response;
+    socket.receive((char*)&response,4);
+    return ntohl(response);
+}
+
+void ProtocolMenu::infoJoinGame(){
+    cleanInfoGames();
+    int numGamesNet;
+    int numGames;
+    int idCreatorNet;
+    int idCreator;
+    int maxPlayersNet;
+    int maxPlayers;
+    int joinedPlayersNet;
+    int joinedPlayers;
+    int typeGameNet;
+    int typeGame;
+    int numTeamsNet;
+    int numTeams;
+
+    socket.receive((char*)&numGamesNet,4);
+    numGames = ntohl(numGamesNet);
+
+    for (int i= 0; i < numGames; i++){
+        socket.receive((char*)&idCreatorNet,4);
+        idCreator = ntohl(idCreatorNet);
+
+        socket.receive((char*)&maxPlayersNet,4);
+        maxPlayers = ntohl(maxPlayersNet);
+
+        socket.receive((char*)&joinedPlayersNet,4);
+        joinedPlayers = ntohl(joinedPlayersNet);
+
+        socket.receive((char*)&typeGameNet,4);
+        typeGame = ntohl(typeGameNet);
+
+        socket.receive((char*)&numTeamsNet,4);
+        numTeams = ntohl(numTeamsNet);
+
+        infoGames.push_back(new InfoGameSelection(idCreator,maxPlayers,joinedPlayers,typeGame,numTeams));
+    }
+
+}
+
+void ProtocolMenu::cleanInfoGames(){
+    for (int i = 0; i < infoGames.size(); i++){
+        delete infoGames[i];
+    }
+    infoGames.clear();
+}
+
+ProtocolMenu::~ProtocolMenu() {
+    cleanInfoGames();
 }
