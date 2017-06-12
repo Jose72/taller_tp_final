@@ -32,11 +32,23 @@
 #define WINDOW_W 600
 #define PLAYER_INTERFACE_W 300
 #define INITIAL_TECH_LEVEL 1
-void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],Gtk::Entry *entry) {
-    std::cout << "TODO: Enviar al server creacion partida " << entry->get_text() << std::endl;
+
+
+void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
+    std::cout << "Chau!" << std::endl;
+    app->quit();
 }
 
-void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[], Gtk::ComboBoxText* combo, tSocket *socket){
+void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow) {
+    pWindow->cleanBox();
+    pWindow->salir->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
+    pWindow->box->add(*(pWindow->salir));
+    pWindow->add(*(pWindow->box));
+    pWindow->show_all();
+}
+
+void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
+    tSocket* socket = pWindow->getSocket();
     SDL_Surface *screen;
     int id_client = 0;
     std::vector<Unit*> u;
@@ -104,22 +116,11 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
 
 }
 
-void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
-    std::cout << "Chau!" << std::endl;
-    app->quit();
-}
 
 
-
-MainWindow::MainWindow(tSocket &socket, int argc, char *argv[], Glib::RefPtr<Gtk::Application> app)
-        : unirse("Unirse"), crear("Crear"), salir("Salir"), box(Gtk::ORIENTATION_VERTICAL, 0) {
-
-    ProtocolMenu protocolMenu(socket);
-    set_default_size(700, 360);
-
+void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *argv[]) {
+    /**ProtocolMenu protocolMenu(socket);
     std::vector<std::string> games = protocolMenu.fetchGames();
-
-
     for (int i = 0; i < games.size(); ++i) {
         combo.append(games[i]);
     }
@@ -130,20 +131,55 @@ MainWindow::MainWindow(tSocket &socket, int argc, char *argv[], Glib::RefPtr<Gtk
 
 
     nombre.set_max_length(50);
-    nombre.set_placeholder_text("Nombre del usuario");
-
-    unirse.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv, &combo, &socket));
-    crear.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,&entry));
-    salir.signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
+    nombre.set_placeholder_text("Nombre del usuario");*/
+    set_default_size(700, 360);
+    unirse->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv,this));
+    crear->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,this));
+    salir->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
     Gtk::Image* image = new Gtk::Image("client/splash/splash.jpg");
 
-    box.add(nombre);
-    box.add(entry);
-    box.add(crear);
-    box.add(*Gtk::manage(image));
-    box.add(combo);
-    box.add(unirse);
-    box.add(salir);
-    add(box);
+    // box.add(nombre);
+    // box.add(entry);
+    box->add(*crear);
+    box->add(*Gtk::manage(image));
+    //   box.add(combo);
+    box->add(*unirse);
+    box->add(*salir);
+    add(*box);
     show_all();
+}
+
+MainWindow::MainWindow(tSocket *socketParam, int argc, char *argv[], Glib::RefPtr<Gtk::Application> app) {
+    socket = socketParam;
+    box = new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0);
+    unirse = new Gtk::Button("Unirse");
+    crear = new Gtk::Button("Crear");
+    salir = new Gtk::Button("Salir");
+    initial(app, argc, argv);
+}
+
+tSocket *MainWindow::getSocket() {
+    return socket;
+}
+
+Gtk::Box * MainWindow::getBox() {
+    return box;
+}
+
+void MainWindow::cleanBox(){
+    delete box;
+    delete unirse;
+    delete crear;
+    delete salir;
+    box = new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0);
+    unirse = new Gtk::Button("Unirse");
+    crear = new Gtk::Button("Crear");
+    salir = new Gtk::Button("Salir");
+}
+
+MainWindow::~MainWindow() {
+    delete box;
+    delete unirse;
+    delete crear;
+    delete salir;
 }

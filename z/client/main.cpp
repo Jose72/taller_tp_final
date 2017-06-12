@@ -25,6 +25,6 @@ int main(int argc, char *argv[]){
     int port_number = atoi(argv[2]);
     socket.connect(argv[1],port_number);
     auto app = Gtk::Application::create();
-    MainWindow mainWindow(socket, argc, argv, app);
+    MainWindow mainWindow(&socket, argc, argv, app);
     return app->run(mainWindow);
 }
