@@ -125,7 +125,7 @@ int test_info_players(){
 			}
 		}
 		
-		if (DEFEAT == ip.checkVictoryConditions(1)){
+		if (DEFEAT == ip.updateVictoryConditions(1)){
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
 				if (u->getOwner() == 1){
@@ -134,7 +134,7 @@ int test_info_players(){
 			}
 		}
 		
-		if (DEFEAT == ip.checkVictoryConditions(2)){
+		if (DEFEAT == ip.updateVictoryConditions(2)){
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
 				if (u->getOwner() == 2){

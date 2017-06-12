@@ -42,10 +42,10 @@ bool juego::isCreator(int c){
 	return false;
 }
 
-void juego::checkVictory(){
-	//para cada cliente chequeo condiciones de vict
+int juego::checkVictory(){
+	//para cada cliente
 	for (auto it = cli_ids.begin(); it != cli_ids.end(); ++it){
-		if (DEFEAT == p_info.checkVictoryConditions(*it)){
+		if (DEFEAT == p_info.updateVictoryConditions(*it)){
 			//si fue derrotado, busco sus unidades y las seteo en DEFEATED
 			for (auto it2 = units.begin(); it2 != units.end(); ++it2){
 				unit *u = (it2->second);
@@ -55,6 +55,12 @@ void juego::checkVictory(){
 			}
 		}
 	}
+	//me fijo si hay ganador
+	int winner = p_info.checkForWinner();
+	if (winner != NO_WINNER){
+		//hay que enviarles a todos que termino la artida
+	}
+	return winner;
 }
 
 void juego::stop(){
@@ -201,9 +207,9 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			if (it2->first != e.getX()) return; //no encontro a la unidad
 			
 			//solo robots o vehiculos
-			//if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
-			(it->second)->attack(it2->second);
-			//}
+			if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
+				(it->second)->attack(it2->second);
+				}
 			}
 			return;
 		
@@ -237,22 +243,20 @@ void juego::run(){
 	//mapa codes de las casillas
 	
 	actualizeUnit actualizer;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoPlayers p_info(4, DEATHMATCH, 0);//HARDCODEO
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
 	while(s > 0){
-			//std::cout << "loop juego" << std::endl;
-			//lockeo cola de evntos
-
-
             int c = event_list.size();
 			int i = 0;
             while (!event_list.empty() && i < c) {
+				//lockeo cola de evntos
                 event_m.lock();
                 Event e = event_list.front();
                 event_list.pop();
                 event_m.unlock();
+				//deslockeo
                 eventHandle(e, units);
                 i++;
 
@@ -260,23 +264,14 @@ void juego::run(){
 
             /*
 			if (!event_list.empty()){
-
 				Event e = event_list.front();
 				event_list.pop();
-				
-
-				
 				eventHandle(e, units);
-
 			}
             */
-			//deslockeo
-
-			
 			
 			//actualizo las undiades (pendiente: crear una func aparte)
-			std::set<int> dead_units;
-			std::set<int> actualized_units;
+			
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
 				actualizer(it->first, *u, units, mapa, 100, id_unit_counter, p_info);
@@ -285,25 +280,22 @@ void juego::run(){
 			usleep(100000);
 			
 			//envio los tech levels
-			//p_info tiene la info de todos los palyes y un puntero a su protocolo para enviar
+			//p_info tiene la info de todos los players y un puntero a su protocolo para enviar
 			p_info.sendUpdateTechLvl();
-			
+			//envio actualizacion de las unidades
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = it->sendActualization(units);
             }
-			
 			//limpio los fiambres
-            //std::cout << "units clean" << std::endl;
 			unit_cleaner();
+			
 	}
 	
-	
+	//limpio unidades al final del juego
 	std::cout << "delete units" << std::endl;
 	for (auto it = units.begin(); it != units.end(); ++it){
 		delete it->second;
 	}
-	
-
 	std::cout << "juego out" << std::endl;	
 	
 	

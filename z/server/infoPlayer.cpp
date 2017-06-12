@@ -9,6 +9,7 @@ infoPlayers::infoPlayers(int max_p, int game_type, int teams){
 	teams_count = teams;
 }	
 		
+//adhiere nuevo jugador, con su protocolo
 void infoPlayers::addNewPlayer(int id_p, serverProtocol *prot){
 	if (players_info.size() < max_players){
 		infoPlayer i(id_p, prot);
@@ -16,6 +17,8 @@ void infoPlayers::addNewPlayer(int id_p, serverProtocol *prot){
 	}
 }
 
+
+//no usar!!
 void infoPlayers::addNewPlayer(int id_p){
 	if (players_info.size() < max_players){
 		infoPlayer i(id_p);
@@ -23,6 +26,8 @@ void infoPlayers::addNewPlayer(int id_p){
 	}
 }
 
+
+//actualiza los tech level correspondientes ante una captura de bandera
 void infoPlayers::updateTechLevels(int id_old, int id_new){
 	std::map<int,infoPlayer>::iterator it;
 	std::map<int,infoPlayer>::iterator it2;
@@ -38,7 +43,8 @@ void infoPlayers::updateTechLevels(int id_old, int id_new){
 		}
 }
 
-
+//inciiaiza a un jugador
+//guarda el puntero al fuerte y la cant de unidades iniciales
 void infoPlayers::initializePlayer(int id_p, unit *fort, int units_count){
 	std::map<int,infoPlayer>::iterator it;
 	it = players_info.find(id_p);
@@ -46,23 +52,47 @@ void infoPlayers::initializePlayer(int id_p, unit *fort, int units_count){
 		(it->second).initialize(fort, units_count);
 }
 
-int infoPlayers::checkVictoryConditions(int id_p){
-	
+
+//devuelde DEFEAT si el jugador fue derrotado en este turno
+//OK si sigue vivo
+//-1 si ya estaba derrotado
+int infoPlayers::updateVictoryConditions(int id_p){
+	//busco el info del player
 	std::map<int,infoPlayer>::iterator it;
 	it = players_info.find(id_p);
-	int i = (it->second).checkVictoryConditions();
+	//si no fue derrotado, hago el update
+	if ((it->second).isDefeated()) return -1;
+	int i = (it->second).updateVictoryConditions();
 	if (i == DEFEAT){
-			std::cout << "jugador: " << (it->second).getPlayerId() << "derrotado------" << std::endl;
+			std::cout << "jugador: " << (it->second).getPlayerId()
+			<< "derrotado------" << std::endl;
 	}
+	//devuelvo el resultado
 	return i;
-	/*
-	for (auto it = players_info.begin(); it != players_info.end(); ++it){
-		int i = (it->second).checkVictoryConditions();
-		if (i == DEFEAT){
-			std::cout << "jugador: " << (it->second).getPlayerId() << "derrotado------" << std::endl;
+}
+
+
+//retorna el id del winner si lo hay, sino retorna 0
+int infoPlayers::checkForWinner(){
+	//si es un deathmath
+	if (game_type == DEATHMATCH){
+		int defeated_count = 0;
+		int winner = NO_WINNER;
+		//me fijo que en los jugadores
+		for (auto it = players_info.begin(); it != players_info.end(); ++it){
+			if ((it->second).isDefeated()){
+				defeated_count++;
+			} else {
+				winner = (it->second).getPlayerId();
+			}
 		}
+		//si solo quedo uno no derrotado es el ganador
+		if (defeated_count == (int)max_players - 1){
+			return winner;
+		} 
+		return NO_WINNER;
 	}
-	*/
+	return NO_WINNER;
 }
 
 int infoPlayers::getPlayerTechLevel(int id_p){
@@ -83,10 +113,22 @@ void infoPlayers::decrementUnitsCount(int id_p){
 	(it->second).decrementUnitsCount();
 }
 
+
+//envio a los jugadores su tech level actual
 void infoPlayers::sendUpdateTechLvl(){
 	for (auto it = players_info.begin(); it != players_info.end(); ++it){
 		(it->second).sendUpdateTechLvl();
 	}
+}
+
+//si un jugador llego a su limite de poblacion
+bool infoPlayers::maxPopulationReached(int id_p){
+	std::map<int,infoPlayer>::iterator it;
+	it = players_info.find(id_p);
+	if (id_p == it->first){
+		return (it->second).maxUnitsReached();
+	} 
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -139,7 +181,7 @@ void infoPlayer::initialize(unit *fort,int units_count){
 	this->units_count = units_count;
 }
 
-int infoPlayer::checkVictoryConditions(){
+int infoPlayer::updateVictoryConditions(){
 	if ((units_count == 0 || !this->fortAlive())) {
 		state = DEFEAT;
 		return DEFEAT;
@@ -149,4 +191,8 @@ int infoPlayer::checkVictoryConditions(){
 
 void infoPlayer::sendUpdateTechLvl(){
 	prot->sendUpdateTechLvl(current_tech_lvl);
+}
+
+bool infoPlayer::isDefeated(){
+	return (state == DEFEAT);
 }

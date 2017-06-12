@@ -30,23 +30,23 @@ class juego: public tThread{
 		std::queue<Event> event_list; //cola de eventos
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
-		std::vector<serverProtocol> protocols;
-		infoPlayers p_info;
+		std::vector<serverProtocol> protocols;//vector de protocolos de clientes
+		infoPlayers p_info; //info global de jugadores/equipos
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
 		std::mutex event_m; //proteger eventos
 		std::mutex game_m;
 		bool running;
 		
 		void eventHandle(Event &e, std::map<int, unit*> &units);
-		void checkVictory();
+		int checkVictory();
 		void unit_cleaner();
 		void unitGameCreate();
 	
 	public:
-		juego(int creator, int cant_players, int game_t, int cant_teams);
+		juego(int creator, int cant_players, int game_type, int cant_teams);
 		void run() override;
 		void stop();
-		void take_event(Event &e); //para apsarle los eventos desde los clientManager
+		void take_event(Event &e); //para pasarle los eventos desde los clientManager
 		void sendInit();
 		bool readyToStart();
 		int clientJoin(int cli_id, tSocket *cli_s);
