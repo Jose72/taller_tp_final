@@ -177,7 +177,7 @@ void juego::sendInit(){
 	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
 	p_info.initializePlayer(1, u3, 1);
-	p_info.initializePlayer(2,nullptr, 2);
+	p_info.initializePlayer(2, nullptr, 2);
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){

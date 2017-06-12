@@ -36,7 +36,7 @@ void gameList::cleanGames(){
 //socket del cliente
 //puntero al juego (es el del clientManager para guardarselo)
 //id del creador para identificar el juego correspondiente
-int gameList::joinGame(int my_id, tSocket *s, juego* j, int creator){
+int gameList::joinGame(int my_id, tSocket *s, juego **j, int creator){
 	tLock l(m);
 	for (auto it = juegos.begin(); it != juegos.end(); ++it){
 		//si es el juego que pedi
@@ -44,7 +44,9 @@ int gameList::joinGame(int my_id, tSocket *s, juego* j, int creator){
 			//si me pude unir
 			if ((*it)->clientJoin(my_id, s) == 0){
 				//el amnager se guarda el puntero al juego
-				j = (*it);
+				*j = (*it);
+				std::cout << "puntero juego" << j << std::endl;
+				return 0;
 			}
 		}
 	}
@@ -72,5 +74,6 @@ void gameList::descriptionGames(std::vector<int> &des, int &c){
 		des.push_back(b);
 		des.push_back(c);
 		des.push_back(d);
+		des.push_back(e);
 	}
 }

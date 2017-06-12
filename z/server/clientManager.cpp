@@ -128,40 +128,15 @@ int tClientManager::gameSelection(){
 			i = htonl(i);
 			cli_skt.send((char*)&i, 4);
 		}
-		/*
-		for (auto it = des.begin(); it != des.end(); ++it){
-			int id_creat = (*it);
-			it = des.erase(it);
-			int max_p = (*it);
-			it = des.erase(it);
-			int cant_p = (*it);
-			it = des.erase(it);
-			int game_t = (*it);
-			it = des.erase(it);
-			int teams = (*it);
-			it = des.erase(it);
-			std::cout << "llego: " << std::endl;
-			id_creat = htonl(id_creat);
-			cli_skt.send((char*)&id_creat, 4);
-			max_p = htonl(max_p);
-			cli_skt.send((char*)&max_p, 4);
-			cant_p = htonl(cant_p);
-			cli_skt.send((char*)&cant_p, 4);
-			game_t = htonl(game_t);
-			cli_skt.send((char*)&game_t, 4);
-			teams = htonl(teams);
-			cli_skt.send((char*)&teams, 4);
-		}
-		*/
-		
 		
 		//recibir codigo
+		std::cout << "llego: "  << std::endl;
 		int g_to_join;
 		cli_skt.receive((char*)&g_to_join, 4);
 		g_to_join = ntohl(g_to_join);
-		
+		std::cout << "g_to join: "  << g_to_join << std::endl;
 
-		if (0 == juegos.joinGame(id_client, &cli_skt, j, g_to_join)){ 
+		if (0 == juegos.joinGame(id_client, &cli_skt, &j, g_to_join)){ 
 			
 			//envio confirmacion de que me uni
 			int confirm = htonl(0);
@@ -174,6 +149,7 @@ int tClientManager::gameSelection(){
 			
 			//si hubo error salgo
 			if (end_game) return -1;
+			return 0;
 			
 		} else {
 			//envio que salio mal
@@ -267,6 +243,8 @@ void tClientManager::run(){
 	*/
 	//////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
+	
+	std::cout << "empezo client: " << id_client << std::endl;	
 	
 	int s = 1;
 	while (s > 0) {
