@@ -21,6 +21,7 @@ public:
     void createIsNotExist(int cod_unit, int unit_type,int unit_owner,int posX, int posY, Factory_Units &factory);
     void cleanDeadUnits();
     Unit* operator [](int i);
+    void endGame(int winner);
     int size();
 
 

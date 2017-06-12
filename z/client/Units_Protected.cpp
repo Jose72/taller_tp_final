@@ -79,7 +79,7 @@ void Units_Protected::cleanDeadUnits() {
     tLock(this->mut);
     std::map<int, Unit*>::iterator it;
     for (it = units_map.begin();it != units_map.end() ; ++it) {
-        if (it->second->get_cameraPosX() == DEAD2){
+        if (it->second->get_state() == DEAD2){
             units_map.erase(it->first);
         }
     }
@@ -167,4 +167,17 @@ void Units_Protected::createUnit(int cod_unit, int unit_owner, int posX, int pos
             units_map[cod_unit] = factory.createUnit(yellow,cod_unit,posX,posY,unit_owner);
             break;
     }
+}
+
+void Units_Protected::endGame(int winner) {
+    tLock(this->mut);
+    std::map<int, Unit*>::iterator it;
+    for (it = units_map.begin();it != units_map.end() ; ++it) {
+        if (it->second->get_owner() == winner){
+            it->second->set_state(CELEBRATE);
+        }else{
+            it->second->set_state(DRINKING);
+        }
+    }
+
 }

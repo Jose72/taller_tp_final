@@ -9,6 +9,7 @@
 #define CODE_STAND 6
 #define CODE_CHECKING_CAPTURE 8
 #define CODE_CHANGE_TECH_LEVEL 35
+#define CODE_END_GAME 40
 Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech):
         socket(s), units(u), game_map(g),factory(f), techLevel(tech) {}
 
@@ -127,43 +128,13 @@ void Protocol::process_message() {
     socket.receive((char*)&posY,4);
     int posY_SC = ntohl(posY);
 
-    units.createIsNotExist(cod_unit_SC,unit_type_SC,cod_unit_owner_SC,posX_SC,posY_SC,factory);
-
-    if (cod_act_SC == CODE_CHANGE_TECH_LEVEL){
-        //std::cout<< "code tech lvl act " << cod_act_SC << "\n";
-        //std::cout<< "tech_lv l" << cod_unit_SC << "\n";
-        techLevel.setTechLevel(cod_unit_SC);
-        return;
-    }
-
-    if(units[cod_unit_SC]->get_state() != DEAD1) {
-        switch (cod_act_SC) {
-            case CODE_SET_POS:
-                units[cod_unit_SC]->set_state(MOVING1);
-                units[cod_unit_SC]->set_health(message4_SC);
-                units[cod_unit_SC]->set_pos(posX_SC, posY_SC);
-                break;
-            case CODE_SET_ATTACK:
-                units[cod_unit_SC]->set_attack(posX_SC,posY_SC);
-                units[cod_unit_SC]->set_state(ATTACKING1);
-                units[cod_unit_SC]->set_health(message4_SC);
-                break;
-            case CODE_DIE:
-                units[cod_unit_SC]->set_state(DEAD1);
-                break;
-            case CODE_STAND:
-                units[cod_unit_SC]->set_state(DRINKING);
-                break;
-            case CODE_CHECKING_CAPTURE:
-                units[cod_unit_SC]->set_owner(cod_unit_owner_SC);
-                break;
-                    /*
-            case CODE_CHANGE_TECH_LEVEL:
-                techLevel.setTechLevel(cod_unit_SC);
-                break;
-                     */
-        }
-    }
+    translate_message(cod_act_SC,
+                      cod_unit_SC,
+                      unit_type_SC,
+                      cod_unit_owner_SC,
+                      message4_SC,
+                      posX_SC,
+                      posY_SC);
 
 }
 
@@ -177,3 +148,38 @@ void Protocol::create_unit(int idCreator, int idCreation) {
     socket.send((char*) &idCreation_to_send,sizeof(int));
     socket.send((char*) &extra_to_send,sizeof(int));
 }
+
+void Protocol::translate_message(int update, int unitCode, int unitType, int unitOwner, int health, int posX,
+                                 int posY) {
+    if (update == CODE_END_GAME) {
+        units.endGame(unitCode);
+    } else if (update == CODE_CHANGE_TECH_LEVEL) {
+        techLevel.setTechLevel(unitCode);
+    } else {
+        units.createIsNotExist(unitCode, unitType, unitOwner, posX, posY, factory);
+        if (units[unitCode]->get_state() != DEAD1) {
+            switch (update) {
+                case CODE_SET_POS:
+                    units[unitCode]->set_state(MOVING1);
+                    units[unitCode]->set_health(health);
+                    units[unitCode]->set_pos(posX, posY);
+                    break;
+                case CODE_SET_ATTACK:
+                    units[unitCode]->set_attack(posX, posY);
+                    units[unitCode]->set_state(ATTACKING1);
+                    units[unitCode]->set_health(health);
+                    break;
+                case CODE_DIE:
+                    units[unitCode]->set_state(DEAD1);
+                    break;
+                case CODE_STAND:
+                    units[unitCode]->set_state(DRINKING);
+                    break;
+                case CODE_CHECKING_CAPTURE:
+                    units[unitCode]->set_owner(unitOwner);
+                    break;
+            }
+        }
+    }
+}
+
