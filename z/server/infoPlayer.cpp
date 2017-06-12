@@ -9,6 +9,13 @@ infoPlayers::infoPlayers(int max_p, int game_type, int teams){
 	teams_count = teams;
 }	
 		
+void infoPlayers::addNewPlayer(int id_p, serverProtocol *prot){
+	if (players_info.size() < max_players){
+		infoPlayer i(id_p, prot);
+		players_info.insert(std::pair<int,infoPlayer>(id_p,i));
+	}
+}
+
 void infoPlayers::addNewPlayer(int id_p){
 	if (players_info.size() < max_players){
 		infoPlayer i(id_p);
@@ -76,12 +83,18 @@ void infoPlayers::decrementUnitsCount(int id_p){
 	(it->second).decrementUnitsCount();
 }
 
+void infoPlayers::sendUpdateTechLvl(){
+	for (auto it = players_info.begin(); it != players_info.end(); ++it){
+		(it->second).sendUpdateTechLvl();
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 
-		
-infoPlayer::infoPlayer(int id, std::vector<int> allies): player_id(id), 
-allies(allies), current_tech_lvl(1), state(OK){}
+
+
+infoPlayer::infoPlayer(int id, serverProtocol *prot): player_id(id), prot(prot), current_tech_lvl(1){}
 
 infoPlayer::infoPlayer(int id): player_id(id), current_tech_lvl(1){}
 
@@ -101,9 +114,7 @@ void infoPlayer::decrementTechLvl(){
 	current_tech_lvl--;
 }
 
-void infoPlayer::getAllies(std::vector<int> &a){
-	a = allies;
-}
+
 
 bool infoPlayer::maxUnitsReached(){
 	if (units_count == MAX_UNITS) return true;
@@ -134,4 +145,8 @@ int infoPlayer::checkVictoryConditions(){
 		return DEFEAT;
 	}
 	return OK;
+}
+
+void infoPlayer::sendUpdateTechLvl(){
+	prot->sendUpdateTechLvl(current_tech_lvl);
 }

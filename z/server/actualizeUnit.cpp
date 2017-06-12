@@ -38,16 +38,16 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 			move_h.moveActualize(u, mapa, 0.5);
 			return 0;
 		case ATTACKING:
-			//std::cout << "unit: " << unit_game_id << " attac" << std::endl;
+			std::cout << "unit: " << unit_game_id << " attac" << std::endl;
 			attack_h.attackActualize(u, units, unit_id_count, time);
 			return 0;
 		case CREATING:
 			//pendiente: chequear la cant de unidades antes de crear
-			//std::cout << "unit: " << unit_game_id << " creat" << std::endl;
+			std::cout << "unit: " << unit_game_id << " creat" << std::endl;
 			create_h.createActualize(u, units, unit_id_count, time);
 			return 0;
 		case STANDING:
-			//std::cout << "unit: " << unit_game_id << " stand" << std::endl;
+			std::cout << "unit: " << unit_game_id << " stand" << std::endl;
 			autoAttackActualize(u, units, mapa, time);
 			return 0;
 		case CHECKING_CAPTURE:

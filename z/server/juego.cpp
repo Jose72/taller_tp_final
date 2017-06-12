@@ -105,8 +105,6 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 		// protocolos
 		protocols.push_back(serverProtocol(*cli_s));
 		
-		//players_info.push_back(infoPlayer(cli_id));
-		
 		cli_ids.push_back(cli_id);
 		p_info.addNewPlayer(cli_id);
 		return 0;
@@ -185,9 +183,9 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			//solo robots o vehiculos
 			std::cout << "move order" << std::endl;
             std::cout << "move u: " << it->first << " x: " << e.getX() << " y: " << e.getY() << std::endl;
-			//if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
-			(it->second)->move(e.getX(),e.getY());
-			//}
+			if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
+				(it->second)->move(e.getX(),e.getY());
+			}
 			
 			}
 			return;
@@ -285,7 +283,11 @@ void juego::run(){
 			}
 			
 			usleep(100000);
-			//std::cout << "actualize" << std::endl;
+			
+			//envio los tech levels
+			//p_info tiene la info de todos los palyes y un puntero a su protocolo para enviar
+			p_info.sendUpdateTechLvl();
+			
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = it->sendActualization(units);
             }

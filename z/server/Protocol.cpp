@@ -77,6 +77,27 @@ int serverProtocol::receive_event(Event &e) {
 	return s;
 }
 
+int serverProtocol::sendUpdateTechLvl(int tech_lvl){
+	int s = 1;
+	int code = 35;
+	//codigo de actualizacion
+	int state_code = htonl(code);
+	s = socket.send((char*) &state_code,sizeof(int));
+	//tech lvl
+	int tech_l = htonl(code);
+	s = socket.send((char*) &tech_l,sizeof(int));
+	//basura
+	int trash = htonl(0);
+	socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash,sizeof(int));
+	s = socket.send((char*) &trash, sizeof(int));
+    //std::cout << "finish act - s: " << s << std::endl;
+	return s;
+}
+
+
 int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 	//int units_size = htonl(map_units.size());
     //socket.send((char*) &units_size,4);
@@ -88,11 +109,9 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 		//codigo unico de unidad en el juego
         int game_unit_id = htonl(it->first);
         s = socket.send((char*) &game_unit_id,sizeof(int));
-		
 		//codigo de unidad
 		int unit_id = htonl(it->second->getUnitId());
         socket.send((char*) &unit_id,sizeof(int));
-		
 		//dueño de la unidad
         int owner_id = htonl(it->second->getOwner());
 		s = socket.send((char*) &owner_id,sizeof(int));

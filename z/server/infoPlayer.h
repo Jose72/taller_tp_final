@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include "unit.h"
+#include "Protocol.h"
 
 #define MAX_UNITS 50
 #define OK 0
@@ -17,23 +18,24 @@ class infoPlayer {
 		int player_id;
 		int units_count;
 		unit *fort;
-		std::vector<int> allies;
+		serverProtocol *prot;
+		
 		int current_tech_lvl;
 		int state;
 	public:
-		infoPlayer(int id, std::vector<int> allies);
-		infoPlayer(int id);
+		infoPlayer(int id, serverProtocol *prot);
+		infoPlayer(int id); //no usar
 		int getPlayerId();
 		int getCurrentTechLvl();
 		void incrementTechLvl();
 		void decrementTechLvl();
-		void getAllies(std::vector<int> &a);
 		bool maxUnitsReached();
 		void incrementUnitsCount();
 		void decrementUnitsCount();
 		bool fortAlive();
 		void initialize(unit *fort,int units_count);
 		int checkVictoryConditions();
+		void sendUpdateTechLvl();
 };
 
 class infoPlayers{
@@ -50,12 +52,14 @@ class infoPlayers{
 	public:
 		infoPlayers(int max_p, int game_type, int teams);
 		void initializePlayer(int id_p, unit *fort, int units_count);
-		void addNewPlayer(int id);
+		void addNewPlayer(int id); //no usar
+		void addNewPlayer(int id, serverProtocol *prot);
 		void updateTechLevels(int id_old, int id_new);
 		int checkVictoryConditions(int id_p);
 		int getPlayerTechLevel(int id_p);
 		void incrementUnitsCount(int id_p);
 		void decrementUnitsCount(int id_p);
+		void sendUpdateTechLvl();
 };
 
 

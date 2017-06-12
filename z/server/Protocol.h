@@ -25,6 +25,7 @@ public:
     void confirm_client(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
 	int sendActualization(std::map<int,unit*> &map_units);
     int receive_event(Event &e);
+	int sendUpdateTechLvl(int tech_lvl);
 
 
 };
