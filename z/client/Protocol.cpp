@@ -8,6 +8,7 @@
 #define CODE_DIE 5
 #define CODE_STAND 6
 #define CODE_CHECKING_CAPTURE 8
+#define CODE_CHANGE_TECH_LEVEL 35
 Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech):
         socket(s), units(u), game_map(g),factory(f), techLevel(tech) {}
 
@@ -149,6 +150,10 @@ void Protocol::process_message() {
                 break;
             case CODE_CHECKING_CAPTURE:
                 units[cod_unit_SC]->set_owner(cod_unit_owner_SC);
+                break;
+            case CODE_CHANGE_TECH_LEVEL:
+                techLevel.setTechLevel(cod_unit_SC);
+                break;
         }
     }
 
