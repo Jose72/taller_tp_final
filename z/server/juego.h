@@ -25,6 +25,7 @@ class juego: public tThread{
 		int game_type;
 		gameMap mapa; //mapa
 		unitBuilder builder;
+		int team_count;
 		int id_unit_counter;
 		std::queue<Event> event_list; //cola de eventos
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una

@@ -15,11 +15,12 @@
 //cant jugadores
 //tipo de juego(deathmatch o equipos)
 //cant equipos
-juego::juego(int creator, int cant_players, int game_t, int cant_teams):
-id_creator(creator), max_players(cant_players), teams(cant_teams),
-game_type(game_t), p_info(infoPlayers(cant_players,
+juego::juego(int creator, int cant_players, int game_t, int cant_teams): 
+id_creator(creator), max_players(cant_players), teams(cant_teams), 
+game_type(game_t), p_info(infoPlayers(cant_players, 
 game_t, cant_teams)), running(false) {
 	id_unit_counter = 1; //se empieza contando desde 1
+	team_count = 1;
 }
 
 bool juego::isRunning(){
@@ -33,7 +34,7 @@ void juego::getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int
 	cant_p = cli_skts.size();
 	game_t = game_type;
 	cant_t = teams;
-
+	
 }
 
 bool juego::isCreator(int c){
@@ -153,24 +154,12 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u2));
 	id_unit_counter++;
 
-	unit *u3 = builder.build(GRUNT, 1,40, 40);
+	unit *u3 = builder.build(FORT, 1, 40, 40);
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u3));
 	id_unit_counter++;
 
-	/**unit *u4 = builder.build(GRUNT, 2,280, 280);
+	unit *u4 = builder.build(GRUNT, 2,280, 280);
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u4));
-	id_unit_counter++;*/
-
-	unit *u5 = builder.build(ROBOT_FACTORY, 1,0, 200);
-	units.insert(std::pair<int,unit*>((id_unit_counter+1),u5));
-	id_unit_counter++;
-
-	unit *u6 = builder.build(VEHICLE_FACTORY, 1,100, 200);
-	units.insert(std::pair<int,unit*>((id_unit_counter+1),u6));
-	id_unit_counter++;
-
-	unit *u7 = builder.build(FORT, 1,200, 200);
-	units.insert(std::pair<int,unit*>((id_unit_counter+1),u7));
 	id_unit_counter++;
 
 	//protocol
@@ -179,10 +168,7 @@ void juego::sendInit(){
 		it->send_units_game(units);
 	}
 
-	
-	
-	
-	
+
 }
 
 
@@ -273,6 +259,7 @@ void juego::run(){
                 i++;
 
             }
+
             /*
 			if (!event_list.empty()){
 
@@ -298,7 +285,7 @@ void juego::run(){
 			}
 			
 			usleep(100000);
-			
+			//std::cout << "actualize" << std::endl;
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = it->sendActualization(units);
             }

@@ -133,7 +133,6 @@ void unit::drive(unit *vehicle){
 }
 
 //chequear tiempo correcto
-//chequear techlevl correcto
 void unit::create(int u_id, int time){
 	if (class_id != BUILDING) return;
 	unit_code_to_create = u_id;
@@ -427,6 +426,7 @@ void unit::updateCreationTimer(int time){
 	} else {
 		countdown -=(time / tech_level) / (sqrt(1-this->getRelativeDamage()));
 	}
+	std::cout << countdown << std::endl;
 }
 
 void unit::setTechLvl(int tl){
