@@ -29,7 +29,7 @@ public:
                         int gameHeight,
                         int width);
 
-    void show(SelectionHandler &selectionHandler);
+    void show(SelectionHandler selectionHandler, TechLevelProtected &techProtected);
 
     virtual ~PlayerInterface();
 

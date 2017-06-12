@@ -38,7 +38,7 @@ void EventHandler::run() {
         posCameraX = camera2.getPosCameraX();
         posCameraY = camera2.getPosCameraY();
         camera2.draw(units,gameMap);
-        playerInterface.show(sHandler);
+        playerInterface.show(sHandler, techLevel);
         SDL_Flip(screen);
 
         //MOSTRAR

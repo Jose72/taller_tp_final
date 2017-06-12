@@ -110,7 +110,7 @@ void PlayerInterface::loadButtons(FlagsUnitType type, int unitCode, int tech){
 
 }
 
-void PlayerInterface::show(SelectionHandler& selectionHandler) {
+void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected &techProtected) {
     bool locked = SDL_MUSTLOCK(screen);
     if(locked)
         SDL_LockSurface(screen);
@@ -118,8 +118,10 @@ void PlayerInterface::show(SelectionHandler& selectionHandler) {
     drawer.drawBackground(gameWidth,gameHeight,width,background);
     drawer.drawLine(screen,gameWidth);
     drawer.drawText(screen,"Z",getCol(2,1,0),0);
+    drawer.drawText(screen,"Tech Lv:",getCol(3,1,0),20);
+    drawer.drawText(screen,std::to_string(techProtected.getTechLevel()),getCol(3,2,0),20);
     if(selectionHandler.unit_select()){
-        loadButtons(selectionHandler.getUnit()->get_type(),selectionHandler.getUnit()->get_unit_code(),100);//reemplazar 100 por el tech de la unidad
+        loadButtons(selectionHandler.getUnit()->get_type(),selectionHandler.getUnit()->get_unit_code(),techProtected.getTechLevel());//reemplazar 100 por el tech de la unidad
         drawer.drawImage(screen,getUnitPortrait(selectionHandler.getUnit()->get_type()).c_str(), getCol(2,1,32), 50);
         drawer.drawText(screen,"Pos X: ",getCol(3,1,0),150);
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posx()),getCol(3,2,0),150);
