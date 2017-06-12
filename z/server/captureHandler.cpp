@@ -55,12 +55,12 @@ void captureHandler::captureActualize(int old_owner, int new_owner, std::map<int
 		if (u->getClassId() == BUILDING){
 			//si es de viejo owner decremento tech lvlv
 			if (u->getOwner() == old_owner && old_owner != 0){
-				std::cout << "old tech: "<< tech_lvl_old << std::endl;
+				//std::cout << "old tech: "<< tech_lvl_old << std::endl;
 				u->setTechLvl(tech_lvl_old);
 			}
 			//si es de nuevo owner incremento tech lvlv
 			if (u->getOwner() == new_owner){
-				std::cout << "new tech: "<< new_owner << std::endl;
+				//std::cout << "new tech: "<< tech_lvl_new << std::endl;
 				u->setTechLvl(tech_lvl_new);
 			}
 		}

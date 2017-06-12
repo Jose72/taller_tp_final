@@ -157,7 +157,7 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u1));
 	id_unit_counter++;
 
-	unit *u2 = builder.build(GRUNT, 2, 200, 15);
+	unit *u2 = builder.build(FLAG, 200, 15);
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u2));
 	id_unit_counter++;
 

@@ -130,8 +130,8 @@ void Protocol::process_message() {
     units.createIsNotExist(cod_unit_SC,unit_type_SC,cod_unit_owner_SC,posX_SC,posY_SC,factory);
 
     if (cod_act_SC == CODE_CHANGE_TECH_LEVEL){
-        std::cout<< "code tech lvl act" << cod_act_SC << "\n";
-        std::cout<< "tech_lvl" << cod_unit_SC << "\n";
+        //std::cout<< "code tech lvl act " << cod_act_SC << "\n";
+        //std::cout<< "tech_lv l" << cod_unit_SC << "\n";
         techLevel.setTechLevel(cod_unit_SC);
         return;
     }

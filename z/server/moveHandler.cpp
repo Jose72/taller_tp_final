@@ -199,7 +199,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 				u.setPos(x_closer, y_closer);
 			}
 		}
-		u.printPos();
+		//u.printPos();
 		
 		
 		////status check
