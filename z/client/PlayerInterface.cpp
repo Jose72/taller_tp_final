@@ -10,7 +10,9 @@
 #include "ClickableButtonLaser.h"
 #include "ClickableButtonHeavyTank.h"
 #include "ClickableButtonJeep.h"
+#include "ClickableButtonCreateUnit.h"
 
+#define PADDING 40
 
 PlayerInterface::PlayerInterface(SDL_Surface* screen,
                                  int gameWidth,
@@ -61,28 +63,58 @@ std::string getUnitPortrait(FlagsUnitType type){
 }
 
 int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
-    if(tech > 0){
-        buttons.push_back(new ClickableButtonGrunt(getCol(3,1,100),pos,50,30,"Grunt",unitCode));
+    //pos += PADDING para los saltos de linea
+    if(tech >= 1){
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Grunt",unitCode,GRUNT));
     }
 
-    if(tech > 3){
-        buttons.push_back(new ClickableButtonLaser(getCol(3,2,100),pos,50,30,"Laser",unitCode));
+    if(tech >= 2){
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Psycho",unitCode,PSYCHO));
+        pos += PADDING;
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Tough",unitCode,TOUGHT));
     }
 
-    pos += 50;
+    if(tech >= 3){
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Sniper",unitCode,SNIPER));
+    }
+
+    if(tech >= 4){
+        pos += PADDING;
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Pyro",unitCode,PYRO));
+    }
+
+    if(tech >= 5){
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Laser",unitCode,LASER));
+    }
+
+    pos += PADDING;
     return pos;
 }
 
 int PlayerInterface::loadVehiclesButtons(int pos,int unitCode, int tech){
-    if(tech > 0){
-        buttons.push_back(new ClickableButtonJeep(getCol(3,1,100),pos,50,30,"Jeep",unitCode));
+    if(tech >= 1){
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Jeep",unitCode,JEEP));
     }
 
-    if(tech > 3){
-        buttons.push_back(new ClickableButtonHeavyTank(getCol(3,2,100),pos,50,30,"Tank",unitCode));
+    if(tech >= 2){
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Light Tank",unitCode,LIGHT_TANK));
     }
 
-    pos += 50;
+    if(tech >= 3){
+        pos += PADDING;
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Medium Tank",unitCode,MEDIUM_TANK));
+    }
+
+    if(tech >= 4){
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Heavy Tank",unitCode,HEAVY_TANK));
+    }
+
+    if(tech >= 5){
+        pos += PADDING;
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"MML",unitCode,MML));
+    }
+
+    pos += PADDING;
     return pos;
 }
 
@@ -121,7 +153,7 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
     drawer.drawText(screen,"Tech Lv:",getCol(3,1,0),20);
     drawer.drawText(screen,std::to_string(techProtected.getTechLevel()),getCol(3,2,0),20);
     if(selectionHandler.unit_select()){
-        loadButtons(selectionHandler.getUnit()->get_type(),selectionHandler.getUnit()->get_unit_code(),techProtected.getTechLevel());//reemplazar 100 por el tech de la unidad
+        loadButtons(selectionHandler.getUnit()->get_type(),selectionHandler.getUnit()->get_unit_code(),techProtected.getTechLevel());
         drawer.drawImage(screen,getUnitPortrait(selectionHandler.getUnit()->get_type()).c_str(), getCol(2,1,32), 50);
         drawer.drawText(screen,"Pos X: ",getCol(3,1,0),150);
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posx()),getCol(3,2,0),150);
