@@ -8,6 +8,7 @@
 #define CODE_DIE 5
 #define CODE_STAND 6
 #define CODE_CHECKING_CAPTURE 8
+#define CODE_DESTROYED 10
 #define CODE_CHANGE_TECH_LEVEL 35
 #define CODE_END_GAME 40
 Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech):
@@ -173,6 +174,8 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                 case CODE_CHECKING_CAPTURE:
                     units[unitCode]->set_owner(unitOwner);
                     break;
+                case CODE_DESTROYED:
+                    units[unitCode]->set_state(DESTROYED1);
             }
         }
     }

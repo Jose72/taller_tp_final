@@ -36,6 +36,7 @@ enum State{
     DEAD1,
     DEAD2,
     COLORLESS,
+    DESTROYED1
 };
 
 class Unit {
