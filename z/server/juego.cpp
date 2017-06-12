@@ -58,6 +58,7 @@ int juego::checkVictory(){
 	//me fijo si hay ganador
 	int winner = p_info.checkForWinner();
 	if (winner != NO_WINNER){
+		std::cout << "winner: " << winner<< std::endl;
 		//hay que enviarles a todos que termino la artida
 	}
 	return winner;
@@ -79,11 +80,14 @@ void juego::unit_cleaner(){
 	deathHandler death_h;
 	for (auto it = units.begin(); it != units.end(); ){
 		unit *u = it->second;
+		bool edificio = (u->getClassId() != BUILDING);
 		if (u->isDead()) {
 			death_h.death(*u, units);//handler por si tiene q hacer algo
-			//std::cout << "unit " << it->first << " dead" << std::endl;
-			delete it->second; // libero mem
-			it = units.erase(it); // borro de la lista
+			//si no es un edificio lo elimino
+			if (edificio){
+				delete it->second; // libero mem
+				it = units.erase(it); // borro de la lista
+			}
 		} else {
 			++it;
 		}
@@ -109,10 +113,11 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 		cli_skts.push_back(cli_s);
 		
 		// protocolos
-		protocols.push_back(serverProtocol(*cli_s));
+		serverProtocol *p = new serverProtocol(*cli_s);
+		protocols.push_back(p);
 		
 		cli_ids.push_back(cli_id);
-		p_info.addNewPlayer(cli_id);
+		p_info.addNewPlayer(cli_id, p);
 		return 0;
 	}
 	return 1;
@@ -152,8 +157,6 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u1));
 	id_unit_counter++;
 
-
-
 	unit *u2 = builder.build(GRUNT, 2, 200, 15);
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u2));
 	id_unit_counter++;
@@ -165,11 +168,17 @@ void juego::sendInit(){
 	unit *u4 = builder.build(GRUNT ,2,280, 280);
 	units.insert(std::pair<int,unit*>((id_unit_counter+1),u4));
 	id_unit_counter++;
+	
+	
+	//hay que inicilizar la info de cada jugador
+	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
+	p_info.initializePlayer(1, u3, 1);
+	p_info.initializePlayer(2,nullptr, 2);
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
-		it->send_map((int*)&map_codes,sss);
-		it->send_units_game(units);
+		(*it)->send_map((int*)&map_codes,sss);
+		(*it)->send_units_game(units);
 	}
 
 
@@ -243,7 +252,6 @@ void juego::run(){
 	//mapa codes de las casillas
 	
 	actualizeUnit actualizer;
-	infoPlayers p_info(4, DEATHMATCH, 0);//HARDCODEO
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
@@ -284,10 +292,14 @@ void juego::run(){
 			p_info.sendUpdateTechLvl();
 			//envio actualizacion de las unidades
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
-                 s = it->sendActualization(units);
+                 s = (*it)->sendActualization(units);
             }
+			
 			//limpio los fiambres
 			unit_cleaner();
+			
+			//check si gano alguien, o si perdio
+			//checkVictory())
 			
 	}
 	
@@ -296,6 +308,11 @@ void juego::run(){
 	for (auto it = units.begin(); it != units.end(); ++it){
 		delete it->second;
 	}
+	
+	for (auto it = protocols.begin(); it != protocols.end(); ++it){
+		delete (*it);
+	}
+	
 	std::cout << "juego out" << std::endl;	
 	
 	

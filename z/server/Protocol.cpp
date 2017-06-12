@@ -84,7 +84,7 @@ int serverProtocol::sendUpdateTechLvl(int tech_lvl){
 	int state_code = htonl(code);
 	s = socket.send((char*) &state_code,sizeof(int));
 	//tech lvl
-	int tech_l = htonl(code);
+	int tech_l = htonl(tech_lvl);
 	s = socket.send((char*) &tech_l,sizeof(int));
 	//basura
 	int trash = htonl(0);
@@ -111,7 +111,7 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
         s = socket.send((char*) &game_unit_id,sizeof(int));
 		//codigo de unidad
 		int unit_id = htonl(it->second->getUnitId());
-        socket.send((char*) &unit_id,sizeof(int));
+        s = socket.send((char*) &unit_id,sizeof(int));
 		//dueño de la unidad
         int owner_id = htonl(it->second->getOwner());
 		s = socket.send((char*) &owner_id,sizeof(int));

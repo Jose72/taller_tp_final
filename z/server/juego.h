@@ -30,7 +30,7 @@ class juego: public tThread{
 		std::queue<Event> event_list; //cola de eventos
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
-		std::vector<serverProtocol> protocols;//vector de protocolos de clientes
+		std::vector<serverProtocol*> protocols;//vector de protocolos de clientes
 		infoPlayers p_info; //info global de jugadores/equipos
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
 		std::mutex event_m; //proteger eventos
