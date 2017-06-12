@@ -177,7 +177,7 @@ void juego::sendInit(){
 	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
 	p_info.initializePlayer(1, u3, 1);
-	p_info.initializePlayer(2, nullptr, 2);
+	p_info.initializePlayer(2, nullptr, 1);
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -216,11 +216,12 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			//moverse
 			std::map<int,unit*>::iterator it2;
 			it2 = units.find(e.getX());
-			
-			if (it2->first != e.getX()) return; //no encontro a la unidad
+			int class_target = it2->first;
+			if (class_target != e.getX()) return; //no encontro a la unidad
 			
 			//solo robots o vehiculos
-			if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
+			if (((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) && 
+			class_target != FLAG) {
 				(it->second)->attack(it2->second);
 				}
 			}
@@ -233,7 +234,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			int u_to_create = e.getX();
 			//si el tech level no le da salgo
 			if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
-			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*100);
+			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*10);
 			}
 			return;
 			
