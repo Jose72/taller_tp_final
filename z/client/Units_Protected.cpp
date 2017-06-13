@@ -86,16 +86,46 @@ void Units_Protected::cleanDeadUnits() {
 
 }
 
-
+enum units {
+    GRUNT = 0, PSYCHO = 1, TOUGHT = 2, PYRO = 3, SNIPER = 4, LAZER = 5,
+    JEEP = 6, MEDIUM_TANK = 7, LIGHT_TANK = 8, HEAVY_TANK = 9, MML = 10,
+    FORT = 11, ROBOT_FACTORY = 12, VEHICLE_FACTORY = 13,
+    FLAG = 14,
+    LLAMAS = 15, HCP = 16, LASER = 17, MISIL = 18, BALAS = 19};
 
 void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY, Factory_Units &factory) {
     tLock(this->mut);
     if(units_map.find(cod_unit) == units_map.end()){
         switch (unit_type){
+
+            case JEEP:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           JEEP_BLUE,JEEP_GREEN,JEEP_RED,JEEP_YELLOW);
+                break;
+
+            case MEDIUM_TANK:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           MEDIUM_TANK_BLUE,MEDIUM_TANK_GREEN,MEDIUM_TANK_RED,MEDIUM_TANK_YELLOW);
+                break;
+            case LIGHT_TANK:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           LIGHT_TANK_BLUE,LIGHT_TANK_GREEN,LIGHT_TANK_RED,LIGHT_TANK_YELLOW);
+                break;
+            case HEAVY_TANK:
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
+                           HEAVY_TANK_BLUE,HEAVY_TANK_GREEN,HEAVY_TANK_RED,HEAVY_TANK_YELLOW);
+                break;
+
+            case MML:
+                createUnit(__cpp_lib_result_of_sfinae,unit_owner,posX,posY,factory,
+                           MISILE_LAUNCHER_BLUE,MISILE_LAUNCHER_GREEN,MISILE_LAUNCHER_RED,MISILE_LAUNCHER_YELLOW);
+                break;
+
             case GRUNT:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_GRUNT,GREEN_GRUNT,RED_GRUNT,YELLOW_GRUNT);
                 break;
+
             case PSYCHO:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_PSYCHO,GREEN_PSYCHO,RED_PSYCHO,YELLOW_PSYCHO);
@@ -132,14 +162,22 @@ void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
             case LASER:
                 units_map[cod_unit] = factory.createUnit(LASER_BULLET,cod_unit,posX,posY,unit_owner);
                 break;
+
             case LLAMAS:
                 units_map[cod_unit] = factory.createUnit(PYRO_BULLET,cod_unit,posX,posY, unit_owner);
                 break;
+
             case MISIL:
                 units_map[cod_unit] = factory.createUnit(TOUGHT_BULLET,cod_unit,posX,posY, unit_owner);
+                break;
+
+            case HCP:
+                units_map[cod_unit] = factory.createUnit(HCP_BULLET,cod_unit,posX,posY,unit_owner);
+                break;
 
             case FLAG:
                 units_map[cod_unit] = factory.createUnit(COLORLESS_FLAG,cod_unit,posX,posY, unit_owner);
+                break;
         }
 
     }
