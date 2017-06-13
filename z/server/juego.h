@@ -36,6 +36,7 @@ class juego: public tThread{
 		std::mutex event_m; //proteger eventos
 		std::mutex game_m;
 		bool running;
+		bool started;
 		
 		void eventHandle(Event &e, std::map<int, unit*> &units);
 		int checkVictory();
@@ -50,7 +51,7 @@ class juego: public tThread{
 		void sendInit();
 		bool readyToStart();
 		int clientJoin(int cli_id, tSocket *cli_s);
-		bool isRunning();
+		bool gameStarted();
 		void getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int &cant_t);
 		bool isCreator(int c);
 };

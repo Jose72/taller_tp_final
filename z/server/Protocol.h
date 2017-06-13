@@ -26,7 +26,7 @@ public:
 	int sendActualization(std::map<int,unit*> &map_units);
     int receive_event(Event &e);
 	int sendUpdateTechLvl(int tech_lvl);
-	int sendVictory();
+	int sendVictory(int winner);
 
 
 };
