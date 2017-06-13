@@ -87,12 +87,13 @@ endif
 
 CFLAGS += $(shell pkg-config --cflags sdl)
 #/usr/include/SDL
-LDFLAGS += -lSDL
+#LDFLAGS += -lSDL
+LDFLAGS += $(shell sdl-config --libs )
 LDFLAGS += -lSDL_ttf
 LDFLAGS += -lSDL_image
 
 #LDFLAGS += -lSDL_mixer
-#LDFLAGS += $(shell sdl-config --libs  lSDL_image)
+
 
 # Linkea con libm de ser necesario.
 ifdef math

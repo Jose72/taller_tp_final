@@ -79,12 +79,14 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     std::vector<tThread*> threads;
     threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running, id_client,techLevel,winnerProtected));
     threads[0]->start();
+
     Protocol protocol(*socket,all_units,game_map,factory,techLevel,winnerProtected);
 
 
     PlayerInterface playerInterface(screen,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
 
-    while(waiting_server){}
+   // while(waiting_server){}
+    sleep(5);
     //main application loop
 
     threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory,id_client,techLevel,winnerProtected));

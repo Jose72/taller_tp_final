@@ -17,19 +17,20 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     int dy2 = posY + SIZE_OF_DELTA;
     unit = units.selectUnit(dx1,dx2,dy1,dy2,unit_selected, id_client);
     //ampliar area de seleccion para edificios
-    if(!unit_selected){
+    //todo revisar, tira segmentation fault
+    /**if(!unit_selected){
         dx1 -= SIZE_OF_DELTA;
         dy1 -= SIZE_OF_DELTA;
         dx2 += SIZE_OF_DELTA;
         dy2 += SIZE_OF_DELTA;
         unit = units.selectUnit(dx1,dx2,dy1,dy2,unit_selected, id_client);
-        if(unit->get_type() != FACTORY_VEHICLES_ALIVE &&
+        if(unit != nullptr && unit->get_type() != FACTORY_VEHICLES_ALIVE &&
                 unit->get_type() != FACTORY_ROBOTS_ALIVE &&
                 unit->get_type() != FORT_ALIVE){
             unit = 0;
             unit_selected = false;
         }
-    }
+    }**/
 
 }
 
