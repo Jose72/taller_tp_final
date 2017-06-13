@@ -77,15 +77,19 @@ int serverProtocol::receive_event(Event &e) {
 	return s;
 }
 
-int serverProtocol::sendVictory(){
+
+
+int serverProtocol::sendVictory(int w){
 	int s = 1;
 	int code = 40;
 	//codigo de actualizacion
 	int state_code = htonl(code);
 	s = socket.send((char*) &state_code,sizeof(int));
+	//winner
+	int winner = htonl(w);
+	s = socket.send((char*) &winner,sizeof(int));
 	//basura
 	int trash = htonl(0);
-	s = socket.send((char*) &trash,sizeof(int));
 	s = socket.send((char*) &trash,sizeof(int));
 	s = socket.send((char*) &trash,sizeof(int));
 	s = socket.send((char*) &trash,sizeof(int));

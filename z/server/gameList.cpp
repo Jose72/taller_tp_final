@@ -26,7 +26,8 @@ void gameList::cleanGames(){
 	tLock l(m);
 	for (auto it = juegos.begin(); it != juegos.end(); ++it){
 		//std::cout << "clean game" << std::endl;
-		if ((*it)->isRunning()) (*it)->join();
+		//si el juego empezo hay que joinear
+		if ((*it)->gameStarted()) (*it)->join();
 		delete (*it);
 	}
 }

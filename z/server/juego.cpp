@@ -18,13 +18,13 @@
 juego::juego(int creator, int cant_players, int game_t, int cant_teams): 
 id_creator(creator), max_players(cant_players), teams(cant_teams), 
 game_type(game_t), p_info(infoPlayers(cant_players, 
-game_t, cant_teams)), running(false) {
+game_t, cant_teams)), running(false), started(false) {
 	id_unit_counter = 1; //se empieza contando desde 1
 	team_count = 1;
 }
 
-bool juego::isRunning(){
-	return running;
+bool juego::gameStarted(){
+	return started;
 }
 
 void juego::getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int &cant_t){
@@ -58,9 +58,12 @@ int juego::checkVictory(){
 	//me fijo si hay ganador
 	int winner = p_info.checkForWinner();
 	if (winner != NO_WINNER){
-		std::cout << "winner: " << winner<< std::endl;
-		//p_info.sendVictoryMessages(winner);
-		//hay que enviarles a todos que termino la partida
+		std::cout << "WINNER: " << winner << std::endl;
+		for (auto it = protocols.begin(); it != protocols.end(); ++it){
+			//hay que enviarles a todos que termino la partida
+			(*it)->sendVictory(winner);
+		}
+		
 	}
 	return winner;
 }
@@ -127,7 +130,7 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 }
 
 void juego::sendInit(){
-	int map_codes[100] = {0};
+	int map_codes[400] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
 	map_codes[17] = 1;
@@ -149,7 +152,7 @@ void juego::sendInit(){
 	map_codes[57] = 2;
 	map_codes[58] = 2;
 
-	int sss = 100;
+	int sss = 400;
 	
 	//cargo mi mapa
 	mapa = gameMap(map_codes, sss);
@@ -157,27 +160,43 @@ void juego::sendInit(){
 	
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
 	unit *u1 = builder.build(GRUNT, 1, 15, 15);
-	units.insert(std::pair<int,unit*>((id_unit_counter+1),u1));
+	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
 	id_unit_counter++;
 
 	unit *u2 = builder.build(FLAG, 200, 15);
-	units.insert(std::pair<int,unit*>((id_unit_counter+1),u2));
+	units.insert(std::pair<int,unit*>(id_unit_counter,u2));
 	id_unit_counter++;
 
 	unit *u3 = builder.build(FORT, 1, 40, 40);
-	units.insert(std::pair<int,unit*>((id_unit_counter+1),u3));
+	units.insert(std::pair<int,unit*>(id_unit_counter,u3));
 	id_unit_counter++;
 
-	unit *u4 = builder.build(GRUNT ,2,280, 280);
-	units.insert(std::pair<int,unit*>((id_unit_counter+1),u4));
+	unit *u4 = builder.build(FORT ,2 ,200, 200);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u4));
+	id_unit_counter++;
+	
+	unit *u5 = builder.build(PYRO, 1, 170, 200);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
+	id_unit_counter++;
+	
+	unit *u6 = builder.build(PYRO, 1, 170, 180);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u6));
+	id_unit_counter++;
+	
+	unit *u7 = builder.build(PYRO, 1, 170, 220);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u7));
+	id_unit_counter++;
+	
+	unit *u8 = builder.build(GRUNT, 2, 10, 230);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
 	id_unit_counter++;
 	
 	
 	//hay que inicilizar la info de cada jugador
 	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
-	p_info.initializePlayer(1, u3, 1);
-	p_info.initializePlayer(2, nullptr, 1);
+	p_info.initializePlayer(1, u3, 4);
+	p_info.initializePlayer(2, u4, 1);
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -252,7 +271,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 }
 
 void juego::run(){
-	
+	started = true;
 	running = true;
 	//mapa codes de las casillas
 	
@@ -304,11 +323,11 @@ void juego::run(){
 			unit_cleaner();
 			
 			//check si gano alguien, o si perdio
-			/*
-			if (NO_WINNER != checkVictory()){}
+			
+			if (NO_WINNER != checkVictory()){
 				running = false;
 			}
-			*/
+			
 	}
 	
 	//limpio unidades al final del juego
