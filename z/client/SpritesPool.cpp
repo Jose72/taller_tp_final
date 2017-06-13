@@ -23,6 +23,10 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->load_sprites_with_null("client/sprites/flags", COLORLESS_FLAG, BLUE_FLAG, GREEN_FLAG, RED_FLAG, YELLOW_FLAG);
     this->load_sprites_with_dim("client/sprites/missile_launcher", MISILE_LAUNCHER_BLUE, MISILE_LAUNCHER_GREEN,
                                 MISILE_LAUNCHER_RED, MISILE_LAUNCHER_YELLOW, 32);
+    this->load_sprites_with_dim("client/sprites/lightTank", HEAVY_TANK_BLUE,HEAVY_TANK_GREEN,HEAVY_TANK_RED,HEAVY_TANK_YELLOW,32);
+    this->load_sprites_with_dim("client/sprites/lightTank", MEDIUM_TANK_BLUE,MEDIUM_TANK_GREEN,MEDIUM_TANK_RED,MEDIUM_TANK_YELLOW,32);
+    this->load_sprites_with_dim("client/sprites/lightTank", LIGHT_TANK_BLUE,LIGHT_TANK_GREEN,LIGHT_TANK_RED,LIGHT_TANK_YELLOW,32);
+    this->load_sprites_with_dim("client/sprites/lightTank", JEEP_BLUE,JEEP_GREEN,JEEP_RED,JEEP_YELLOW,32);
     this->load_sprite("client/sprites/laserBullet", LASER_BULLET, "laser", 16, 16);
     this->load_sprite("client/sprites/pyroBullet", PYRO_BULLET, "bullet", 16, 16);
     this->load_sprite("client/sprites/toughtBullet", TOUGHT_BULLET, "bullet", 16, 16);

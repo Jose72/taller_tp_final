@@ -185,6 +185,135 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
                             this->pool.get_animations(CELEBRATE_YELLOW),
                             unit_code,posx,posy,DRINKING,GREEN_LASER, unit_owner);
 
+        case HEAVY_TANK_BLUE:
+            return new Unit(this->pool.get_animations(HEAVY_TANK_BLUE),
+                            this->pool.get_animations(HEAVY_TANK_BLUE),
+                            this->pool.get_animations(HEAVY_TANK_BLUE),
+                            this->pool.get_animations(HEAVY_TANK_BLUE),
+                            this->pool.get_animations(HEAVY_TANK_BLUE),
+                            unit_code,posx,posy,MOVING1,HEAVY_TANK_BLUE, unit_owner);
+
+        case HEAVY_TANK_GREEN:
+            return  new Unit(this->pool.get_animations(HEAVY_TANK_GREEN),
+                             this->pool.get_animations(HEAVY_TANK_GREEN),
+                             this->pool.get_animations(HEAVY_TANK_GREEN),
+                             this->pool.get_animations(HEAVY_TANK_GREEN),
+                             this->pool.get_animations(HEAVY_TANK_GREEN),
+                             unit_code,posx,posy,MOVING1,HEAVY_TANK_GREEN, unit_owner);
+
+        case HEAVY_TANK_RED:
+            return new Unit(this->pool.get_animations(HEAVY_TANK_RED),
+                            this->pool.get_animations(HEAVY_TANK_RED),
+                            this->pool.get_animations(HEAVY_TANK_RED),
+                            this->pool.get_animations(HEAVY_TANK_RED),
+                            this->pool.get_animations(HEAVY_TANK_RED),
+                            unit_code,posx,posy,MOVING1,HEAVY_TANK_RED , unit_owner);
+
+        case HEAVY_TANK_YELLOW:
+            return  new Unit(this->pool.get_animations(HEAVY_TANK_YELLOW),
+                             this->pool.get_animations(HEAVY_TANK_YELLOW),
+                             this->pool.get_animations(HEAVY_TANK_YELLOW),
+                             this->pool.get_animations(HEAVY_TANK_YELLOW),
+                             this->pool.get_animations(HEAVY_TANK_YELLOW),
+                             unit_code,posx,posy,MOVING1, HEAVY_TANK_YELLOW, unit_owner);
+
+        case MEDIUM_TANK_BLUE:
+            return new Unit(this->pool.get_animations(MEDIUM_TANK_BLUE),
+                            this->pool.get_animations(MEDIUM_TANK_BLUE),
+                            this->pool.get_animations(MEDIUM_TANK_BLUE),
+                            this->pool.get_animations(MEDIUM_TANK_BLUE),
+                            this->pool.get_animations(MEDIUM_TANK_BLUE),
+                            unit_code,posx,posy,MOVING1,MEDIUM_TANK_BLUE, unit_owner);
+
+        case MEDIUM_TANK_GREEN:
+            return  new Unit(this->pool.get_animations(MEDIUM_TANK_GREEN),
+                             this->pool.get_animations(MEDIUM_TANK_GREEN),
+                             this->pool.get_animations(MEDIUM_TANK_GREEN),
+                             this->pool.get_animations(MEDIUM_TANK_GREEN),
+                             this->pool.get_animations(MEDIUM_TANK_GREEN),
+                             unit_code,posx,posy,MOVING1,MEDIUM_TANK_GREEN, unit_owner);
+
+        case MEDIUM_TANK_RED:
+            return new Unit(this->pool.get_animations(MEDIUM_TANK_RED),
+                            this->pool.get_animations(MEDIUM_TANK_RED),
+                            this->pool.get_animations(MEDIUM_TANK_RED),
+                            this->pool.get_animations(MEDIUM_TANK_RED),
+                            this->pool.get_animations(MEDIUM_TANK_RED),
+                            unit_code,posx,posy,MOVING1,MEDIUM_TANK_RED , unit_owner);
+
+        case MEDIUM_TANK_YELLOW:
+            return  new Unit(this->pool.get_animations(MEDIUM_TANK_YELLOW),
+                             this->pool.get_animations(MEDIUM_TANK_YELLOW),
+                             this->pool.get_animations(MEDIUM_TANK_YELLOW),
+                             this->pool.get_animations(MEDIUM_TANK_YELLOW),
+                             this->pool.get_animations(MEDIUM_TANK_YELLOW),
+                             unit_code,posx,posy,MOVING1, MEDIUM_TANK_YELLOW, unit_owner);
+        case LIGHT_TANK_BLUE:
+            return new Unit(this->pool.get_animations(LIGHT_TANK_BLUE),
+                            this->pool.get_animations(LIGHT_TANK_BLUE),
+                            this->pool.get_animations(LIGHT_TANK_BLUE),
+                            this->pool.get_animations(LIGHT_TANK_BLUE),
+                            this->pool.get_animations(LIGHT_TANK_BLUE),
+                            unit_code,posx,posy,MOVING1,LIGHT_TANK_BLUE, unit_owner);
+
+        case LIGHT_TANK_GREEN:
+            return  new Unit(this->pool.get_animations(LIGHT_TANK_GREEN),
+                             this->pool.get_animations(LIGHT_TANK_GREEN),
+                             this->pool.get_animations(LIGHT_TANK_GREEN),
+                             this->pool.get_animations(LIGHT_TANK_GREEN),
+                             this->pool.get_animations(LIGHT_TANK_GREEN),
+                             unit_code,posx,posy,MOVING1,LIGHT_TANK_GREEN, unit_owner);
+
+        case LIGHT_TANK_RED:
+            return new Unit(this->pool.get_animations(LIGHT_TANK_RED),
+                            this->pool.get_animations(LIGHT_TANK_RED),
+                            this->pool.get_animations(LIGHT_TANK_RED),
+                            this->pool.get_animations(LIGHT_TANK_RED),
+                            this->pool.get_animations(LIGHT_TANK_RED),
+                            unit_code,posx,posy,MOVING1,LIGHT_TANK_RED, unit_owner);
+
+        case LIGHT_TANK_YELLOW:
+            return  new Unit(this->pool.get_animations(LIGHT_TANK_YELLOW),
+                             this->pool.get_animations(LIGHT_TANK_YELLOW),
+                             this->pool.get_animations(LIGHT_TANK_YELLOW),
+                             this->pool.get_animations(LIGHT_TANK_YELLOW),
+                             this->pool.get_animations(LIGHT_TANK_YELLOW),
+                             unit_code,posx,posy,MOVING1,LIGHT_TANK_YELLOW , unit_owner);
+
+        case JEEP_BLUE:
+            return new Unit(this->pool.get_animations(JEEP_BLUE),
+                            this->pool.get_animations(JEEP_BLUE),
+                            this->pool.get_animations(JEEP_BLUE),
+                            this->pool.get_animations(JEEP_BLUE),
+                            this->pool.get_animations(JEEP_BLUE),
+                            unit_code,posx,posy,MOVING1,JEEP_BLUE, unit_owner);
+
+        case JEEP_GREEN:
+            return  new Unit(this->pool.get_animations(JEEP_GREEN),
+                             this->pool.get_animations(JEEP_GREEN),
+                             this->pool.get_animations(JEEP_GREEN),
+                             this->pool.get_animations(JEEP_GREEN),
+                             this->pool.get_animations(JEEP_GREEN),
+                             unit_code,posx,posy,MOVING1,JEEP_GREEN, unit_owner);
+
+        case JEEP_RED:
+            return new Unit(this->pool.get_animations(JEEP_RED),
+                            this->pool.get_animations(JEEP_RED),
+                            this->pool.get_animations(JEEP_RED),
+                            this->pool.get_animations(JEEP_RED),
+                            this->pool.get_animations(JEEP_RED),
+                            unit_code,posx,posy,MOVING1,JEEP_RED, unit_owner);
+
+        case JEEP_YELLOW:
+            return  new Unit(this->pool.get_animations(JEEP_YELLOW),
+                             this->pool.get_animations(JEEP_YELLOW),
+                             this->pool.get_animations(JEEP_YELLOW),
+                             this->pool.get_animations(JEEP_YELLOW),
+                             this->pool.get_animations(JEEP_YELLOW),
+                             unit_code,posx,posy,MOVING1, JEEP_YELLOW, unit_owner);
+
+
+
         case MISILE_LAUNCHER_BLUE:
             return new Unit(this->pool.get_animations(MISILE_LAUNCHER_BLUE),
                             this->pool.get_animations(MISILE_LAUNCHER_BLUE),
@@ -216,6 +345,8 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
                              this->pool.get_animations(MISILE_LAUNCHER_YELLOW),
                              this->pool.get_animations(MISILE_LAUNCHER_YELLOW),
                              unit_code,posx,posy,MOVING1, MISILE_LAUNCHER_YELLOW, unit_owner);
+
+
 
         case COLORLESS_FLAG:
             return new Unit(this->pool.get_animations(COLORLESS_FLAG),
@@ -271,7 +402,13 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
                             this->pool.get_animations(TOUGHT_BULLET),
                             unit_code,posx,posy,MOVING1,TOUGHT_BULLET, unit_owner);
 
-
+        case HCP_BULLET:
+            return new Unit(this->pool.get_animations(TOUGHT_BULLET),
+                            this->pool.get_animations(TOUGHT_BULLET),
+                            this->pool.get_animations(BULLET_DEAD),
+                            this->pool.get_animations(TOUGHT_BULLET),
+                            this->pool.get_animations(TOUGHT_BULLET),
+                            unit_code,posx,posy,MOVING1,HCP_BULLET, unit_owner);
     }
 
 }
