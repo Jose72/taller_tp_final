@@ -17,15 +17,15 @@ EventHandler::EventHandler(SDL_Surface *screen,
                            Game_map &m,
                            bool &b,
                            Factory_Units &f,
-                           int &id, TechLevelProtected &tech):
-        playerInterface(p),units(u),socket(s), gameMap(m),running(b), factory(f), id_client(id), techLevel(tech){
+                           int &id, TechLevelProtected &tech,WinnerProtected &winner):
+        playerInterface(p),units(u),socket(s), gameMap(m),running(b), factory(f), id_client(id), techLevel(tech), winner(winner){
     this->screen = screen;
 }
 
 EventHandler::~EventHandler() {}
 
 void EventHandler::run() {
-    Protocol protocol(socket,units,gameMap,factory, techLevel);
+    Protocol protocol(socket,units,gameMap,factory, techLevel,winner);
 
     SDL_Event event;
     int posCameraX = 0;
@@ -39,7 +39,7 @@ void EventHandler::run() {
         posCameraX = camera2.getPosCameraX();
         posCameraY = camera2.getPosCameraY();
         camera2.draw(units,gameMap);
-        playerInterface.show(sHandler, techLevel);
+        playerInterface.show(sHandler, techLevel,winner,id_client);
         SDL_Flip(screen);
 
         //MOSTRAR

@@ -33,6 +33,7 @@
 #define WINDOW_W 600
 #define PLAYER_INTERFACE_W 300
 #define INITIAL_TECH_LEVEL 1
+#define NO_WINNER -1
 
 void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
     pWindow->hide();
@@ -44,6 +45,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     Units_Protected all_units(um);
     bool running = true;
     TechLevelProtected techLevel(INITIAL_TECH_LEVEL);
+    WinnerProtected winnerProtected(NO_WINNER);
 
     bool waiting_server = true;
     //INICIA SDL Y CREA LA PANTALLA
@@ -75,9 +77,9 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     int port_number = atoi(argv[2]);
     //socket->connect(argv[1],port_number);
     std::vector<tThread*> threads;
-    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running, id_client,techLevel));
+    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running, id_client,techLevel,winnerProtected));
     threads[0]->start();
-    Protocol protocol(*socket,all_units,game_map,factory,techLevel);
+    Protocol protocol(*socket,all_units,game_map,factory,techLevel,winnerProtected);
 
     int posx1 = 100;
     int posy1 = 100;
@@ -92,7 +94,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     while(waiting_server){}
     //main application loop
 
-    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory,id_client,techLevel));
+    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory,id_client,techLevel,winnerProtected));
     threads[1]->start();
 
     for (int i = 0; i <threads.size(); ++i) {
@@ -199,11 +201,9 @@ void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *arg
     unirse->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv,this));
     crear->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,this));
     salir->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
-    siguiente->signal_clicked().connect(sigc::bind(sigc::ptr_fun(jugar), app,argc,argv,this)); // todo borrar cuando no se use mas el protocolo viejo
     box->add(*crear);
     box->add(*image);
     box->add(*unirse);
-    box->add(*siguiente);// todo borrar cuando no se use mas el protocolo viejo
     box->add(*salir);
     add(*box);
     show_all();

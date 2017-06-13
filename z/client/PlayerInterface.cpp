@@ -12,7 +12,10 @@
 #include "ClickableButtonJeep.h"
 #include "ClickableButtonCreateUnit.h"
 
+
 #define PADDING 40
+#define LEFT_PADDING 10
+#define NO_WINNER -1
 
 PlayerInterface::PlayerInterface(SDL_Surface* screen,
                                  int gameWidth,
@@ -26,7 +29,11 @@ PlayerInterface::PlayerInterface(SDL_Surface* screen,
 }
 
 int PlayerInterface::getCol(int division,int offset,int sizeElement){
-    return gameWidth + (width/division) * offset - sizeElement;
+    return getCol(division,offset,sizeElement,0);
+}
+
+int PlayerInterface::getCol(int division,int offset,int sizeElement,int leftPadding){
+    return gameWidth + (width/division) * offset - sizeElement + leftPadding;
 }
 
 bool PlayerInterface::checkClickedButtons(int x, int y,Protocol protocol){
@@ -65,26 +72,26 @@ std::string getUnitPortrait(FlagsUnitType type){
 int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
     //pos += PADDING para los saltos de linea
     if(tech >= 1){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Grunt",unitCode,GRUNT));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Grunt",unitCode,GRUNT));
     }
 
     if(tech >= 2){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Psycho",unitCode,PSYCHO));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Psycho",unitCode,PSYCHO));
         pos += PADDING;
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Tough",unitCode,TOUGHT));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Tough",unitCode,TOUGHT));
     }
 
     if(tech >= 3){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Sniper",unitCode,SNIPER));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Sniper",unitCode,SNIPER));
     }
 
     if(tech >= 4){
         pos += PADDING;
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Pyro",unitCode,PYRO));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Pyro",unitCode,PYRO));
     }
 
     if(tech >= 5){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Laser",unitCode,LASER));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Laser",unitCode,LASER));
     }
 
     pos += PADDING;
@@ -93,25 +100,25 @@ int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
 
 int PlayerInterface::loadVehiclesButtons(int pos,int unitCode, int tech){
     if(tech >= 1){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Jeep",unitCode,JEEP));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Jeep",unitCode,JEEP));
     }
 
     if(tech >= 2){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Light Tank",unitCode,LIGHT_TANK));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Light Tank",unitCode,LIGHT_TANK));
     }
 
     if(tech >= 3){
         pos += PADDING;
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"Medium Tank",unitCode,MEDIUM_TANK));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Medium Tank",unitCode,MEDIUM_TANK));
     }
 
     if(tech >= 4){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100),pos,50,30,"Heavy Tank",unitCode,HEAVY_TANK));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Heavy Tank",unitCode,HEAVY_TANK));
     }
 
     if(tech >= 5){
         pos += PADDING;
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100),pos,50,30,"MML",unitCode,MML));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"MML",unitCode,MML));
     }
 
     pos += PADDING;
@@ -142,7 +149,7 @@ void PlayerInterface::loadButtons(FlagsUnitType type, int unitCode, int tech){
 
 }
 
-void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected &techProtected) {
+void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected &techProtected, WinnerProtected &winnerProtected,int idClient) {
     bool locked = SDL_MUSTLOCK(screen);
     if(locked)
         SDL_LockSurface(screen);
@@ -165,13 +172,19 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_type()),getCol(3,2,0),210);
     } else {
         drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),150);
-        drawer.drawGiantText(screen,"PUBLICITA ACA",100,400);//ejemplo de como escribir gigante
     }
 
     for(int i = 0; i != buttons.size(); i++) {
         drawer.drawButton(screen,buttons[i]);
     }
 
+    if(winnerProtected.getWinner() != NO_WINNER){
+        if(winnerProtected.getWinner() == idClient){
+            drawer.drawGiantText(screen,"VICTORY",100,400);
+        } else {
+            drawer.drawGiantText(screen,"DEFEAT",100,400);
+        }
+    }
 
     if(locked)
         SDL_UnlockSurface(screen);

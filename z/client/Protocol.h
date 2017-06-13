@@ -7,6 +7,7 @@
 #include "Game_map.h"
 #include "Factory_Units.h"
 #include "TechLevelProtected.h"
+#include "WinnerProtected.h"
 
 class Protocol {
 private:
@@ -15,9 +16,10 @@ private:
     Game_map &game_map;
     Factory_Units &factory;
     TechLevelProtected &techLevel;
+    WinnerProtected &winner;
 
 public:
-    Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech);
+    Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech, WinnerProtected &winner);
     ~Protocol();
     void moveUnitCS(int cod_unit, int posX, int posY);
     void attackUnitCS(int cod_unit, int cod_objective);

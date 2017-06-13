@@ -10,6 +10,7 @@
 #include "Factory_Units.h"
 #include "Units_Protected.h"
 #include "TechLevelProtected.h"
+#include "WinnerProtected.h"
 
 class TClient_receive: public tThread {
 private:
@@ -21,6 +22,7 @@ private:
     bool &running;
     int &id_client;
     TechLevelProtected &techLevel;
+    WinnerProtected &winner;
 
 public:
     TClient_receive(tSocket &s,
@@ -28,7 +30,8 @@ public:
                     Units_Protected &u,
                     Factory_Units &f,
                     bool &done, bool &r, int &id_c,
-                    TechLevelProtected &tech);
+                    TechLevelProtected &tech,
+                    WinnerProtected &winner);
     ~TClient_receive();
     void run();
     void stop();

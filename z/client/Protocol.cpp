@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Protocol.h"
+#include "WinnerProtected.h"
+
 #define CODE_MOVE_UNIT 0
 #define CODE_ATTACK 1
 #define CODE_SET_POS 1
@@ -11,8 +13,8 @@
 #define CODE_DESTROYED 10
 #define CODE_CHANGE_TECH_LEVEL 35
 #define CODE_END_GAME 40
-Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech):
-        socket(s), units(u), game_map(g),factory(f), techLevel(tech) {}
+Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner):
+        socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner) {}
 
 Protocol::~Protocol() {}
 
@@ -149,8 +151,10 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                                  int posY) {
     if (update == CODE_END_GAME) {
         units.endGame(unitCode);
+
     } else if (update == CODE_CHANGE_TECH_LEVEL) {
         techLevel.setTechLevel(unitCode);
+        winner.setWinner(unitCode);
     } else {
         units.createIsNotExist(unitCode, unitType, unitOwner, posX, posY, factory);
         if (units[unitCode]->get_state() != DEAD1) {

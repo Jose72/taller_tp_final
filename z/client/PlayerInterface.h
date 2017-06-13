@@ -29,13 +29,13 @@ public:
                         int gameHeight,
                         int width);
 
-    void show(SelectionHandler selectionHandler, TechLevelProtected &techProtected);
+    void show(SelectionHandler selectionHandler, TechLevelProtected &techProtected, WinnerProtected &winnerProtected,int idClient);
 
     virtual ~PlayerInterface();
 
     int getCol(int division, int offset);
 
-    int getCol(int division, int offset, int sizeElement);
+    int getCol(int division, int offset, int sizeElement, int leftPadding);
 
     bool checkClickedButtons(int x, int y);
 
@@ -58,6 +58,8 @@ public:
     int loadVehiclesButtons(int pos, int unitCode, int tech);
 
     void loadButtons(FlagsUnitType type, int unitCode, int tech);
+
+    int getCol(int division, int offset, int sizeElement);
 };
 
 
