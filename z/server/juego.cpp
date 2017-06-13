@@ -190,13 +190,17 @@ void juego::sendInit(){
 	unit *u8 = builder.build(GRUNT, 2, 10, 230);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
 	id_unit_counter++;
+
+	unit *u9 = builder.build(GRUNT, 2, 0, 230);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u9));
+	id_unit_counter++;
 	
 	
 	//hay que inicilizar la info de cada jugador
 	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
 	p_info.initializePlayer(1, u3, 4);
-	p_info.initializePlayer(2, u4, 1);
+	p_info.initializePlayer(2, u4, 2);
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){

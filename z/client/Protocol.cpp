@@ -151,10 +151,10 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                                  int posY) {
     if (update == CODE_END_GAME) {
         units.endGame(unitCode);
-
+        winner.setWinner(unitCode);
     } else if (update == CODE_CHANGE_TECH_LEVEL) {
         techLevel.setTechLevel(unitCode);
-        winner.setWinner(unitCode);
+
     } else {
         units.createIsNotExist(unitCode, unitType, unitOwner, posX, posY, factory);
         if (units[unitCode]->get_state() != DEAD1) {
