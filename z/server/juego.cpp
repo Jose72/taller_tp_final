@@ -160,35 +160,35 @@ void juego::sendInit(){
 	
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
 	unit *u1 = builder.build(GRUNT, 1, 15, 15);
-	units.insert(std::pair<int,unit*>((id_unit_counter),u1));
+	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
 	id_unit_counter++;
 
 	unit *u2 = builder.build(FLAG, 200, 15);
-	units.insert(std::pair<int,unit*>((id_unit_counter),u2));
+	units.insert(std::pair<int,unit*>(id_unit_counter,u2));
 	id_unit_counter++;
 
 	unit *u3 = builder.build(FORT, 1, 40, 40);
-	units.insert(std::pair<int,unit*>((id_unit_counter),u3));
+	units.insert(std::pair<int,unit*>(id_unit_counter,u3));
 	id_unit_counter++;
 
-	unit *u4 = builder.build(FORT ,2 ,250, 250);
-	units.insert(std::pair<int,unit*>((id_unit_counter),u4));
+	unit *u4 = builder.build(FORT ,2 ,200, 200);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u4));
 	id_unit_counter++;
 	
-	unit *u5 = builder.build(PYRO, 1, 220, 220);
-	units.insert(std::pair<int,unit*>((id_unit_counter),u5));
+	unit *u5 = builder.build(PYRO, 1, 170, 200);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
 	id_unit_counter++;
 	
-	unit *u6 = builder.build(PYRO, 1, 225, 225);
-	units.insert(std::pair<int,unit*>((id_unit_counter),u6));
+	unit *u6 = builder.build(PYRO, 1, 170, 180);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u6));
 	id_unit_counter++;
 	
-	unit *u7 = builder.build(PYRO, 1, 230, 230);
-	units.insert(std::pair<int,unit*>((id_unit_counter),u7));
+	unit *u7 = builder.build(PYRO, 1, 170, 220);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u7));
 	id_unit_counter++;
 	
 	unit *u8 = builder.build(GRUNT, 2, 10, 230);
-	units.insert(std::pair<int,unit*>((id_unit_counter),u8));
+	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
 	id_unit_counter++;
 	
 	

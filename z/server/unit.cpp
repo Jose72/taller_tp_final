@@ -199,7 +199,7 @@ bool unit::isEnemy(unit &u){
 	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
 	if (u.owner == 0) return false;
 	if (this->owner != u.owner) {
-		if (this->sameTeam(&u)) return false;
+		//if (this->sameTeam(&u)) return false;
 		return true;
 	}
 	return false;
