@@ -130,7 +130,7 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 }
 
 void juego::sendInit(){
-	int map_codes[400] = {0};
+	int map_codes[800] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
 	map_codes[17] = 1;
@@ -152,7 +152,7 @@ void juego::sendInit(){
 	map_codes[57] = 2;
 	map_codes[58] = 2;
 
-	int sss = 400;
+	int sss = 800;
 	
 	//cargo mi mapa
 	mapa = gameMap(map_codes, sss);

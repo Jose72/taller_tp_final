@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Game_map.h"
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
@@ -24,13 +25,13 @@ void Game_map::add_tile(int tile) {
 }
 
 void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD, SDL_Rect &cameraRect) {
-
+    int mapDimensions = sqrt(map_des.size());
     int x,y,t;
-    //dibujar escenario
-    for (int i =0 ; i<10; i++) {
-        for (int j=0 ; j<10; j++) {
-            int pos = ((i*10)+(j));
-            if(pos < MAP_LENGHT ){
+
+    for (int i =0 ; i<mapDimensions; i++) {
+        for (int j=0 ; j<mapDimensions; j++) {
+            int pos = ((i*mapDimensions)+(j));
+            if(pos < map_des.size()){
                 t = this->map_des[pos];
                 // calculo de la posición del tile
                 x = j*32;

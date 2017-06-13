@@ -19,8 +19,8 @@ Camera2::Camera2(SDL_Surface *screen,int posX, int posY, int W, int H, int lW, i
 Camera2::~Camera2() {}
 
 void Camera2::set_position_cameraRect(int posX, int posY) {
-    this->cameraRect.x = posX;// - (cameraW / 2);
-    this->cameraRect.y = posY;// - (cameraH / 2);
+    this->cameraRect.x = posX;
+    this->cameraRect.y = posY;
     if (cameraRect.x < 0) {
         cameraRect.x = 0;
     }
@@ -37,12 +37,12 @@ void Camera2::set_position_cameraRect(int posX, int posY) {
 
 void Camera2::draw(Units_Protected &units, Game_map &game_map) {
     unsigned int ticks = SDL_GetTicks();
-    if((ticks % 60 ) == 0) {
+    if((ticks % 20 ) == 0) {
         SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
-        int limitXL = cameraRect.x - (cameraW / 2);
-        int limitXR = cameraRect.x + (cameraW / 2);
-        int limitYU = cameraRect.y - (cameraH / 2);
-        int limitYD = cameraRect.y + (cameraH / 2);
+        int limitXL = cameraRect.x - (cameraW);
+        int limitXR = cameraRect.x + (cameraW );
+        int limitYU = cameraRect.y - (cameraH );
+        int limitYD = cameraRect.y + (cameraH);
         game_map.draw_map(limitXL, limitXR, limitYU, limitYD, cameraRect);
         units.animate(limitXL, limitXR, limitYU, limitYD, cameraRect);
     }

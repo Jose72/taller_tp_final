@@ -29,8 +29,8 @@
 
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 1
-#define WINDOW_H 800
-#define WINDOW_W 600
+#define WINDOW_H 1600
+#define WINDOW_W 1200
 #define PLAYER_INTERFACE_W 300
 #define INITIAL_TECH_LEVEL 1
 #define NO_WINNER -1
@@ -81,13 +81,6 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     threads[0]->start();
     Protocol protocol(*socket,all_units,game_map,factory,techLevel,winnerProtected);
 
-    int posx1 = 100;
-    int posy1 = 100;
-    int posx2 = 400;
-    int posy2 = 400;
-    int posCameraX = 200;
-    int posCameraY = 200;
-    SDL_Rect cameraRect = {0,0,640,480};
 
     PlayerInterface playerInterface(screen,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
 
