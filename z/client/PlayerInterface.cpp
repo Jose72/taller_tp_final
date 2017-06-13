@@ -164,7 +164,8 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
         drawer.drawText(screen,"Tipo: ",getCol(3,1,0),210);
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_type()),getCol(3,2,0),210);
     } else {
-        drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),150);;
+        drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),150);
+        drawer.drawGiantText(screen,"PUBLICITA ACA",100,400);//ejemplo de como escribir gigante
     }
 
     for(int i = 0; i != buttons.size(); i++) {

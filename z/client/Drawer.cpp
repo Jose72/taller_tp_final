@@ -34,6 +34,10 @@ void Drawer::drawText(SDL_Surface *screen, std::string msj, int x, int y){
     writter.drawText(screen,msj,x-(msj.size()*3),y);
 }
 
+void Drawer::drawGiantText(SDL_Surface *screen, std::string msj, int x, int y){
+    writter.drawGiantText(screen,msj,x-(msj.size()*3),y);
+}
+
 int Drawer::drawImage(SDL_Surface *surface, const char *image_path, Sint16 x_pos, Sint16 y_pos) {
     SDL_Surface *image = IMG_Load ( image_path );
     if ( !image ) {

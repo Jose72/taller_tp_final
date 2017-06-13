@@ -11,12 +11,15 @@
 class TTF_Writter {
 private:
     TTF_Font* font;
+    TTF_Font* giantFont;
 public:
     TTF_Writter();
 
     void drawText(SDL_Surface *screen, std::string mensaje, Sint16 x, Sint16 y);
 
     virtual ~TTF_Writter();
+
+    void drawGiantText(SDL_Surface *screen, std::string mensaje, Sint16 x, Sint16 y);
 };
 
 
