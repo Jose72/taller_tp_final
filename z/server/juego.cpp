@@ -130,7 +130,7 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 }
 
 void juego::sendInit(){
-	int map_codes[800] = {0};
+	int map_codes[900] = {0};
 	map_codes[15] = 1;
 	map_codes[16] = 1;
 	map_codes[17] = 1;
@@ -152,38 +152,38 @@ void juego::sendInit(){
 	map_codes[57] = 2;
 	map_codes[58] = 2;
 
-	int sss = 800;
+	int sss = 900;
 	
 	//cargo mi mapa
 	mapa = gameMap(map_codes, sss);
 	
 	
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
-	unit *u1 = builder.build(GRUNT, 1, 15, 15);
+	unit *u1 = builder.build(GRUNT, 1, 300, 400);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
 	id_unit_counter++;
 
-	unit *u2 = builder.build(FLAG, 200, 15);
+	unit *u2 = builder.build(FLAG, 270, 15);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u2));
 	id_unit_counter++;
 
-	unit *u3 = builder.build(FORT, 1, 40, 40);
+	unit *u3 = builder.build(FORT, 1, 32, 32);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u3));
 	id_unit_counter++;
 
-	unit *u4 = builder.build(FORT ,2 ,200, 200);
+	unit *u4 = builder.build(FORT ,2 ,640, 640);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u4));
 	id_unit_counter++;
 	
-	unit *u5 = builder.build(PYRO, 1, 170, 200);
+	unit *u5 = builder.build(PYRO, 1, 300, 200);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
 	id_unit_counter++;
 	
-	unit *u6 = builder.build(PYRO, 1, 170, 180);
+	unit *u6 = builder.build(PYRO, 1, 300, 180);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u6));
 	id_unit_counter++;
 	
-	unit *u7 = builder.build(PYRO, 1, 170, 220);
+	unit *u7 = builder.build(PYRO, 1, 300, 220);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u7));
 	id_unit_counter++;
 	
@@ -191,11 +191,13 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
 	id_unit_counter++;
 
-	unit *u9 = builder.build(GRUNT, 2, 0, 230);
+	unit *u9 = builder.build(GRUNT, 2, 20, 230);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u9));
 	id_unit_counter++;
 	
 	
+	mapa.setBlocking(units);
+	mapa.seePassableForUnit(ROBOT);
 	//hay que inicilizar la info de cada jugador
 	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan

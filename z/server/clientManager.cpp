@@ -120,8 +120,6 @@ int tClientManager::gameSelection(){
 		cant_games = htonl(juegos.size());
 		cli_skt.send((char*)&cant_games, 4);
 		
-		std::cout << "llego: " << std::endl;
-		
 		//loop envio descripcion de juegos
 		for (auto it = des.begin(); it != des.end(); ++it){
 			int i = (*it);
@@ -130,7 +128,6 @@ int tClientManager::gameSelection(){
 		}
 		
 		//recibir codigo
-		std::cout << "llego: "  << std::endl;
 		int g_to_join;
 		cli_skt.receive((char*)&g_to_join, 4);
 		g_to_join = ntohl(g_to_join);

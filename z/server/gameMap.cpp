@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "math.h"
+#include <iostream>
 
 gameMap::gameMap(){}
 
@@ -42,6 +43,48 @@ void gameMap::getNeightboors(tile &q, std::vector<tile*> &ady){
 	//tomo el x,y de la casilla
 	int x = q.getX();
 	int y = q.getY();
+	int s = casillas.size();
+	
+	int aux = x - 1 + (y - 1) * width;
+	if ((aux < s - 1) || (aux >= 0)){
+		ady.push_back(&casillas[aux]);
+	}
+	
+	aux = x + (y - 1) * width;
+	if ((aux < s - 1) || (aux >= 0)){
+		ady.push_back(&casillas[aux]);
+	}
+	
+	aux = x + 1 + (y - 1) * width;
+	if ((aux < s - 1) || (aux >= 0)){
+		ady.push_back(&casillas[aux]);
+	}
+	
+	aux = x - 1 + y * width;
+	if ((aux < s - 1) || (aux >= 0)){
+		ady.push_back(&casillas[aux]);
+	}
+	
+	aux = x + 1 + y * width;
+	if ((aux < s - 1) || (aux >= 0)){
+		ady.push_back(&casillas[aux]);
+	}
+	
+	aux = x - 1 + (y + 1) * width;
+	if ((aux < s - 1) || (aux >= 0)){
+		ady.push_back(&casillas[aux]);
+	}
+	
+	aux = x + (y + 1) * width;
+	if ((aux < s - 1) || (aux >= 0)){
+		ady.push_back(&casillas[aux]);
+	}
+	
+	aux = x + 1 + (y + 1) * width;
+	if ((aux < s - 1) || (aux >= 0)){
+		ady.push_back(&casillas[aux]);
+	}
+	/*
 	for (int dx = -1; dx < 2; dx++){
 		for (int dy = -1; dy < 2; dy++){
 			int new_x = x + dx;
@@ -55,6 +98,7 @@ void gameMap::getNeightboors(tile &q, std::vector<tile*> &ady){
 			}
 		}
 	}
+	*/
 }
 
 tile gameMap::getTile(int x, int y){
@@ -65,16 +109,16 @@ tile* gameMap::getTileP(int x, int y){
 	return &casillas[x + y * width];
 }
 
-tile* gameMap::getTilePFromUnit(int x, int y){
-	int px;
-	int py;
+tile* gameMap::getTilePFromUnit(double x, double y){
+	double px;
+	double py;
 	for (px = 0; px < width; px++) {
-		if ((px+1)*32 >= x) {
+		if ((px+1)*32 > x) {
 			break;
 		}
 	}
 	for (py = 0; py < height; py++) {
-		if ((py+1)*32 >= y) {
+		if ((py+1)*32 > y) {
 			break;
 		}
 	}
@@ -88,10 +132,52 @@ void gameMap::printMap(){
 }
 
 
-std::vector<int> gameMap::getTilesCodes(){
-	std::vector<int> codes;
-	for (auto it = casillas.begin(); it != casillas.end(); ++it){
-		codes.push_back(it->getTerrainCode());
+void gameMap::setBlocking(std::map<int,unit*> &units){
+	for (auto it = units.begin(); it != units.end(); ++it){
+		unit *u = it->second;
+		int b = u->getBlockingType();
+		if (b != B_NOTHING){
+			
+			std::cout << "unit: " << it->first << std::endl;
+			int h = u->getHeight();
+			int w = u->getWidth();
+			
+			int counter_y = (h / TILE_LENGHT);
+			if (counter_y < 1) counter_y = 1;
+			int counter_x = (w / TILE_LENGHT);
+			if (counter_x < 1) counter_x = 1;
+			
+			std::cout << "casi in y: " << counter_y << std::endl;
+			std::cout << "casi in x: " << counter_x << std::endl;
+			
+			int x_pos = u->getX();
+			int y_pos = u->getY();
+			
+			
+			tile *t = this->getTilePFromUnit(x_pos, y_pos);
+			int x_tile = t->getX();
+			int y_tile = t->getY();
+			
+			for (int i = x_tile; i < x_tile+counter_x; ++i){
+				for (int j = y_tile; j< y_tile+counter_y; ++j){
+					tile *t2 = this->getTileP(i,j);
+					bool p;
+					if (b == B_BLOCK) {
+						p = false;
+					} else {
+						p = true;
+					}
+					std::cout << "casi que block: " << i << "-" << j << std::endl; 
+					t2->putUnitOver(p);
+				}
+			}
+			
+		}
 	}
-	return codes;
+}
+
+void gameMap::seePassableForUnit(int unit_code){
+	for (auto it = casillas.begin(); it != casillas.end(); ++it){
+		std::cout << "x: " << it->getX() << " y: " << it->getY() << " - " << it->isPassable(unit_code) << std::endl;
+	}
 }

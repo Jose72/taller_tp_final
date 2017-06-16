@@ -13,6 +13,85 @@
 
 #include <unistd.h>
 
+
+
+int test_a_start(){
+	gameMap mapa;
+	unitBuilder builder;
+	std::map<int, unit*> units;
+	int id_unit_counter = 1;
+	int map_codes[900] = {0};
+	infoPlayers p_info(2,DEATHMATCH,0);
+	map_codes[15] = 1;
+	map_codes[16] = 1;
+	map_codes[17] = 1;
+	map_codes[18] = 1;
+	map_codes[31] = 1;
+	map_codes[32] = 1;
+	map_codes[33] = 1;
+	map_codes[34] = 1;
+	map_codes[43] = 2;
+	map_codes[44] = 2;
+	map_codes[45] = 2;
+	map_codes[46] = 2;
+	map_codes[47] = 2;
+	map_codes[48] = 2;
+	map_codes[53] = 2;
+	map_codes[54] = 2;
+	map_codes[55] = 2;
+	map_codes[56] = 2;
+	map_codes[57] = 2;
+	map_codes[58] = 2;
+
+	int sss = 900;
+	
+	//cargo mi mapa
+	mapa = gameMap(map_codes, sss);
+	
+	
+
+	unit *u2 = builder.build(FLAG, 270, 15);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u2));
+	id_unit_counter++;
+
+	unit *u3 = builder.build(FORT, 1, 96, 96);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u3));
+	id_unit_counter++;
+
+	unit *u4 = builder.build(FORT ,2 ,600, 600);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u4));
+	id_unit_counter++;
+	
+	unit *u5 = builder.build(GRUNT, 1, 266, 186);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
+	id_unit_counter++;
+
+	
+	
+	mapa.setBlocking(units);
+	//mapa.seePassableForUnit(ROBOT);
+	
+	u5->move(15, 192);
+	
+	actualizeUnit au;
+	for (int i = 0; i < 1; i++){
+		for (auto it = units.begin(); it != units.end(); ++it){
+			int id = it->first;
+			unit *u = it->second;
+			
+			au(id, *u, units, mapa, 100, id_unit_counter, p_info);
+		}
+	}
+	
+	for (auto it = units.begin(); it != units.end(); ++it){
+			delete it->second;
+		}
+
+	return 0;
+}
+
+
+
 int test_create_units(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);

@@ -43,7 +43,7 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 				} else {
 					std::cout << "crea bullet" << std::endl;
 					unitBuilder ub;
-					unit *u = ub.build(attacker.unitToCreate(), attacker.getX(), attacker.getY());
+					unit *u = ub.build(attacker.unitToCreate(), attacker.getCenterX(), attacker.getCenterY());
 					u->attack(attacked);
 					units.insert(std::pair<int,unit*>(unit_id_c,u));
 					unit_id_c++;//incremento id_units
@@ -83,15 +83,14 @@ int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*
 					attacker.resetTimer();
 				}
 			} 
-		} else {
-			//si me fui de rango
-			//remuevo el target y quedo en STANDING
-			//(autoataque sigue encendido)
-			std::cout << "disable autoptataq" << std::endl;
-			attacker.removeTarget(attacked);
-			attacker.changeState(STANDING);
-			attacker.resetTimer();
-;
+	} else {
+		//si me fui de rango
+		//remuevo el target y quedo en STANDING
+		//(autoataque sigue encendido)
+		std::cout << "reset autoataq" << std::endl;
+		attacker.removeTarget(attacked);
+		attacker.changeState(STANDING);
+		attacker.resetTimer();
 		}
 		return 0;
 }

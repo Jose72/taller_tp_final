@@ -46,7 +46,7 @@ int gameList::joinGame(int my_id, tSocket *s, juego **j, int creator){
 			if ((*it)->clientJoin(my_id, s) == 0){
 				//el amnager se guarda el puntero al juego
 				*j = (*it);
-				std::cout << "puntero juego" << j << std::endl;
+				//std::cout << "puntero juego" << j << std::endl;
 				return 0;
 			}
 		}

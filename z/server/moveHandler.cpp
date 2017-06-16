@@ -38,6 +38,10 @@ while (!open.empty()){//mientras al lista no este vacia
 	//std::cout << "current" << std::endl;
 	//q->printTile();
 	
+	//borro q de open y lo inserto el closed
+	open.eraseIfFound(q);
+	closed.insert(q);
+	
 	//si la casilla es el destino se termina el recorrido
 	if (q->isEqual(*dest)){
 			last = q;
@@ -51,31 +55,59 @@ while (!open.empty()){//mientras al lista no este vacia
 	//para todos los adyacentes
 	for (auto it = ady.begin(); it != ady.end(); ++it){
 		//si no esta en closed y es pasable
+		
+		
+		
 		if (!closed.found(*it) && (*it)->isPassable(unit_code)){
+			
+			
+			///////////////////////////////////////////////////
+			int new_g = q->getG() + q->dist(**it);
+			if (open.found((*it))){
+				//si el g nuevo es mejor, reemplzo
+				if (new_g < (*it)->getG()){
+					(*it)->setParent(q);
+					(*it)->setG(new_g); 
+				} 
+			} else {
+				//si no estaba en open inserto
+				(*it)->setParent(q);
+				(*it)->setG(new_g); 
+				(*it)->setH(*dest);
+				open.insert((*it));
+			}
+			
+			
+			
+			/////////////////////////////////////////////////////////////////
+			/*
 			//seteo de padre a q
 			(*it)->setParent(q);
 			
 			//saco g y h
 			//dist() es solo para casilla adyacentes!
-			(*it)->setG(q->getG() + q->dist(**it)); 
-			(*it)->setH(*dest);
 			
+			(*it)->setG(); 
+			(*it)->setH(*dest);
 			//si el sucesor no esta en open agrego
 			//si esta, pero este es mejor (menor f), reemplazo
 			open.foundReplaceOrInsert(*it);
+			*/
 		}
 		
 		//si ya esta en close hay que reemplazar como en open?????
 	}
-	//borro q de open y lo inserto el closed
-	open.eraseIfFound(q);
-	closed.insert(q);
+	
 }
 
 //hay que retornar la lista de punteros (o la lista de coordenadas mejor)
 //usar un stack? (es LIFO)
 
+
+//std::cout << "last: " << last << std::endl;
+
 //voy hacia  atras con parent
+//std::cout << "-------------------------" << std::endl;
 while (last != nullptr){
 	//last->printTile();
 	path.push_back(last);
@@ -152,6 +184,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		
 		//std::cout << "closer tile" << std::endl;
 		//closer_tile->printTile();
+		//u.printPos();
 		
 		//conseguir el centro de la casilla (coord pixel)
 		int x_closer = 15 + 32 * closer_tile->getX();

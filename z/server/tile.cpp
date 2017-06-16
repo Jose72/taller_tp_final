@@ -9,6 +9,7 @@
 
 tile::tile(int x, int y, int terrain_id): x_cord(x), y_cord(y), terr(terrain(terrain_id)) {
 	parent = nullptr;
+	unit_over = false;
 }
 
 //retorna coordenada x de la casilla
@@ -32,16 +33,17 @@ void tile::setParent(tile *p){
 //chequea si las casillas sin iguales en el mapa
 //solo cuequea coordenadas
 bool tile::isEqual(tile &t){
-	if (t.x_cord == this->x_cord && t.y_cord == this->y_cord) return true;
+	if ((t.x_cord == this->x_cord) && (t.y_cord == this->y_cord)) return true;
 	return false;
 }
 
 //chequea si se puede pasar por la casilla
 //true si el terreno es pasable y si no hay unidades/edificios en la casilla
 bool tile::isPassable(int unit_code){
-	if (terr.isPassable(unit_code)) return true;
-	return false;
-
+	if (unit_over){
+		return passable;
+	} 
+	return (terr.isPassable(unit_code));
 }
 
 
@@ -97,19 +99,18 @@ double tile::getH(){
 	return h;
 }
 
+double tile::getF(){
+	return g + h;
+}
+
 void tile::printTile(){
 	std::cout << "x: " << x_cord << std::endl;
 	std::cout << "y: " << y_cord << std::endl;
 	std::cout << terr.getTerrainFactor() << std::endl;
+	std::cout << "g: " << g << std::endl;
+	std::cout << "h: " << h << std::endl;
 	std::cout << std::endl;
-}
 
-bool tile::isDiagonal(tile &t){
-	if (x_cord == 1 + t.x_cord && y_cord == 1 + t.y_cord) return true;
-	if (x_cord == 1 + t.x_cord && y_cord == -1 + t.y_cord) return true;
-	if (x_cord == -1 + t.x_cord && y_cord == 1 + t.y_cord) return true;
-	if (x_cord == -1 + t.x_cord && y_cord == -1 + t.y_cord) return true;
-	return false;
 }
 
 double tile::getTerrainFactor(){
@@ -118,4 +119,16 @@ double tile::getTerrainFactor(){
 
 int tile::getTerrainCode(){
 	return terr.getTerrainCode();
+}
+
+//si hay una undiad arriba
+//seteo en bool el flg
+//y pongo en pasable el bool indicado
+void tile::putUnitOver(bool b){
+	unit_over = true;
+	passable = b;
+}
+
+void tile::releaseUnitOver(){
+	unit_over = false;
 }

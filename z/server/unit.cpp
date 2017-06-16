@@ -1,6 +1,7 @@
 #include "unit.h"
 #include <iostream>
 #include "math.h"
+#include <vector>
 
 unit::unit(int unit_id, int owner, int x, int y): unit_id(unit_id), owner(owner), x(x), y(y), 
 dest_x(x), dest_y(y), target(nullptr) {
@@ -12,11 +13,11 @@ dest_x(x), dest_y(y), target(nullptr) {
 	
 };
 
-unit::unit(int unit_id, int class_id, int owner, int x, int y, 
-int health, int state, int speed, int a_range, int base_damage, bool explosive, 
+unit::unit(int unit_id, int class_id, int height, int width, int owner, int x, int y, 
+int health, int state, int blocking, int speed, int a_range, int base_damage, bool explosive, 
 int base_time, int unit_to_c, int tech_level): unit_id(unit_id),   
-class_id(class_id), owner(owner),x(x), y(y), b_health(health), 
-health(health), state(state), dest_x(x), dest_y(y) ,speed(speed), 
+class_id(class_id), height(height), width(width), owner(owner), x(x), y(y), b_health(health), 
+health(health), state(state), blocking(blocking), dest_x(x), dest_y(y) ,speed(speed), 
 driver(nullptr), target(nullptr), attack_range(a_range), 
 base_damage(base_damage), explosive_damage(explosive), auto_attack(false), base_time(base_time), 
 countdown(base_time), unit_code_to_create(unit_to_c), 
@@ -152,7 +153,9 @@ void unit::stop(){
 }
 
 bool unit::isInRange(unit &u){
-	if (sqrt(pow((this->x - u.x),2) + pow((this->y - u.y),2)) <= this->attack_range) {
+	if (sqrt(pow((this->getCenterX_D() - u.getCenterX_D()),2) + 
+	pow((this->getCenterY_D() - u.getCenterY_D()),2)) <= (this->attack_range + 
+	this->getRadius() + u.getRadius())) {
 		return true;
 	}
 	return false;
@@ -248,9 +251,10 @@ void unit::changeState(int s){
 
 bool unit::targetIsInRange(){
 	if (target) {
-		if (sqrt(pow((x - target->x),2) + pow((y - target->y),2)) <= this->attack_range) {
-		return true;
-		}
+		return this->isInRange(*target);
+		//if (sqrt(pow((x - target->x),2) + pow((y - target->y),2)) <= this->attack_range) {
+		//return true;
+		//}
 	}
 	return false;
 }
@@ -259,8 +263,8 @@ bool unit::targetIsInRange(){
 //sino me quedo quieto
 void unit::moveToTarget(){
 	if (target){
-		this->dest_x = target->getX();
-		this->dest_y = target->getY();
+		this->dest_x = target->getCenterX();
+		this->dest_y = target->getCenterY();
 		state = MOVING;
 	} else {
 		state = STANDING;
@@ -445,4 +449,39 @@ void unit::releaseFlag(){
 
 bool unit::sameTeam(unit *u){
 	return (this->team == u->team);
+}
+
+int unit::getWidth(){
+	return width;
+}
+
+int unit::getHeight(){
+	return height;
+}
+
+int unit::getCenterX(){
+	return x + (width / 2);
+}
+
+int unit::getCenterY(){
+	return y + (height / 2);
+}
+double unit::getCenterX_D(){
+	return x + (width / 2);
+}
+
+double unit::getCenterY_D(){
+	return y + (height / 2);
+}
+
+//el mas pequeño
+double unit::getRadius(){
+	if (height < width){
+		return (height / 2);
+	}
+	return (width / 2);
+}
+
+int unit::getBlockingType(){
+	return blocking;
 }

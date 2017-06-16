@@ -8,14 +8,16 @@ int getHealthFromUnit(int unit_c);
 int getFabTimeFromUnit(int unit_c);
 int getTechLvlFromUnit(int unit_c);
 
-enum class_units {ROBOT = 20, VEHICLE = 21, BUILDING = 22, FLAG_C = 23, BULLET = 24};
+enum class_units {ROBOT = 20, VEHICLE = 21, BUILDING = 22, FLAG_C = 23, BULLET = 24, BRIDGE_C = 25, BLOCK = 26};
 
 enum units {
 	GRUNT = 0, PSYCHO = 1, TOUGHT = 2, PYRO = 3, SNIPER = 4, LAZER = 5, 
 	JEEP = 6, MEDIUM_TANK = 7, LIGHT_TANK = 8, HEAVY_TANK = 9, MML = 10, 
 	FORT = 11, ROBOT_FACTORY = 12, VEHICLE_FACTORY = 13, 
 	FLAG = 14, 
-	LLAMAS = 15, HCP = 16, LASER = 17, MISIL = 18, BALAS = 19};
+	LLAMAS = 15, HCP = 16, LASER = 17, MISIL = 18, BALAS = 19, 
+	BRIDGE_V = 20, BRIDGE_H = 21,  //puente horiz y vert
+	ROCK = 22, ICE_B = 23};
 
 enum unit_speed { //veocidad (por seg ?)
 		ROBOT_SPEED = 4, JEEP_SPEED = 8, MEDIUM_TANK_SPEED = 5, 
@@ -60,7 +62,11 @@ HEAVY_TANK_TL = 4, MML_TL = 5 };
 enum range {GRUNT_RANGE = 7, PSYCHO_RANGE = 7, TOUGHT_RANGE = 5, 
 PYRO_RANGE = 6, SNIPER_RANGE = 10, LAZER_RANGE = 7, JEEP_RANGE = 6, 
 MEDIUM_TANK_RANGE = 7, LIGHT_TANK_RANGE = 6, HEAVY_TANK_RANGE = 8, 
-MML_RANGE = 8, FLAG_RANGE = 8};
+MML_RANGE = 8, FLAG_RANGE = 8, BULLET_RANGE = 3};
+
+//enumerados
+//no hace anda, bloquea y deja pasar
+enum block_cod {B_NOTHING, B_BLOCK, B_LET_PASS};
 
 #endif
 

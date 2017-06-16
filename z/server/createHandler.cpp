@@ -15,7 +15,7 @@ int &unit_id_c, int time, infoPlayers &ip){
 		unitBuilder ub;
 		//chequear donde se va a crear la unidad (posicion)
 		unit *u = ub.build(creator.unitToCreate(), creator.getOwner(), 
-		creator.getX(), creator.getY()+32);
+		creator.getCenterX() + creator.getRadius() + 16, creator.getCenterY());
 		units.insert(std::pair<int,unit*>(unit_id_c,u));
 		unit_id_c++;//incremento id_units
 		ip.incrementUnitsCount(creator.getOwner()); //incremento cant unidades player

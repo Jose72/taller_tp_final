@@ -4,6 +4,8 @@
 
 #include "tile.h"
 #include <vector>
+#include <map>
+#include "unit.h"
 
 //objecto protegido?
 class gameMap {
@@ -11,7 +13,6 @@ class gameMap {
 		int height;
 		int width;
 		std::vector<tile> casillas;
-		std::vector<bool> pasables;
 	public:
 		gameMap();
 		gameMap(int *casilla, int size);
@@ -21,9 +22,11 @@ class gameMap {
 		void getNeightboors(tile &q, std::vector<tile*> &ady);
 		tile getTile(int x, int y);
 		tile* getTileP(int x, int y);
-		tile* getTilePFromUnit(int x, int y);
-		std::vector<int> getTilesCodes();
+		tile* getTilePFromUnit(double x, double y);
 		void printMap();
+		void setBlocking(std::map<int,unit*> &units);
+		void seePassableForUnit(int unit_code);
+		
 };
 
 #endif

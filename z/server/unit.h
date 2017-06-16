@@ -1,9 +1,8 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include "../common/constants.h"
-#include "armament.h"
 #include <vector>
+#include "../common/constants.h"
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
 
@@ -13,6 +12,8 @@ class unit {
 	protected:
 		int unit_id;
 		int class_id;
+		int height;
+		int width;
 		int team;
 		int owner;
 		double x;
@@ -22,6 +23,8 @@ class unit {
 		
 		//estado
 		int state;
+		
+		int blocking;
 		
 		//movimiento
 		int dest_x;
@@ -50,8 +53,8 @@ class unit {
 		
 	public:
 		unit(int unit_id, int owner, int x, int y);
-		unit(int unit_id, int class_id, int owner, int x, int y, 
-	int health, int state, int speed, int a_range, int base_damage, bool explosive, 
+		unit(int unit_id, int class_id, int height, int width, int owner, int x, int y, 
+	int health, int state, int blocking, int speed, int a_range, int base_damage, bool explosive, 
 	int base_time, int unit_to_c, int tech_level);
 		void setPos(double p_x, double p_y);
 		bool isMoving();
@@ -61,6 +64,15 @@ class unit {
 		double getX_D();
 		int getY();
 		double getY_D();
+		
+		int getWidth();
+		int getHeight();
+		int getCenterX();
+		int getCenterY();
+		double getCenterX_D();
+		double getCenterY_D();
+		double getRadius();
+		
 		int getDestX();
 		int getDestY();
 		int getHealth();
@@ -72,6 +84,7 @@ class unit {
 		double getRelativeDamage();
 		int getTargetOwner();
 		bool isExplosiveDamage();
+		int getBlockingType();
 		
 		//seters
 		void changeState(int state);
@@ -101,7 +114,7 @@ class unit {
 		bool targetIsInRange();
 		bool canDriveTarget();
 		bool isDriving();
-
+		
 		//double getDamage(double time); 
 		int takeDamage(int dam, bool explosive);
 		
