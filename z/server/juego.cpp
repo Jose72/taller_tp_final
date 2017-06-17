@@ -17,10 +17,9 @@
 //cant equipos
 juego::juego(int creator, int cant_players, int game_t, int cant_teams): 
 id_creator(creator), max_players(cant_players), teams(cant_teams), 
-game_type(game_t), p_info(infoPlayers(cant_players, 
+game_type(game_t), g_info(infoGame(cant_players, 
 game_t, cant_teams)), running(false), started(false) {
 	id_unit_counter = 1; //se empieza contando desde 1
-	team_count = 1;
 }
 
 bool juego::gameStarted(){
@@ -44,19 +43,19 @@ bool juego::isCreator(int c){
 
 int juego::checkVictory(){
 	//para cada cliente
-	for (auto it = cli_ids.begin(); it != cli_ids.end(); ++it){
-		if (DEFEAT == p_info.updateVictoryConditions(*it)){
+	for (int i = 1; i <= teams; ++i){
+		if (DEFEAT == g_info.updateVictoryCond(i)){
 			//si fue derrotado, busco sus unidades y las seteo en DEFEATED
-			for (auto it2 = units.begin(); it2 != units.end(); ++it2){
-				unit *u = (it2->second);
-				if (u->getOwner() == (*it)){
+			for (auto it = units.begin(); it != units.end(); ++it){
+				unit *u = (it->second);
+				if (u->getOwner() == (i)){
 					u->changeState(DEFEATED);
 				}
 			}
 		}
 	}
 	//me fijo si hay ganador
-	int winner = p_info.checkForWinner();
+	int winner = g_info.checkForWinner();
 	if (winner != NO_WINNER){
 		std::cout << "WINNER: " << winner << std::endl;
 		for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -89,7 +88,7 @@ void juego::unit_cleaner(){
 			death_h.death(*u, units);//handler por si tiene q hacer algo
 			//si no es un edificio lo elimino
 			if (edificio){
-				p_info.decrementUnitsCount(u->getOwner()); //decremento cant unidadades player
+				g_info.decrementUnitsCount(u->getOwner()); //decremento cant unidadades player
 				delete it->second; // libero mem
 				it = units.erase(it); // borro de la lista
 				
@@ -113,7 +112,7 @@ bool juego::readyToStart(){
 	return false;
 }
 
-int juego::clientJoin(int cli_id, tSocket *cli_s){
+int juego::clientJoin(int cli_id, tSocket *cli_s, int team_n){
 	tLock l(game_m);
 	if (cli_skts.size() < (unsigned int) max_players){
 		cli_skts.push_back(cli_s);
@@ -123,7 +122,7 @@ int juego::clientJoin(int cli_id, tSocket *cli_s){
 		protocols.push_back(p);
 		
 		cli_ids.push_back(cli_id);
-		p_info.addNewPlayer(cli_id, p);
+		g_info.addNewPlayer(cli_id, p, team_n);
 		return 0;
 	}
 	return 1;
@@ -197,12 +196,20 @@ void juego::sendInit(){
 	
 	
 	mapa.setBlocking(units);
-	mapa.seePassableForUnit(ROBOT);
+	//mapa.seePassableForUnit(ROBOT);
 	//hay que inicilizar la info de cada jugador
 	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
-	p_info.initializePlayer(1, u3, 4);
-	p_info.initializePlayer(2, u4, 2);
+	
+	//mandar vector de fuertes por equipo
+	std::vector<unit*> forts_1;
+	forts_1.push_back(u3);
+	std::vector<unit*> forts_2;
+	forts_2.push_back(u4);
+	g_info.initializeTeam(1,forts_1, 4);
+	g_info.initializeTeam(2,forts_2, 2);
+	//g_info.initializePlayer(1, u3, 4);
+	//g_info.initializePlayer(2, u4, 2);
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -312,14 +319,16 @@ void juego::run(){
 			
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
-				actualizer(it->first, *u, units, mapa, 100, id_unit_counter, p_info);
+				actualizer(it->first, *u, units, mapa, 100, id_unit_counter, g_info);
 			}
 			
 			usleep(100000);
 			
-			//envio los tech levels
-			//p_info tiene la info de todos los players y un puntero a su protocolo para enviar
-			p_info.sendUpdateTechLvl();
+			//envio los tech levels -----  NO NECESARIO MALLLLLLL
+			for (auto it = protocols.begin(); it != protocols.end(); ++it){
+                 s = (*it)->sendUpdateTechLvl(5);
+            }
+			
 			//envio actualizacion de las unidades
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = (*it)->sendActualization(units);

@@ -167,7 +167,7 @@ void gameMap::setBlocking(std::map<int,unit*> &units){
 					} else {
 						p = true;
 					}
-					std::cout << "casi que block: " << i << "-" << j << std::endl; 
+					//std::cout << "casi que block: " << i << "-" << j << std::endl; 
 					t2->putUnitOver(p);
 				}
 			}

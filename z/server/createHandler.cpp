@@ -7,11 +7,11 @@
 
 
 int createHandler::createActualize(unit &creator, std::map<int, unit*> &units, 
-int &unit_id_c, int time, infoPlayers &ip){
+int &unit_id_c, int time, infoGame &ip){
 	//if (creator.getClassId() != BUILDING) return 1;
-	creator.updateCreationTimer(time); //avanzo el timer
+	creator.updateCreationTimer(time, ip.getCapturedTer(creator.getOwner())); //avanzo el timer
 	//si llego el timer a 0 y no alcnzo limite de unidades
-	if (creator.canCreate() && !ip.maxPopulationReached(creator.getOwner())){
+	if (creator.canCreate() && !ip.maxPopReached(creator.getOwner())){
 		unitBuilder ub;
 		//chequear donde se va a crear la unidad (posicion)
 		unit *u = ub.build(creator.unitToCreate(), creator.getOwner(), 

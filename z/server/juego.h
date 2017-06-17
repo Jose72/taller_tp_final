@@ -12,7 +12,7 @@
 #include "gameMap.h"
 #include "unit.h"
 #include "unitBuilder.h"
-#include "infoPlayer.h"
+#include "infoGame.h"
 #include "Protocol.h"
 #include <string>
 
@@ -25,13 +25,12 @@ class juego: public tThread{
 		int game_type;
 		gameMap mapa; //mapa
 		unitBuilder builder;
-		int team_count;
 		int id_unit_counter;
 		std::queue<Event> event_list; //cola de eventos
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
 		std::vector<serverProtocol*> protocols;//vector de protocolos de clientes
-		infoPlayers p_info; //info global de jugadores/equipos
+		infoGame g_info; //info global de jugadores/equipos
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
 		std::mutex event_m; //proteger eventos
 		std::mutex game_m;
@@ -50,7 +49,7 @@ class juego: public tThread{
 		void take_event(Event &e); //para pasarle los eventos desde los clientManager
 		void sendInit();
 		bool readyToStart();
-		int clientJoin(int cli_id, tSocket *cli_s);
+		int clientJoin(int cli_id, tSocket *cli_s, int team);
 		bool gameStarted();
 		void getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int &cant_t);
 		bool isCreator(int c);

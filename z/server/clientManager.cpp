@@ -79,8 +79,13 @@ int tClientManager::gameSelection(){
 		
 		//creo el juego
 		//harcodeo
-		j = new juego(id_client, cant_p, DEATHMATCH, teams);
-		j->clientJoin(id_client, &cli_skt);
+		
+		//si es deathmantc equipos = juagdores
+		int teams2 = teams;
+		if (type_game == DEATHMATCH) teams2 = cant_p;
+		
+		j = new juego(id_client, cant_p, DEATHMATCH, teams2);
+		j->clientJoin(id_client, &cli_skt, 1);
 		//pusheo en el vector
 		juegos.push_back(j);
 
@@ -133,7 +138,8 @@ int tClientManager::gameSelection(){
 		g_to_join = ntohl(g_to_join);
 		std::cout << "g_to join: "  << g_to_join << std::endl;
 
-		if (0 == juegos.joinGame(id_client, &cli_skt, &j, g_to_join)){ 
+		//RECIBIR EL TEAM!!!!!!!!!!
+		if (0 == juegos.joinGame(id_client, &cli_skt, &j, g_to_join, 2)){ 
 			
 			//envio confirmacion de que me uni
 			int confirm = htonl(0);

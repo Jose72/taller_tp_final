@@ -131,8 +131,8 @@ class unit {
 		void destroy();
 		
 		//creacion-captura
-		void actualizeTimer(int time);
-		void updateCreationTimer(int time);
+		void actualizeTimer(int time); // para ataque
+		void updateCreationTimer(int time, int t_count); ///para crear unidad
 		void resetTimer();
 		int unitToCreate();
 		

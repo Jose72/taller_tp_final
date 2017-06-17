@@ -21,7 +21,7 @@ int test_a_start(){
 	std::map<int, unit*> units;
 	int id_unit_counter = 1;
 	int map_codes[900] = {0};
-	infoPlayers p_info(2,DEATHMATCH,0);
+	infoGame p_info(2,DEATHMATCH,0);
 	map_codes[15] = 1;
 	map_codes[16] = 1;
 	map_codes[17] = 1;
@@ -97,7 +97,7 @@ int test_create_units(){
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	int unit_id_count = 4;
 	std::set<int> d_units;
 	std::set<int> a_units;
@@ -132,22 +132,24 @@ int test_create_units(){
 	return 0;
 }
 
+
+/*
 int test_info_players(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	deathHandler death_h;
 	int unit_id_count = 9;
 	std::set<int> d_units;
 	std::set<int> a_units;
 	
 	
-	infoPlayers ip(2,DEATHMATCH,0);
+	infoGame ip(2,DEATHMATCH,0);
 	ip.addNewPlayer(1);
 	ip.addNewPlayer(2);
-	/*
+	//-------
 	//se le murieron tdas la unidades
 	unit *r1 = ub.build(FORT, 1, 40, 40);
 	unit *r2 = ub.build(GRUNT, 1, 70, 40);
@@ -157,7 +159,7 @@ int test_info_players(){
 	unit *r6 = ub.build(GRUNT, 2, 70, 55);
 	unit *r7 = ub.build(GRUNT, 2, 77, 55);
 	unit *r8 = ub.build(GRUNT, 2, 84, 55);
-	*/
+	//--------------
 	
 	//se le murio el fuerte
 	unit *r1 = ub.build(FORT, 1, 40, 40);
@@ -245,13 +247,15 @@ int test_info_players(){
 	return 0;
 	return 0;
 }
+*/
+
 
 int test_unit_driving(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	int unit_id_count = 4;
 	std::set<int> d_units;
 	std::set<int> a_units;
@@ -286,13 +290,14 @@ int test_unit_driving(){
 	return 0;
 }
 
+/*
 int flag_capture(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
 	int unit_id_count = 6;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	
 	
 	unit *r1 = ub.build(GRUNT, 1, 35, 18);
@@ -320,12 +325,13 @@ int flag_capture(){
 		}
 		if (i == 50) {
 			r4->move(200,200);
-			/*
+			//-------
 			std::map<int,unit*>::iterator it;
 			it = units.find(4);
 			(it->second)->stopFollowers();
 			units.erase(4);
-			*/
+			
+			//-----------
 		}
 		
 	}
@@ -340,13 +346,15 @@ int flag_capture(){
 	return 0;
 }
 
+*/
+
 int test_auto_attack_unit(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
 	std::map<int, unit*> units;
 	unitBuilder ub;
 	int unit_id_count = 3;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	
 	unit *r1 = ub.build(GRUNT, 1, 37, 18);
 	unit *r2 = ub.build(GRUNT, 2, 40, 18);
@@ -393,7 +401,7 @@ int test_create_unit(){
 	std::map<int, unit*> units;
 	unitBuilder ub;
 	int unit_id_count = 2;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	
 	
 	unit *r1 = ub.build(FORT, 1, 35, 18);
@@ -438,7 +446,7 @@ int map_codes[100] = {0};
 	unitBuilder ub;
 	deathHandler dh;
 	int unit_id_count = 3;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	
 	
 	unit *r1 = ub.build(GRUNT, 1, 35, 18);
@@ -491,7 +499,7 @@ int test_bullet_attack(){
 	unitBuilder ub;
 	deathHandler dh;
 	int unit_id_count = 3;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	
 	
 	unit *r1 = ub.build(GRUNT, 1, 35, 18);
@@ -542,7 +550,7 @@ int test_move_unit(){
 	std::map<int, unit*> units;
 	unitBuilder ub;
 	int unit_id_count = 1;
-	infoPlayers p_info(4, DEATHMATCH, 0);
+	infoGame p_info(4, DEATHMATCH, 0);
 	
 	unit r1(1, GRUNT, 35, 18);
 	unit *r2 = ub.build(MISIL, 60, 60);

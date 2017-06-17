@@ -23,7 +23,7 @@ class actualizeUnit: public behaviour {
 		captureHandler capture_h;
 	public:
 		int operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, 
-		double time, int &unit_id_count, infoPlayers &ip);
+		double time, int &unit_id_count, infoGame &ip);
 };
 
 #endif

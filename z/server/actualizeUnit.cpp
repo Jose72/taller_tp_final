@@ -29,7 +29,7 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 	return 1;
 }
 
-int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count, infoPlayers &ip){
+int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &units, gameMap &mapa, double time, int &unit_id_count, infoGame &ip){
 	int state = u.getState();
 	switch(state){
 		case MOVING:

@@ -414,11 +414,11 @@ bool unit::isExplosiveDamage(){
 	return explosive_damage;
 }
 
-void unit::updateCreationTimer(int time){
+void unit::updateCreationTimer(int time, int t_count){
 	if (countdown - time < 0){
 		countdown = 0;
 	} else {
-		countdown -=(time / tech_level) / (sqrt(1-(this->getRelativeDamage())));
+		countdown -=(time / t_count) / (sqrt(1-(this->getRelativeDamage())));
 	}
 }
 

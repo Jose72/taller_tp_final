@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &units, int time, infoPlayers &ip){
+void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &units, int time, infoGame &ip){
 	if (!u.getTarget()){
 		//chequeo por unidad cercana
 		for (auto it = units.begin(); it != units.end(); ++it){
@@ -31,7 +31,8 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 				if (u.timerIsZero()){
 					//actualizo tech levels de las fabricas
 					std::cout << "---------------flga captured by: "<< u.getTargetOwner() << std::endl;
-					this->captureActualize(u.getOwner(), u.getTargetOwner(), units, ip);
+					//this->captureActualize(u.getOwner(), u.getTargetOwner(), units, ip);
+					ip.updateCapturedTer(u.getOwner(), u.getTargetOwner());
 					//seteo el owner nuevo
 					u.changeOwnerForTargetOwner();
 				}
@@ -44,8 +45,9 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 }
 
 
-void captureHandler::captureActualize(int old_owner, int new_owner, std::map<int, unit*> &units, infoPlayers &ip){
+void captureHandler::captureActualize(int old_owner, int new_owner, std::map<int, unit*> &units, infoGame &ip){
 	//actualizo player info
+	/*
 	ip.updateTechLevels(old_owner,new_owner);
 	int tech_lvl_old = ip.getPlayerTechLevel(old_owner);
 	int tech_lvl_new = ip.getPlayerTechLevel(new_owner);
@@ -65,4 +67,5 @@ void captureHandler::captureActualize(int old_owner, int new_owner, std::map<int
 			}
 		}
 	}
+	*/ 
 }
