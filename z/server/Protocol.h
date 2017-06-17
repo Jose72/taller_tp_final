@@ -21,6 +21,7 @@ public:
     //ENVIAR
     void send_id_client(int id_client);
     void send_map(int * map_s, unsigned int size);
+	void send_map(std::vector<int> &map_s);
     void send_units_game(std::map<int,unit*> &map_units);
     void confirm_client(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
 	int sendActualization(std::map<int,unit*> &map_units);

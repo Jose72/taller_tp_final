@@ -11,6 +11,7 @@
 #include "infoPlayer.h"
 #include <ctime>
 #include "Protocol.h"
+#include "JsonHandler.h"
 
 //cant jugadores
 //tipo de juego(deathmatch o equipos)
@@ -129,33 +130,10 @@ int juego::clientJoin(int cli_id, tSocket *cli_s, int team_n){
 }
 
 void juego::sendInit(){
-	int map_codes[900] = {0};
-	map_codes[15] = 1;
-	map_codes[16] = 1;
-	map_codes[17] = 1;
-	map_codes[18] = 1;
-	map_codes[31] = 1;
-	map_codes[32] = 1;
-	map_codes[33] = 1;
-	map_codes[34] = 1;
-	map_codes[43] = 2;
-	map_codes[44] = 2;
-	map_codes[45] = 2;
-	map_codes[46] = 2;
-	map_codes[47] = 2;
-	map_codes[48] = 2;
-	map_codes[53] = 2;
-	map_codes[54] = 2;
-	map_codes[55] = 2;
-	map_codes[56] = 2;
-	map_codes[57] = 2;
-	map_codes[58] = 2;
+	JsonHandler jsonHandler;
+	std::vector<int> mapDes = jsonHandler.jsonToMap();
+	mapa = gameMap(mapDes);
 
-	int sss = 900;
-	
-	//cargo mi mapa
-	mapa = gameMap(map_codes, sss);
-	
 	
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
 	unit *u1 = builder.build(GRUNT, 1, 300, 400);
@@ -213,7 +191,7 @@ void juego::sendInit(){
 
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
-		(*it)->send_map((int*)&map_codes,sss);
+		(*it)->send_map(mapDes);
 		(*it)->send_units_game(units);
 	}
 

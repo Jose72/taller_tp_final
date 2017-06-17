@@ -5,10 +5,10 @@
 
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 1
-#define WINDOW_H 1600
-#define WINDOW_W 1200
-#define CAMERADX 640
-#define CAMERADY 640
+#define WINDOW_H 960
+#define WINDOW_W 960
+#define CAMERADX 600
+#define CAMERADY 600
 
 EventHandler::EventHandler(SDL_Surface *screen,
                            PlayerInterface &p,

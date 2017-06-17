@@ -24,6 +24,16 @@ void serverProtocol::send_map(int * map_s, unsigned int size) {
     }
 }
 
+void serverProtocol::send_map(std::vector<int> &map_s) {
+    int map_size = htonl(map_s.size());
+    socket.send((char*) &map_size,4);
+
+    for (int i = 0; i <map_s.size() ; ++i) {
+        int tile = htonl(map_s[i]);
+        socket.send((char*) &tile,4);
+    }
+}
+
 void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
     int units_size = htonl(map_units.size());
     socket.send((char*) &units_size,4);

@@ -29,8 +29,8 @@
 
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 1
-#define WINDOW_H 1600
-#define WINDOW_W 1200
+#define WINDOW_H 600
+#define WINDOW_W 600
 #define PLAYER_INTERFACE_W 300
 #define INITIAL_TECH_LEVEL 1
 #define NO_WINNER -1
