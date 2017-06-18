@@ -16,11 +16,11 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 		unit *target = it->second;
 		//chequeo quien es el dueño de la unidad
 		
-		if (attacker.isEnemy(*target) && 
+		if (attacker.isEnemy(*target) && (target->isAlive()) &&
 		(target->getClassId() == ROBOT || target->getClassId() == VEHICLE || target->getClassId() == BUILDING)){
 			//si esta en rango
 			if (attacker.isInRange(*target)){
-				std::cout << "target in range" << it->first << std::endl;
+				//std::cout << "target in range" << it->first << std::endl;
 				attacker.setAutoAttack(target);
 				return 0;
 			}

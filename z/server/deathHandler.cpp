@@ -18,7 +18,11 @@ int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units){
 	std::cout << "murio vehicle" << std::endl;
 	unit* a = u.getDriver();
 	std::cout << "vehicle driver"  << u.getDriver() << std::endl;
-	u.releaseDriver();
+	std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
+	a->setPos(u.getX(), u.getY());
+	std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
+	a->changeState(STANDING);
+	//u.releaseDriver();
 	return 0;
 }
 
@@ -31,7 +35,7 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 			ip.decrementUnitsCount(u.getOwner());
 			break;
 		case VEHICLE:
-			deathVehicle(u, units);
+			//deathVehicle(u, units);
 			ip.decrementUnitsCount(u.getOwner());
 			break;
 		case BUILDING:

@@ -38,6 +38,7 @@ bool team::fortsAlive(){
 }
 
 int team::updateVictoryConditions(){
+	//std::cout << "team: " << team_n << " u: " << unit_count << " fa: " << this->fortsAlive() << std::endl;
 	if ((unit_count == 0 || !this->fortsAlive())) {
 		state = DEFEAT;
 		return DEFEAT;

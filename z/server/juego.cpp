@@ -88,7 +88,7 @@ void juego::unit_cleaner(){
 			death_h.death(*u, units, id_unit_counter, g_info);//handler por si tiene q hacer algo
 			//si no es un edificio lo elimino
 			if (not_edificio){
-				g_info.decrementUnitsCount(u->getOwner()); //decremento cant unidadades player
+				//g_info.decrementUnitsCount(u->getOwner()); //decremento cant unidadades player
 				delete it->second; // libero mem
 				it = units.erase(it); // borro de la lista
 				
@@ -172,7 +172,7 @@ void juego::sendInit(){
 	id_unit_counter++;
 	
 	
-	mapa.setBlocking(units);
+	
 	//mapa.seePassableForUnit(ROBOT);
 	//hay que inicilizar la info de cada jugador
 	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
@@ -183,11 +183,27 @@ void juego::sendInit(){
 	forts_1.push_back(u3);
 	std::vector<unit*> forts_2;
 	forts_2.push_back(u4);
+	
 	g_info.initializeTeam(1,forts_1, 4);
 	g_info.initializeTeam(2,forts_2, 2);
 	//g_info.initializePlayer(1, u3, 4);
 	//g_info.initializePlayer(2, u4, 2);
+	
+	
+	/*
+	//probar con 3 juagdores
+	unit *u10 = builder.build(FORT ,3 ,128, 640);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u10));
+	id_unit_counter++;
+	unit *u11 = builder.build(GRUNT ,3 ,200, 640);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u11));
+	id_unit_counter++;
+	std::vector<unit*> forts_3;
+	forts_3.push_back(u10);
+	g_info.initializeTeam(3,forts_3, 1);
+	*/
 
+	mapa.setBlocking(units);
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		(*it)->send_map(mapDes);

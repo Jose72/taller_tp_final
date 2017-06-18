@@ -25,6 +25,7 @@ int createHandler::createVehicleActualize(unit &creator, std::map<int, unit*> &u
 	units.insert(std::pair<int,unit*>(unit_id_c,u));
 	unit_id_c++;//incremento id_units
 	
+	/*
 	//creo driver
 	unit *driv = ub.build(GRUNT, creator.getOwner(), 
 	creator.getCenterX() + creator.getRadius() + 16, creator.getCenterY());
@@ -33,6 +34,8 @@ int createHandler::createVehicleActualize(unit &creator, std::map<int, unit*> &u
 	unit_id_c++;//incremento id_unit
 	
 	ip.incrementUnitsCount(creator.getOwner()); 
+	*/ 
+	
 	ip.incrementUnitsCount(creator.getOwner());
 	
 	//reseteo el timer

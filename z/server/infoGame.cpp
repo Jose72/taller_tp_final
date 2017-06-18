@@ -127,7 +127,8 @@ void infoGame::initializeTeams(){
 		for (unsigned int i = 1; i <= team_limit; ++i){
 			team t(i, max_players/max_teams);
 			teams.push_back(t);
-			std::cout << "captured init:" << t.getCapturedTer() << std::endl;
+			std::cout << "team: " << i << std::endl;
+			std::cout << "ppt: " << max_players/max_teams << std::endl;
 		}
 	}
 
