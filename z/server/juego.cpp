@@ -12,6 +12,7 @@
 #include <ctime>
 #include "Protocol.h"
 #include "JsonHandler.h"
+#include "defeatHandler.h"
 
 //cant jugadores
 //tipo de juego(deathmatch o equipos)
@@ -46,15 +47,9 @@ int juego::checkVictory(){
 	//para cada cliente
 	for (int i = 1; i <= teams; ++i){
 		if (DEFEAT == g_info.updateVictoryCond(i)){
+			//defeatHandler df;
 			//si fue derrotado, hay que ver que hacer con las unidades
-			/*
-			for (auto it = units.begin(); it != units.end(); ++it){
-				unit *u = (it->second);
-				if (u->getOwner() == (i)){
-					u->changeState(DEFEATED);
-				}
-			}
-			*/ 
+			//df.defeatPlayer(i, units);
 		}
 	}
 	//me fijo si hay ganador
@@ -88,7 +83,6 @@ void juego::unit_cleaner(){
 			death_h.death(*u, units, id_unit_counter, g_info);//handler por si tiene q hacer algo
 			//si no es un edificio lo elimino
 			if (not_edificio){
-				//g_info.decrementUnitsCount(u->getOwner()); //decremento cant unidadades player
 				delete it->second; // libero mem
 				it = units.erase(it); // borro de la lista
 				
@@ -173,6 +167,34 @@ void juego::sendInit(){
 	id_unit_counter++;
      */
 	
+	unit *u1 = builder.build(GRUNT, 1, 300, 400);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
+	id_unit_counter++;
+	
+	unit *u8 = builder.build(GRUNT, 2, 10, 230);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
+	id_unit_counter++;
+	
+	///////////////77
+	//TERRITORIOS HARDCODEADO
+	unit *u2 = builder.build(FLAG, 50, 500);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u2));
+	id_unit_counter++;
+	
+	unit *u3 = builder.build(VEHICLE_FACTORY, 0, 100, 500);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u3));
+	id_unit_counter++;
+	
+	unit *u4 = builder.build(ROBOT_FACTORY, 0, 100, 600);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u4));
+	id_unit_counter++;
+	
+	std::vector<unit*> fac;
+	fac.push_back(u3);
+	fac.push_back(u4);
+	territory t(u2, fac);
+	territorios.push_back(t);
+	///////////////////////////////////
 	
 	
 	//mapa.seePassableForUnit(ROBOT);
@@ -186,11 +208,13 @@ void juego::sendInit(){
     forts_1.push_back(units[1]);
     std::vector<unit*> forts_2;
     forts_2.push_back(units[2]);
-    g_info.initializeTeam(1,forts_1, 4);
-    g_info.initializeTeam(2,forts_2, 2);
+    g_info.initializeTeam(1,forts_1, 1);
+    g_info.initializeTeam(2,forts_2, 1);
     //g_info.initializePlayer(1, u3, 4);
 	//g_info.initializePlayer(2, u4, 2);
 	
+	
+
 	
 	/*
 	//probar con 3 juagdores
@@ -243,12 +267,12 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			//moverse
 			std::map<int,unit*>::iterator it2;
 			it2 = units.find(e.getX());
-			int class_target = it2->first;
-			if (class_target != e.getX()) return; //no encontro a la unidad
+			int unit_uniq_code = it2->first;
+			if (unit_uniq_code != e.getX()) return; //no encontro a la unidad
 			
 			//solo robots o vehiculos
 			if (((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) && 
-			class_target != FLAG) {
+			(it2->second)->getUnitId() != FLAG) {
 				(it->second)->attack(it2->second);
 				}
 			}
@@ -257,14 +281,15 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 		case 2: 
 			{
 			//crear
-            std::cout << "create order" << std::endl;
+            std::cout << "create order: " << e.getX() << std::endl;
 			int u_to_create = e.getX();
 			//si el tech level no le da salgo
-			if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
+			//if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
 			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*10);
-			}
-			return;
 			
+			return;
+			}
+		
 		/*
 		case 3: //conducir
 			//busco la unidad destino
@@ -315,6 +340,11 @@ void juego::run(){
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
 				actualizer(it->first, *u, units, mapa, 100, id_unit_counter, g_info);
+			}
+			
+			//actualzicion de territorios
+			for (auto it = territorios.begin(); it != territorios.end(); ++it){
+				it->changeOwnership();
 			}
 			
 			usleep(100000);

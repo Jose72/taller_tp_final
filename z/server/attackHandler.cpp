@@ -31,7 +31,7 @@ int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, 
 //ATAQUE COMUN
 int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
 	unit *attacked = attacker.getTarget();
-	if (attacker.targetIsInRange()){
+	if (attacker.targetIsInRange() && attacker.targetIsEnemy()){
 			//actualiza el timer
 			attacker.actualizeTimer(time);
 			//si estoy en cond de atacar lo hago
@@ -63,7 +63,7 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 //AUTO-ATAQUE COMUN
 int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
 	unit *attacked = attacker.getTarget();
-	if (attacker.targetIsInRange()){
+	if (attacker.targetIsInRange() && attacker.targetIsEnemy()){
 			//actualiza el timer
 			attacker.actualizeTimer(time);
 			//si estoy en cond de atacar lo hago
@@ -87,7 +87,7 @@ int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*
 		//si me fui de rango
 		//remuevo el target y quedo en STANDING
 		//(autoataque sigue encendido)
-		std::cout << "reset autoataq" << std::endl;
+		//std::cout << "reset autoataq" << std::endl;
 		attacker.removeTarget(attacked);
 		attacker.changeState(STANDING);
 		attacker.resetTimer();
@@ -102,7 +102,7 @@ int attackHandler::attackBulletActualize(unit &attacker, int time){
 	
 	//si el taget enta en rango
 	//recibe daño
-	if (attacker.targetIsInRange()){
+	if (attacker.targetIsInRange() && attacker.targetIsEnemy()){
 			attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 	}
 	

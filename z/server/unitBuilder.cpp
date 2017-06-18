@@ -31,7 +31,7 @@ unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 			PYRO_HEALTH, STANDING, B_NOTHING, ROBOT_SPEED, PYRO_RANGE*5, LANZALLAMAS_D, true, PYRO_SF, LLAMAS, PYRO_TL);
 		case SNIPER:
 			return new unit(unit_code, ROBOT, ROB_SIZE_D, ROB_SIZE_D, owner, x, y, 
-			SNIPER_HEALTH, STANDING, B_NOTHING, ROBOT_SPEED, SNIPER_RANGE*5, BALAS_D, true, SNIPER_SF, BALAS, SNIPER_TL);
+			SNIPER_HEALTH, STANDING, B_NOTHING, ROBOT_SPEED, SNIPER_RANGE*5, BALAS_D, false, SNIPER_SF, BALAS, SNIPER_TL);
 		case LAZER:
 			return new unit(unit_code, ROBOT, ROB_SIZE_D, ROB_SIZE_D, owner, x, y, 
 			LAZER_HEALTH, STANDING, B_NOTHING, ROBOT_SPEED, LAZER_RANGE*5, LASER_D, false, LAZER_SF, LASER, LAZER_TL);
@@ -61,10 +61,10 @@ unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 			BUILDING_HEALTH, CREATING, B_BLOCK, 0, 0, 0, false, GRUNT_F_TIME*1000, GRUNT, 1);
 		case VEHICLE_FACTORY:
 			return new unit(unit_code, BUILDING, FAC_SIZE_D, FAC_SIZE_D, owner, x, y, 
-			BUILDING_HEALTH, CREATING, B_BLOCK, 0, 0, 0, false, JEEP_F_TIME*1000, JEEP, 1);
+			BUILDING_HEALTH, NO_STATE, B_BLOCK, 0, 0, 0, false, JEEP_F_TIME*1000, JEEP, 1);
 		case ROBOT_FACTORY:
 			return new unit(unit_code, BUILDING, FAC_SIZE_D, FAC_SIZE_D, owner, x, y, 
-			BUILDING_HEALTH, CREATING, B_BLOCK, 0, 0, 0, false, GRUNT_F_TIME*1000, GRUNT, 1);
+			BUILDING_HEALTH, NO_STATE, B_BLOCK, 0, 0, 0, false, GRUNT_F_TIME*1000, GRUNT, 1);
 			
 			
 		case FLAG:

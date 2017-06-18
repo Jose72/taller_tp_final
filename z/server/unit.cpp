@@ -204,11 +204,12 @@ void unit::printPosDest(){
 	std::cout << "y: " << y << " d_y: " << dest_y << std::endl;
 }
 
-bool unit::isEnemy(unit &u){
+bool unit::isEnemy(unit *u){
 	//pendiente: chequear si el owner es mageMap 
 	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
-	if (u.owner == 0) return false;
-	if (this->owner != u.owner) {
+	if (!u) return false;
+	if (u->owner == 0) return false;
+	if (this->owner != u->owner) {
 		//if (this->sameTeam(&u)) return false;
 		return true;
 	}
@@ -279,7 +280,7 @@ void unit::moveToTarget(){
 }
 
 bool unit::targetIsEnemy(){
-	if (this->isEnemy(*target)) return true;
+	if (this->isEnemy(target)) return true;
 	return false;
 }
 

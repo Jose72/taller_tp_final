@@ -8,6 +8,7 @@ int createHandler::createcommonActualize(unit &creator, std::map<int, unit*> &un
 	//chequear donde se va a crear la unidad (posicion)
 	unit *u = ub.build(creator.unitToCreate(), creator.getOwner(), 
 	creator.getCenterX() + creator.getRadius() + 16, creator.getCenterY());
+	std::cout << "unti creted: " << creator.unitToCreate() << std::endl;
 	units.insert(std::pair<int,unit*>(unit_id_c,u));
 	unit_id_c++;//incremento id_units
 	ip.incrementUnitsCount(creator.getOwner()); //incremento cant unidades player

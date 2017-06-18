@@ -15,6 +15,7 @@
 #include "infoGame.h"
 #include "Protocol.h"
 #include <string>
+#include "territory.h"
 
 class juego: public tThread{
 	private:
@@ -30,6 +31,7 @@ class juego: public tThread{
 		std::map<int, unit*> units; //mapa para unidades con id unica cada una
 		std::vector<tSocket*> cli_skts; //vector de sockets de clientes
 		std::vector<serverProtocol*> protocols;//vector de protocolos de clientes
+		std::vector<territory> territorios;
 		infoGame g_info; //info global de jugadores/equipos
 		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
 		std::mutex event_m; //proteger eventos

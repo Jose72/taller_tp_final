@@ -2,10 +2,13 @@
 #include <iostream>
 #include "unitBuilder.h"
 
+
+//si es un fuerte creo la bandera
+//paso el edificio a DESTROYED 
 int deathHandler::deathBuilding(unit &u, std::map<int, unit*> &units, int &id_units_count){
 	if (u.getUnitId() == FORT) {
 		unitBuilder ub;
-		unit *f = ub.build(FLAG, u.getCenterX(), u.getCenterY());
+		unit *f = ub.build(FLAG, u.getX(), u.getY());
 		f->changeOwner(u.getOwner());
 		units.insert(std::pair<int,unit*>(id_units_count,f));
 		id_units_count++;

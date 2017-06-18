@@ -109,7 +109,7 @@ class unit {
 		bool isAlive();
 		bool isDead();
 		bool canAttack();
-		bool isEnemy(unit &u);
+		bool isEnemy(unit *u);
 		bool canCreate();
 		bool autoAttackEnabled();
 		bool timerIsZero();
