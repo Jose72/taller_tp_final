@@ -12,7 +12,7 @@ void JsonHandler::toJson(std::vector<int> descriptorVector) {
 
     Json::Value vec(Json::arrayValue);
 
-    for (int i = 0; i <descriptorVector.size() ; ++i) {
+    for (unsigned int i = 0; i <descriptorVector.size() ; ++i) {
         vec.append(Json::Value(descriptorVector[i]));
     }
 
@@ -32,7 +32,7 @@ std::vector<int> JsonHandler::jsonToMap() {
         std::cout << reader.getFormattedErrorMessages();
         exit(1);
     } else {
-        for (int i = 0; i <root.size() ; ++i) {
+        for (unsigned int i = 0; i <root.size() ; ++i) {
             mapDescriptor.push_back(root[i].asInt());
         }
     }

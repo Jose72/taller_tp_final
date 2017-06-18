@@ -46,13 +46,15 @@ int juego::checkVictory(){
 	//para cada cliente
 	for (int i = 1; i <= teams; ++i){
 		if (DEFEAT == g_info.updateVictoryCond(i)){
-			//si fue derrotado, busco sus unidades y las seteo en DEFEATED
+			//si fue derrotado, hay que ver que hacer con las unidades
+			/*
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = (it->second);
 				if (u->getOwner() == (i)){
 					u->changeState(DEFEATED);
 				}
 			}
+			*/ 
 		}
 	}
 	//me fijo si hay ganador
@@ -70,25 +72,22 @@ int juego::checkVictory(){
 
 void juego::stop(){
 	std::cout << "juego stop" << std::endl;	
-	
 	//rompo los sockets
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 			(*it)->shutdown(SHUT_WR);
 	}
-	
 	std::cout << "juego stop out" << std::endl;	
-	
 }
 
 void juego::unit_cleaner(){
 	deathHandler death_h;
 	for (auto it = units.begin(); it != units.end(); ){
 		unit *u = it->second;
-		bool edificio = (u->getClassId() != BUILDING);
+		bool not_edificio = (u->getClassId() != BUILDING);
 		if (u->isDead()) {
-			death_h.death(*u, units);//handler por si tiene q hacer algo
+			death_h.death(*u, units, id_unit_counter, g_info);//handler por si tiene q hacer algo
 			//si no es un edificio lo elimino
-			if (edificio){
+			if (not_edificio){
 				g_info.decrementUnitsCount(u->getOwner()); //decremento cant unidadades player
 				delete it->second; // libero mem
 				it = units.erase(it); // borro de la lista

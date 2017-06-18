@@ -128,6 +128,11 @@ void unit::drive(unit *vehicle){
 	//si estoy en rango lo conduzco, sino me pongo en moving
 	if (this->targetIsInRange() && this->canDriveTarget()){
 		this->driveTarget();
+		/*
+		//setear una pos invalida
+		x = -200;
+		y = -200;
+		*/
 	} else {
 		this->moveToTarget();
 	}
@@ -440,12 +445,6 @@ void unit::releaseDriver(){
 	}
 }
 
-void unit::releaseFlag(){
-	if (driver){
-		driver->target = nullptr;
-		driver->state = CHECKING_CAPTURE;
-	}
-}
 
 bool unit::sameTeam(unit *u){
 	return (this->team == u->team);
@@ -484,4 +483,8 @@ double unit::getRadius(){
 
 int unit::getBlockingType(){
 	return blocking;
+}
+
+void unit::changeOwner(int o){
+	owner = o;
 }

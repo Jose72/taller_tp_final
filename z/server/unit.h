@@ -92,6 +92,7 @@ class unit {
 		void decreaseTechLvl();
 		void increaseTechLvl();
 		void setTechLvl(int tl);
+		void changeOwner(int o);
 		
 		//events
 		void move(int d_x, int d_y);
@@ -138,7 +139,6 @@ class unit {
 		
 		//driving
 		void releaseDriver();
-		void releaseFlag();
 		
 		//targeting
 		void setTarget(unit *u);
