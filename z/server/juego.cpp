@@ -132,8 +132,9 @@ void juego::sendInit(){
 	JsonHandler jsonHandler;
 	std::vector<int> mapDes = jsonHandler.jsonToMap();
 	mapa = gameMap(mapDes);
+    jsonHandler.jsonToUnits(id_unit_counter,builder,units);
 
-	
+    /*
 	//unit* u1 = new unit(1, GRUNT, 60, 15);
 	unit *u1 = builder.build(GRUNT, 1, 300, 400);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
@@ -170,6 +171,7 @@ void juego::sendInit(){
 	unit *u9 = builder.build(GRUNT, 2, 20, 230);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u9));
 	id_unit_counter++;
+     */
 	
 	
 	
@@ -179,14 +181,14 @@ void juego::sendInit(){
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
 	
 	//mandar vector de fuertes por equipo
-	std::vector<unit*> forts_1;
-	forts_1.push_back(u3);
-	std::vector<unit*> forts_2;
-	forts_2.push_back(u4);
-	
-	g_info.initializeTeam(1,forts_1, 4);
-	g_info.initializeTeam(2,forts_2, 2);
-	//g_info.initializePlayer(1, u3, 4);
+
+    std::vector<unit*> forts_1;
+    forts_1.push_back(units[1]);
+    std::vector<unit*> forts_2;
+    forts_2.push_back(units[2]);
+    g_info.initializeTeam(1,forts_1, 4);
+    g_info.initializeTeam(2,forts_2, 2);
+    //g_info.initializePlayer(1, u3, 4);
 	//g_info.initializePlayer(2, u4, 2);
 	
 	
