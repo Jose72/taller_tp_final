@@ -65,9 +65,27 @@ unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 		case ROBOT_FACTORY:
 			return new unit(unit_code, BUILDING, FAC_SIZE_D, FAC_SIZE_D, owner, x, y, 
 			BUILDING_HEALTH, CREATING, B_BLOCK, 0, 0, 0, false, GRUNT_F_TIME*1000, GRUNT, 1);
+			
+			
 		case FLAG:
 			return new unit(unit_code, FLAG_C, FLAG_SIZE_D, FLAG_SIZE_D, 0, x, y, 
 			0, CHECKING_CAPTURE, B_NOTHING, 0, FLAG_RANGE*5, 0, false, FLAG_CAPTURE_TIME, -1, 0);
+			
+		//PUENTE
+		case BRIDGE_V:
+			return new unit(unit_code, BRIDGE_C, BRIDGE_H1, BRIDGE_W1, 0, x, y, 
+			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
+		case BRIDGE_H:
+			return new unit(unit_code, BRIDGE_C, BRIDGE_H2, BRIDGE_W2, 0, x, y, 
+			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
+		
+		//BLOQUES
+		case ROCK:
+			return new unit(unit_code, BLOCK, BLOCK_SIZE_D, BLOCK_SIZE_D, 0, x, y, 
+			0, NO_STATE, B_BLOCK, 0, 0, 0, false, 0, -1, 0);
+		case ICE_B:
+			return new unit(unit_code, BLOCK, BLOCK_SIZE_D, BLOCK_SIZE_D, 0, x, y, 
+			0, NO_STATE, B_BLOCK, 0, 0, 0, false, 0, -1, 0);
 			
 		default:
 			return nullptr;
@@ -101,18 +119,18 @@ unit* unitBuilder::build(int unit_code, int x, int y){
 			0, MOVING, B_NOTHING, BULLET_SPEED, BULLET_RANGE, MISILES_D, true, 0, -1, 0);
 			
 		//PUENTE
-			case BRIDGE_V:
+		case BRIDGE_V:
 			return new unit(unit_code, BRIDGE_C, BRIDGE_H1, BRIDGE_W1, 0, x, y, 
 			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
-			case BRIDGE_H:
+		case BRIDGE_H:
 			return new unit(unit_code, BRIDGE_C, BRIDGE_H2, BRIDGE_W2, 0, x, y, 
 			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
 		
 		//BLOQUES
-			case ROCK:
+		case ROCK:
 			return new unit(unit_code, BLOCK, BLOCK_SIZE_D, BLOCK_SIZE_D, 0, x, y, 
 			0, NO_STATE, B_BLOCK, 0, 0, 0, false, 0, -1, 0);
-			case ICE_B:
+		case ICE_B:
 			return new unit(unit_code, BLOCK, BLOCK_SIZE_D, BLOCK_SIZE_D, 0, x, y, 
 			0, NO_STATE, B_BLOCK, 0, 0, 0, false, 0, -1, 0);
 			
