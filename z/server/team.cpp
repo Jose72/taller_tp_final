@@ -34,13 +34,11 @@ bool team::fortsAlive(){
 			c++;
 		}
 	}
-	std::cout << "c: " << c << std::endl;
 	return (c > 0);
 }
 
 int team::updateVictoryConditions(){
 	if ((unit_count == 0 || !this->fortsAlive())) {
-		std::cout << "zxxxxxx: " << unit_count << std::endl;
 		state = DEFEAT;
 		return DEFEAT;
 	}

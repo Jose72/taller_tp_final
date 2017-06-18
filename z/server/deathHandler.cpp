@@ -1,4 +1,5 @@
 #include "deathHandler.h"
+#include <iostream>
 #include "unitBuilder.h"
 
 int deathHandler::deathBuilding(unit &u, std::map<int, unit*> &units, int &id_units_count){
@@ -14,6 +15,9 @@ int deathHandler::deathBuilding(unit &u, std::map<int, unit*> &units, int &id_un
 }
 
 int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units){
+	std::cout << "murio vehicle" << std::endl;
+	unit* a = u.getDriver();
+	std::cout << "vehicle driver"  << u.getDriver() << std::endl;
 	u.releaseDriver();
 	return 0;
 }
@@ -32,6 +36,7 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 			break;
 		case BUILDING:
 			deathBuilding(u, units, id_unit_counter);
+			break;
 		default:
 		break;
 	}

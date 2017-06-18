@@ -65,7 +65,9 @@ unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 		case ROBOT_FACTORY:
 			return new unit(unit_code, BUILDING, FAC_SIZE_D, FAC_SIZE_D, owner, x, y, 
 			BUILDING_HEALTH, CREATING, B_BLOCK, 0, 0, 0, false, GRUNT_F_TIME*1000, GRUNT, 1);
-			
+		case FLAG:
+			return new unit(unit_code, FLAG_C, FLAG_SIZE_D, FLAG_SIZE_D, 0, x, y, 
+			0, CHECKING_CAPTURE, B_NOTHING, 0, FLAG_RANGE*5, 0, false, FLAG_CAPTURE_TIME, -1, 0);
 			
 		default:
 			return nullptr;

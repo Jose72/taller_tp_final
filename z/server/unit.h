@@ -85,6 +85,7 @@ class unit {
 		int getTargetOwner();
 		bool isExplosiveDamage();
 		int getBlockingType();
+		unit* getDriver();
 		
 		//seters
 		void changeState(int state);

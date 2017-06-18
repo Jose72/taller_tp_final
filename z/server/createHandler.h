@@ -7,9 +7,9 @@
 
 class createHandler{
 		int createcommonActualize(unit &creator, std::map<int, unit*> &units, 
-			int &unit_id_c, int time, infoGame &ip);
+			int &unit_id_c, infoGame &ip);
 		int createVehicleActualize(unit &creator, std::map<int, unit*> &units, 
-			int &unit_id_c, int time, infoGame &ip);
+			int &unit_id_c, infoGame &ip);
 	public:
 		int createActualize(unit &creator, std::map<int, unit*> &units, 
 			int &unit_id_c, int time, infoGame &ip);

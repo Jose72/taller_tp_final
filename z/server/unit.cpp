@@ -128,11 +128,13 @@ void unit::drive(unit *vehicle){
 	//si estoy en rango lo conduzco, sino me pongo en moving
 	if (this->targetIsInRange() && this->canDriveTarget()){
 		this->driveTarget();
-		/*
+		
+		
 		//setear una pos invalida
 		x = -200;
 		y = -200;
-		*/
+		
+		
 	} else {
 		this->moveToTarget();
 	}
@@ -487,4 +489,8 @@ int unit::getBlockingType(){
 
 void unit::changeOwner(int o){
 	owner = o;
+}
+
+unit* unit::getDriver(){
+	return driver;
 }
