@@ -11,6 +11,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/comboboxtext.h>
+#include <SDL_mixer.h>
 #include "../common/Socket.h"
 
 class MainWindow : public Gtk::Window{

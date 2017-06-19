@@ -8,6 +8,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/comboboxtext.h>
 #include <cstring>
+
 #include "SDL.h"
 #include "Animation.h"
 #include "Game_map.h"
@@ -24,6 +25,7 @@
 #include "MainWindow.h"
 #include "ProtocolMenu.h"
 #include "TechLevelProtected.h"
+#include <SDL_mixer.h>
 
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
 
@@ -49,10 +51,14 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
 
     bool waiting_server = true;
     //INICIA SDL Y CREA LA PANTALLA
-    if(SDL_Init(SDL_INIT_VIDEO)<0){
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)<0){
         std::cout<<"No se puedo iniciar SDL\n"<< SDL_GetError();
         return;
     }
+
+    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048);
+    Mix_Chunk *sonidoMover = Mix_LoadWAV( "sounds/acknowledge_01.wav" );
+
 
     //Initialize PNG loading
     int imgFlags = IMG_INIT_PNG;

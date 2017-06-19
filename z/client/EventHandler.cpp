@@ -1,8 +1,9 @@
 #include <iostream>
+#include <SDL_mixer.h>
 #include "EventHandler.h"
 #include "../server/gameMap.h"
 #include "Camera2.h"
-
+#include "SoundManager.h"
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 1
 #define WINDOW_H 960
@@ -33,6 +34,7 @@ void EventHandler::run() {
     Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,WINDOW_W,WINDOW_H,factory);
     SelectionHandler sHandler(protocol,id_client,camera2);
     int destinoX, destinoY, seleccionX, seleccionY;
+    SoundManager soundManager;
     while(running == true) {
         //MOSTRAR
         camera2.set_position_cameraRect(posCameraX,posCameraY);
@@ -41,6 +43,7 @@ void EventHandler::run() {
         camera2.draw(units,gameMap);
         playerInterface.show(sHandler, techLevel,winner,id_client);
         SDL_Flip(screen);
+
 
         //MOSTRAR
         if (SDL_PollEvent(&event)) {
@@ -93,6 +96,7 @@ void EventHandler::run() {
                             destinoY = event.button.y + camera2.getPosCameraY();
                             std::cout << "X: "<< destinoX << " Y: " << destinoY <<"\n";
                             sHandler.set_objetive(destinoX, destinoY,units);
+                            soundManager.play();
                             break;
                             //SDL_Quit()
                         }
