@@ -313,6 +313,7 @@ void juego::run(){
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
 	while(s > 0 && running){
+			//tomo tiempo
 			clock_t Start = clock();
 			
             int c = event_list.size();
@@ -328,18 +329,8 @@ void juego::run(){
                 i++;
 
             }
-			
-			std::cout << "Time Difference: " << (double)(clock() - Start) / CLOCKS_PER_SEC << std::endl;
-            /*
-			if (!event_list.empty()){
-				Event e = event_list.front();
-				event_list.pop();
-				eventHandle(e, units);
-			}
-            */
-			
+
 			//actualizo las undiades (pendiente: crear una func aparte)
-			
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
 				actualizer(it->first, *u, units, mapa, 100, id_unit_counter, g_info);
@@ -350,12 +341,20 @@ void juego::run(){
 				it->changeOwnership();
 			}
 			
-			usleep(100000);
+			//sleep
+			int sleep_time = 100000 - ((clock() - Start) * 1000);
+			if (sleep_time < 0) sleep_time = 0;
+			//std::cout << "Time Difference: " << sleep_time << std::endl;
+			usleep(sleep_time);
 			
+			
+			//HARCIDEO - CAMBIAR
 			//envio los tech levels -----  NO NECESARIO MALLLLLLL
 			for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = (*it)->sendUpdateTechLvl(5);
             }
+			
+			
 			
 			//envio actualizacion de las unidades
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -366,7 +365,6 @@ void juego::run(){
 			unit_cleaner();
 			
 			//check si gano alguien, o si perdio
-			
 			if (NO_WINNER != checkVictory()){
 				running = false;
 			}
