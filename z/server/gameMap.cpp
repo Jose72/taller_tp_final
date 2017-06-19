@@ -43,48 +43,7 @@ void gameMap::getNeightboors(tile &q, std::vector<tile*> &ady){
 	//tomo el x,y de la casilla
 	int x = q.getX();
 	int y = q.getY();
-	int s = casillas.size();
-	
-	int aux = x - 1 + (y - 1) * width;
-	if ((aux < s - 1) || (aux >= 0)){
-		ady.push_back(&casillas[aux]);
-	}
-	
-	aux = x + (y - 1) * width;
-	if ((aux < s - 1) || (aux >= 0)){
-		ady.push_back(&casillas[aux]);
-	}
-	
-	aux = x + 1 + (y - 1) * width;
-	if ((aux < s - 1) || (aux >= 0)){
-		ady.push_back(&casillas[aux]);
-	}
-	
-	aux = x - 1 + y * width;
-	if ((aux < s - 1) || (aux >= 0)){
-		ady.push_back(&casillas[aux]);
-	}
-	
-	aux = x + 1 + y * width;
-	if ((aux < s - 1) || (aux >= 0)){
-		ady.push_back(&casillas[aux]);
-	}
-	
-	aux = x - 1 + (y + 1) * width;
-	if ((aux < s - 1) || (aux >= 0)){
-		ady.push_back(&casillas[aux]);
-	}
-	
-	aux = x + (y + 1) * width;
-	if ((aux < s - 1) || (aux >= 0)){
-		ady.push_back(&casillas[aux]);
-	}
-	
-	aux = x + 1 + (y + 1) * width;
-	if ((aux < s - 1) || (aux >= 0)){
-		ady.push_back(&casillas[aux]);
-	}
-	/*
+
 	for (int dx = -1; dx < 2; dx++){
 		for (int dy = -1; dy < 2; dy++){
 			int new_x = x + dx;
@@ -98,7 +57,7 @@ void gameMap::getNeightboors(tile &q, std::vector<tile*> &ady){
 			}
 		}
 	}
-	*/
+	
 }
 
 tile gameMap::getTile(int x, int y){

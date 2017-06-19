@@ -426,7 +426,10 @@ void unit::updateCreationTimer(int time, int t_count){
 	if (countdown - time < 0){
 		countdown = 0;
 	} else {
-		countdown -=(time / t_count) / (sqrt(1-(this->getRelativeDamage())));
+		if (t_count == 0){
+			std::cout << "BADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" << std::endl;
+		}
+		countdown -=(time * t_count) * (sqrt(1-(this->getRelativeDamage())));
 	}
 }
 

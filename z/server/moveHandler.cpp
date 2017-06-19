@@ -100,6 +100,9 @@ while (!open.empty()){//mientras al lista no este vacia
 	
 }
 
+//si se me acabaron los open
+//salgo, no hay camino
+
 //hay que retornar la lista de punteros (o la lista de coordenadas mejor)
 //usar un stack? (es LIFO)
 

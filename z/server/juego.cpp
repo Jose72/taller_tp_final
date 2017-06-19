@@ -167,7 +167,7 @@ void juego::sendInit(){
 	id_unit_counter++;
      */
 	
-	unit *u1 = builder.build(GRUNT, 1, 300, 400);
+	unit *u1 = builder.build(JEEP, 1, 300, 400);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
 	id_unit_counter++;
 	
@@ -313,6 +313,8 @@ void juego::run(){
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
 	while(s > 0 && running){
+			clock_t Start = clock();
+			
             int c = event_list.size();
 			int i = 0;
             while (!event_list.empty() && i < c) {
@@ -326,7 +328,8 @@ void juego::run(){
                 i++;
 
             }
-
+			
+			std::cout << "Time Difference: " << (double)(clock() - Start) / CLOCKS_PER_SEC << std::endl;
             /*
 			if (!event_list.empty()){
 				Event e = event_list.front();
