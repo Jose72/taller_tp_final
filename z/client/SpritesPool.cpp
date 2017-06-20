@@ -5,38 +5,172 @@
 
 SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->screen = screen;
-    this->load_sprites("client/sprites/robot1", BLUE_GRUNT, GREEN_GRUNT, RED_GRUNT, YELLOW_GRUNT);
-    this->load_sprites("client/sprites/grunt_fire", FIRE_BLUE_GRUNT, FIRE_GREEN_GRUNT, FIRE_RED_GRUNT,
+    this->load_sprites("client/sprites/robot1",
+                       BLUE_GRUNT,
+                       GREEN_GRUNT,
+                       RED_GRUNT,
+                       YELLOW_GRUNT);
+
+    this->load_sprites("client/sprites/grunt_fire",
+                       FIRE_BLUE_GRUNT,
+                       FIRE_GREEN_GRUNT,
+                       FIRE_RED_GRUNT,
                        FIRE_YELLOW_GRUNT);
-    this->load_sprites("client/sprites/laser_fire", FIRE_LASER_BLUE, FIRE_LASER_GREEN, FIRE_LASER_RED,
+
+    this->load_sprites("client/sprites/laser_fire",
+                       FIRE_LASER_BLUE,
+                       FIRE_LASER_GREEN,
+                       FIRE_LASER_RED,
                        FIRE_LASER_YELLOW);
-    this->load_sprites("client/sprites/psycho_fire", FIRE_PSYCHO_BLUE, FIRE_PSYCHO_GREEN, FIRE_PSYCHO_RED,
+
+    this->load_sprites("client/sprites/psycho_fire",
+                       FIRE_PSYCHO_BLUE,
+                       FIRE_PSYCHO_GREEN,
+                       FIRE_PSYCHO_RED,
                        FIRE_PSYCHO_YELLOW);
-    this->load_sprites("client/sprites/pyro_fire", FIRE_PYRO_BLUE, FIRE_PYRO_GREEN, FIRE_PYRO_RED, FIRE_PYRO_YELLOW);
-    this->load_sprites("client/sprites/sniper_fire", FIRE_SNIPER_BLUE, FIRE_SNIPER_GREEN, FIRE_SNIPER_RED,
+
+    this->load_sprites("client/sprites/pyro_fire",
+                       FIRE_PYRO_BLUE,
+                       FIRE_PYRO_GREEN,
+                       FIRE_PYRO_RED,
+                       FIRE_PYRO_YELLOW);
+
+    this->load_sprites("client/sprites/sniper_fire",
+                       FIRE_SNIPER_BLUE,
+                       FIRE_SNIPER_GREEN,
+                       FIRE_SNIPER_RED,
                        FIRE_SNIPER_YELLOW);
-    this->load_sprites("client/sprites/tought_fire", FIRE_TOUGHT_BLUE, FIRE_TOUGHT_GREEN, FIRE_TOUGHT_RED,
+
+    this->load_sprites("client/sprites/tought_fire",
+                       FIRE_TOUGHT_BLUE,
+                       FIRE_TOUGHT_GREEN,
+                       FIRE_TOUGHT_RED,
                        FIRE_TOUGHT_YELLOW);
-    this->load_sprites("client/sprites/die", DIE_BLUE_GRUNT, DIE_GREEN_GRUNT, DIE_RED_GRUNT, DIE_YELLOW_GRUNT);
-    this->load_sprites("client/sprites/beer", BEER_BLUE, BEER_GREEN, BEER_RED, BEER_YELLOW);
-    this->load_sprites("client/sprites/celebrate", CELEBRATE_BLUE, CELEBRATE_GREEN, CELEBRATE_RED, CELEBRATE_YELLOW);
-    this->load_sprites_with_null("client/sprites/flags", COLORLESS_FLAG, BLUE_FLAG, GREEN_FLAG, RED_FLAG, YELLOW_FLAG);
-    this->load_sprites_with_dim("client/sprites/missile_launcher", MISILE_LAUNCHER_BLUE, MISILE_LAUNCHER_GREEN,
-                                MISILE_LAUNCHER_RED, MISILE_LAUNCHER_YELLOW, 32);
-    this->load_sprites_with_dim("client/sprites/lightTank", HEAVY_TANK_BLUE,HEAVY_TANK_GREEN,HEAVY_TANK_RED,HEAVY_TANK_YELLOW,32);
-    this->load_sprites_with_dim("client/sprites/lightTank", MEDIUM_TANK_BLUE,MEDIUM_TANK_GREEN,MEDIUM_TANK_RED,MEDIUM_TANK_YELLOW,32);
-    this->load_sprites_with_dim("client/sprites/lightTank", LIGHT_TANK_BLUE,LIGHT_TANK_GREEN,LIGHT_TANK_RED,LIGHT_TANK_YELLOW,32);
-    this->load_sprites_with_dim("client/sprites/lightTank", JEEP_BLUE,JEEP_GREEN,JEEP_RED,JEEP_YELLOW,32);
-    this->load_sprite("client/sprites/laserBullet", LASER_BULLET, "laser", 16, 16);
-    this->load_sprite("client/sprites/pyroBullet", PYRO_BULLET, "bullet", 16, 16);
-    this->load_sprite("client/sprites/toughtBullet", TOUGHT_BULLET, "bullet", 16, 16);
-    this->load_sprite("client/sprites/fire", BULLET_DEAD, "fire", 16, 16);
-    this->load_sprite("client/sprites/fuerte", FORT_ALIVE, "alive", 160, 192);
-    this->load_sprite("client/sprites/fuerte", FORT_DEAD, "destroyed", 160, 192);
-    this->load_sprite("client/sprites/fabrica_robots", FACTORY_ROBOTS_ALIVE, "alive", 80, 80);
-    this->load_sprite("client/sprites/fabrica_robots", FACTORY_ROBOTS_DEAD, "destroyed", 80, 80);
-    this->load_sprite("client/sprites/fabrica_vehiculos", FACTORY_VEHICLES_ALIVE, "alive", 80, 80);
-    this->load_sprite("client/sprites/fabrica_vehiculos", FACTORY_VEHICLES_DEAD, "destroyed", 80, 80);
+
+    this->load_sprites("client/sprites/die",
+                       DIE_BLUE_GRUNT,
+                       DIE_GREEN_GRUNT,
+                       DIE_RED_GRUNT,
+                       DIE_YELLOW_GRUNT);
+
+    this->load_sprites("client/sprites/beer",
+                       BEER_BLUE,
+                       BEER_GREEN,
+                       BEER_RED,
+                       BEER_YELLOW);
+
+    this->load_sprites("client/sprites/celebrate",
+                       CELEBRATE_BLUE,
+                       CELEBRATE_GREEN,
+                       CELEBRATE_RED,
+                       CELEBRATE_YELLOW);
+
+    this->load_sprites_with_null("client/sprites/flags",
+                                 COLORLESS_FLAG,
+                                 BLUE_FLAG,
+                                 GREEN_FLAG,
+                                 RED_FLAG,
+                                 YELLOW_FLAG);
+
+    this->load_sprites_with_dim("client/sprites/missile_launcher",
+                                MISILE_LAUNCHER_BLUE,
+                                MISILE_LAUNCHER_GREEN,
+                                MISILE_LAUNCHER_RED,
+                                MISILE_LAUNCHER_YELLOW,
+                                32);
+
+    this->load_sprites_with_dim("client/sprites/heavyTank",
+                                HEAVY_TANK_BLUE,
+                                HEAVY_TANK_GREEN,
+                                HEAVY_TANK_RED,
+                                HEAVY_TANK_YELLOW,
+                                32);
+
+    this->load_sprites_with_dim("client/sprites/mediumTank",
+                                MEDIUM_TANK_BLUE,
+                                MEDIUM_TANK_GREEN,
+                                MEDIUM_TANK_RED,
+                                MEDIUM_TANK_YELLOW,
+                                32);
+
+    this->load_sprites_with_dim("client/sprites/lightTank",
+                                LIGHT_TANK_BLUE,
+                                LIGHT_TANK_GREEN,
+                                LIGHT_TANK_RED,
+                                LIGHT_TANK_YELLOW,
+                                32);
+
+    this->load_sprites_with_dim("client/sprites/jeep",
+                                JEEP_BLUE,
+                                JEEP_GREEN,
+                                JEEP_RED,
+                                JEEP_YELLOW,
+                                32);
+
+    this->load_sprite("client/sprites/laserBullet",
+                      LASER_BULLET,
+                      "laser",
+                      16, 16);
+
+    this->load_sprite("client/sprites/pyroBullet",
+                      PYRO_BULLET,
+                      "bullet",
+                      16, 16);
+
+    this->load_sprite("client/sprites/toughtBullet",
+                      TOUGHT_BULLET,
+                      "bullet",
+                      16, 16);
+
+    this->load_sprite("client/sprites/fire",
+                      BULLET_DEAD,
+                      "fire",
+                      16, 16);
+
+    this->load_sprite("client/sprites/fuerte",
+                      FORT_ALIVE,
+                      "alive",
+                      160, 192);
+
+    this->load_sprite("client/sprites/fuerte",
+                      FORT_DEAD,
+                      "destroyed",
+                      160, 192);
+
+    this->load_sprite("client/sprites/fabrica_robots",
+                      FACTORY_ROBOTS_ALIVE,
+                      "alive",
+                      80, 80);
+
+    this->load_sprite("client/sprites/fabrica_robots",
+                      FACTORY_ROBOTS_DEAD,
+                      "destroyed",
+                      80, 80);
+
+    this->load_sprite("client/sprites/fabrica_vehiculos",
+                      FACTORY_VEHICLES_ALIVE,
+                      "alive",
+                      80, 80);
+
+    this->load_sprite("client/sprites/fabrica_vehiculos",
+                      FACTORY_VEHICLES_DEAD,
+                      "destroyed",
+                      80, 80);
+
+    this->load_sprite("client/sprites/bridgeCH",BRIDGE_CONCRETE_HORIZONTAL,"bridge",64,64);
+    this->load_sprite("client/sprites/bridgeCH",BRIDGE_CONTRETE_HORIZONTAL_DESTROYED,"destroyed",64,64);
+    this->load_sprite("client/sprites/bridgeCV",BRIDGE_CONCRETE_VERTICAL,"bridge",64,64);
+    this->load_sprite("client/sprites/bridgeCV",BRIDGE_CONTRETE_VERTICAL_DESTROYED,"destroyed",64,64);
+
+    this->load_sprite("client/sprites/bridgeWH",BRIDGE_WOOD_HORIZONTAL,"bridge",64,64);
+    this->load_sprite("client/sprites/bridgeWH",BRIDGE_WOOD_HORIZONTAL_DESTROYED,"destroyed",64,64);
+    this->load_sprite("client/sprites/bridgeWV",BRIDGE_WOOD_VERTICAL,"bridge",64,64);
+    this->load_sprite("client/sprites/bridgeWV",BRIDGE_WOOD_VERTICAL_DESTROYED,"destroyed",64,64);
+    this->load_sprite("client/sprites/iceBlock",ICE_BLOCK,"ice",32,32);
+    this->load_sprite("client/sprites/rock",ROCK_BLOCK,"rock",32,32);
+
+
+
 }
 
 
