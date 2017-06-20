@@ -379,6 +379,55 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
                             this->pool.get_animations(FACTORY_ROBOTS_ALIVE),
                             unit_code,posx,posy,DRINKING,FACTORY_ROBOTS_ALIVE, unit_owner);
 
+        case ROCK_BLOCK:
+            return new Unit(this->pool.get_animations(ROCK_BLOCK),
+                            this->pool.get_animations(ROCK_BLOCK),
+                            this->pool.get_animations(ROCK_BLOCK),
+                            this->pool.get_animations(ROCK_BLOCK),
+                            this->pool.get_animations(ROCK_BLOCK),
+                            unit_code,posx,posy,DRINKING,ROCK_BLOCK,unit_owner);
+
+        case ICE_BLOCK:
+            return new Unit(this->pool.get_animations(ICE_BLOCK),
+                            this->pool.get_animations(ICE_BLOCK),
+                            this->pool.get_animations(ICE_BLOCK),
+                            this->pool.get_animations(ICE_BLOCK),
+                            this->pool.get_animations(ICE_BLOCK),
+                            unit_code,posx,posy,DRINKING,ICE_BLOCK,unit_owner);
+
+        case BRIDGE_CONCRETE_VERTICAL:
+            return new Unit(this->pool.get_animations(BRIDGE_CONCRETE_VERTICAL),
+                            this->pool.get_animations(BRIDGE_CONCRETE_VERTICAL),
+                            this->pool.get_animations(BRIDGE_CONTRETE_VERTICAL_DESTROYED),
+                            this->pool.get_animations(BRIDGE_CONCRETE_VERTICAL),
+                            this->pool.get_animations(BRIDGE_CONCRETE_VERTICAL),
+                            unit_code,posx,posy,DRINKING,BRIDGE_CONCRETE_VERTICAL,unit_owner);
+
+        case BRIDGE_WOOD_VERTICAL:
+            return new Unit(this->pool.get_animations(BRIDGE_WOOD_VERTICAL),
+                            this->pool.get_animations(BRIDGE_WOOD_VERTICAL),
+                            this->pool.get_animations(BRIDGE_WOOD_VERTICAL_DESTROYED),
+                            this->pool.get_animations(BRIDGE_WOOD_VERTICAL),
+                            this->pool.get_animations(BRIDGE_WOOD_VERTICAL),
+                            unit_code,posx,posy,DRINKING,BRIDGE_WOOD_VERTICAL,unit_owner);
+
+
+        case BRIDGE_CONCRETE_HORIZONTAL:
+            return new Unit(this->pool.get_animations(BRIDGE_CONCRETE_HORIZONTAL),
+                            this->pool.get_animations(BRIDGE_CONCRETE_HORIZONTAL),
+                            this->pool.get_animations(BRIDGE_CONTRETE_HORIZONTAL_DESTROYED),
+                            this->pool.get_animations(BRIDGE_CONCRETE_HORIZONTAL),
+                            this->pool.get_animations(BRIDGE_CONCRETE_HORIZONTAL),
+                            unit_code,posx,posy,DRINKING,BRIDGE_CONCRETE_VERTICAL,unit_owner);
+
+
+        case BRIDGE_WOOD_HORIZONTAL:
+            return new Unit(this->pool.get_animations(BRIDGE_WOOD_HORIZONTAL),
+                            this->pool.get_animations(BRIDGE_WOOD_HORIZONTAL),
+                            this->pool.get_animations(BRIDGE_WOOD_HORIZONTAL_DESTROYED),
+                            this->pool.get_animations(BRIDGE_WOOD_HORIZONTAL),
+                            this->pool.get_animations(BRIDGE_WOOD_HORIZONTAL),
+                            unit_code,posx,posy,DRINKING,BRIDGE_WOOD_HORIZONTAL,unit_owner);
 
         case LASER_BULLET:
             return new Unit(this->pool.get_animations(LASER_BULLET),

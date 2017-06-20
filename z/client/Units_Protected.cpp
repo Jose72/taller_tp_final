@@ -92,7 +92,7 @@ void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
     if(units_map.find(cod_unit) == units_map.end()){
         switch (unit_type){
 
-            case JEEP:
+             case JEEP:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            JEEP_BLUE,JEEP_GREEN,JEEP_RED,JEEP_YELLOW);
                 break;
@@ -111,7 +111,7 @@ void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                 break;
 
             case MML:
-                createUnit(__cpp_lib_result_of_sfinae,unit_owner,posX,posY,factory,
+                createUnit(cod_unit,unit_owner,posX,posY,factory,
                            MISILE_LAUNCHER_BLUE,MISILE_LAUNCHER_GREEN,MISILE_LAUNCHER_RED,MISILE_LAUNCHER_YELLOW);
                 break;
 
@@ -167,6 +167,22 @@ void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
 
             case HCP:
                 units_map[cod_unit] = factory.createUnit(HCP_BULLET,cod_unit,posX,posY,unit_owner);
+                break;
+
+            case BRIDGE_V:
+                units_map[cod_unit] = factory.createUnit(BRIDGE_CONCRETE_VERTICAL,cod_unit,posX,posY,unit_owner);
+                break;
+
+            case BRIDGE_H:
+                units_map[cod_unit] = factory.createUnit(BRIDGE_CONCRETE_HORIZONTAL,cod_unit,posX,posY,unit_owner);
+                break;
+
+            case ROCK:
+                units_map[cod_unit] = factory.createUnit(ROCK_BLOCK,cod_unit,posX,posY,unit_owner);
+                break;
+
+            case ICE_B:
+                units_map[cod_unit] = factory.createUnit(ICE_BLOCK,cod_unit,posX,posY,unit_owner);
                 break;
 
             case FLAG:

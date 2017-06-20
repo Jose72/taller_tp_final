@@ -168,9 +168,6 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->load_sprite("client/sprites/bridgeWV",BRIDGE_WOOD_VERTICAL_DESTROYED,"destroyed",64,64);
     this->load_sprite("client/sprites/iceBlock",ICE_BLOCK,"ice",32,32);
     this->load_sprite("client/sprites/rock",ROCK_BLOCK,"rock",32,32);
-
-
-
 }
 
 
