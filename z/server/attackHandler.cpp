@@ -96,7 +96,6 @@ int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*
 }
 
 
-//si la bala impacto, se muere y retorno 1
 int attackHandler::attackBulletActualize(unit &attacker, int time){
 	unit *attacked = attacker.getTarget();
 	
@@ -106,23 +105,7 @@ int attackHandler::attackBulletActualize(unit &attacker, int time){
 			attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 	}
 	
-	//la bala muere caundoa ataca
+	//la bala muere cuando ataca
 	attacker.changeState(DEAD);
 	return 0;
-	
-	
-	/*
-	//si llego al destino
-	if (!attacker.isMoving()){
-			//si el taget enta en rango y esta vivo
-			//recibe daño
-			if (attacker.isInRange(*attacked) && attacked->isAlive()){
-				attacked->takeDamage(round(attacker.getDamage()));
-			}
-			//si llego a destino la bala muere
-			return 1;
-		} 
-	
-	return 0;
-	*/
 }

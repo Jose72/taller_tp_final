@@ -57,6 +57,12 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 
         int posY = htonl(it->second->getY());
         socket.send((char*) &posY, sizeof(int));
+		
+		/*
+		//envia tl de la unidad (pasa saber en que estan los edificios)
+		int tl = htonl(it->second->getTechLvl());
+        socket.send((char*) &tl, sizeof(int));
+		*/
     }
 }
 
@@ -155,6 +161,13 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 		//vida de la unidad
 		int health = htonl(it->second->getHealth());
         s = socket.send((char*) &health,sizeof(int));
+		
+		/*
+		//tiempo hasta que se fabrique la unidad (solo edificios)
+		int time = htonl(it->second->getTimeToCompletion();
+        s = socket.send((char*) &time,sizeof(int));
+		*/
+		 
 		//pos x de la unidad
         int posX = htonl(it->second->getX());
         s = socket.send((char*) &posX,sizeof(int));

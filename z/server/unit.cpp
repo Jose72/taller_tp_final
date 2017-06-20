@@ -510,3 +510,10 @@ bool unit::targetIsAttackable(){
 	}
 	return false;
 }
+
+int unit::getTimeToCompletion(){
+	if (base_time != 0){
+		return round((countdown/base_time)*100);
+	}
+	return 0;
+}

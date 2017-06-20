@@ -86,6 +86,7 @@ class unit {
 		bool isExplosiveDamage();
 		int getBlockingType();
 		unit* getDriver();
+		int getTimeToCompletion();
 		
 		//seters
 		void changeState(int state);
