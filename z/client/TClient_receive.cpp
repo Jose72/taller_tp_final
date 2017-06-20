@@ -18,6 +18,13 @@ void TClient_receive::run() {
 
     Protocol protocol_client_server(socket,units,game_map,factory, techLevel, winner);
 
+    /////////////////////////
+    int team_n;
+    socket.receive((char*) &team_n, 4);
+    team_n = ntohl(team_n);
+    id_client = team_n;
+    /////////////////////////
+
     protocol_client_server.create_map();
     protocol_client_server.set_units_game();
 

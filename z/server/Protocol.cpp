@@ -28,10 +28,15 @@ void serverProtocol::send_map(std::vector<int> &map_s) {
     int map_size = htonl(map_s.size());
     socket.send((char*) &map_size,4);
 
-    for (int i = 0; i <map_s.size() ; ++i) {
+    for (unsigned int i = 0; i < map_s.size() ; ++i) {
         int tile = htonl(map_s[i]);
         socket.send((char*) &tile,4);
     }
+}
+
+void serverProtocol::send_team_number(int t){
+	int team_n = htonl(t);
+	socket.send((char*) &team_n,sizeof(int));
 }
 
 void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {

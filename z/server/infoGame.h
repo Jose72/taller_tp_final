@@ -36,11 +36,11 @@ class infoGame{
 		
 		void addNewPlayer(int id_p); //no usar
 		void addNewPlayer(int id_p, serverProtocol *prot);
-		int updateVictoryConditions(int id_p);
+		//int updateVictoryConditions(int id_p);
 		//void incrementUnitsCount(int id_p);
 		//void decrementUnitsCount(int id_p);
-		void sendUpdateTechLvl();
-		bool maxPopulationReached(int id_p);
+		//void sendUpdateTechLvl();
+		//bool maxPopulationReached(int id_p);
 		//int checkForWinner();
 		
 		void initializeTeams();
@@ -53,6 +53,7 @@ class infoGame{
 		void initializeTeam(int team_n, std::vector<unit*> forts, int unit_count);
 		int checkForWinner();
 		void updateCapturedTer(int old_owner, int new_owner);
+		void sendTeamNumbers();
 };
 
 #endif

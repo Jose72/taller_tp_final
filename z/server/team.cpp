@@ -74,3 +74,9 @@ void team::incrementCapturedTer(){
 void team::decrementCapturedTer(){
 	captured_territories--;
 }
+
+void team::sendTeamNumber(){
+	for (auto it = players.begin(); it != players.end(); ++it){
+		it->sendTeamNumber(team_n);
+	}
+}

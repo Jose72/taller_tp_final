@@ -31,7 +31,7 @@ int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, 
 //ATAQUE COMUN
 int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
 	unit *attacked = attacker.getTarget();
-	if (attacker.targetIsInRange() && attacker.targetIsEnemy()){
+	if (attacker.targetIsInRange() && attacker.targetIsAttackable()){
 			//actualiza el timer
 			attacker.actualizeTimer(time);
 			//si estoy en cond de atacar lo hago
@@ -102,7 +102,7 @@ int attackHandler::attackBulletActualize(unit &attacker, int time){
 	
 	//si el taget enta en rango
 	//recibe daño
-	if (attacker.targetIsInRange() && attacker.targetIsEnemy()){
+	if (attacker.targetIsInRange() && attacker.targetIsAttackable()){
 			attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 	}
 	

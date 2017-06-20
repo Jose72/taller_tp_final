@@ -43,6 +43,7 @@ class team {
 		void initialize(std::vector<unit*> forts, int unit_count);
 		void incrementCapturedTer();
 		void decrementCapturedTer();
+		void sendTeamNumber();
 		
 };
 

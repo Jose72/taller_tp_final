@@ -5,13 +5,14 @@
 #include <vector>
 #include <map>
 #include "unit.h"
+#include "infoUnits.h"
 
 class JsonUnitInfoHandler {
 
 public:
     JsonUnitInfoHandler();
-    void jsonToUnitsInfo();
+    void jsonToUnitsInfo(infoUnits &iu);
 
 };
 
-#endif //GENMAP_JSONHANDLER_H
+#endif

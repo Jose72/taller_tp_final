@@ -1,7 +1,7 @@
 #ifndef TESTS_CPP
 #define TESTS_CPP
 
-
+int test_map_h();
 int test_a_start();
 int test_create_units();
 int test_info_players();

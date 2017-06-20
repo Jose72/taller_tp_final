@@ -169,7 +169,7 @@ bool unit::isInRange(unit &u){
 }
 
 int unit::takeDamage(int dam, bool explosive){
-	if (class_id == BUILDING && !explosive) return 0;
+	if ((class_id == BUILDING || class_id == BRIDGE_C || class_id == BLOCK) && !explosive) return 0;
 	if (health - dam <= 0) {
 		health = 0;
 		state = DEAD;
@@ -497,4 +497,16 @@ void unit::changeOwner(int o){
 
 unit* unit::getDriver(){
 	return driver;
+}
+
+bool unit::isAttackable(unit *u){
+	return (this->isEnemy(u) || u->owner == 0);
+	
+}
+
+bool unit::targetIsAttackable(){
+	if (target){
+		return this->isAttackable(target);
+	}
+	return false;
 }

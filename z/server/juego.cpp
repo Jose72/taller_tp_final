@@ -20,7 +20,7 @@
 juego::juego(int creator, int cant_players, int game_t, int cant_teams): 
 id_creator(creator), max_players(cant_players), teams(cant_teams), 
 game_type(game_t), g_info(infoGame(cant_players, 
-game_t, cant_teams)), running(false), started(false) {
+game_t, cant_teams)), running(false), started(false), ended(false) {
 	id_unit_counter = 1; //se empieza contando desde 1
 }
 
@@ -83,7 +83,7 @@ void juego::unit_cleaner(){
 			death_h.death(*u, units, id_unit_counter, g_info);//handler por si tiene q hacer algo
 			//si no es un edificio lo elimino
 			if (not_edificio){
-				delete it->second; // libero mem
+				delete it->second;
 				it = units.erase(it); // borro de la lista
 				
 			}
@@ -181,12 +181,28 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>(id_unit_counter,u2));
 	id_unit_counter++;
 	
-	unit *u3 = builder.build(VEHICLE_FACTORY, 0, 96, 512);
+	unit *u3 = builder.build(VEHICLE_FACTORY, 0, 104, 520);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u3));
 	id_unit_counter++;
 	
-	unit *u4 = builder.build(ROBOT_FACTORY, 0, 96, 608);
+	unit *u4 = builder.build(ROBOT_FACTORY, 0, 104, 680);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u4));
+	id_unit_counter++;
+
+	unit *u5 = builder.build(BRIDGE_H, 320, 680);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
+	id_unit_counter++;
+	u5 = builder.build(BRIDGE_H, 384, 680);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
+	id_unit_counter++;
+	u5 = builder.build(BRIDGE_H, 448, 680);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
+	id_unit_counter++;
+	u5 = builder.build(BRIDGE_H, 512, 680);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
+	id_unit_counter++;
+	u5 = builder.build(BRIDGE_H, 576, 680);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
 	id_unit_counter++;
 	
 	std::vector<unit*> fac;
@@ -197,13 +213,12 @@ void juego::sendInit(){
 	///////////////////////////////////
 	
 	
-	//mapa.seePassableForUnit(ROBOT);
-	//hay que inicilizar la info de cada jugador
-	//codigo de juagdor (owner), puntero a fuerte, cant incial de unidades
+	
+	//hay que inicilizar la info de cada equipo
+	//codigo de equipo (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
 	
-	//mandar vector de fuertes por equipo
-
+	//mandar vector de fuertes por equipo (o un solo fuerte por equipo???)
     std::vector<unit*> forts_1;
     forts_1.push_back(units[1]);
     std::vector<unit*> forts_2;
@@ -229,7 +244,16 @@ void juego::sendInit(){
 	g_info.initializeTeam(3,forts_3, 1);
 	*/
 
+		
 	mapa.setBlocking(units);
+	
+	
+	////////////////////////////////
+	//ENVIAR NUMERO DE EQUIPO ANTES QUE TODO
+	g_info.sendTeamNumbers();
+	///////////////////////////////
+	
+	
 	//protocol
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		(*it)->send_map(mapDes);
@@ -349,7 +373,7 @@ void juego::run(){
 			
 			
 			//HARCIDEO - CAMBIAR
-			//envio los tech levels -----  NO NECESARIO MALLLLLLL
+			//envio los tech levels -----  NO NECESARIO - ARREGLAR
 			for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = (*it)->sendUpdateTechLvl(5);
             }
@@ -376,13 +400,13 @@ void juego::run(){
 	for (auto it = units.begin(); it != units.end(); ++it){
 		delete it->second;
 	}
-	
+	//y los protocolos
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		delete (*it);
 	}
 	
 	std::cout << "juego out" << std::endl;	
 	
-	
+	ended = true;
 	return;
 }

@@ -46,3 +46,7 @@ int infoPlayer::updateVictoryConditions(){
 bool infoPlayer::isDefeated(){
 	return (state == DEFEAT);
 }
+
+void infoPlayer::sendTeamNumber(int t){
+	prot->send_team_number(t);
+}

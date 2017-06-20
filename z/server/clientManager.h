@@ -19,6 +19,7 @@ class tClientManager: public tThread{
 		gameList &juegos;
 		bool end_game;
 		juego *j;
+		bool ended;
 
 		int gameSelection();
 	public:

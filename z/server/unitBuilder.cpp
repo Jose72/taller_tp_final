@@ -6,11 +6,11 @@
 #define VEH_SIZE_D 32
 #define FORT_SIZE_W 160
 #define FORT_SIZE_H 192
-#define FAC_SIZE_D 80
-#define BRIDGE_H1 80
-#define BRIDGE_W1 40
-#define BRIDGE_H2 30
-#define BRIDGE_W2 80
+#define FAC_SIZE_D 96
+#define BRIDGE_H1 64
+#define BRIDGE_W1 64
+#define BRIDGE_H2 64
+#define BRIDGE_W2 64
 #define BLOCK_SIZE_D 32
 
 unit* unitBuilder::build(int unit_code, int owner, int x, int y){

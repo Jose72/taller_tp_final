@@ -38,6 +38,7 @@ class juego: public tThread{
 		std::mutex game_m;
 		bool running;
 		bool started;
+		bool ended;
 		
 		void eventHandle(Event &e, std::map<int, unit*> &units);
 		int checkVictory();
