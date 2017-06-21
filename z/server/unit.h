@@ -6,7 +6,7 @@
 #define DAMAGE_TAKEN 0
 #define UNIT_DEAD 1
 
-enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE, DEFEATED, DESTROYED};
+enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE, DEFEATED, DESTROYED, ERASED};
 
 class unit {
 	protected:
@@ -95,6 +95,7 @@ class unit {
 		void increaseTechLvl();
 		void setTechLvl(int tl);
 		void changeOwner(int o);
+		void setDriver(unit *);
 		
 		//events
 		void move(int d_x, int d_y);
@@ -104,6 +105,8 @@ class unit {
 		void drive(unit *vehicle);
 		void driveTarget();
 		void create(int u_id, int time);
+		
+		void instantDrive(unit *u);
 		
 		//checks
 		bool isInRange(unit &u);

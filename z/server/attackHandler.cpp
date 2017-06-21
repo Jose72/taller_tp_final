@@ -41,7 +41,7 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 				if (attacker.unitToCreate() == BALAS){
 					attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 				} else {
-					std::cout << "crea bullet" << std::endl;
+					//std::cout << "crea bullet" << std::endl;
 					unitBuilder ub;
 					unit *u = ub.build(attacker.unitToCreate(), attacker.getCenterX(), attacker.getCenterY());
 					u->attack(attacked);
@@ -63,6 +63,7 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 //AUTO-ATAQUE COMUN
 int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
 	unit *attacked = attacker.getTarget();
+	if (attacker.getOwner() == 0) return 1;
 	if (attacker.targetIsInRange() && attacker.targetIsEnemy()){
 			//actualiza el timer
 			attacker.actualizeTimer(time);
@@ -73,7 +74,7 @@ int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*
 				if (attacker.unitToCreate() == BALAS){
 					attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 				} else {
-					std::cout << "crea bullet" << std::endl;
+					//std::cout << "crea bullet" << std::endl;
 					unitBuilder ub;
 					unit *u = ub.build(attacker.unitToCreate(), attacker.getX(), attacker.getY());
 					u->attack(attacked);

@@ -14,7 +14,8 @@
 #define CODE_CHANGE_TECH_LEVEL 35
 #define CODE_END_GAME 40
 
-enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE, DEFEATED, DESTROYED};
+enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE,
+    DEFEATED, DESTROYED, ERASED};
 
 
 Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner,SoundManager &soundManager):
@@ -213,6 +214,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
                     units[unitCode]->set_health(health);
                     units[unitCode]->set_state(DRINKING);
+                    units[unitCode]->set_pos(posX, posY);
                     break;
                 case CHECKING_CAPTURE:
                     if(units[unitCode]->get_owner() != unitOwner){
@@ -222,6 +224,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     break;
                 case DESTROYED:
                     units[unitCode]->set_state(DESTROYED1);
+                    break;
                 case DRIVING:
                     units[unitCode]->set_state(DRINKING);
                     units[unitCode]->set_pos(posX,posY);
@@ -229,7 +232,12 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                 case CREATING:
                     soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
                     units[unitCode]->set_health(health);
-
+                    break;
+                case ERASED:
+                    units[unitCode]->set_pos(-200,-200);
+                    units[unitCode]->set_health(health);
+                    units[unitCode]->set_state(DEAD1);
+                    break;
 
             }
         }

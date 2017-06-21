@@ -108,8 +108,8 @@ void gameMap::setBlocking(std::map<int,unit*> &units){
 			int counter_x = (w / TILE_LENGHT);
 			if (counter_x < 1) counter_x = 1;
 			
-			std::cout << "casi in y: " << counter_y << std::endl;
-			std::cout << "casi in x: " << counter_x << std::endl;
+			//std::cout << "casi in y: " << counter_y << std::endl;
+			//std::cout << "casi in x: " << counter_x << std::endl;
 			
 			int x_pos = u->getX();
 			int y_pos = u->getY();
@@ -128,7 +128,7 @@ void gameMap::setBlocking(std::map<int,unit*> &units){
 					} else {
 						p = true;
 					}
-					std::cout << "casi que block: " << i << "-" << j << std::endl; 
+					//std::cout << "casi que block: " << i << "-" << j << std::endl; 
 					t2->putUnitOver(p);
 				}
 			}
@@ -171,8 +171,8 @@ void gameMap::setUnitAsBlocking(unit *u){
 //si la unidad esta en una casilla en la que no podria (es bloqueante)
 //(por ej se destruyo el puente)
 bool gameMap::impossibleTile(int x, int y, int class_u){
-	tile t = casillas[x + y * width];
-	return t.isPassable(class_u);
+	tile *t = getTilePFromUnit(x, y);
+	return !t->isPassable(class_u);
 }
 
 ////////////////////////////////////////////////777

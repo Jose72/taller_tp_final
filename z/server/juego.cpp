@@ -79,7 +79,33 @@ void juego::unit_cleaner(){
 	for (auto it = units.begin(); it != units.end(); ){
 		unit *u = it->second;
 		bool not_edificio = (u->getClassId() != BUILDING);
-		if (u->isDead()) {
+		int estado = u->getState();
+		switch(estado){
+			case(DEAD):{
+				death_h.death(*u, units, id_unit_counter, mapa, g_info);//handler por si tiene q hacer algo
+				//si no es un edificio lo elimino
+				if (not_edificio){
+					delete it->second;
+					it = units.erase(it); // borro de la lista
+				} else {
+					++it;
+				}
+				break;
+			}
+			case(ERASED):{
+				delete it->second;
+				it = units.erase(it);
+				break;
+			}
+			default:{
+				++it;
+				break;
+			}
+			
+		}
+		/*
+		//si la unidad esta muerta o fue borrada
+		if (u->isDead() || u.getState() == ERASED) {
 			death_h.death(*u, units, id_unit_counter, mapa, g_info);//handler por si tiene q hacer algo
 			//si no es un edificio lo elimino
 			if (not_edificio){
@@ -88,8 +114,9 @@ void juego::unit_cleaner(){
 				
 			}
 		} else {
-			++it;
+			
 		}
+		*/ 
 	}
 }
 
@@ -167,7 +194,7 @@ void juego::sendInit(){
 	id_unit_counter++;
      */
 	
-	unit *u1 = builder.build(JEEP, 1, 300, 400);
+	unit *u1 = builder.build(PYRO, 1, 300, 400);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
 	id_unit_counter++;
 	

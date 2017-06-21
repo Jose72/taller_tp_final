@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>  
 #include <algorithm> 
+#include "unitBuilder.h"
 
 
 
@@ -34,7 +35,7 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 	switch(state){
 		case MOVING:
 			//std::cout << "unit: " << unit_game_id << " move" << std::endl;
-			move_h.moveActualize(u, mapa, 0.5);
+			move_h.moveActualize(u, mapa, 1);
 			return 0;
 		case ATTACKING:
 			//std::cout << "unit: " << unit_game_id << " attac" << std::endl;
@@ -56,9 +57,26 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 			//std::cout << "unit: " << unit_game_id << " captured" << std::endl;
 			u.changeState(CHECKING_CAPTURE);
 			return 0;
-		case DRIVING:
+		case DRIVING:{
 			//std::cout << "unit: " << unit_game_id << " driving" << std::endl;
+			
+			unit *v = u.getTarget();
+			if (v->getOwner() != u.getOwner()){
+				std::cout << "vehic own: " << v->getOwner() << std::endl;
+				unitBuilder ub;
+				unit *n_v = ub.build(v->getUnitId(), u.getOwner(), v->getX(), v->getY());
+				units.insert(std::pair<int,unit*>(unit_id_count,n_v));
+				unit_id_count++;
+				u.instantDrive(n_v);
+				v->changeState(ERASED);
+				/*
+				v->setPos(-200, -200);
+				v->setDriver(nullptr);
+				v->changeState(DEAD);
+				*/ 
+			}
 			return 0;
+			}
 		case DEFEATED:
 			//std::cout << "unit: " << unit_game_id << " defeated" << std::endl;
 			return 0;

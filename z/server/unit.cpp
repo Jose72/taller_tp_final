@@ -412,8 +412,8 @@ bool unit::canDriveTarget(){
 void unit::driveTarget(){
 	this->stopFollowers();
 	target->driver = this;
-	target->owner = this->owner;
-	std::cout << "new owner: " << target->owner << std::endl;
+	//target->owner = this->owner;
+	//std::cout << "new owner: " << target->owner << std::endl;
 	state = DRIVING;
 }
 
@@ -526,4 +526,17 @@ bool unit::hasOnTop(unit *u){
 	bool dx = ((this->x) < (u->x) &&  (u->x) < (this->x + this->width));
 	bool dy = ((this->y) < (u->y) && (u->y) < (this->y + this->height));
 	return (dx && dy);
+}
+
+void unit::instantDrive(unit *vehicle){
+	if (target) target->removeFollower(this);
+	target = vehicle;
+	this->driveTarget();
+	//setear una pos invalida
+	this->x = -200;
+	this->y = -200;
+}
+
+void unit::setDriver(unit *u){
+	driver = u;
 }

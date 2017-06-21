@@ -18,21 +18,25 @@ int deathHandler::deathBuilding(unit &u, std::map<int, unit*> &units, int &id_un
 }
 
 int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units, gameMap &mapa){
-	std::cout << "murio vehicle" << std::endl;
+	//std::cout << "murio vehicle" << std::endl;
 	unit* a = u.getDriver();
-	std::cout << "vehicle driver"  << u.getDriver() << std::endl;
-	std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
+	//std::cout << "vehicle driver"  << u.getDriver() << std::endl;
+	//std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
+	if (a){
 	a->setPos(u.getX(), u.getY());
-	std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
-	
-	//si el conductor esta en una casilla imposible
-	//(se destruyo puente y tiene que a aparecer ahi, va a DEAD)
-	if (mapa.impossibleTile(a->getX(), a->getY(), ROBOT)){
-		a->changeState(DEAD);
-	} else {
-		a->changeState(STANDING);
+		std::cout << "---------------------------------: " << std::endl;
+		std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
+		a->setTarget(nullptr);
+		//si el conductor esta en una casilla imposible
+		//(se destruyo puente y tiene que a aparecer ahi, va a DEAD)
+		if (mapa.impossibleTile(a->getX(), a->getY(), ROBOT)){
+			a->changeState(DEAD);
+			std::cout << "MUERTO---------------------------------: " << std::endl;
+		} else {
+			a->changeState(STANDING);
+			std::cout << "STANDING---------------------------------: " << std::endl;
+		}
 	}
-	
 	//u.releaseDriver();
 	return 0;
 }
@@ -68,8 +72,8 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 			ip.decrementUnitsCount(u.getOwner());
 			break;
 		case VEHICLE:
-			//deathVehicle(u, units, mapa);
-			ip.decrementUnitsCount(u.getOwner());
+			deathVehicle(u, units, mapa);
+			//ip.decrementUnitsCount(u.getOwner());
 			break;
 		case BUILDING:
 			deathBuilding(u, units, id_unit_counter);
