@@ -137,6 +137,7 @@ int moveHandler::moveActualize(unit &u, gameMap &mapa, double time){
 
 
 
+
 int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 	
 		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
@@ -156,14 +157,6 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		//corro el astart para obtener el camino
 		a_Start(orig, dest, mapa, c_id, camino);
 		
-		/*
-		std::cout << "camnio" << std::endl;
-		for (unsigned int i = 0; i < camino.size(); i++){
-			camino[i]->printTile();
-		}
-		std::cout << "camnio end" << std::endl;
-		*/
-		
 		//se tiene que mover hasta el centro de la siguiente casilla del camino
 		//que seria la segunda guardada en camino (la primera en el origen)
 		//si no hay mas de 1 es el origen
@@ -174,7 +167,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			//me quedo donde estoy y paso a standing
 			u.stop();
 			u.changeState(STANDING);
-            std::cout << "mo camino" << std::endl;
+            std::cout << "no camino" << std::endl;
 			return 1;
 		}
 
@@ -190,8 +183,10 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		//u.printPos();
 		
 		//conseguir el centro de la casilla (coord pixel)
-		int x_closer = 15 + 32 * closer_tile->getX();
-		int y_closer = 15 + 32 * closer_tile->getY(); 
+		//int x_closer = 15 + 32 * closer_tile->getX();
+		//int y_closer = 15 + 32 * closer_tile->getY(); 
+		int x_closer = 32 * closer_tile->getX();
+		int y_closer = 32 * closer_tile->getY(); 
 		//si hay una sola casilla (estas en la casilla destino)
 		//los yx que queres son los de destino, no el centro de la casilla
 		if (camino.size() == 1){
@@ -293,3 +288,127 @@ int moveHandler::moveBulletActualize(unit &u, double time){
 	return 0;
  }
  
+ 
+ //
+int moveHandler::moveCommonActualize2(unit &u, gameMap &mapa, double time){
+	
+		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
+		//necesito clse de unidad
+		int c_id = u.getClassId();
+		double x_unit = u.getX_D();
+		double y_unit = u.getY_D();
+		//std::cout << "dest_x: " << u.getDestX() << std::endl;
+		//std::cout << "dest_y: " << u.getDestY() << std::endl;
+		//saco casillas origen y destino 
+		tile *orig = mapa.getTilePFromUnitHRes(x_unit, y_unit);
+		tile *dest = mapa.getTilePFromUnitHRes(u.getDestX(), u.getDestY());
+		//orig->printTile();
+		//dest->printTile();
+		std::vector<tile*> camino;
+		
+		//corro el astart para obtener el camino
+		a_Start(orig, dest, mapa, c_id, camino);
+		
+		//se tiene que mover hasta el centro de la siguiente casilla del camino
+		//que seria la segunda guardada en camino (la primera en el origen)
+		//si no hay mas de 1 es el origen
+		//std::cout << camino.size() << std::endl;
+
+		if (camino.size() == 0) {
+			//si no hay camino (selecione lava por ej)
+			//me quedo donde estoy y paso a standing
+			u.stop();
+			u.changeState(STANDING);
+            std::cout << "no camino" << std::endl;
+			return 1;
+		}
+
+
+		tile *closer_tile = camino[camino.size() - 1];
+		if (camino.size() > 1){
+			closer_tile = camino[camino.size() - 2];
+			
+		}
+		
+		//std::cout << "closer tile" << std::endl;
+		//closer_tile->printTile();
+		//u.printPos();
+		
+		//conseguir el centro de la casilla (coord pixel)
+		int x_closer = 7 + 16 * closer_tile->getX();
+		int y_closer = 7 + 16 * closer_tile->getY(); 
+		//si hay una sola casilla (estas en la casilla destino)
+		//los yx que queres son los de destino, no el centro de la casilla
+		if (camino.size() == 1){
+			x_closer = u.getDestX(); 
+			y_closer = u.getDestY();
+		}
+		
+		//std::cout << "x_closer" << x_closer << std::endl;
+		//std::cout << "y_closer" << y_closer << std::endl;
+		
+		//distancia a esa coord (euclidea)
+		double dist = sqrt(pow((x_unit - x_closer),2) + pow((y_unit - y_closer),2));
+		//std::cout << x_unit - x_closer << std::endl;
+		//std::cout << y_unit - y_closer << std::endl;
+		
+		if (dist != 0) { // si no  estoy en el destino
+			//seteo velocidad
+			//multiplico por el factor de terreno de la casilla actual
+			//y por
+			double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
+			//si es una unidad no movible hay un error
+			if (speed == 0) return 1; //no deberia suceder
+
+			//calculo los nuevos xy
+			double new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
+			double new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
+			/*
+			std::cout << "time " << time << std::endl;
+			std::cout << "speed " << speed << std::endl;
+			std::cout << "dist " << dist << std::endl;
+			std::cout << "new_x " << new_x << std::endl;
+			std::cout << "new_y " << new_y << std::endl;
+			*/
+			//si la dist de los nuevos xy con el origen es mayor o igual
+			//a la del origen on el destno, seteo el destino como pos actual
+			//sino seteo los nuevos xy
+
+			if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) < dist){
+				u.setPos(new_x, new_y);
+			} else {
+				u.setPos(x_closer, y_closer);
+			}
+		}
+		//u.printPos();
+		
+		
+		////status check
+		if (u.isMoving()){
+		//si tengo target
+			if (u.getTarget()){
+				//si estoy en el rango
+				if (u.targetIsInRange()){
+					//si es enemigo
+					if (u.targetIsEnemy()){
+						//ataco
+						u.changeState(ATTACKING);
+					} else{
+						//si puedo conducir al target lo ahgo
+						if (u.canDriveTarget()){
+							u.driveTarget();
+						} else {
+							u.changeState(STANDING);
+						}
+					}
+					
+				} else {
+					u.moveToTarget();
+				}
+			} 
+		} else {//si llegue a destino
+			u.changeState(STANDING);
+		}
+		
+		return 0;
+}

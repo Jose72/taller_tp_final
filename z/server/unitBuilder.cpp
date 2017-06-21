@@ -6,11 +6,11 @@
 #define VEH_SIZE_D 32
 #define FORT_SIZE_W 160
 #define FORT_SIZE_H 192
-#define FAC_SIZE_D 80
-#define BRIDGE_H1 80
-#define BRIDGE_W1 40
-#define BRIDGE_H2 30
-#define BRIDGE_W2 80
+#define FAC_SIZE_D 96
+#define BRIDGE_H1 64
+#define BRIDGE_W1 64
+#define BRIDGE_H2 64
+#define BRIDGE_W2 64
 #define BLOCK_SIZE_D 32
 
 unit* unitBuilder::build(int unit_code, int owner, int x, int y){
@@ -78,6 +78,12 @@ unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 		case BRIDGE_H:
 			return new unit(unit_code, BRIDGE_C, BRIDGE_H2, BRIDGE_W2, 0, x, y, 
 			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
+		case BRIDGE_V_WOOD:
+			return new unit(unit_code, BRIDGE_C, BRIDGE_H1, BRIDGE_W1, 0, x, y, 
+			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
+		case BRIDGE_H_WOOD:
+			return new unit(unit_code, BRIDGE_C, BRIDGE_H2, BRIDGE_W2, 0, x, y, 
+			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
 		
 		//BLOQUES
 		case ROCK:
@@ -123,6 +129,12 @@ unit* unitBuilder::build(int unit_code, int x, int y){
 			return new unit(unit_code, BRIDGE_C, BRIDGE_H1, BRIDGE_W1, 0, x, y, 
 			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
 		case BRIDGE_H:
+			return new unit(unit_code, BRIDGE_C, BRIDGE_H2, BRIDGE_W2, 0, x, y, 
+			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
+		case BRIDGE_V_WOOD:
+			return new unit(unit_code, BRIDGE_C, BRIDGE_H1, BRIDGE_W1, 0, x, y, 
+			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
+		case BRIDGE_H_WOOD:
 			return new unit(unit_code, BRIDGE_C, BRIDGE_H2, BRIDGE_W2, 0, x, y, 
 			0, NO_STATE, B_LET_PASS, 0, 0, 0, false, 0, -1, 0);
 		

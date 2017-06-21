@@ -16,37 +16,8 @@
 
 tClientManager::tClientManager(int id, tSocket cli_s, gameList &jgs, 
 std::mutex &manager_m): id_client(id), cli_skt(std::move(cli_s)), 
-manager_m(manager_m), juegos(jgs), end_game(false), j(nullptr) {}
+manager_m(manager_m), juegos(jgs), end_game(false), j(nullptr), ended(false) {}
 
-
-
-//enviar y recibir (protocolo envia size primero, son del tp3) cambiarlos!!!
-
-//tiene que haber dos protocolos:
-//antes de empezar la partida y durante el juego
-
-int receiveMessage(tSocket &skt_cli, std::string &msg){
-	int s;
-	int size_msg = 0;//aux para tamaño 
-	s = skt_cli.receive((char *)&size_msg, sizeof(int)); //recivo tam msg
-	//Reservo tamaño mensaje
-	char* buff = new char [size_msg + 1];
-	buff[size_msg]='\0';
-	s = skt_cli.receive(buff, size_msg);
-	//std::cout << "msg from client: " << buff << std::endl;
-	msg = std::string(buff);
-	delete [] buff;
-	return s;
-}	
-
-int sendMessage(tSocket &skt_cli, std::string &msg_to_send){
-	int s;
-	int size_msg = msg_to_send.size(); //htonl
-	//std::cout << "tam msg to send: " << size_msg << std::endl;
-	s = skt_cli.send((char*)&size_msg, sizeof(size_msg));
-	s = skt_cli.send(&msg_to_send[0u], size_msg);
-	return s;
-}
 
 int tClientManager::gameSelection(){
 	serverProtocol prot(cli_skt);
@@ -266,6 +237,6 @@ void tClientManager::run(){
 	
 	
 	std::cout << "manager out" << std::endl;	
-
+	ended = true;
 	return;
 }

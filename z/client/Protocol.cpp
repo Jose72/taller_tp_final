@@ -82,6 +82,17 @@ void Protocol::set_units_game() {
         int posX_SC = ntohl(posX);
         socket.receive((char*)&posY,4);
         int posY_SC = ntohl(posY);
+
+        
+        /*
+        //tech lvl de edificios
+        //en unidades comunes deberia ser ignorado???
+        int tl;
+        socket.receive((char*)&tl,4);
+        int tl_SC = ntohl(tl);
+         */
+
+
         //AGREGAR SWITCH
         units.createIsNotExist(unit_code_SC,unit_code_config_SC,owner_SC,posX_SC,posY_SC,factory);
 
@@ -114,9 +125,18 @@ void Protocol::process_message() {
     socket.receive((char*)&cod_unit_owner,4);
     int cod_unit_owner_SC = ntohl(cod_unit_owner);
 
+    //salud de la unidad
     int message4;
     socket.receive((char*)&message4,4);
     int message4_SC = ntohl(message4);
+
+    /*
+    //seria el porcentage de tiempo que falta para la creacion de la unidad (en edificios)
+    //buscar otro uso para las unidades comunes??????
+    int message5;
+    socket.receive((char*)&message5,4);
+    int message5_SC = ntohl(message5);
+    */
 
     int posX;
     socket.receive((char*)&posX,4);

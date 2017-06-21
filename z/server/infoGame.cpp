@@ -244,3 +244,9 @@ void infoGame::updateCapturedTer(int old_owner, int new_owner){
 		}
 	}
 }
+
+void infoGame::sendTeamNumbers(){
+	for (auto it = teams.begin(); it != teams.end(); ++it){
+		it->sendTeamNumber();
+	}
+}

@@ -86,6 +86,7 @@ class unit {
 		bool isExplosiveDamage();
 		int getBlockingType();
 		unit* getDriver();
+		int getTimeToCompletion();
 		
 		//seters
 		void changeState(int state);
@@ -116,6 +117,7 @@ class unit {
 		bool targetIsInRange();
 		bool canDriveTarget();
 		bool isDriving();
+		bool isAttackable(unit *u);
 		
 		//double getDamage(double time); 
 		int takeDamage(int dam, bool explosive);
@@ -125,6 +127,7 @@ class unit {
 		unit* getTarget();
 		void printPosDest();
 		bool targetIsEnemy();
+		bool targetIsAttackable();
 		bool sameOwner(unit *u);
 		bool sameOwnerAsTarget();
 		bool sameTeam(unit *u);

@@ -13,6 +13,8 @@ class gameMap {
 		int height;
 		int width;
 		std::vector<tile> casillas;
+		
+		std::vector<tile> h_casillas;
 	public:
 		gameMap();
 		gameMap(int *casilla, int size);
@@ -26,7 +28,13 @@ class gameMap {
 		void printMap();
 		void setBlocking(std::map<int,unit*> &units);
 		void seePassableForUnit(int unit_code);
-		
+		//para mejora
+		void setHighResMap(); //no use yet
+		void getNeightboorsHRes(tile &q, std::vector<tile*> &ady);
+		void setBlockingHRes(std::map<int,unit*> &units);
+		tile getTileHRes(int x, int y);
+		tile* getTilePHRes(int x, int y);
+		tile* getTilePFromUnitHRes(double x, double y);
 };
 
 #endif

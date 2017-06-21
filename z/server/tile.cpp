@@ -132,3 +132,7 @@ void tile::putUnitOver(bool b){
 void tile::releaseUnitOver(){
 	unit_over = false;
 }
+
+void tile::setTerrain(int t_code){
+	terr = terrain(t_code);
+}

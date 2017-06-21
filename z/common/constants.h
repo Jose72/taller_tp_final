@@ -17,7 +17,8 @@ enum units {
 	FLAG = 14, 
 	LLAMAS = 15, HCP = 16, LASER = 17, MISIL = 18, BALAS = 19, 
 	BRIDGE_V = 20, BRIDGE_H = 21,  //puente horiz y vert
-	ROCK = 22, ICE_B = 23};
+	ROCK = 22, ICE_B = 23, 
+	BRIDGE_V_WOOD = 24, BRIDGE_H_WOOD = 25};
 
 enum unit_speed { //veocidad (por seg ?)
 		ROBOT_SPEED = 4, JEEP_SPEED = 8, MEDIUM_TANK_SPEED = 5, 

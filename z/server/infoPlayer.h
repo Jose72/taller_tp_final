@@ -38,7 +38,7 @@ class infoPlayer {
 		void initialize(unit *fort,int units_count);
 		int updateVictoryConditions();
 		bool isDefeated();
-		
+		void sendTeamNumber(int t);
 };
 
 

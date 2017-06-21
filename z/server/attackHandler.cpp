@@ -31,7 +31,7 @@ int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, 
 //ATAQUE COMUN
 int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
 	unit *attacked = attacker.getTarget();
-	if (attacker.targetIsInRange() && attacker.targetIsEnemy()){
+	if (attacker.targetIsInRange() && attacker.targetIsAttackable()){
 			//actualiza el timer
 			attacker.actualizeTimer(time);
 			//si estoy en cond de atacar lo hago
@@ -96,33 +96,16 @@ int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*
 }
 
 
-//si la bala impacto, se muere y retorno 1
 int attackHandler::attackBulletActualize(unit &attacker, int time){
 	unit *attacked = attacker.getTarget();
 	
 	//si el taget enta en rango
 	//recibe daño
-	if (attacker.targetIsInRange() && attacker.targetIsEnemy()){
+	if (attacker.targetIsInRange() && attacker.targetIsAttackable()){
 			attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 	}
 	
-	//la bala muere caundoa ataca
+	//la bala muere cuando ataca
 	attacker.changeState(DEAD);
 	return 0;
-	
-	
-	/*
-	//si llego al destino
-	if (!attacker.isMoving()){
-			//si el taget enta en rango y esta vivo
-			//recibe daño
-			if (attacker.isInRange(*attacked) && attacked->isAlive()){
-				attacked->takeDamage(round(attacker.getDamage()));
-			}
-			//si llego a destino la bala muere
-			return 1;
-		} 
-	
-	return 0;
-	*/
 }

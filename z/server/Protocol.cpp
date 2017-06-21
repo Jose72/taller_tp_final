@@ -28,10 +28,15 @@ void serverProtocol::send_map(std::vector<int> &map_s) {
     int map_size = htonl(map_s.size());
     socket.send((char*) &map_size,4);
 
-    for (int i = 0; i <map_s.size() ; ++i) {
+    for (unsigned int i = 0; i < map_s.size() ; ++i) {
         int tile = htonl(map_s[i]);
         socket.send((char*) &tile,4);
     }
+}
+
+void serverProtocol::send_team_number(int t){
+	int team_n = htonl(t);
+	socket.send((char*) &team_n,sizeof(int));
 }
 
 void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
@@ -52,6 +57,12 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 
         int posY = htonl(it->second->getY());
         socket.send((char*) &posY, sizeof(int));
+		
+		/*
+		//envia tl de la unidad (pasa saber en que estan los edificios)
+		int tl = htonl(it->second->getTechLvl());
+        socket.send((char*) &tl, sizeof(int));
+		*/
     }
 }
 
@@ -150,6 +161,13 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 		//vida de la unidad
 		int health = htonl(it->second->getHealth());
         s = socket.send((char*) &health,sizeof(int));
+		
+		/*
+		//tiempo hasta que se fabrique la unidad (solo edificios)
+		int time = htonl(it->second->getTimeToCompletion();
+        s = socket.send((char*) &time,sizeof(int));
+		*/
+		 
 		//pos x de la unidad
         int posX = htonl(it->second->getX());
         s = socket.send((char*) &posX,sizeof(int));

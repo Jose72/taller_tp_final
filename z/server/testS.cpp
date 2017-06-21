@@ -13,7 +13,34 @@
 
 #include <unistd.h>
 
-
+int test_map_h(){
+	gameMap mapa;
+	int map_codes[900] = {0};
+	map_codes[15] = 1;
+	map_codes[16] = 1;
+	map_codes[17] = 1;
+	map_codes[18] = 1;
+	map_codes[31] = 1;
+	map_codes[32] = 1;
+	map_codes[33] = 1;
+	map_codes[34] = 1;
+	map_codes[43] = 2;
+	map_codes[44] = 2;
+	map_codes[45] = 2;
+	map_codes[46] = 2;
+	map_codes[47] = 2;
+	map_codes[48] = 2;
+	map_codes[53] = 2;
+	map_codes[54] = 2;
+	map_codes[55] = 2;
+	map_codes[56] = 2;
+	map_codes[57] = 2;
+	map_codes[58] = 2;
+	int sss = 900;
+	//cargo mi mapa
+	mapa = gameMap(map_codes, sss);
+	return 0;
+}
 
 int test_a_start(){
 	gameMap mapa;
