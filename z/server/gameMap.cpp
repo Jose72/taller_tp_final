@@ -143,6 +143,37 @@ void gameMap::seePassableForUnit(int unit_code){
 	}
 }
 
+void gameMap::setUnitAsBlocking(unit *u){
+	int h = u->getHeight();
+	int w = u->getWidth();
+			
+	int counter_y = (h / TILE_LENGHT);
+	if (counter_y < 1) counter_y = 1;
+	int counter_x = (w / TILE_LENGHT);
+	if (counter_x < 1) counter_x = 1;
+			
+	int x_pos = u->getX();
+	int y_pos = u->getY();
+			
+	tile *t = this->getTilePFromUnit(x_pos, y_pos);
+	int x_tile = t->getX();
+	int y_tile = t->getY();
+			
+	for (int i = x_tile; i < x_tile+counter_x; ++i){
+		for (int j = y_tile; j< y_tile+counter_y; ++j){
+			tile *t2 = this->getTileP(i,j);
+			bool p = false;
+			t2->putUnitOver(p);
+		}
+	}
+}
+
+//si la unidad esta en una casilla en la que no podria (es bloqueante)
+//(por ej se destruyo el puente)
+bool gameMap::impossibleTile(int x, int y, int class_u){
+	tile t = casillas[x + y * width];
+	return t.isPassable(class_u);
+}
 
 ////////////////////////////////////////////////777
 ///////////////////////////////////////////////////7

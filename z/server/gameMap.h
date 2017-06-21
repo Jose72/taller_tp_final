@@ -27,8 +27,12 @@ class gameMap {
 		tile* getTilePFromUnit(double x, double y);
 		void printMap();
 		void setBlocking(std::map<int,unit*> &units);
+		void setUnitAsBlocking(unit *u);
 		void seePassableForUnit(int unit_code);
-		//para mejora
+		bool impossibleTile(int x, int y, int class_u);
+		
+		//para mejora (no se si se implementara)
+		//NO USAR
 		void setHighResMap(); //no use yet
 		void getNeightboorsHRes(tile &q, std::vector<tile*> &ady);
 		void setBlockingHRes(std::map<int,unit*> &units);

@@ -495,7 +495,7 @@ int map_codes[100] = {0};
 		for (auto it = units.begin(); it != units.end(); ){
 			unit *u = it->second;
 			if (u->isDead()) {
-				dh.death(*u, units, unit_id_count, p_info);
+				dh.death(*u, units, unit_id_count, mapa, p_info);
 				it = units.erase(it);
 			} else {
 				++it;
@@ -548,7 +548,7 @@ int test_bullet_attack(){
 		for (auto it = units.begin(); it != units.end(); ){
 			unit *u = it->second;
 			if (u->isDead()) {
-				dh.death(*u, units, unit_id_count, p_info);
+				dh.death(*u, units, unit_id_count, mapa, p_info);
 				it = units.erase(it);
 			} else {
 				++it;

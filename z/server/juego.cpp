@@ -80,7 +80,7 @@ void juego::unit_cleaner(){
 		unit *u = it->second;
 		bool not_edificio = (u->getClassId() != BUILDING);
 		if (u->isDead()) {
-			death_h.death(*u, units, id_unit_counter, g_info);//handler por si tiene q hacer algo
+			death_h.death(*u, units, id_unit_counter, mapa, g_info);//handler por si tiene q hacer algo
 			//si no es un edificio lo elimino
 			if (not_edificio){
 				delete it->second;

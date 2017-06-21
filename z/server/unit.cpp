@@ -517,3 +517,9 @@ int unit::getTimeToCompletion(){
 	}
 	return 0;
 }
+
+bool unit::hasOnTop(unit *u){
+	bool dx = ((this->x) < (u->x) &&  (u->x) < (this->x + this->width));
+	bool dy = ((this->y) < (u->y) && (u->y) < (this->y + this->height));
+	return (dx && dy);
+}

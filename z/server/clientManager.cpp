@@ -48,14 +48,25 @@ int tClientManager::gameSelection(){
 		//std::cout << "gem: " << type_game << std::endl;
 		//std::cout << "tcant eq: " << teams << std::endl;
 		
+		//si la cant de jugadores es menor o igual a 1 da error
+		if (cant_p <= 1 ){
+			return 1;
+		}
+		
 		//creo el juego
 		//harcodeo
 		
 		//si es deathmantc equipos = juagdores
 		int teams2 = teams;
-		if (type_game == DEATHMATCH) teams2 = cant_p;
+		if (type_game == DEATHMATCH) {
+			teams2 = cant_p;
+		} else {
+			//sino tienen que ser equipos parejos
+			if ((cant_p % teams) != 0 || teams <= 1) return 1;
+		}
 		
-		j = new juego(id_client, cant_p, DEATHMATCH, teams2);
+		//hardocdeado DEATHMATCH
+		j = new juego(id_client, cant_p, type_game, teams2);
 		j->clientJoin(id_client, &cli_skt, 1);
 		//pusheo en el vector
 		juegos.push_back(j);

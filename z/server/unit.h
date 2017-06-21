@@ -118,6 +118,7 @@ class unit {
 		bool canDriveTarget();
 		bool isDriving();
 		bool isAttackable(unit *u);
+		bool hasOnTop(unit *u);
 		
 		//double getDamage(double time); 
 		int takeDamage(int dam, bool explosive);
