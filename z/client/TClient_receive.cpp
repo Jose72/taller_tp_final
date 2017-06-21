@@ -9,14 +9,15 @@ TClient_receive::TClient_receive(tSocket &s,
                                  Factory_Units &f,
                                  bool &done, bool &r, int &id,
                                  TechLevelProtected &tech,
-                                 WinnerProtected &winner):
-        socket(s),game_map(game_map),units(u), factory(f), done(done), running(r), id_client(id),techLevel(tech),winner(winner)  {}
+                                 WinnerProtected &winner,
+                                SoundManager &soundManager):
+        socket(s),game_map(game_map),units(u), factory(f), done(done), running(r), id_client(id),techLevel(tech),winner(winner),soundManager(soundManager)  {}
 
 TClient_receive::~TClient_receive() {}
 
 void TClient_receive::run() {
 
-    Protocol protocol_client_server(socket,units,game_map,factory, techLevel, winner);
+    Protocol protocol_client_server(socket,units,game_map,factory, techLevel, winner,soundManager);
 
     /////////////////////////
     int team_n;

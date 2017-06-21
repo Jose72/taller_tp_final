@@ -87,7 +87,8 @@ void Units_Protected::cleanDeadUnits() {
 }
 
 
-void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY, Factory_Units &factory) {
+bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY,
+                                       Factory_Units &factory) {
     tLock(this->mut);
     if(units_map.find(cod_unit) == units_map.end()){
         switch (unit_type){
@@ -189,8 +190,10 @@ void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                 units_map[cod_unit] = factory.createUnit(COLORLESS_FLAG,cod_unit,posX,posY, unit_owner);
                 break;
         }
+        return true;
 
     }
+    return false;
 }
 
 void Units_Protected::createUnit(int cod_unit, int unit_owner, int posX, int posY, Factory_Units &factory,

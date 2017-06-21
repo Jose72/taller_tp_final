@@ -5,6 +5,7 @@
 #include "Game_map.h"
 #include "Factory_Units.h"
 #include "WinnerProtected.h"
+#include "SoundManager.h"
 
 class EventHandler: public tThread {
 private:
@@ -18,6 +19,7 @@ private:
     int &id_client;
     TechLevelProtected &techLevel;
     WinnerProtected &winner;
+    SoundManager &soundManager;
 
 
 public:
@@ -27,7 +29,8 @@ public:
                  tSocket &s,
                  Game_map &m, bool &b,
                  Factory_Units &f,
-                 int &id_client, TechLevelProtected &tech,WinnerProtected &winner);
+                 int &id_client, TechLevelProtected &tech,WinnerProtected &winner,
+                SoundManager &soundManager);
     ~EventHandler();
     void run();
     void stop();

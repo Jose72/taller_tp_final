@@ -18,15 +18,16 @@ EventHandler::EventHandler(SDL_Surface *screen,
                            Game_map &m,
                            bool &b,
                            Factory_Units &f,
-                           int &id, TechLevelProtected &tech,WinnerProtected &winner):
-        playerInterface(p),units(u),socket(s), gameMap(m),running(b), factory(f), id_client(id), techLevel(tech), winner(winner){
+                           int &id, TechLevelProtected &tech,WinnerProtected &winner,
+                            SoundManager &soundManager):
+        playerInterface(p),units(u),socket(s), gameMap(m),running(b), factory(f), id_client(id), techLevel(tech), winner(winner),soundManager(soundManager){
     this->screen = screen;
 }
 
 EventHandler::~EventHandler() {}
 
 void EventHandler::run() {
-    Protocol protocol(socket,units,gameMap,factory, techLevel,winner);
+    Protocol protocol(socket,units,gameMap,factory, techLevel,winner,soundManager);
 
     SDL_Event event;
     int posCameraX = 0;
@@ -34,7 +35,7 @@ void EventHandler::run() {
     Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,WINDOW_W,WINDOW_H,factory);
     SelectionHandler sHandler(protocol,id_client,camera2);
     int destinoX, destinoY, seleccionX, seleccionY;
-    SoundManager soundManager;
+
     while(running == true) {
         //MOSTRAR
         camera2.set_position_cameraRect(posCameraX,posCameraY);

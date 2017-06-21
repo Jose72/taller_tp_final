@@ -12,7 +12,7 @@
 #include <caca_conio.h>
 #define SOUND_PATH "client/sounds/"
 
-SoundManager::SoundManager(){
+SoundManager::SoundManager() {
     std::string soundPath;
     soundPath = "client/sounds/";
     std::string filePath;
@@ -76,6 +76,10 @@ SoundManager::SoundManager(){
     sound = new Sound(soundPath + filePath,1);
     sounds[VEHICLE_FACTORY] = sound;
 
+    filePath = "comp_robot_manufactured.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[100] = sound;
+
     lastSound = std::chrono::system_clock::now();
 
 }
@@ -83,7 +87,10 @@ SoundManager::SoundManager(){
 void SoundManager::play(int flag){
     ColorToType colorToType;
     tLock(this->mut);
-    int indexSound = colorToType.getType((FlagsUnitType)flag);
+    int indexSound = flag;
+    if(flag < 100){
+         indexSound = colorToType.getType((FlagsUnitType)flag);
+    }
     std::cout << indexSound << std::endl;
     std::chrono::time_point<std::chrono::system_clock> newSound;
     newSound = std::chrono::system_clock::now();

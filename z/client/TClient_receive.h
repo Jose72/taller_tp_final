@@ -11,6 +11,7 @@
 #include "Units_Protected.h"
 #include "TechLevelProtected.h"
 #include "WinnerProtected.h"
+#include "SoundManager.h"
 
 class TClient_receive: public tThread {
 private:
@@ -23,6 +24,7 @@ private:
     int &id_client;
     TechLevelProtected &techLevel;
     WinnerProtected &winner;
+    SoundManager &soundManager;
 
 public:
     TClient_receive(tSocket &s,
@@ -31,7 +33,8 @@ public:
                     Factory_Units &f,
                     bool &done, bool &r, int &id_c,
                     TechLevelProtected &tech,
-                    WinnerProtected &winner);
+                    WinnerProtected &winner,
+                    SoundManager &soundManager);
     ~TClient_receive();
     void run();
     void stop();

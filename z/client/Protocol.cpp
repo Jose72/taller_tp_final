@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Protocol.h"
 #include "WinnerProtected.h"
+#include "SoundManager.h"
 
 #define CODE_MOVE_UNIT 0
 #define CODE_ATTACK 1
@@ -13,8 +14,8 @@
 #define CODE_DESTROYED 10
 #define CODE_CHANGE_TECH_LEVEL 35
 #define CODE_END_GAME 40
-Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner):
-        socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner) {}
+Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner,SoundManager &soundManager):
+        socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner), soundManager(soundManager) {}
 
 Protocol::~Protocol() {}
 
@@ -176,7 +177,9 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
         techLevel.setTechLevel(unitCode);
 
     } else {
-        units.createIsNotExist(unitCode, unitType, unitOwner, posX, posY, factory);
+        if(units.createIsNotExist(unitCode, unitType, unitOwner, posX, posY, factory)){
+            soundManager.play(100);
+        }
         if (units[unitCode]->get_state() != DEAD1) {
             switch (update) {
                 case CODE_SET_POS:

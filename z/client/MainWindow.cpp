@@ -25,6 +25,7 @@
 #include "MainWindow.h"
 #include "ProtocolMenu.h"
 #include "TechLevelProtected.h"
+#include "SoundManager.h"
 #include <SDL_mixer.h>
 
 #define IMAGEPATH "client/sprites/robot1/1.bmp"
@@ -48,6 +49,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     bool running = true;
     TechLevelProtected techLevel(INITIAL_TECH_LEVEL);
     WinnerProtected winnerProtected(NO_WINNER);
+    SoundManager soundManager;
 
     bool waiting_server = true;
     //INICIA SDL Y CREA LA PANTALLA
@@ -81,12 +83,13 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     Factory_Units factory(pool);
     Game_map game_map(screen);
     int port_number = atoi(argv[2]);
+
     //socket->connect(argv[1],port_number);
     std::vector<tThread*> threads;
-    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running, id_client,techLevel,winnerProtected));
+    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running, id_client,techLevel,winnerProtected,soundManager));
     threads[0]->start();
 
-    Protocol protocol(*socket,all_units,game_map,factory,techLevel,winnerProtected);
+    Protocol protocol(*socket,all_units,game_map,factory,techLevel,winnerProtected,soundManager);
 
 
     PlayerInterface playerInterface(screen,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
@@ -95,7 +98,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     sleep(5);
     //main application loop
 
-    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory,id_client,techLevel,winnerProtected));
+    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory,id_client,techLevel,winnerProtected,soundManager));
     threads[1]->start();
 
     for (int i = 0; i <threads.size(); ++i) {
