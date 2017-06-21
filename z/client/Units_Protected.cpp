@@ -34,7 +34,25 @@ void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD
     for (it = units_map.begin();it != units_map.end() ; ++it) {
         if (BETWEEN(it->second->get_posx(), limitXL, limitXR)) {
             if (BETWEEN(it->second->get_posy(), limitYU, limitYD)) {
-                it->second->animate(cameraRect);
+                if((it->second->get_type() == BRIDGE_CONCRETE_HORIZONTAL)||
+                   (it->second->get_type() == BRIDGE_CONCRETE_VERTICAL)||
+                   (it->second->get_type() == BRIDGE_WOOD_HORIZONTAL) ||
+                   (it->second->get_type() == BRIDGE_WOOD_VERTICAL)) {
+                    it->second->animate(cameraRect);
+                }
+
+            }
+        }
+    }
+    for (it = units_map.begin();it != units_map.end() ; ++it) {
+        if (BETWEEN(it->second->get_posx(), limitXL, limitXR)) {
+            if (BETWEEN(it->second->get_posy(), limitYU, limitYD)) {
+                if((it->second->get_type() != BRIDGE_CONCRETE_HORIZONTAL)&&
+                   (it->second->get_type() != BRIDGE_CONCRETE_VERTICAL)&&
+                   (it->second->get_type() != BRIDGE_WOOD_HORIZONTAL) &&
+                   (it->second->get_type() != BRIDGE_WOOD_VERTICAL)){
+                    it->second->animate(cameraRect);
+                }
             }
         }
     }
