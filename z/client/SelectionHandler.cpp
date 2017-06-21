@@ -18,7 +18,8 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     unit = units.selectUnit(dx1,dx2,dy1,dy2,unit_selected, id_client);
     //ampliar area de seleccion para edificios
     //todo revisar, tira segmentation fault
-    /**if(!unit_selected){
+    /*
+    if(!unit_selected){
         dx1 -= SIZE_OF_DELTA;
         dy1 -= SIZE_OF_DELTA;
         dx2 += SIZE_OF_DELTA;
@@ -30,7 +31,8 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
             unit = 0;
             unit_selected = false;
         }
-    }**/
+    }
+     */
 
 }
 
@@ -69,18 +71,27 @@ void SelectionHandler::set_objetive(int destX, int destY, Units_Protected &units
     int dx2 = destX + SIZE_OF_DELTA;
     int dy1 = destY - SIZE_OF_DELTA;
     int dy2 = destY + SIZE_OF_DELTA;
-    bool attack = false;
+    Action action;
     Unit * enemy;
 
     if(unit_selected) {
-        enemy = units.selectEnemy(dx1,dx2,dy1,dy2,attack, id_client);
-            if (attack) {
+        enemy = units.selectEnemy(dx1,dx2,dy1,dy2,action, id_client);
+        switch (action){
+            case MOVE:
+                protocol.moveUnitCS(unit->get_unit_code(),destX,destY);
+                break;
+            case ATTACK:
                 if((enemy->get_state() != DEAD2) && (enemy->get_state() != DEAD1)) {
                     protocol.attackUnitCS(unit->get_unit_code(), enemy->get_unit_code());
                 }
-            } else {
-                protocol.moveUnitCS(unit->get_unit_code(),destX,destY);
-            }
+                break;
+            case DRIVE:
+
+
+
+
+        }
+
     }
 }
 

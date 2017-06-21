@@ -78,6 +78,7 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 MISILE_LAUNCHER_RED,
                                 MISILE_LAUNCHER_YELLOW,
                                 32);
+    this->load_sprite("client/sprites/missile_launcher",MISILE_LAUNCHER_EMPTY,"empty",32,32);
 
     this->load_sprites_with_dim("client/sprites/heavyTank",
                                 HEAVY_TANK_BLUE,
@@ -85,6 +86,7 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 HEAVY_TANK_RED,
                                 HEAVY_TANK_YELLOW,
                                 32);
+    this->load_sprite("client/sprites/heavyTank",HEAVY_TANK_EMPTY,"empty",32,32);
 
     this->load_sprites_with_dim("client/sprites/mediumTank",
                                 MEDIUM_TANK_BLUE,
@@ -93,6 +95,8 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 MEDIUM_TANK_YELLOW,
                                 32);
 
+    this->load_sprite("client/sprites/mediumTank",MEDIUM_TANK_EMPTY,"empty",32,32);
+
     this->load_sprites_with_dim("client/sprites/lightTank",
                                 LIGHT_TANK_BLUE,
                                 LIGHT_TANK_GREEN,
@@ -100,12 +104,16 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 LIGHT_TANK_YELLOW,
                                 32);
 
+    this->load_sprite("client/sprites/lightTank",LIGHT_TANK_EMPTY,"empty",32,32);
+
     this->load_sprites_with_dim("client/sprites/jeep",
                                 JEEP_BLUE,
                                 JEEP_GREEN,
                                 JEEP_RED,
                                 JEEP_YELLOW,
                                 32);
+
+    this->load_sprite("client/sprites/jeep",JEEP_EMPTY,"empty",32,32);
 
     this->load_sprite("client/sprites/laserBullet",
                       LASER_BULLET,

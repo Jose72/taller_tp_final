@@ -1,10 +1,6 @@
-#include <iostream>
-#include "Protocol.h"
-#include "WinnerProtected.h"
-#include "SoundManager.h"
-
 #define CODE_MOVE_UNIT 0
 #define CODE_ATTACK 1
+#define CODE_DRIVE 2
 #define CODE_SET_POS 1
 #define CODE_SET_ATTACK 2
 #define CODE_CREATE_UNIT 2
@@ -14,8 +10,8 @@
 #define CODE_DESTROYED 10
 #define CODE_CHANGE_TECH_LEVEL 35
 #define CODE_END_GAME 40
-Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner,SoundManager &soundManager):
-        socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner), soundManager(soundManager) {}
+Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner):
+        socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner) {}
 
 Protocol::~Protocol() {}
 
@@ -47,6 +43,16 @@ void Protocol::attackUnitCS(int cod_unit, int cod_objective) {
     socket.send((char*) &O_to_send,sizeof(int));
 }
 
+void Protocol::driveUnitCS(int cod_unit, int drive_objetive) {
+    int CO_to_send = htonl(CODE_DRIVE);
+    int CU_to_send = htonl(cod_unit);
+    int O_to_send = htonl(drive_objetive);
+    socket.send((char*) &CO_to_send,sizeof(int));
+    socket.send((char*) &CU_to_send,sizeof(int));
+    socket.send((char*) &O_to_send,sizeof(int));
+    socket.send((char*) &O_to_send,sizeof(int));
+
+}
 void Protocol::create_map() {
     int tamanio_map;
     socket.receive((char*)&tamanio_map,4);

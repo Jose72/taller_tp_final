@@ -1,6 +1,7 @@
 #include "Units_Protected.h"
 #include "../common/Lock.h"
 
+#define NO_OWNER 0
 #define OWNER_BLUE 1
 #define OWNER_GREEN 2
 #define OWNER_RED 3
@@ -57,17 +58,25 @@ Unit* Units_Protected::selectUnit(int dx1, int dx2, int dy1, int dy2, bool &foun
     return unitSelected;
 }
 
-Unit* Units_Protected::selectEnemy(int dx1, int dx2, int dy1, int dy2, bool &found, int id_client) {
+Unit* Units_Protected::selectEnemy(int dx1, int dx2, int dy1, int dy2, Action &action, int id_client) {
     tLock(this->mut);
     Unit *enemy;
-    found = false;
     std::map<int, Unit*>::iterator it;
+    action = MOVE;
     for (it = units_map.begin();it != units_map.end() ; ++it) {
         if (BETWEEN(it->second->get_posx(), dx1, dx2)) {
             if (BETWEEN(it->second->get_posy(), dy1, dy2)) {
                 if(it->second->get_owner() != id_client){
+                    if((it->second->get_type() == HEAVY_TANK_EMPTY) ||
+                       (it->second->get_type() == MEDIUM_TANK_EMPTY)||
+                       (it->second->get_type() == LIGHT_TANK_EMPTY) ||
+                       (it->second->get_type() == JEEP_EMPTY)||
+                       (it->second->get_type() == MISILE_LAUNCHER_EMPTY)){
+                        action = DRIVE;
+                    } else{
+                        action = ATTACK;
+                    }
                     enemy = it->second;
-                    found = true;
                 }
             }
         }
@@ -87,33 +96,52 @@ void Units_Protected::cleanDeadUnits() {
 }
 
 
-bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY,
-                                       Factory_Units &factory) {
+void Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY, Factory_Units &factory) {
     tLock(this->mut);
     if(units_map.find(cod_unit) == units_map.end()){
         switch (unit_type){
 
              case JEEP:
-                createUnit(cod_unit,unit_owner,posX,posY,factory,
-                           JEEP_BLUE,JEEP_GREEN,JEEP_RED,JEEP_YELLOW);
+                createVehicle(cod_unit,unit_owner,posX,posY,factory,
+                              JEEP_BLUE,
+                              JEEP_GREEN,
+                              JEEP_RED,
+                              JEEP_YELLOW,
+                              JEEP_EMPTY);
                 break;
 
             case MEDIUM_TANK:
-                createUnit(cod_unit,unit_owner,posX,posY,factory,
-                           MEDIUM_TANK_BLUE,MEDIUM_TANK_GREEN,MEDIUM_TANK_RED,MEDIUM_TANK_YELLOW);
+                createVehicle(cod_unit,unit_owner,posX,posY,factory,
+                              MEDIUM_TANK_BLUE,
+                              MEDIUM_TANK_GREEN,
+                              MEDIUM_TANK_RED,
+                              MEDIUM_TANK_YELLOW,
+                              MEDIUM_TANK_EMPTY);
                 break;
             case LIGHT_TANK:
-                createUnit(cod_unit,unit_owner,posX,posY,factory,
-                           LIGHT_TANK_BLUE,LIGHT_TANK_GREEN,LIGHT_TANK_RED,LIGHT_TANK_YELLOW);
+                createVehicle(cod_unit,unit_owner,posX,posY,factory,
+                              LIGHT_TANK_BLUE,
+                              LIGHT_TANK_GREEN,
+                              LIGHT_TANK_RED,
+                              LIGHT_TANK_YELLOW,
+                              LIGHT_TANK_EMPTY);
                 break;
             case HEAVY_TANK:
-                createUnit(cod_unit,unit_owner,posX,posY,factory,
-                           HEAVY_TANK_BLUE,HEAVY_TANK_GREEN,HEAVY_TANK_RED,HEAVY_TANK_YELLOW);
+                createVehicle(cod_unit,unit_owner,posX,posY,factory,
+                              HEAVY_TANK_BLUE,
+                              HEAVY_TANK_GREEN,
+                              HEAVY_TANK_RED,
+                              HEAVY_TANK_YELLOW,
+                              HEAVY_TANK_EMPTY);
                 break;
 
             case MML:
-                createUnit(cod_unit,unit_owner,posX,posY,factory,
-                           MISILE_LAUNCHER_BLUE,MISILE_LAUNCHER_GREEN,MISILE_LAUNCHER_RED,MISILE_LAUNCHER_YELLOW);
+                createVehicle(cod_unit,unit_owner,posX,posY,factory,
+                              MISILE_LAUNCHER_BLUE,
+                              MISILE_LAUNCHER_GREEN,
+                              MISILE_LAUNCHER_RED,
+                              MISILE_LAUNCHER_YELLOW,
+                              MISILE_LAUNCHER_EMPTY);
                 break;
 
             case GRUNT:
@@ -190,16 +218,43 @@ bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                 units_map[cod_unit] = factory.createUnit(COLORLESS_FLAG,cod_unit,posX,posY, unit_owner);
                 break;
         }
-        return true;
 
     }
-    return false;
 }
 
 void Units_Protected::createUnit(int cod_unit, int unit_owner, int posX, int posY, Factory_Units &factory,
                                  FlagsUnitType blue, FlagsUnitType green, FlagsUnitType red, FlagsUnitType yellow) {
 
     switch(unit_owner){
+        case OWNER_BLUE:
+            units_map[cod_unit]= factory.createUnit(blue,cod_unit,posX,posY,unit_owner);
+            break;
+        case OWNER_GREEN:
+            units_map[cod_unit] = factory.createUnit(green,cod_unit,posX,posY,unit_owner);
+            break;
+        case OWNER_RED:
+            units_map[cod_unit] = factory.createUnit(red,cod_unit,posX,posY,unit_owner);
+            break;
+        case OWNER_YELLOW:
+            units_map[cod_unit] = factory.createUnit(yellow,cod_unit,posX,posY,unit_owner);
+            break;
+    }
+}
+
+
+
+void Units_Protected::createVehicle(int cod_unit, int unit_owner, int posX, int posY,
+                                    Factory_Units &factory,
+                                    FlagsUnitType blue,
+                                    FlagsUnitType green,
+                                    FlagsUnitType red,
+                                    FlagsUnitType yellow,
+                                    FlagsUnitType empty) {
+
+    switch(unit_owner){
+        case NO_OWNER:
+            units_map[cod_unit]= factory.createUnit(empty,cod_unit,posX,posY,unit_owner);
+            break;
         case OWNER_BLUE:
             units_map[cod_unit]= factory.createUnit(blue,cod_unit,posX,posY,unit_owner);
             break;

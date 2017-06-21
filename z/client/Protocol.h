@@ -8,7 +8,6 @@
 #include "Factory_Units.h"
 #include "TechLevelProtected.h"
 #include "WinnerProtected.h"
-#include "SoundManager.h"
 
 class Protocol {
 private:
@@ -18,13 +17,13 @@ private:
     Factory_Units &factory;
     TechLevelProtected &techLevel;
     WinnerProtected &winner;
-    SoundManager &soundManager;
 
 public:
-    Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech, WinnerProtected &winner, SoundManager &soundManager);
+    Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech, WinnerProtected &winner);
     ~Protocol();
     void moveUnitCS(int cod_unit, int posX, int posY);
     void attackUnitCS(int cod_unit, int cod_objective);
+    void driveUnitCS(int cod_unit, int drive_objetive);
     void create_map();
     void set_units_game();
     void confirm_server(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
