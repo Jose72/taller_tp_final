@@ -1,3 +1,6 @@
+#include <iostream>
+#include "Protocol.h"
+
 #define CODE_MOVE_UNIT 0
 #define CODE_ATTACK 1
 #define CODE_DRIVE 3
@@ -10,8 +13,8 @@
 #define CODE_DESTROYED 10
 #define CODE_CHANGE_TECH_LEVEL 35
 #define CODE_END_GAME 40
-Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner):
-        socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner) {}
+Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner,SoundManager &soundManager):
+        socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner), soundManager(soundManager) {}
 
 Protocol::~Protocol() {}
 
