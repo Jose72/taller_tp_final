@@ -60,8 +60,24 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 		
 		/*
 		//envia tl de la unidad (pasa saber en que estan los edificios)
-		int tl = htonl(it->second->getTechLvl());
-        socket.send((char*) &tl, sizeof(int));
+		//id del conduciotr en el caso de los vehiculos
+		int m = 0;
+		int c = it->second->getClassId();
+		switch(c){
+			case(BUILDING):{
+				m = it->second->getTechLvl();
+				break;
+			}
+			case(VEHICLE):{
+				unit *d = it->second->getDriver();
+				if (d){
+					m = d->getUnitId();
+				}
+				break;
+			}
+		}
+		m = htonl(m);
+        socket.send((char*) &m, sizeof(int));
 		*/
     }
 }
@@ -163,9 +179,23 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
         s = socket.send((char*) &health,sizeof(int));
 		
 		/*
-		//tiempo hasta que se fabrique la unidad (solo edificios)
-		int time = htonl(it->second->getTimeToCompletion();
-        s = socket.send((char*) &time,sizeof(int));
+		int m = 0;
+		int c = it->second->getClassId();
+		switch(c){
+			case(BUILDING):{
+				m = it->second->getTimeToCompletion();
+				break;
+			}
+			case(VEHICLE):{
+				unit *d = it->second->getDriver();
+				if (d){
+					m = d->getUnitId();
+				}
+				break;
+			}
+		}
+		m = htonl(m);
+        socket.send((char*) &m, sizeof(int));
 		*/
 		 
 		//pos x de la unidad

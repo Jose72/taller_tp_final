@@ -205,6 +205,10 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
 	id_unit_counter++;
 	
+	u5 = builder.build(JEEP, 0, 104, 800);
+	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
+	id_unit_counter++;
+	
 	std::vector<unit*> fac;
 	fac.push_back(u3);
 	fac.push_back(u4);
@@ -313,17 +317,19 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			
 			return;
 			}
-		
-		/*
 		case 3: //conducir
+			{
 			//busco la unidad destino
+			//si no es robot salgo
+			std::cout << "drive order: " << e.getX() << std::endl;
+			if (it->second->getClassId() != ROBOT) return;
 			std::map<int,unit*>::iterator it2;
 			it2 = units.find(e.getX());
 			if (it2->first != e.getX()) return; //no encontro a la unidad
+			std::cout << "drive ok: " << e.getX() << std::endl;
 			(it->second)->drive(it2->second);
 			return;
-			
-		*/
+			}
 	}
 }
 
