@@ -86,10 +86,8 @@ void SelectionHandler::set_objetive(int destX, int destY, Units_Protected &units
                 }
                 break;
             case DRIVE:
-
-
-
-
+                protocol.driveUnitCS(unit->get_unit_code(),enemy->get_unit_code());
+                break;
         }
 
     }

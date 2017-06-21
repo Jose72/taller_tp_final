@@ -1,6 +1,6 @@
 #define CODE_MOVE_UNIT 0
 #define CODE_ATTACK 1
-#define CODE_DRIVE 2
+#define CODE_DRIVE 3
 #define CODE_SET_POS 1
 #define CODE_SET_ATTACK 2
 #define CODE_CREATE_UNIT 2
