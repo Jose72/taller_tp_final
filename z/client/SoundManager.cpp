@@ -1,7 +1,7 @@
 //
 // Created by mbataglia on 19/06/17.
 //
-
+#define SECONDS_UNTIL_NEXT_ALARM 5
 #define CREATE_ROBOT_SOUND 1000
 #define CREATE_VEHICLE_SOUND 1001
 #define WIN_FLAG_SOUND 1002
@@ -108,8 +108,7 @@ SoundManager::SoundManager(int idClient) {
     sound = new Sound(soundPath + filePath,1);
     sounds[UNIT_UNDER_ATTACK] = sound;
 
-
-
+    lastDmgAlert = std::chrono::system_clock::now();
     lastSound = std::chrono::system_clock::now();
 
 }
@@ -117,11 +116,19 @@ SoundManager::SoundManager(int idClient) {
 void SoundManager::playDamage(int unitOwner,int unitType,int preHeatlh,int postHealth){
     if(unitOwner == idClient){
         if(postHealth < preHeatlh){
-            if(unitType == FORT){
-                play(FORT_UNDER_ATTACK);
-            } else {
-                play(UNIT_UNDER_ATTACK);
+            std::chrono::time_point<std::chrono::system_clock> newSound;
+            newSound = std::chrono::system_clock::now();
+            int elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>
+                    (newSound-lastDmgAlert).count();
+            if(elapsed_seconds >= SECONDS_UNTIL_NEXT_ALARM){
+                if(unitType == FORT){
+                    play(FORT_UNDER_ATTACK);
+                } else {
+                    play(UNIT_UNDER_ATTACK);
+                }
+                lastDmgAlert = std::chrono::system_clock::now();
             }
+
         }
     }
 }

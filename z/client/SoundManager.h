@@ -18,6 +18,7 @@ class SoundManager {
 private:
     std::mutex mut;
     std::chrono::time_point<std::chrono::system_clock> lastSound;
+    std::chrono::time_point<std::chrono::system_clock> lastDmgAlert;
     std::map<int,Sound*> sounds;
     int idClient;
 public:

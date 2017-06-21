@@ -226,6 +226,11 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     units[unitCode]->set_state(DRINKING);
                     units[unitCode]->set_pos(posX,posY);
                     break;
+                case CREATING:
+                    soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
+                    units[unitCode]->set_health(health);
+
+
             }
         }
     }
