@@ -43,7 +43,7 @@ file(GLOB SOURCE_FILES_SERVER
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 
-add_executable(clientGame ${SOURCE_FILES_CLIENT})
+add_executable(clientGame ${SOURCE_FILES_CLIENT} client/ConstantsInterpretor.cpp client/ConstantsInterpretor.h)
 add_executable(serverGame ${SOURCE_FILES_SERVER})
 
 target_link_libraries(clientGame ${GTKMM_LIBRARIES} ${SDL_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${SDL_MIXER_LIBRARIES} ${SDL_TTF_LIBRARIES} )
