@@ -96,7 +96,6 @@ void EventHandler::run() {
                             destinoY = event.button.y + camera2.getPosCameraY();
                             std::cout << "X: "<< destinoX << " Y: " << destinoY <<"\n";
                             sHandler.set_objetive(destinoX, destinoY,units);
-                            soundManager.play();
                             break;
                             //SDL_Quit()
                         }
@@ -105,6 +104,9 @@ void EventHandler::run() {
                             seleccionY = event.button.y + camera2.getPosCameraY();
                             std::cout << "X: "<< seleccionX << " Y: " << seleccionY <<"\n";
                             sHandler.set_location(seleccionX, seleccionY, units);
+                            if(sHandler.unit_select()){
+                                soundManager.play((int) sHandler.getUnit()->get_type());
+                            }
                             break;
                         }
                     }

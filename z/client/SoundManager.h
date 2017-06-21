@@ -7,16 +7,28 @@
 
 
 #include <SDL_mixer.h>
+#include <ctime>
+#include <chrono>
+#include <mutex>
+#include "Sound.h"
+#include "SpritesPool.h"
+#include "../common/constants.h"
 
 class SoundManager {
 private:
-    Mix_Chunk *sonidoMover;
+    std::mutex mut;
+    std::chrono::time_point<std::chrono::system_clock> lastSound;
+    std::map<int,Sound*> sounds;
 public:
     SoundManager();
     ~SoundManager();
 
 
     void play();
+
+    void play(FlagsUnitType flag);
+
+    void play(int flag);
 };
 
 
