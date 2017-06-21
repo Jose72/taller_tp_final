@@ -115,10 +115,12 @@ void SoundManager::playCreationUnit(int idOwner, int idUnit) {
     }
 }
 
-void SoundManager::playCaptureFlag(int idOwner){
+void SoundManager::playCaptureFlag(int idOwner, int previousOwner) {
     if(idClient == idOwner){
         play(WIN_FLAG_SOUND);
-    } else {
+    }
+
+    if(idClient == previousOwner){
         play(LOSS_FLAG_SOUND);
     }
 }

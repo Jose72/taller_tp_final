@@ -209,7 +209,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     break;
                 case CODE_CHECKING_CAPTURE:
                     if(units[unitCode]->get_owner() != unitOwner){
-                        soundManager.playCaptureFlag(unitOwner);
+                        soundManager.playCaptureFlag(unitOwner, units[unitCode]->get_owner());
                     }
                     units[unitCode]->set_owner(unitOwner);
                     break;

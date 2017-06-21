@@ -33,7 +33,7 @@ public:
 
     void playCreationUnit(int idOwner, int i);
 
-    void playCaptureFlag(int idOwner);
+    void playCaptureFlag(int idOwner, int i);
 };
 
 
