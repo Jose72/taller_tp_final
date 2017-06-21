@@ -398,13 +398,6 @@ void juego::run(){
 				it->changeOwnership();
 			}
 			
-			//sleep
-			int sleep_time = 100000 - ((clock() - Start) * 1000);
-			if (sleep_time < 0) sleep_time = 0;
-			//std::cout << "Time Difference: " << sleep_time << std::endl;
-			usleep(sleep_time);
-			
-			
 			//HARCIDEO - CAMBIAR
 			//envio los tech levels -----  NO NECESARIO - ARREGLAR
 			for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -425,6 +418,13 @@ void juego::run(){
 			if (NO_WINNER != checkVictory()){
 				running = false;
 			}
+			
+			
+		int elapsed_time = (clock() - Start) * 1000000 / CLOCKS_PER_SEC;
+		int sleep_time = 100000 - elapsed_time;
+		if (sleep_time < 0) sleep_time = 0;
+		std::cout << "Time Difference: " << sleep_time << std::endl;
+		usleep(sleep_time);
 			
 	}
 	

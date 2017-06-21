@@ -114,6 +114,7 @@ void EventHandler::run() {
             }
         }
         checkDead();
+        SDL_Delay((1000/10 )-(SDL_GetTicks()-ticks));
         //camera2.update_pos();
     }
 }
