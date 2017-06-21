@@ -187,7 +187,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
 
     } else {
         if(units.createIsNotExist(unitCode, unitType, unitOwner, posX, posY, factory)){
-            soundManager.play(100);
+            soundManager.playCreationUnit(unitOwner, unitType);
         }
         if (units[unitCode]->get_state() != DEAD1) {
             switch (update) {
@@ -208,6 +208,9 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     units[unitCode]->set_state(DRINKING);
                     break;
                 case CODE_CHECKING_CAPTURE:
+                    if(units[unitCode]->get_owner() != unitOwner){
+                        soundManager.playCaptureFlag(unitOwner, units[unitCode]->get_owner());
+                    }
                     units[unitCode]->set_owner(unitOwner);
                     break;
                 case CODE_DESTROYED:
