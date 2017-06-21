@@ -1,5 +1,7 @@
+#include <iostream>
 #include "Units_Protected.h"
 #include "../common/Lock.h"
+#include "SoundManager.h"
 
 #define NO_OWNER 0
 #define OWNER_BLUE 1
@@ -28,7 +30,7 @@ int Units_Protected::size() {
     return units_map.size();
 }
 
-void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD , SDL_Rect cameraRect) {
+void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD , SDL_Rect cameraRect, SoundManager &soundManager) {
     tLock(this->mut);
     std::map<int, Unit*>::iterator it;
     for (it = units_map.begin();it != units_map.end() ; ++it) {
@@ -51,6 +53,9 @@ void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD
                    (it->second->get_type() != BRIDGE_CONCRETE_VERTICAL)&&
                    (it->second->get_type() != BRIDGE_WOOD_HORIZONTAL) &&
                    (it->second->get_type() != BRIDGE_WOOD_VERTICAL)){
+                    if(it->second->get_type() == PYRO_BULLET){
+                        soundManager.playGuns(PYRO_BULLET);
+                    }
                     it->second->animate(cameraRect);
                 }
             }

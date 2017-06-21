@@ -108,8 +108,15 @@ SoundManager::SoundManager(int idClient) {
     sound = new Sound(soundPath + filePath,1);
     sounds[UNIT_UNDER_ATTACK] = sound;
 
+    filePath = "FLAMER.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[PYRO_BULLET] = sound;
+
+
+
     lastDmgAlert = std::chrono::system_clock::now();
     lastSound = std::chrono::system_clock::now();
+    pyroBulletSound = std::chrono::system_clock::now();
 
 }
 
@@ -155,14 +162,28 @@ void SoundManager::playCaptureFlag(int idOwner, int previousOwner) {
     }
 }
 
+void SoundManager::playGuns(int flag){
+    tLock(this->mut);
+    std::chrono::time_point<std::chrono::system_clock> newSound;
+    newSound = std::chrono::system_clock::now();
+    if(flag == PYRO_BULLET){
+        int elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>
+                (newSound-pyroBulletSound).count();
+        if(elapsed_seconds >= sounds[PYRO_BULLET]->getDuration()){
+            sounds[PYRO_BULLET]->play();
+            pyroBulletSound = std::chrono::system_clock::now();
+        }
+    }
+}
+
 void SoundManager::play(int flag){
     ConstantsInterpretor constantsInterpretor;
     tLock(this->mut);
     int indexSound = flag;
+
     if(flag < CREATE_ROBOT_SOUND){
          indexSound = constantsInterpretor.getType((FlagsUnitType)flag);
     }
-    std::cout << indexSound << std::endl;
     std::chrono::time_point<std::chrono::system_clock> newSound;
     newSound = std::chrono::system_clock::now();
     int elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>

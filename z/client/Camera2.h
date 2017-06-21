@@ -28,7 +28,7 @@ public:
     Camera2(SDL_Surface *screen,int posX, int posY, int W, int H, int lW, int lH, Factory_Units &f);
     ~Camera2();
     void set_position_cameraRect(int posX, int posY);
-    void draw(Units_Protected &units, Game_map &game_map);
+    void draw(Units_Protected &units, Game_map &game_map,SoundManager &soundManager);
     int getPosCameraX();
     int getPosCameraY();
 

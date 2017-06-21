@@ -41,7 +41,7 @@ void EventHandler::run() {
         camera2.set_position_cameraRect(posCameraX,posCameraY);
         posCameraX = camera2.getPosCameraX();
         posCameraY = camera2.getPosCameraY();
-        camera2.draw(units,gameMap);
+        camera2.draw(units,gameMap,soundManager);
         playerInterface.show(sHandler, techLevel,winner,id_client);
         SDL_Flip(screen);
 

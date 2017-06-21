@@ -19,6 +19,7 @@ private:
     std::mutex mut;
     std::chrono::time_point<std::chrono::system_clock> lastSound;
     std::chrono::time_point<std::chrono::system_clock> lastDmgAlert;
+    std::chrono::time_point<std::chrono::system_clock> pyroBulletSound;
     std::map<int,Sound*> sounds;
     int idClient;
 public:
@@ -37,6 +38,8 @@ public:
     void playCaptureFlag(int idOwner, int i);
 
     void playDamage(int unitOwner, int unitType, int preHeatlh, int postHealth);
+
+    void playGuns(int flag);
 };
 
 
