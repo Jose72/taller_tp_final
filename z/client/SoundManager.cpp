@@ -6,6 +6,9 @@
 #define CREATE_VEHICLE_SOUND 1001
 #define WIN_FLAG_SOUND 1002
 #define LOSS_FLAG_SOUND 1003
+#define FORT_UNDER_ATTACK 1004
+#define UNIT_UNDER_ATTACK 1005
+
 #include <iostream>
 #include "SoundManager.h"
 #include "Sound.h"
@@ -97,10 +100,30 @@ SoundManager::SoundManager(int idClient) {
     sound = new Sound(soundPath + filePath,1);
     sounds[LOSS_FLAG_SOUND] = sound;
 
+    filePath = "comp_fort_under_attack.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[FORT_UNDER_ATTACK] = sound;
+
+    filePath = "comp_youre_losing_05.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[UNIT_UNDER_ATTACK] = sound;
+
 
 
     lastSound = std::chrono::system_clock::now();
 
+}
+
+void SoundManager::playDamage(int unitOwner,int unitType,int preHeatlh,int postHealth){
+    if(unitOwner == idClient){
+        if(postHealth < preHeatlh){
+            if(unitType == FORT){
+                play(FORT_UNDER_ATTACK);
+            } else {
+                play(UNIT_UNDER_ATTACK);
+            }
+        }
+    }
 }
 
 void SoundManager::playCreationUnit(int idOwner, int idUnit) {

@@ -91,7 +91,7 @@ int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
     }
 
     if(tech >= 5){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Laser",unitCode,LASER));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Laser",unitCode,LAZER));
     }
 
     pos += PADDING;

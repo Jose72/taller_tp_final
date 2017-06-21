@@ -34,6 +34,8 @@ public:
     void playCreationUnit(int idOwner, int i);
 
     void playCaptureFlag(int idOwner, int i);
+
+    void playDamage(int unitOwner, int unitType, int preHeatlh, int postHealth);
 };
 
 

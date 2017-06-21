@@ -192,6 +192,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
         if (units[unitCode]->get_state() != DEAD1) {
             switch (update) {
                 case CODE_SET_POS:
+                    soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
                     units[unitCode]->set_state(MOVING1);
                     units[unitCode]->set_health(health);
                     units[unitCode]->set_pos(posX, posY);
@@ -205,6 +206,8 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     units[unitCode]->set_state(DEAD1);
                     break;
                 case CODE_STAND:
+                    soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
+                    units[unitCode]->set_health(health);
                     units[unitCode]->set_state(DRINKING);
                     break;
                 case CODE_CHECKING_CAPTURE:
