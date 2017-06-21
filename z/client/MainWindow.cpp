@@ -49,7 +49,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     bool running = true;
     TechLevelProtected techLevel(INITIAL_TECH_LEVEL);
     WinnerProtected winnerProtected(NO_WINNER);
-    SoundManager soundManager;
+    SoundManager soundManager(id_client);
 
     bool waiting_server = true;
     //INICIA SDL Y CREA LA PANTALLA

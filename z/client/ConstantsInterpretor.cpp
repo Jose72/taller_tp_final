@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "ColorToType.h"
+#include "ConstantsInterpretor.h"
 #include "SpritesPool.h"
 #include "../common/constants.h"
 
@@ -11,7 +11,11 @@ bool isColor(FlagsUnitType a ,FlagsUnitType b ,FlagsUnitType c , FlagsUnitType d
     return (color == a || color == b || color == c || color == d);
 }
 
-int ColorToType::getType(FlagsUnitType color){
+bool ConstantsInterpretor::isRobotUnit(int t){
+    return (t == GRUNT || t == PYRO || t == LAZER || t == PSYCHO || t == TOUGHT || t == SNIPER);
+}
+
+int ConstantsInterpretor::getType(FlagsUnitType color){
 
     if(isColor(BLUE_GRUNT,GREEN_GRUNT,RED_GRUNT,YELLOW_GRUNT,color))
         return GRUNT;

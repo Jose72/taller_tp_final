@@ -19,8 +19,9 @@ private:
     std::mutex mut;
     std::chrono::time_point<std::chrono::system_clock> lastSound;
     std::map<int,Sound*> sounds;
+    int idClient;
 public:
-    SoundManager();
+    SoundManager(int idClient);
     ~SoundManager();
 
 
@@ -29,6 +30,10 @@ public:
     void play(FlagsUnitType flag);
 
     void play(int flag);
+
+    void playCreationUnit(int idOwner, int i);
+
+    void playCaptureFlag(int idOwner);
 };
 
 

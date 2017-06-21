@@ -2,17 +2,22 @@
 // Created by mbataglia on 19/06/17.
 //
 
+#define CREATE_ROBOT_SOUND 1000
+#define CREATE_VEHICLE_SOUND 1001
+#define WIN_FLAG_SOUND 1002
+#define LOSS_FLAG_SOUND 1003
 #include <iostream>
 #include "SoundManager.h"
 #include "Sound.h"
 #include "../common/Lock.h"
 #include "SpritesPool.h"
-#include "ColorToType.h"
-#include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
-#include <caca_conio.h>
-#define SOUND_PATH "client/sounds/"
+#include "ConstantsInterpretor.h"
+#include <time.h>
 
-SoundManager::SoundManager() {
+
+
+SoundManager::SoundManager(int idClient) {
+    this->idClient = idClient;
     std::string soundPath;
     soundPath = "client/sounds/";
     std::string filePath;
@@ -78,18 +83,52 @@ SoundManager::SoundManager() {
 
     filePath = "comp_robot_manufactured.wav";
     sound = new Sound(soundPath + filePath,1);
-    sounds[100] = sound;
+    sounds[CREATE_ROBOT_SOUND] = sound;
+
+    filePath = "comp_vehicle_manufactured.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[CREATE_VEHICLE_SOUND] = sound;
+
+    filePath = "COMP10.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[WIN_FLAG_SOUND] = sound;
+
+    filePath = "comp_territory_lost.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[LOSS_FLAG_SOUND] = sound;
+
+
 
     lastSound = std::chrono::system_clock::now();
 
 }
 
+void SoundManager::playCreationUnit(int idOwner, int idUnit) {
+    if(idClient == idOwner){
+        ConstantsInterpretor constantsInterpretor;
+        if(constantsInterpretor.isRobotUnit(idUnit)){
+            play(CREATE_ROBOT_SOUND);
+        } else {
+            play(CREATE_VEHICLE_SOUND);
+        }
+
+    }
+}
+
+void SoundManager::playCaptureFlag(int idOwner){
+    if(idClient == idOwner){
+        play(WIN_FLAG_SOUND);
+    } else {
+        play(LOSS_FLAG_SOUND);
+    }
+}
+
 void SoundManager::play(int flag){
-    ColorToType colorToType;
+    ConstantsInterpretor constantsInterpretor;
     tLock(this->mut);
     int indexSound = flag;
-    if(flag < 100){
-         indexSound = colorToType.getType((FlagsUnitType)flag);
+    if(flag < CREATE_ROBOT_SOUND){
+         indexSound = constantsInterpretor.getType((FlagsUnitType)flag);
     }
     std::cout << indexSound << std::endl;
     std::chrono::time_point<std::chrono::system_clock> newSound;

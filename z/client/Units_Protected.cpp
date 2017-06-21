@@ -99,6 +99,7 @@ void Units_Protected::cleanDeadUnits() {
 bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY,
                                        Factory_Units &factory) {
     tLock(this->mut);
+    bool result = false;
     if(units_map.find(cod_unit) == units_map.end()){
         switch (unit_type){
 
@@ -109,6 +110,7 @@ bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                               JEEP_RED,
                               JEEP_YELLOW,
                               JEEP_EMPTY);
+                result = true;
                 break;
 
             case MEDIUM_TANK:
@@ -118,6 +120,7 @@ bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                               MEDIUM_TANK_RED,
                               MEDIUM_TANK_YELLOW,
                               MEDIUM_TANK_EMPTY);
+                result = true;
                 break;
             case LIGHT_TANK:
                 createVehicle(cod_unit,unit_owner,posX,posY,factory,
@@ -126,6 +129,7 @@ bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                               LIGHT_TANK_RED,
                               LIGHT_TANK_YELLOW,
                               LIGHT_TANK_EMPTY);
+                result = true;
                 break;
             case HEAVY_TANK:
                 createVehicle(cod_unit,unit_owner,posX,posY,factory,
@@ -134,6 +138,7 @@ bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                               HEAVY_TANK_RED,
                               HEAVY_TANK_YELLOW,
                               HEAVY_TANK_EMPTY);
+                result = true;
                 break;
 
             case MML:
@@ -143,32 +148,39 @@ bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                               MISILE_LAUNCHER_RED,
                               MISILE_LAUNCHER_YELLOW,
                               MISILE_LAUNCHER_EMPTY);
+                result = true;
                 break;
 
             case GRUNT:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_GRUNT,GREEN_GRUNT,RED_GRUNT,YELLOW_GRUNT);
+                result = true;
                 break;
 
             case PSYCHO:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_PSYCHO,GREEN_PSYCHO,RED_PSYCHO,YELLOW_PSYCHO);
+                result = true;
                 break;
             case TOUGHT:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_TOUGHT,GREEN_TOUGHT,RED_TOUGHT,YELLOW_TOUGHT);
+                result = true;
                 break;
             case PYRO:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_PYRO,GREEN_PYRO,RED_PYRO,YELLOW_PYRO);
+                result = true;
                 break;
             case SNIPER:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_SNIPER,GREEN_SNIPER,RED_SNIPER,YELLOW_SNIPER);
+                result = true;
                 break;
             case LAZER:
                 createUnit(cod_unit,unit_owner,posX,posY,factory,
                            BLUE_LASER,GREEN_LASER,RED_LASER,YELLOW_LASER);
+                result = true;
                 break;
 
             case FORT:
@@ -219,9 +231,9 @@ bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_own
                 units_map[cod_unit] = factory.createUnit(COLORLESS_FLAG,cod_unit,posX,posY, unit_owner);
                 break;
         }
-        return true;
+
     }
-    return false;
+    return result;
 }
 
 void Units_Protected::createUnit(int cod_unit, int unit_owner, int posX, int posY, Factory_Units &factory,

@@ -8,9 +8,11 @@
 
 #include "SpritesPool.h"
 
-class ColorToType {
+class ConstantsInterpretor {
 public:
     int getType(FlagsUnitType color);
+
+    bool isRobotUnit(int t);
 };
 
 
