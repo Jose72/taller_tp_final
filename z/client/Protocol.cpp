@@ -13,6 +13,10 @@
 #define CODE_DESTROYED 10
 #define CODE_CHANGE_TECH_LEVEL 35
 #define CODE_END_GAME 40
+
+enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE, DEFEATED, DESTROYED};
+
+
 Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner,SoundManager &soundManager):
         socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner), soundManager(soundManager) {}
 
@@ -191,31 +195,31 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
         }
         if (units[unitCode]->get_state() != DEAD1) {
             switch (update) {
-                case CODE_SET_POS:
+                case MOVING:
                     units[unitCode]->set_state(MOVING1);
                     units[unitCode]->set_health(health);
                     units[unitCode]->set_pos(posX, posY);
                     break;
-                case CODE_SET_ATTACK:
+                case ATTACKING:
                     units[unitCode]->set_attack(posX, posY);
                     units[unitCode]->set_state(ATTACKING1);
                     units[unitCode]->set_health(health);
                     break;
-                case CODE_DIE:
+                case DEAD:
                     units[unitCode]->set_state(DEAD1);
                     break;
-                case CODE_STAND:
+                case STANDING:
                     units[unitCode]->set_state(DRINKING);
                     break;
-                case CODE_CHECKING_CAPTURE:
+                case CHECKING_CAPTURE:
                     if(units[unitCode]->get_owner() != unitOwner){
                         soundManager.playCaptureFlag(unitOwner, units[unitCode]->get_owner());
                     }
                     units[unitCode]->set_owner(unitOwner);
                     break;
-                case CODE_DESTROYED:
+                case DESTROYED:
                     units[unitCode]->set_state(DESTROYED1);
-                case CODE_DRIVE:
+                case DRIVING:
                     units[unitCode]->set_state(DRINKING);
                     units[unitCode]->set_pos(posX,posY);
                     break;

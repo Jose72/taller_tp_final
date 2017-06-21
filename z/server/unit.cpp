@@ -131,8 +131,10 @@ void unit::drive(unit *vehicle){
 		
 		
 		//setear una pos invalida
-		x = -200;
-		y = -200;
+		this->x = -200;
+		this->y = -200;
+		std::cout << "x------: " << this->getX() << std::endl;
+		std::cout << "y------: " << this->getY() << std::endl;
 		
 		
 	} else {
@@ -400,9 +402,9 @@ bool unit::canDriveTarget(){
 	//target es vehiculo
 	//el vehiculo no tiene conductor
 	//unidad es robot
-	if (target->owner == this->owner && 
+	if (target->owner == 0 && 
 	target->class_id == VEHICLE && !target->driver
-	 &&this->class_id == ROBOT) return true;
+	 && this->class_id == ROBOT) return true;
 	return false;
 	
 }
@@ -410,6 +412,8 @@ bool unit::canDriveTarget(){
 void unit::driveTarget(){
 	this->stopFollowers();
 	target->driver = this;
+	target->owner = this->owner;
+	std::cout << "new owner: " << target->owner << std::endl;
 	state = DRIVING;
 }
 
