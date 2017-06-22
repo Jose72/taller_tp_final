@@ -90,7 +90,6 @@ void Protocol::set_units_game() {
         std::cout<< unit_code_SC << "\n";
         socket.receive((char*)&unit_code_config,4);
         int unit_code_config_SC = ntohl(unit_code_config);
-        //std::cout << unit_code_config_SC <<"\n";
         socket.receive((char*)&owner,4);
         int owner_SC = ntohl(owner);
         socket.receive((char*)&posX,4);
@@ -147,7 +146,8 @@ void Protocol::process_message() {
 
     /*
     //seria el porcentage de tiempo que falta para la creacion de la unidad (en edificios)
-    //buscar otro uso para las unidades comunes??????
+    //el codigo de unidad del conductor para los vehiculos
+    //buscar otro uso para los demas??????
     int message5;
     socket.receive((char*)&message5,4);
     int message5_SC = ntohl(message5);
@@ -232,6 +232,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                 case CREATING:
                     soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
                     units[unitCode]->set_health(health);
+                    units[unitCode]->set_owner(unitOwner);
                     break;
                 case ERASED:
                     units[unitCode]->set_pos(-200,-200);

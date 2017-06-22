@@ -189,8 +189,8 @@
    {
       "unit_id":11,
       "class_id":22,
-      "height":160,
-      "width":192,
+      "height":192,
+      "width":160,
       "health":1000,
       "blocking":1,
       "speed":0,
