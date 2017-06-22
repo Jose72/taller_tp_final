@@ -543,3 +543,11 @@ bool unit::timerComplete(){
 void unit::resetAttackTimer(){
 	countdown =+ base_time;
 }
+
+void unit::actualizeCaptureTimer(int time){
+	if (countdown - time < 0){
+		countdown = 0;
+	} else {
+		countdown -= time;
+	}
+}

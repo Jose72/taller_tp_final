@@ -10,15 +10,18 @@ bool territory::flagBelongToTerritory(unit *f){
 
 
 //cambia el owner de las fabricas
-//se asume que el flag ya cambio de owner
+//si el flag ya cambio de owner
 //si el nuevo owner es distinto de 0 (es un team) pasa a CREATING
 void territory::changeOwnership(){
 	int n_owner = flag->getOwner();
 	for (auto it = factories.begin(); it != factories.end(); ++it){
 		unit *factory = (*it);
-		factory->changeOwner(n_owner);
-		if (factory->getOwner() != 0){
-			factory->changeState(CREATING);
+		if(n_owner != factory->getOwner()){
+			factory->changeOwner(n_owner);
+			if (factory->getOwner() != 0){
+				factory->changeState(CREATING);
+				factory->resetTimer();
+			}
 		}
 	}
 }

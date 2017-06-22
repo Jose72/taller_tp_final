@@ -26,7 +26,7 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 			//es distinto al owner de la bandera
 			if (!u.sameOwnerAsTarget()){
 				//actualizo el timer
-				u.actualizeTimer(time);
+				u.actualizeCaptureTimer(time);
 				//si se cumplio el tiempo, es capturada
 				if (u.timerComplete()){
 					//actualizo tech levels de las fabricas

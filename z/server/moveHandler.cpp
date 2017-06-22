@@ -182,20 +182,20 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		//closer_tile->printTile();
 		//u.printPos();
 		
-		//conseguir el centro de la casilla (coord pixel)
+		//conseguir el borde de la casilla (coord pixel)
 		//int x_closer = 15 + 32 * closer_tile->getX();
 		//int y_closer = 15 + 32 * closer_tile->getY(); 
 		int x_closer = 32 * closer_tile->getX();
 		int y_closer = 32 * closer_tile->getY(); 
 		//si hay una sola casilla (estas en la casilla destino)
-		//los yx que queres son los de destino, no el centro de la casilla
+		//los yx que queres son los de destino, no el borde de la casilla
 		if (camino.size() == 1){
 			x_closer = u.getDestX(); 
 			y_closer = u.getDestY();
 		}
 		
-		//std::cout << "x_closer" << x_closer << std::endl;
-		//std::cout << "y_closer" << y_closer << std::endl;
+		std::cout << "x_closer" << x_closer << std::endl;
+		std::cout << "y_closer" << y_closer << std::endl;
 		
 		//distancia a esa coord (euclidea)
 		double dist = sqrt(pow((x_unit - x_closer),2) + pow((y_unit - y_closer),2));
@@ -220,17 +220,23 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			std::cout << "new_x " << new_x << std::endl;
 			std::cout << "new_y " << new_y << std::endl;
 			*/
-			//si la dist de los nuevos xy con el origen es mayor o igual
-			//a la del origen on el destno, seteo el destino como pos actual
-			//sino seteo los nuevos xy
-
-			if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) < dist){
-				u.setPos(new_x, new_y);
+			
+			//si la distancia a los xy mas cercanos es mayor
+			//a la distancia hacia el destino, seteo el destino como pos
+			if (sqrt(pow((u.getDestX() - x_unit),2) + pow((u.getDestY() - y_unit),2)) <= dist){
+				u.setPos(u.getDestX(), u.getDestY());
 			} else {
-				u.setPos(x_closer, y_closer);
+				//si la dist de los nuevos xy con la pos de partida es mayor o igual
+				//a la de partida con los xy mas cercanos, seteo los ams cercanos como pos actual
+				//sino seteo los nuevos xy
+				if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) <= dist){
+					u.setPos(new_x, new_y);
+				} else {
+					u.setPos(x_closer, y_closer);
+				}
 			}
 		}
-		//u.printPos();
+		u.printPos();
 		
 		
 		////status check

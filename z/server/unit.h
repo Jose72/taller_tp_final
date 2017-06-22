@@ -141,6 +141,7 @@ class unit {
 		
 		//creacion-captura
 		void actualizeTimer(int time); // para ataque
+		void actualizeCaptureTimer(int time); // para ataque
 		void updateCreationTimer(int time, int t_count); ///para crear unidad
 		void resetTimer();
 		void resetAttackTimer();
@@ -153,7 +154,6 @@ class unit {
 		//targeting
 		void setTarget(unit *u);
 		void setAutoAttack(unit *u);
-		void setAllie(int a);
 		void setFollower(unit *u);
 		void removeFollower(unit* u);
 		void removeTarget(unit *u);

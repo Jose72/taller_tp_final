@@ -196,13 +196,15 @@ void juego::sendInit(){
 	id_unit_counter++;
      */
 	
-	unit *u1 = builder.build(PYRO, 1, 300, 400);
+	unit *u1 = builder.build(PYRO, 1, 150, 400);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
 	id_unit_counter++;
 	
 	unit *u8 = builder.build(GRUNT, 2, 10, 230);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
 	id_unit_counter++;
+	
+	u8->move(287,431);
 	
 	///////////////77
 	//TERRITORIOS HARDCODEADO
