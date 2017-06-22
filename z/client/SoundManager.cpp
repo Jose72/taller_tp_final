@@ -16,6 +16,7 @@
 #include "SpritesPool.h"
 #include "ConstantsInterpretor.h"
 #include <time.h>
+#include <algorithm>
 
 
 
@@ -201,4 +202,18 @@ SoundManager::~SoundManager() {
     }
     sounds.clear();
     Mix_CloseAudio();
+}
+
+void SoundManager::addToughBullet(int id) {
+    if(std::find(toughBullets.begin(), toughBullets.end(), id) == toughBullets.end()) {
+        toughBullets.push_back(id);
+    }//copy(v1.begin(), v1.end(), v2.begin());
+}
+
+void SoundManager::playToughBullets(){
+    for(int i = 0; i < toughBullets.size(); i++) {
+        if(std::find(previousToughBullets.begin(), previousToughBullets.end(), toughBullets[i]) == previousToughBullets.end()) {
+
+        }
+    }
 }

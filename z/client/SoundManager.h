@@ -21,12 +21,14 @@ private:
     std::chrono::time_point<std::chrono::system_clock> lastDmgAlert;
     std::chrono::time_point<std::chrono::system_clock> pyroBulletSound;
     std::map<int,Sound*> sounds;
+    std::vector<int> toughBullets;
+    std::vector<int> previousToughBullets;
     int idClient;
 public:
     SoundManager(int idClient);
     ~SoundManager();
 
-
+    void addToughBullet(int id);
     void play();
 
     void play(FlagsUnitType flag);
@@ -40,6 +42,8 @@ public:
     void playDamage(int unitOwner, int unitType, int preHeatlh, int postHealth);
 
     void playGuns(int flag);
+
+    void playToughBullets();
 };
 
 

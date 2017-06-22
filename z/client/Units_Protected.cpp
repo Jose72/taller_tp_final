@@ -56,6 +56,26 @@ void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD
                     if(it->second->get_type() == PYRO_BULLET){
                         soundManager.playGuns(PYRO_BULLET);
                     }
+
+                    if(it->second->get_type() == LASER_BULLET){
+                        std::cout << "LASER_BULLET " << it->second->get_unit_code() << std::endl;
+                    }
+
+                    if(it->second->get_type() == TOUGHT_BULLET){
+                      //  soundManager.addToughBullet(it->second->get_unit_code());
+                    }
+
+                    if(it->second->get_type() == HCP_BULLET){
+                        std::cout << "TOUGHT_BULLET " << it->second->get_unit_code() << std::endl;
+                    }
+
+                    if(it->second->get_type() == BULLET_DEAD){
+                        std::cout << "BULLET_DEAD " << it->second->get_unit_code() << std::endl;
+                    }
+
+
+
+
                     it->second->animate(cameraRect);
                 }
             }
