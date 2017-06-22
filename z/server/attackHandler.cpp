@@ -4,6 +4,9 @@
 #include "unitBuilder.h"
 #include <iostream>
 
+
+attackHandler::attackHandler(unitBuilder &ub): ub(ub) {}
+
 int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
 	int u_class = attacker.getClassId();
 	if (attacker.autoAttackEnabled()){
@@ -42,13 +45,12 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 					attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 				} else {
 					//std::cout << "crea bullet" << std::endl;
-					unitBuilder ub;
 					unit *u = ub.build(attacker.unitToCreate(), attacker.getCenterX(), attacker.getCenterY());
 					u->attack(attacked);
 					units.insert(std::pair<int,unit*>(unit_id_c,u));
 					unit_id_c++;//incremento id_units
-					//reseteo el timer
-					attacker.resetTimer();
+					//reseteo el timer (este reset es solo mientras este atacando al mismo target)
+					attacker.resetAttackTimer();
 				}
 			} 
 		} else {
@@ -75,13 +77,12 @@ int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*
 					attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 				} else {
 					//std::cout << "crea bullet" << std::endl;
-					unitBuilder ub;
 					unit *u = ub.build(attacker.unitToCreate(), attacker.getX(), attacker.getY());
 					u->attack(attacked);
 					units.insert(std::pair<int,unit*>(unit_id_c,u));
 					unit_id_c++;//incremento id_units
-					//reseteo el timer
-					attacker.resetTimer();
+					//reseteo el timer (este reset es solo mientras este atacando al mismo target)
+					attacker.resetAttackTimer();
 				}
 			} 
 	} else {

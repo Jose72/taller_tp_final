@@ -14,8 +14,7 @@ class unit {
 		int class_id;
 		int height;
 		int width;
-		int team;
-		int owner;
+		int owner; //team number
 		double x;
 		double y;
 		int b_health;
@@ -46,6 +45,7 @@ class unit {
 		int base_time;
 		double countdown;
 		int unit_code_to_create;
+		int quant_to_create;
 		int tech_level;
 		
 		//bandera
@@ -143,7 +143,9 @@ class unit {
 		void actualizeTimer(int time); // para ataque
 		void updateCreationTimer(int time, int t_count); ///para crear unidad
 		void resetTimer();
+		void resetAttackTimer();
 		int unitToCreate();
+		bool timerComplete();
 		
 		//driving
 		void releaseDriver();

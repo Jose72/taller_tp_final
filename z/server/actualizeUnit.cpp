@@ -6,7 +6,7 @@
 #include <algorithm> 
 #include "unitBuilder.h"
 
-
+actualizeUnit::actualizeUnit(unitBuilder &ub, infoUnits &u_info): ub(ub), u_info(u_info), attack_h(ub), create_h(ub, u_info) {}
 
 int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &mapa, double time){
 	int class_u = attacker.getClassId();
@@ -63,7 +63,6 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 			unit *v = u.getTarget();
 			if (v->getOwner() != u.getOwner()){
 				std::cout << "vehic own: " << v->getOwner() << std::endl;
-				unitBuilder ub;
 				unit *n_v = ub.build(v->getUnitId(), u.getOwner(), v->getX(), v->getY());
 				units.insert(std::pair<int,unit*>(unit_id_count,n_v));
 				unit_id_count++;

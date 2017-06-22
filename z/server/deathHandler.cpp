@@ -2,12 +2,13 @@
 #include <iostream>
 #include "unitBuilder.h"
 
+deathHandler::deathHandler(unitBuilder &ub): ub(ub) {}
+
 
 //si es un fuerte creo la bandera
 //paso el edificio a DESTROYED 
 int deathHandler::deathBuilding(unit &u, std::map<int, unit*> &units, int &id_units_count){
 	if (u.getUnitId() == FORT) {
-		unitBuilder ub;
 		unit *f = ub.build(FLAG, u.getX(), u.getY());
 		f->changeOwner(u.getOwner());
 		units.insert(std::pair<int,unit*>(id_units_count,f));
@@ -17,24 +18,20 @@ int deathHandler::deathBuilding(unit &u, std::map<int, unit*> &units, int &id_un
 	return 0;
 }
 
+//se encarga de dejar al driver(si lo tiene) en la posicion del vehiculo 
 int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units, gameMap &mapa){
-	//std::cout << "murio vehicle" << std::endl;
 	unit* a = u.getDriver();
 	//std::cout << "vehicle driver"  << u.getDriver() << std::endl;
 	//std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
 	if (a){
 	a->setPos(u.getX(), u.getY());
-		std::cout << "---------------------------------: " << std::endl;
-		std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
 		a->setTarget(nullptr);
 		//si el conductor esta en una casilla imposible
 		//(se destruyo puente y tiene que a aparecer ahi, va a DEAD)
 		if (mapa.impossibleTile(a->getX(), a->getY(), ROBOT)){
 			a->changeState(DEAD);
-			std::cout << "MUERTO---------------------------------: " << std::endl;
 		} else {
 			a->changeState(STANDING);
-			std::cout << "STANDING---------------------------------: " << std::endl;
 		}
 	}
 	//u.releaseDriver();
@@ -42,7 +39,7 @@ int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units, gameMap &ma
 }
 
 int deathHandler::deathBridge(unit &u, std::map<int, unit*> &units, gameMap &mapa){
-	//seteo las casilla como bloqueadas
+	//seteo las casillas como bloqueadas
 	mapa.setUnitAsBlocking(&u);
 	//me fijo que unidades estaban arriba y las pongo en muerte
 	for (auto it = units.begin(); it != units.end(); ++it){
@@ -86,5 +83,4 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 	}
 	u.stopFollowers();
 	return 0;
-	
 }

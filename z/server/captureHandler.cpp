@@ -28,7 +28,7 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 				//actualizo el timer
 				u.actualizeTimer(time);
 				//si se cumplio el tiempo, es capturada
-				if (u.timerIsZero()){
+				if (u.timerComplete()){
 					//actualizo tech levels de las fabricas
 					std::cout << "---------------flga captured by: "<< u.getTargetOwner() << std::endl;
 					//this->captureActualize(u.getOwner(), u.getTargetOwner(), units, ip);

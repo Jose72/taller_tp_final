@@ -1,5 +1,7 @@
 
 #include "infoUnits.h"
+#include <iostream>
+#include "JsonUnitInfoHandler.h"
 
 unitPlantilla::unitPlantilla(int unit_c, int class_c, int height, int width, 
 int health, int blocking, int speed, int range_u, int damage, bool explosive, 
@@ -70,8 +72,34 @@ int unitPlantilla::getQuantToFab(){
 	return quant_fab;
 }
 
+void unitPlantilla::print(){
+	std::cout <<
+	"unit_c: " << unit_c << "\n" << 
+	" class_c: " << class_c << "\n" << 
+	" height: " << height << "\n" << 
+	" width: " << width << "\n" << 
+	" health: " << health << "\n" << 
+	" blocking: " << blocking << "\n" << 
+	" speed: " << speed << "\n" << 
+	" range: " << range_u << "\n" << 
+	" damage: " << damage << "\n" << 
+	" explosive: " << explosive << "\n" << 
+	" unit_to_create: " << unit_to_create << "\n" << 
+	" fab_time: " << fab_time << "\n" << 
+	" shoot_time: " << shoot_time << "\n" << 
+	" tech_lvl: " << tech_lvl << "\n" << 
+	" quant_fab: " << quant_fab <<
+	std::endl;
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
+infoUnits::infoUnits(){
+	JsonUnitInfoHandler ju;
+	ju.jsonToUnitsInfo(*this);
+	//u_info.print();
+}
+
 void infoUnits::addInfo(unitPlantilla &up){
 	plantillas.push_back(up);
 }
@@ -200,4 +228,11 @@ int infoUnits::getQuantToFab(int unit_c){
 		}
 	}
 	return -1;
+}
+
+void infoUnits::print(){
+	for (auto it = plantillas.begin(); it != plantillas.end(); ++it){
+		std::cout << "-------------------------" << std::endl;
+		it->print();
+	}
 }

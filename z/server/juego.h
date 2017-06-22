@@ -16,6 +16,7 @@
 #include "Protocol.h"
 #include <string>
 #include "territory.h"
+#include "infoUnits.h"
 
 class juego: public tThread{
 	private:
@@ -25,6 +26,7 @@ class juego: public tThread{
 		int teams;
 		int game_type;
 		gameMap mapa; //mapa
+		infoUnits u_info;
 		unitBuilder builder;
 		int id_unit_counter;
 		std::queue<Event> event_list; //cola de eventos

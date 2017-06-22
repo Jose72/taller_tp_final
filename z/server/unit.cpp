@@ -233,7 +233,7 @@ bool unit::isAlive(){
 //hay "espera" por la frecuencia de disparo
 //
 bool unit::canAttack(){
-	return (countdown == 0);
+	return (countdown <= 0);
 }
 
 //resto el tiempo del time slice al countdown
@@ -455,11 +455,6 @@ void unit::releaseDriver(){
 	}
 }
 
-
-bool unit::sameTeam(unit *u){
-	return (this->team == u->team);
-}
-
 int unit::getWidth(){
 	return width;
 }
@@ -539,4 +534,12 @@ void unit::instantDrive(unit *vehicle){
 
 void unit::setDriver(unit *u){
 	driver = u;
+}
+
+bool unit::timerComplete(){
+	return (countdown <= 0);
+}
+
+void unit::resetAttackTimer(){
+	countdown =+ base_time;
 }

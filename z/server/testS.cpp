@@ -10,9 +10,20 @@
 #include "unitBuilder.h"
 #include "deathHandler.h"
 #include "infoPlayer.h"
+#include "JsonUnitInfoHandler.h"
+#include "infoUnits.h"
 
 #include <unistd.h>
 
+int test_load_u_data(){
+	JsonUnitInfoHandler j;
+	infoUnits u_info;
+	j.jsonToUnitsInfo(u_info);
+	u_info.print();
+	return 0;
+	}
+
+/*
 int test_map_h(){
 	gameMap mapa;
 	int map_codes[900] = {0};
@@ -276,7 +287,7 @@ int test_info_players(){
 }
 */
 
-
+/*
 int test_unit_driving(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
@@ -374,7 +385,7 @@ int flag_capture(){
 }
 
 */
-
+/*
 int test_auto_attack_unit(){
 	int map_codes[100] = {0};
 	gameMap mapa(&map_codes[0], 100);
@@ -624,3 +635,4 @@ int test_find_unit_tile(){
 	return 0;
 }
 
+*/

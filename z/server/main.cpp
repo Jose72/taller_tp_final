@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-	//test_map_h();
+	//test_load_u_data();
 	
 	char c = '0';
 	tServer server(atoi(argv[1]));

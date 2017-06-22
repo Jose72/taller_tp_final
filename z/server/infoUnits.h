@@ -26,6 +26,7 @@ int quant_fab;
 
 public:
     unitPlantilla(int,int,int,int,int,int,int,int,int,bool,int,int,int,int,int);
+	void print();
 	int getUnitCode();
 	int getClassCode();
 	int getHeight();
@@ -49,6 +50,7 @@ private:
 	std::vector<unitPlantilla> plantillas;
 public:
     infoUnits();
+	void print();
 	void addInfo(unitPlantilla &up);
 	int getClassCode(int unit_c);
 	int getHeight(int unit_c);

@@ -6,6 +6,7 @@
 JsonUnitInfoHandler::JsonUnitInfoHandler(){}
 
 void JsonUnitInfoHandler::jsonToUnitsInfo(infoUnits &iu){
+	//std::ifstream jsonFile("/home/jjjtony/TALLER_TP_FINAL/z/server/unitsInfo/unitsInfo.json");
 	std::ifstream jsonFile("server/unitsInfo/unitsInfo.json");
 
     Json::Reader reader;
@@ -16,9 +17,8 @@ void JsonUnitInfoHandler::jsonToUnitsInfo(infoUnits &iu){
         exit(1);
     } else {
         for (unsigned int i = 0; i < root.size(); ++i) {
-			
 			int unit_c = root[i]["unit_id"].asInt();
-			int class_c = root[i]["unit_class"].asInt();
+			int class_c = root[i]["class_id"].asInt();
 			int height = root[i]["height"].asInt();
 			int width = root[i]["width"].asInt();
 			int health = root[i]["health"].asInt();

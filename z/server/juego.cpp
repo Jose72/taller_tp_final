@@ -7,19 +7,21 @@
 #include "actualizeUnit.h"
 #include <unistd.h>
 #include "unitBuilder.h"
+#include "infoUnits.h"
 #include "deathHandler.h"
 #include "infoPlayer.h"
 #include <ctime>
 #include "Protocol.h"
 #include "JsonHandler.h"
 #include "defeatHandler.h"
+#include "JsonUnitInfoHandler.h"
 
 //cant jugadores
 //tipo de juego(deathmatch o equipos)
 //cant equipos
 juego::juego(int creator, int cant_players, int game_t, int cant_teams): 
 id_creator(creator), max_players(cant_players), teams(cant_teams), 
-game_type(game_t), g_info(infoGame(cant_players, 
+game_type(game_t), builder(u_info), g_info(infoGame(cant_players, 
 game_t, cant_teams)), running(false), started(false), ended(false) {
 	id_unit_counter = 1; //se empieza contando desde 1
 }
@@ -75,7 +77,7 @@ void juego::stop(){
 }
 
 void juego::unit_cleaner(){
-	deathHandler death_h;
+	deathHandler death_h(builder);
 	for (auto it = units.begin(); it != units.end(); ){
 		unit *u = it->second;
 		bool not_edificio = (u->getClassId() != BUILDING);
@@ -365,7 +367,7 @@ void juego::run(){
 	running = true;
 	//mapa codes de las casillas
 	
-	actualizeUnit actualizer;
+	actualizeUnit actualizer(builder, u_info);
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
@@ -423,7 +425,7 @@ void juego::run(){
 		int elapsed_time = (clock() - Start) * 1000000 / CLOCKS_PER_SEC;
 		int sleep_time = 100000 - elapsed_time;
 		if (sleep_time < 0) sleep_time = 0;
-		std::cout << "Time Difference: " << sleep_time << std::endl;
+		//std::cout << "Time Difference: " << sleep_time << std::endl;
 		usleep(sleep_time);
 			
 	}
