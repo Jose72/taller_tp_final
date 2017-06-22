@@ -39,10 +39,11 @@
 #define NO_WINNER -1
 
 void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
-    pWindow->hide();
     tSocket* socket = pWindow->getSocket();
-    SDL_Surface *screen;
     int id_client = pWindow->id_client;
+
+    SDL_Surface *screen;
+
     std::vector<Unit*> u;
     std::map<int, Unit*>um;
     Units_Protected all_units(um);
@@ -105,10 +106,10 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
         threads[i]->join();
 
     }
-    pWindow->show();
+
     TTF_Quit();
     IMG_Quit();
-
+    app->quit();
 }
 
 
@@ -117,8 +118,16 @@ void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
     app->quit();
 }
 
+void hideAndPlay(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
+    pWindow->activate_focus();
+    pWindow->hide();
+    jugar(app,argc,argv,pWindow);
+}
+
 void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow) {
-    ProtocolMenu protocolMenu(*(pWindow->socket));
+
+     ProtocolMenu protocolMenu(*(pWindow->socket));
+
     int numPlayers = atoi(pWindow->entry->get_text().data());
     int typeGame = 0;
     if( std::strcmp(pWindow->combo->get_active_text().data(), "TEAM_GAME") == 0){
@@ -127,7 +136,7 @@ void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, cha
     int numTeams = atoi(pWindow->entry2->get_text().data());
     int response = protocolMenu.createGame(numPlayers,typeGame,numTeams);
     if(response == RESPONSE_PROTOCOL_MENU_OK){
-        jugar(app,argc,argv,pWindow);
+        hideAndPlay(app,argc,argv,pWindow);
     } else {
         std::cout << "Crear juego: " << response << std::endl;
         //pWindow->initial(app,argc,argv,pWindow);
@@ -167,7 +176,7 @@ void on_siguiente_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, ch
     ProtocolMenu protocolMenu(*(pWindow->socket));
     int response = protocolMenu.joinGame(idCreator);
     if(response == RESPONSE_PROTOCOL_MENU_OK){
-        jugar(app,argc,argv,pWindow);
+        hideAndPlay(app,argc,argv,pWindow);
     } else {
         std::cout << "siguiente unirse join game " << response << std::endl;
     }
