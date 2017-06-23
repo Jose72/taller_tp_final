@@ -47,7 +47,7 @@ void EventHandler::run() {
 
 
         //MOSTRAR
-        if (SDL_PollEvent(&event)) {
+        while (SDL_PollEvent(&event)) {
 
             switch (event.type) {
                 case SDL_QUIT:
@@ -125,7 +125,7 @@ void EventHandler::stop() {
 
 void EventHandler::checkDead() {
     unsigned int ticks = SDL_GetTicks();
-    if((ticks %600) == 0){
+    if((ticks %100) == 0){
         units.cleanDeadUnits();
     }
 }

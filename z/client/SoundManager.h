@@ -21,6 +21,8 @@ private:
     std::chrono::time_point<std::chrono::system_clock> lastDmgAlert;
     std::chrono::time_point<std::chrono::system_clock> pyroBulletSound;
     std::map<int,Sound*> sounds;
+    std::vector<int> previousLaserBullets;
+    std::vector<int> laserBullets;
     std::vector<int> toughBullets;
     std::vector<int> previousToughBullets;
     int idClient;
@@ -44,6 +46,12 @@ public:
     void playGuns(int flag);
 
     void playToughBullets();
+
+    void playLazer();
+
+    void addLaserBullet(int id);
+
+    void playLaser();
 };
 
 

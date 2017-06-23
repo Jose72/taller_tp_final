@@ -8,6 +8,7 @@
 #define LOSS_FLAG_SOUND 1003
 #define FORT_UNDER_ATTACK 1004
 #define UNIT_UNDER_ATTACK 1005
+#define TOUGHT_BULLET_EXPLOSION 1006
 
 #include <iostream>
 #include "SoundManager.h"
@@ -113,11 +114,23 @@ SoundManager::SoundManager(int idClient) {
     sound = new Sound(soundPath + filePath,1);
     sounds[PYRO_BULLET] = sound;
 
+    filePath = "TOUGHBULLET.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[TOUGHT_BULLET] = sound;
+
+    filePath = "explosion_02.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[TOUGHT_BULLET_EXPLOSION] = sound;
+
+    filePath = "LASERGUN.wav";
+    sound = new Sound(soundPath + filePath,1);
+    sounds[LASER_BULLET] = sound;
 
 
     lastDmgAlert = std::chrono::system_clock::now();
     lastSound = std::chrono::system_clock::now();
     pyroBulletSound = std::chrono::system_clock::now();
+
 
 }
 
@@ -167,13 +180,16 @@ void SoundManager::playGuns(int flag){
     tLock(this->mut);
     std::chrono::time_point<std::chrono::system_clock> newSound;
     newSound = std::chrono::system_clock::now();
+    int elapsed_seconds = 0;
     if(flag == PYRO_BULLET){
-        int elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>
+        elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>
                 (newSound-pyroBulletSound).count();
         if(elapsed_seconds >= sounds[PYRO_BULLET]->getDuration()){
             sounds[PYRO_BULLET]->play();
             pyroBulletSound = std::chrono::system_clock::now();
         }
+    } else {
+        sounds[flag]->play();
     }
 }
 
@@ -195,6 +211,64 @@ void SoundManager::play(int flag){
     }
 }
 
+
+void SoundManager::addToughBullet(int id) {
+    if(std::find(toughBullets.begin(), toughBullets.end(), id) == toughBullets.end()) {
+        toughBullets.push_back(id);
+    }
+}
+
+void SoundManager::addLaserBullet(int id) {
+    if(std::find(laserBullets.begin(), laserBullets.end(), id) == laserBullets.end()) {
+        laserBullets.push_back(id);
+    }
+}
+
+void SoundManager::playLaser(){
+    int i = 0;
+    bool newLaser = false;
+    while(i < laserBullets.size() && !newLaser) {
+        if(std::find(previousLaserBullets.begin(), previousLaserBullets.end(), laserBullets[i]) == previousLaserBullets.end()) {
+            playGuns(LASER_BULLET);
+            newLaser = true;
+        }
+        i++;
+    }
+
+    previousLaserBullets.clear();
+    // std::copy(toughBullets.begin(), toughBullets.end(), previousToughBullets.begin());
+    previousLaserBullets = laserBullets;
+    laserBullets.clear();
+
+}
+
+void SoundManager::playToughBullets(){
+    int i = 0;
+    bool newBullet = false;
+    bool explosion = false;
+    while(i < toughBullets.size() && !newBullet) {
+        if(std::find(previousToughBullets.begin(), previousToughBullets.end(), toughBullets[i]) == previousToughBullets.end()) {
+            playGuns(TOUGHT_BULLET);
+            newBullet = true;
+        }
+        i++;
+    }
+
+    i=0;
+    while(i < previousToughBullets.size() && !explosion) {
+        if(std::find(toughBullets.begin(), toughBullets.end(), previousToughBullets[i]) == toughBullets.end()) {
+            playGuns(TOUGHT_BULLET_EXPLOSION);
+            explosion = true;
+        }
+        i++;
+    }
+    previousToughBullets.clear();
+   // std::copy(toughBullets.begin(), toughBullets.end(), previousToughBullets.begin());
+    previousToughBullets = toughBullets;
+    toughBullets.clear();
+}
+
+
 SoundManager::~SoundManager() {
     std::map <int, Sound*>::iterator it;
     for (it = sounds.begin(); it != sounds.end(); it++){
@@ -202,18 +276,4 @@ SoundManager::~SoundManager() {
     }
     sounds.clear();
     Mix_CloseAudio();
-}
-
-void SoundManager::addToughBullet(int id) {
-    if(std::find(toughBullets.begin(), toughBullets.end(), id) == toughBullets.end()) {
-        toughBullets.push_back(id);
-    }//copy(v1.begin(), v1.end(), v2.begin());
-}
-
-void SoundManager::playToughBullets(){
-    for(int i = 0; i < toughBullets.size(); i++) {
-        if(std::find(previousToughBullets.begin(), previousToughBullets.end(), toughBullets[i]) == previousToughBullets.end()) {
-
-        }
-    }
 }

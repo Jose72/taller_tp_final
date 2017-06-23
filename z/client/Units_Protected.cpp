@@ -58,29 +58,20 @@ void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD
                     }
 
                     if(it->second->get_type() == LASER_BULLET){
-                        std::cout << "LASER_BULLET " << it->second->get_unit_code() << std::endl;
+                        soundManager.addLaserBullet(it->second->get_unit_code());
                     }
 
                     if(it->second->get_type() == TOUGHT_BULLET){
-                      //  soundManager.addToughBullet(it->second->get_unit_code());
+                        soundManager.addToughBullet(it->second->get_unit_code());
                     }
-
-                    if(it->second->get_type() == HCP_BULLET){
-                        std::cout << "TOUGHT_BULLET " << it->second->get_unit_code() << std::endl;
-                    }
-
-                    if(it->second->get_type() == BULLET_DEAD){
-                        std::cout << "BULLET_DEAD " << it->second->get_unit_code() << std::endl;
-                    }
-
-
-
 
                     it->second->animate(cameraRect);
                 }
             }
         }
     }
+    soundManager.playToughBullets();
+    soundManager.playLaser();
 }
 
 Unit* Units_Protected::selectUnit(int dx1, int dx2, int dy1, int dy2, bool &found, int id_client) {
