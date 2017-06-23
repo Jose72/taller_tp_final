@@ -84,12 +84,6 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
     }
 }
 
-void serverProtocol::confirm_client() {
-    int confirmation;
-    socket.receive((char*)&confirmation, INT_SIZE);
-    socket.receive((char*)&confirmation, INT_SIZE);
-}
-
 int serverProtocol::receive_event(Event &e) {
     std::cout << "recibe event" << std::endl;
 	int s = 1;

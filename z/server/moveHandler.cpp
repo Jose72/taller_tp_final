@@ -117,6 +117,45 @@ return 0;
 }
 
 
+void correctPath(gameMap &mapa, int c_code ,std::vector<tile*> &path){
+	std::vector<tile*> path_aux;
+	int s = path.size();
+	if (s < 1) return;
+	path_aux.push_back(path[0]);
+	for (int i = 1; i < s; ++i){
+		tile *t_ant = path[i-1];
+		tile *t_next = path[i];
+		
+		if (t_ant->isDiagonal(*t_next)){
+			int dir_x = t_next->getX() - t_ant->getX();
+			int dir_y = t_next->getY() - t_ant->getY();
+			tile *t1 = mapa.getTileP(t_ant->getX() + dir_x, t_ant->getY());
+			tile *t2 = mapa.getTileP(t_ant->getX(), t_ant->getY() + dir_y);
+			if (!t1->isPassable(c_code) && t2->isPassable(c_code)){
+				path_aux.push_back(t2);
+			} else {
+				if (t1->isPassable(c_code) && !t2->isPassable(c_code)){
+					path_aux.push_back(t1);
+				}
+			}
+		}
+		path_aux.push_back(t_next);
+	}
+	/*
+	std::cout << "path--------" << std::endl;
+	for (auto it = path.begin(); it != path.end(); ++it){
+		(*it)->printTile();
+	}
+	std::cout << "path--aux------" << std::endl;
+	for (auto it = path_aux.begin(); it != path_aux.end(); ++it){
+		(*it)->printTile();
+	}
+	*/ 
+	path = path_aux;
+	return;
+}
+
+
 int moveHandler::moveActualize(unit &u, gameMap &mapa, double time){
 	int u_class = u.getClassId();
 	switch(u_class){
@@ -166,7 +205,9 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
             std::cout << "no camino" << std::endl;
 			return 1;
 		}
-
+		
+		//correcion de camino
+		correctPath(mapa, c_id, camino);
 
 		tile *closer_tile = camino[camino.size() - 1];
 		if (camino.size() > 1){
@@ -181,8 +222,8 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		//conseguir el borde de la casilla (coord pixel)
 		//int x_closer = 15 + 32 * closer_tile->getX();
 		//int y_closer = 15 + 32 * closer_tile->getY(); 
-		int x_closer = 32 * closer_tile->getX();
-		int y_closer = 32 * closer_tile->getY(); 
+		int x_closer = 15 + 32 * closer_tile->getX();
+		int y_closer = 15 + 32 * closer_tile->getY(); 
 		//si hay una sola casilla (estas en la casilla destino)
 		//los yx que queres son los de destino, no el borde de la casilla
 		if (camino.size() == 1){
@@ -214,7 +255,10 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			//si los nuevos xy van por una casilla no pasable hay que recalcular
 			tile *t_t = mapa.getTilePFromUnit(new_x, new_y);
 			if (!t_t->isPassable(c_id)){
-				//std::cout << "imapssable------------tile" << std::endl;
+				//tile *dest_prox = mapa.getTilePFromUnit(x_closer, y_closer);
+				//std::vector<tile*> mini_camino;
+				//a_Start_No_Diagonal(orig,dest_prox,mapa,c_id,mini_camino);
+				
 			}
 			
 			/*
@@ -301,126 +345,110 @@ int moveHandler::moveBulletActualize(unit &u, double time){
  }
  
  
- //
-int moveHandler::moveCommonActualize2(unit &u, gameMap &mapa, double time){
+
+int a_Start_No_Diagonal(tile *orig, tile *dest, gameMap &gmap, int unit_code, std::vector<tile*> &path){
+//se ordena con el f, seria una especie de costo por moverse
+//cada casilla tiene uno, lo uso para buscar el camino hasta el destino
+//f = g + h
+//g = costo por moverme desde el origen hasta la casilla actual, por el camino elegido hasta el momento
+//h = costo por moverme desde la casilla actual hasta el destino (se aproxima en gral, por ej distancia euclidea)
+
+
+//usar punteros, sino se rompe todo
+//nodos visitados, pero no expandidos (no chequee vecinos)
+tilesListCost open;
+//nodos visitados, y expandidos (chequee vecinos)
+tilesListCost closed; // nodos ya evaluados
+
+//inserto, seteo g y h (g = 0 en el origen)
+orig->setG(0);
+orig->setH(*dest);
+orig->setParent(nullptr); //padre a null, es el origen
+open.insert(orig); //inserto en open
+
+tile *last = nullptr;
+//std::cout << "empieza while" << std::endl;
+while (!open.empty()){//mientras al lista no este vacia
+	//saco la primera casilla del open list (la de menor f);
 	
-		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
-		//necesito clse de unidad
-		int c_id = u.getClassId();
-		double x_unit = u.getX_D();
-		double y_unit = u.getY_D();
-		//std::cout << "dest_x: " << u.getDestX() << std::endl;
-		//std::cout << "dest_y: " << u.getDestY() << std::endl;
-		//saco casillas origen y destino 
-		tile *orig = mapa.getTilePFromUnitHRes(x_unit, y_unit);
-		tile *dest = mapa.getTilePFromUnitHRes(u.getDestX(), u.getDestY());
-		//orig->printTile();
-		//dest->printTile();
-		std::vector<tile*> camino;
-		
-		//corro el astart para obtener el camino
-		a_Start(orig, dest, mapa, c_id, camino);
-		
-		//se tiene que mover hasta el centro de la siguiente casilla del camino
-		//que seria la segunda guardada en camino (la primera en el origen)
-		//si no hay mas de 1 es el origen
-		//std::cout << camino.size() << std::endl;
-
-		if (camino.size() == 0) {
-			//si no hay camino (selecione lava por ej)
-			//me quedo donde estoy y paso a standing
-			u.stop();
-			u.changeState(STANDING);
-            std::cout << "no camino" << std::endl;
-			return 1;
+	tile *q = open.begin();
+	//std::cout << "current" << std::endl;
+	//q->printTile();
+	
+	//borro q de open y lo inserto el closed
+	open.eraseIfFound(q);
+	closed.insert(q);
+	
+	//si la casilla es el destino se termina el recorrido
+	if (q->isEqual(*dest)){
+			last = q;
+			break;
 		}
-
-
-		tile *closer_tile = camino[camino.size() - 1];
-		if (camino.size() > 1){
-			closer_tile = camino[camino.size() - 2];
+	
+	//consigo la lista de casilleros adyacentes
+	std::vector<tile*> ady;
+	gmap.getNeightboorsNoDiagonal(*q, ady);
+	
+	//para todos los adyacentes
+	for (auto it = ady.begin(); it != ady.end(); ++it){
+		//si no esta en closed y es pasable
+		
+		
+		
+		if (!closed.found(*it) && (*it)->isPassable(unit_code)){
 			
-		}
-		
-		//std::cout << "closer tile" << std::endl;
-		//closer_tile->printTile();
-		//u.printPos();
-		
-		//conseguir el centro de la casilla (coord pixel)
-		int x_closer = 7 + 16 * closer_tile->getX();
-		int y_closer = 7 + 16 * closer_tile->getY(); 
-		//si hay una sola casilla (estas en la casilla destino)
-		//los yx que queres son los de destino, no el centro de la casilla
-		if (camino.size() == 1){
-			x_closer = u.getDestX(); 
-			y_closer = u.getDestY();
-		}
-		
-		//std::cout << "x_closer" << x_closer << std::endl;
-		//std::cout << "y_closer" << y_closer << std::endl;
-		
-		//distancia a esa coord (euclidea)
-		double dist = sqrt(pow((x_unit - x_closer),2) + pow((y_unit - y_closer),2));
-		//std::cout << x_unit - x_closer << std::endl;
-		//std::cout << y_unit - y_closer << std::endl;
-		
-		if (dist != 0) { // si no  estoy en el destino
-			//seteo velocidad
-			//multiplico por el factor de terreno de la casilla actual
-			//y por
-			double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
-			//si es una unidad no movible hay un error
-			if (speed == 0) return 1; //no deberia suceder
-
-			//calculo los nuevos xy
-			double new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
-			double new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
-			/*
-			std::cout << "time " << time << std::endl;
-			std::cout << "speed " << speed << std::endl;
-			std::cout << "dist " << dist << std::endl;
-			std::cout << "new_x " << new_x << std::endl;
-			std::cout << "new_y " << new_y << std::endl;
-			*/
-			//si la dist de los nuevos xy con el origen es mayor o igual
-			//a la del origen on el destno, seteo el destino como pos actual
-			//sino seteo los nuevos xy
-
-			if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) < dist){
-				u.setPos(new_x, new_y);
+			
+			///////////////////////////////////////////////////
+			int new_g = q->getG() + q->dist(**it);
+			if (open.found((*it))){
+				//si el g nuevo es mejor, reemplzo
+				if (new_g < (*it)->getG()){
+					(*it)->setParent(q);
+					(*it)->setG(new_g); 
+				} 
 			} else {
-				u.setPos(x_closer, y_closer);
+				//si no estaba en open inserto
+				(*it)->setParent(q);
+				(*it)->setG(new_g); 
+				(*it)->setH(*dest);
+				open.insert((*it));
 			}
-		}
-		//u.printPos();
-		
-		
-		////status check
-		if (u.isMoving()){
-		//si tengo target
-			if (u.getTarget()){
-				//si estoy en el rango
-				if (u.targetIsInRange()){
-					//si es enemigo
-					if (u.targetIsEnemy()){
-						//ataco
-						u.changeState(ATTACKING);
-					} else{
-						//si puedo conducir al target lo ahgo
-						if (u.canDriveTarget()){
-							u.driveTarget();
-						} else {
-							u.changeState(STANDING);
-						}
-					}
-					
-				} else {
-					u.moveToTarget();
-				}
-			} 
-		} else {//si llegue a destino
-			u.changeState(STANDING);
+			
+			
+			
+			/////////////////////////////////////////////////////////////////
+			/*
+			//seteo de padre a q
+			(*it)->setParent(q);
+			
+			//saco g y h
+			//dist() es solo para casilla adyacentes!
+			
+			(*it)->setG(); 
+			(*it)->setH(*dest);
+			//si el sucesor no esta en open agrego
+			//si esta, pero este es mejor (menor f), reemplazo
+			open.foundReplaceOrInsert(*it);
+			*/
 		}
 		
-		return 0;
+	}
+	
+}
+
+//si se me acabaron los open
+//salgo, no hay camino
+
+//hay que retornar la lista de punteros
+
+//std::cout << "last: " << last << std::endl;
+
+//voy hacia  atras con parent
+while (last != nullptr){
+	//last->printTile();
+	path.push_back(last);
+	last = last->getParent();
+}
+
+return 0;
 }

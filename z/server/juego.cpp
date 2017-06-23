@@ -24,10 +24,9 @@
 //cant equipos
 juego::juego(int creator, int cant_players, int game_t, int cant_teams): 
 id_creator(creator), max_players(cant_players), teams(cant_teams), 
-game_type(game_t), builder(u_info), g_info(infoGame(cant_players, 
-game_t, cant_teams)), running(false), started(false), ended(false) {
-	id_unit_counter = 1; //se empieza contando desde 1
-}
+game_type(game_t), builder(u_info), id_unit_counter(1), 
+g_info(infoGame(cant_players, game_t, cant_teams)), running(false), 
+started(false), ended(false) {}
 
 bool juego::gameStarted(){
 	return started;

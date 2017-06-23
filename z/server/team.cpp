@@ -2,10 +2,10 @@
 #include <iostream>
 
 team::team(int team_n, int max_p): team_n(team_n), max_p(max_p){
-	max_units = 50 * max_p;
-	unit_count = 0;
-	state = OK;
-	captured_territories = max_p;
+	this->max_units = 50 * max_p;
+	this->unit_count = 0;
+	this->state = OK;
+	this->captured_territories = max_p;
 }
 
 int team::addPlayer(int p_id, serverProtocol *prot){

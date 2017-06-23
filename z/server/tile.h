@@ -12,12 +12,12 @@ class tile{
 		int y_cord;
 		terrain terr;
 		bool unit_over; //si hay unidad que afecta al terreno (puente, edificio, roca)
-		bool passable; //si hay unidad arriba, me fijo aca si es pasable
+		bool passable; //si hay unidad arriba, me fijo aca si es pasable, en vez de ver el terreno
 		
 		
 		//para el a*
 		tile *parent;
-		double h;
+		double h; //euristica
 		double g;
 		
 		
@@ -29,7 +29,7 @@ class tile{
 		void setTerrain(int t_code);
 		tile* getParent();
 		void setParent(tile *p);
-		double gValue();                   //hacer gValue, hValue por fuera de tiles !!!!!!!
+		double gValue();           
 		double hValue(tile &dest);
 		void setG(double g);
 		void setH(double h);
@@ -39,6 +39,7 @@ class tile{
 		void setH(tile &dest);
 		bool operator<(tile &t);
 		bool isPassable(int unit_code); 
+		bool isDiagonal(tile &t);
 		bool isEqual(tile &t); //comparacion para el a*
 		double dist(tile &t); //distancia entre casillas
 		void printTile();

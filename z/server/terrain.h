@@ -38,24 +38,4 @@ class terrain{
 		int getTerrainCode();
 };
 
-/*
-// codigo viejo, guardado por la dudas
-//tipos de terrenos
-
-class terrainPradera: public terrain{
-	public:
-		terrainPradera();
-};
-
-class terrainAgua: public terrain{
-	public:
-		terrainAgua();
-};
-
-class terrainLava: public terrain{
-	public:
-		terrainLava();
-};
-*/
-
 #endif

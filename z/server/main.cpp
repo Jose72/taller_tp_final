@@ -1,15 +1,8 @@
 #include <stdio.h>
 #include <iostream>
-#include "gameMap.h"
-#include "tile.h"
-#include "terrain.h"
-#include "actualizeUnit.h"
-
 #include "testS.h" //small tests
-
-#include <stdio.h>
 #include "server.h"
-#include <iostream>
+
 
 int main(int argc, char **argv)
 {

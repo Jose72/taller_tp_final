@@ -21,12 +21,9 @@
 class infoPlayer {
 	private:
 		int player_id;
-		int units_count;
-		unit *fort;
 		serverProtocol *prot;
-		
-		int current_tech_lvl;
 		int state;
+		
 	public:
 		infoPlayer(int id, serverProtocol *prot);
 		infoPlayer(int id); //no usar
@@ -34,8 +31,6 @@ class infoPlayer {
 		bool maxUnitsReached();
 		void incrementUnitsCount();
 		void decrementUnitsCount();
-		bool fortAlive();
-		void initialize(unit *fort,int units_count);
 		int updateVictoryConditions();
 		bool isDefeated();
 		void sendTeamNumber(int t);

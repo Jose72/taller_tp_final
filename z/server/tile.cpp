@@ -7,7 +7,8 @@
 #include <iostream>
 #include <algorithm>
 
-tile::tile(int x, int y, int terrain_id): x_cord(x), y_cord(y), terr(terrain(terrain_id)) {
+tile::tile(int x, int y, int terrain_id): x_cord(x), y_cord(y), terr(terrain(terrain_id)), 
+unit_over(false), passable(true), parent(nullptr), h(0), g(0) {
 	parent = nullptr;
 	unit_over = false;
 }
@@ -31,7 +32,7 @@ void tile::setParent(tile *p){
 }
 
 //chequea si las casillas sin iguales en el mapa
-//solo cuequea coordenadas
+//solo chequea coordenadas
 bool tile::isEqual(tile &t){
 	if ((t.x_cord == this->x_cord) && (t.y_cord == this->y_cord)) return true;
 	return false;
@@ -49,16 +50,17 @@ bool tile::isPassable(int unit_code){
 
 //solo para casillas adyacentes
 double tile::dist(tile &t){
-	/*
-	//si es diagonal costo es +0.4
-	if (this->isDiagonal(t)) {
-		return 0.4 + t.gValue();
-	}
-	*/
 	return t.gValue();
-	
 }
 
+//si es uan tile adyancente en diagonal
+bool tile::isDiagonal(tile &t){
+	if (x_cord == 1 + t.x_cord && y_cord == 1 + t.y_cord) return true;
+	if (x_cord == 1 + t.x_cord && y_cord == -1 + t.y_cord) return true;
+	if (x_cord == -1 + t.x_cord && y_cord == 1 + t.y_cord) return true;
+	if (x_cord == -1 + t.x_cord && y_cord == -1 + t.y_cord) return true;
+	return false;
+}
 
 //costo de moverse a esta casilla desde una vecina no diagonal
 double tile::gValue(){
@@ -122,7 +124,7 @@ int tile::getTerrainCode(){
 }
 
 //si hay una undiad arriba
-//seteo en bool el flg
+//seteo en true el flg
 //y pongo en pasable el bool indicado
 void tile::putUnitOver(bool b){
 	unit_over = true;

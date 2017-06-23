@@ -33,7 +33,7 @@ tSocket::~tSocket() {
 
 
 
-void tSocket::bindAndListen(int &port_number) {
+void tSocket::bindAndListen(int port_number) {
 	struct sockaddr_in serv;
 	memset((char*)&serv, 0, sizeof(sockaddr_in));
 	serv.sin_family = AF_INET;
@@ -47,7 +47,7 @@ void tSocket::bindAndListen(int &port_number) {
 		throw 1;}
 }
 
-void tSocket::connect(char *ip_address, int &port_number) {
+void tSocket::connect(char *ip_address, int port_number) {
 	struct sockaddr_in serv;
 	serv.sin_addr.s_addr = inet_addr(ip_address);
         serv.sin_family = AF_INET;
@@ -107,8 +107,8 @@ void tSocket::shutdown(int how){
 }
 
 tSocket::tSocket(tSocket&& other){
-	this->skt = std::move(other.skt);
-        other.skt = -1;
+	this->skt = other.skt;
+	other.skt = -1;
 }
 
 tSocket& tSocket::operator=(tSocket&& other){

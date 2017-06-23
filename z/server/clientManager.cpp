@@ -165,8 +165,6 @@ void tClientManager::stop(){
 }
 
 void tClientManager::run(){
-	std::string player_name;
-	std::mutex mmm;
 	serverProtocol protocolo(cli_skt);
 
 	//enviar id cliente;

@@ -7,7 +7,7 @@
 #include <map>
 #include "unit.h"
 
-//objecto protegido?
+
 class gameMap {
 	private:
 		int height;
@@ -22,7 +22,7 @@ class gameMap {
 		gameMap(int height, int width, std::vector<tile> &casillas); //para testeo
 		gameMap(int height, int width); //pasarle el archivo xml y que complete casillas??
 		void getNeightboors(tile &q, std::vector<tile*> &ady);
-		tile getTile(int x, int y);
+		void getNeightboorsNoDiagonal(tile &q, std::vector<tile*> &ady);
 		tile* getTileP(int x, int y);
 		tile* getTilePFromUnit(double x, double y);
 		void printMap();
@@ -30,15 +30,6 @@ class gameMap {
 		void setUnitAsBlocking(unit *u);
 		void seePassableForUnit(int unit_code);
 		bool impossibleTile(int x, int y, int class_u);
-		
-		//para mejora (no se si se implementara)
-		//NO USAR
-		void setHighResMap(); //no use yet
-		void getNeightboorsHRes(tile &q, std::vector<tile*> &ady);
-		void setBlockingHRes(std::map<int,unit*> &units);
-		tile getTileHRes(int x, int y);
-		tile* getTilePHRes(int x, int y);
-		tile* getTilePFromUnitHRes(double x, double y);
 };
 
 #endif
