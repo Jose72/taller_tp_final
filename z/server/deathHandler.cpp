@@ -64,6 +64,7 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 	int status = u.getState();
 	if (status != DEAD) return 1;
 	int class_unit = u.getClassId();
+	u.stopFollowers();
 	switch(class_unit){
 		case ROBOT:
 			ip.decrementUnitsCount(u.getOwner());
@@ -81,6 +82,5 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 		default:
 		break;
 	}
-	u.stopFollowers();
 	return 0;
 }

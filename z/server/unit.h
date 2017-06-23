@@ -52,7 +52,6 @@ class unit {
 		
 		
 	public:
-		unit(int unit_id, int owner, int x, int y);
 		unit(int unit_id, int class_id, int height, int width, int owner, int x, int y, 
 	int health, int state, int blocking, int speed, int a_range, int base_damage, bool explosive, 
 	int base_time, int unit_to_c, int tech_level);
@@ -101,6 +100,7 @@ class unit {
 		void move(int d_x, int d_y);
 		void moveToTarget();
 		void attack(unit *u);
+		void follow(unit *u);
 		void stop();
 		void drive(unit *vehicle);
 		void driveTarget();

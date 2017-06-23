@@ -2,7 +2,6 @@
 #define UNITBUILDER_H
 
 #include "unit.h"
-#include "../common/constants.h"
 #include "infoUnits.h"
 
 class unitBuilder {

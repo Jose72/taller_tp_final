@@ -34,8 +34,8 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 	int state = u.getState();
 	switch(state){
 		case MOVING:
-			std::cout << "unit: " << unit_game_id << " move" << std::endl;
-			move_h.moveActualize(u, mapa, 1);
+			//std::cout << "unit: " << unit_game_id << " move" << std::endl;
+			move_h.moveActualize(u, mapa, time / 100);
 			return 0;
 		case ATTACKING:
 			//std::cout << "unit: " << unit_game_id << " attac" << std::endl;

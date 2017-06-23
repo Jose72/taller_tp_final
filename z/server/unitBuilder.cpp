@@ -16,7 +16,7 @@
 #define BLOCK_SIZE_D 32
 
 unitBuilder::unitBuilder(infoUnits &u_info): u_info(u_info) {
-	u_info.print();
+	//u_info.print();
 	}
 
 unit* unitBuilder::build(int unit_code, int owner, int x, int y){

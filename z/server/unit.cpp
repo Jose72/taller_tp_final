@@ -3,15 +3,6 @@
 #include "math.h"
 #include <vector>
 
-unit::unit(int unit_id, int owner, int x, int y): unit_id(unit_id), owner(owner), x(x), y(y), 
-dest_x(x), dest_y(y), target(nullptr) {
-	class_id = getClassCodeFromUnit(unit_id);
-	speed = getSpeedFromUnit(unit_id);
-	b_health = getHealthFromUnit(unit_id);
-	health = b_health;
-
-	
-};
 
 unit::unit(int unit_id, int class_id, int height, int width, int owner, int x, int y, 
 int health, int state, int blocking, int speed, int a_range, int base_damage, bool explosive, 
@@ -121,10 +112,24 @@ void unit::attack(unit *u){
 	} 
 }
 
+void unit::follow(unit *u){
+	if (u) {
+		auto_attack = false;
+		target = u;
+		u->setFollower(this);
+		if (this->targetIsInRange()){
+			this->changeState(STANDING);
+		} else {
+			this->moveToTarget();
+		}
+	}
+}
+
 void unit::drive(unit *vehicle){
 	//si tenia target le digo que no lo sigo y targetteo vehiculo
 	if (target) target->removeFollower(this);
 	target = vehicle;
+	target->setFollower(this);
 	//si estoy en rango lo conduzco, sino me pongo en moving
 	if (this->targetIsInRange() && this->canDriveTarget()){
 		this->driveTarget();
@@ -209,8 +214,8 @@ void unit::printPosDest(){
 bool unit::isEnemy(unit *u){
 	//pendiente: chequear si el owner es mageMap 
 	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
-	if (!u) return false;
-	if (u->owner == 0) return false;
+
+	if (!u || u->owner == 0 || u->class_id == FLAG) return false;
 	if (this->owner != u->owner) {
 		//if (this->sameTeam(&u)) return false;
 		return true;

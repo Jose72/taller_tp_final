@@ -58,6 +58,7 @@ class juego: public tThread{
 		bool gameStarted();
 		void getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int &cant_t);
 		bool isCreator(int c);
+		bool readyToClean();
 };
 
 #endif

@@ -57,7 +57,7 @@ int &unit_id_c, int time, infoGame &ip){
 	creator.updateCreationTimer(time, ip.getCapturedTer(creator.getOwner())); //avanzo el timer
 	//si llego el timer a 0 y no alcanzo limite de unidades
 	if (creator.canCreate() && !ip.maxPopReached(creator.getOwner())){
-		switch(getClassCodeFromUnit(creator.unitToCreate())){
+		switch(u_info.getClassCode(creator.unitToCreate())){
 			case ROBOT:
 				createRobotActualize(creator, units, unit_id_c, ip);
 				return 0;

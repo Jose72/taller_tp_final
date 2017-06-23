@@ -16,6 +16,9 @@
 #include "defeatHandler.h"
 #include "JsonUnitInfoHandler.h"
 
+
+#define MILISEC_SLICE 100
+
 //cant jugadores
 //tipo de juego(deathmatch o equipos)
 //cant equipos
@@ -41,8 +44,11 @@ void juego::getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int
 }
 
 bool juego::isCreator(int c){
-	if (id_creator == c) return true;
-	return false;
+	return (id_creator == c);
+}
+
+bool juego::readyToClean(){
+	return ended;
 }
 
 int juego::checkVictory(){
@@ -95,6 +101,7 @@ void juego::unit_cleaner(){
 				break;
 			}
 			case(ERASED):{
+				it->second->stopFollowers();
 				delete it->second;
 				it = units.erase(it);
 				break;
@@ -204,8 +211,6 @@ void juego::sendInit(){
 	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
 	id_unit_counter++;
 	
-	u8->move(287,431);
-	
 	///////////////77
 	//TERRITORIOS HARDCODEADO
 	unit *u2 = builder.build(FLAG, 50, 500);
@@ -253,15 +258,13 @@ void juego::sendInit(){
 	//codigo de equipo (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
 	
-	//mandar vector de fuertes por equipo (o un solo fuerte por equipo???)
+	//un solo fuerte por equipo
     std::vector<unit*> forts_1;
     forts_1.push_back(units[1]);
     std::vector<unit*> forts_2;
     forts_2.push_back(units[2]);
     g_info.initializeTeam(1,forts_1, 1);
     g_info.initializeTeam(2,forts_2, 1);
-    //g_info.initializePlayer(1, u3, 4);
-	//g_info.initializePlayer(2, u4, 2);
 	
 	
 
@@ -279,7 +282,7 @@ void juego::sendInit(){
 	g_info.initializeTeam(3,forts_3, 1);
 	*/
 
-		
+	//seteo en el mapa las casillas bloqueadas (o desbloqueadas por unidades)
 	mapa.setBlocking(units);
 	
 	
@@ -330,13 +333,16 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			if (unit_uniq_code != e.getX()) return; //no encontro a la unidad
 			
 			//solo robots o vehiculos
-			if (((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) && 
-			(it2->second)->getUnitId() != FLAG) {
-				(it->second)->attack(it2->second);
+			if (((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE)) {
+				if ((it2->second)->getUnitId() != FLAG){
+					(it->second)->attack(it2->second);
+				} else {
+					//si la unidad no es atacable hago un follow
+					//(it->second)->follow(it2->second);
 				}
+			} 
 			}
 			return;
-		
 		case 2: 
 			{
 			//crear
@@ -344,7 +350,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			int u_to_create = e.getX();
 			//si el tech level no le da salgo
 			//if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
-			(it->second)->create(u_to_create, getFabTimeFromUnit(u_to_create)*10);
+			(it->second)->create(u_to_create, u_info.getFabTime(u_to_create)/100);
 			
 			return;
 			}
@@ -367,8 +373,8 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 void juego::run(){
 	started = true;
 	running = true;
-	//mapa codes de las casillas
 	
+	//seteo el actualizador de unidades
 	actualizeUnit actualizer(builder, u_info);
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
@@ -388,13 +394,12 @@ void juego::run(){
 				//deslockeo
                 eventHandle(e, units);
                 i++;
-
             }
 
 			//actualizo las undiades (pendiente: crear una func aparte)
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
-				actualizer(it->first, *u, units, mapa, 100, id_unit_counter, g_info);
+				actualizer(it->first, *u, units, mapa, MILISEC_SLICE, id_unit_counter, g_info);
 			}
 			
 			//actualzicion de territorios
@@ -407,8 +412,6 @@ void juego::run(){
 			for (auto it = protocols.begin(); it != protocols.end(); ++it){
                  s = (*it)->sendUpdateTechLvl(5);
             }
-			
-			
 			
 			//envio actualizacion de las unidades
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -425,7 +428,7 @@ void juego::run(){
 			
 			
 		int elapsed_time = (clock() - Start) * 1000000 / CLOCKS_PER_SEC;
-		int sleep_time = 100000 - elapsed_time;
+		int sleep_time = (MILISEC_SLICE * 1000) - elapsed_time;
 		if (sleep_time < 0) sleep_time = 0;
 		//std::cout << "Time Difference: " << sleep_time << std::endl;
 		usleep(sleep_time);

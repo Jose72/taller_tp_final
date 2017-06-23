@@ -27,6 +27,7 @@ class tClientManager: public tThread{
 		std::mutex &manager_m);
 		void run() override;
 		void stop();
+		bool readyToClean();
 };
 
 #endif

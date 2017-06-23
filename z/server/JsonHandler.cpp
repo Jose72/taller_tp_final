@@ -37,7 +37,7 @@ void JsonHandler::jsonToUnits(int &unit_counter, unitBuilder &builder, std::map<
         std::cout << reader.getFormattedErrorMessages();
         exit(1);
     } else {
-        for (int i = 0; i < root.size(); ++i) {
+        for (unsigned int i = 0; i < root.size(); ++i) {
             int unitCode = root[i]["id"].asInt();
             int posX = root[i]["posX"].asInt();
             int posY = root[i]["posY"].asInt();

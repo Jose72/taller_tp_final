@@ -19,6 +19,10 @@ std::mutex &manager_m): id_client(id), cli_skt(std::move(cli_s)),
 manager_m(manager_m), juegos(jgs), end_game(false), j(nullptr), ended(false) {}
 
 
+bool tClientManager::readyToClean(){
+	return ended;
+}
+
 int tClientManager::gameSelection(){
 	serverProtocol prot(cli_skt);
 
@@ -176,63 +180,19 @@ void tClientManager::run(){
 	while (!ok && !end_game){
 		int i = this->gameSelection();
 		if (i == 0) ok = true; //todo bien
-		if (i == -1) return; //se rompio algo y hay que salir del manager
+		if (i == -1) {
+			ended = true;
+			return; //se rompio algo y hay que salir del manager
+		}
 	}
-	
-	
-	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////
-	//HARDCODEO DE COMUNICACION APRA CREAR O UNISE (LO VIEJO)
-	/*
-	//si seleccione nuevo juego
-	if (id_client == 1) {
-		//creo el juego
-		//hardcodeado cant jugadores
-		j = new juego(id_client, 1, DEATHMATCH, 0);
-		j->clientJoin(id_client, &cli_skt);
-		//pusheo en el vector
-		juegos.push_back(j);
-
-
-		//espero hasta que esten todos listos
-		while (!j->readyToStart() && !end_game){
-			usleep(200000);
-		}
-		//si sali del loop porque se acaba el juego, salgo del manager
-		if (end_game) return;
-
-
-		//que el juego envie datos iniciales
-		j->sendInit();
-
-		//empiezo el juego
-		j->start();
-
-	} else { //si seleccione unirme
-		//enviar lista de los juegos
-		//busco en el vector de juegos
-
-		//HARDOCDEADO
-		if (0 == juegos.joinGame(id_client, &cli_skt, j, 1)){ //si hay juegos
-			//espero a que todos esten listos
-			while (!j->readyToStart() && !end_game){
-				usleep(200000);
-			}
-			if (end_game) return;
-		} else {
-			return; //si no hay juegos salgo
-		}
-
-	}
-	*/
-	//////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////
+	
 	
 	std::cout << "empezo client: " << id_client << std::endl;	
 	
 	int s = 1;
-	while (s > 0) {
+	while (s > 0 && !end_game) {
 		/*
 		std::cout << "start taking event: " << std::endl;
 		*/

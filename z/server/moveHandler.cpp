@@ -194,8 +194,8 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			y_closer = u.getDestY();
 		}
 		
-		std::cout << "x_closer" << x_closer << std::endl;
-		std::cout << "y_closer" << y_closer << std::endl;
+		//std::cout << "x_closer" << x_closer << std::endl;
+		//std::cout << "y_closer" << y_closer << std::endl;
 		
 		//distancia a esa coord (euclidea)
 		double dist = sqrt(pow((x_unit - x_closer),2) + pow((y_unit - y_closer),2));
@@ -236,7 +236,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 				}
 			}
 		}
-		u.printPos();
+		//u.printPos();
 		
 		
 		////status check
@@ -249,11 +249,13 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 					if (u.targetIsEnemy()){
 						//ataco
 						u.changeState(ATTACKING);
+						//std::cout << "ataq mov" << std::endl;
 					} else{
 						//si puedo conducir al target lo ahgo
 						if (u.canDriveTarget()){
 							u.drive(u.getTarget());
 						} else {
+							u.stop();
 							u.changeState(STANDING);
 						}
 					}

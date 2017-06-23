@@ -206,8 +206,8 @@
    {
       "unit_id":12,
       "class_id":22,
-      "height":80,
-      "width":80,
+      "height":96,
+      "width":96,
       "health":1000,
       "blocking":1,
       "speed":0,
@@ -223,8 +223,8 @@
    {
       "unit_id":13,
       "class_id":22,
-      "height":80,
-      "width":80,
+      "height":96,
+      "width":96,
       "health":1000,
       "blocking":1,
       "speed":0,

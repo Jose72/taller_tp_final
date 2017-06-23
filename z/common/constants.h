@@ -1,13 +1,13 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-
+/*
 int getClassCodeFromUnit(int unit_c);
 int getSpeedFromUnit(int unit_c);
 int getHealthFromUnit(int unit_c);
 int getFabTimeFromUnit(int unit_c);
 int getTechLvlFromUnit(int unit_c);
-
+*/
 enum class_units {ROBOT = 20, VEHICLE = 21, BUILDING = 22, FLAG_C = 23, BULLET = 24, BRIDGE_C = 25, BLOCK = 26};
 
 enum units {
