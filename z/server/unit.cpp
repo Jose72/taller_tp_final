@@ -138,8 +138,8 @@ void unit::drive(unit *vehicle){
 		//setear una pos invalida
 		this->x = -200;
 		this->y = -200;
-		std::cout << "x------: " << this->getX() << std::endl;
-		std::cout << "y------: " << this->getY() << std::endl;
+		//std::cout << "x------: " << this->getX() << std::endl;
+		//std::cout << "y------: " << this->getY() << std::endl;
 		
 		
 	} else {

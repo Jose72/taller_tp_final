@@ -57,12 +57,15 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 			//std::cout << "unit: " << unit_game_id << " captured" << std::endl;
 			u.changeState(CHECKING_CAPTURE);
 			return 0;
+		case READY_TO_DIE:
+			u.changeState(DEAD);
+			return 0;
 		case DRIVING:{
 			//std::cout << "unit: " << unit_game_id << " driving" << std::endl;
 			
 			unit *v = u.getTarget();
 			if (v->getOwner() != u.getOwner()){
-				std::cout << "vehic own: " << v->getOwner() << std::endl;
+				//std::cout << "vehic own: " << v->getOwner() << std::endl;
 				unit *n_v = ub.build(v->getUnitId(), u.getOwner(), v->getX(), v->getY());
 				units.insert(std::pair<int,unit*>(unit_id_count,n_v));
 				unit_id_count++;

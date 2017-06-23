@@ -95,7 +95,6 @@ while (!open.empty()){//mientras al lista no este vacia
 			*/
 		}
 		
-		//si ya esta en close hay que reemplazar como en open?????
 	}
 	
 }
@@ -103,14 +102,11 @@ while (!open.empty()){//mientras al lista no este vacia
 //si se me acabaron los open
 //salgo, no hay camino
 
-//hay que retornar la lista de punteros (o la lista de coordenadas mejor)
-//usar un stack? (es LIFO)
-
+//hay que retornar la lista de punteros
 
 //std::cout << "last: " << last << std::endl;
 
 //voy hacia  atras con parent
-//std::cout << "-------------------------" << std::endl;
 while (last != nullptr){
 	//last->printTile();
 	path.push_back(last);
@@ -213,6 +209,14 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			//calculo los nuevos xy
 			double new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
 			double new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
+			
+			
+			//si los nuevos xy van por una casilla no pasable hay que recalcular
+			tile *t_t = mapa.getTilePFromUnit(new_x, new_y);
+			if (!t_t->isPassable(c_id)){
+				//std::cout << "imapssable------------tile" << std::endl;
+			}
+			
 			/*
 			std::cout << "time " << time << std::endl;
 			std::cout << "speed " << speed << std::endl;

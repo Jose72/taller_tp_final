@@ -29,7 +29,7 @@ int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units, gameMap &ma
 		//si el conductor esta en una casilla imposible
 		//(se destruyo puente y tiene que a aparecer ahi, va a DEAD)
 		if (mapa.impossibleTile(a->getX(), a->getY(), ROBOT)){
-			a->changeState(DEAD);
+			a->changeState(READY_TO_DIE);
 		} else {
 			a->changeState(STANDING);
 		}
@@ -39,22 +39,19 @@ int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units, gameMap &ma
 }
 
 int deathHandler::deathBridge(unit &u, std::map<int, unit*> &units, gameMap &mapa){
-	//seteo las casillas como bloqueadas
-	mapa.setUnitAsBlocking(&u);
 	//me fijo que unidades estaban arriba y las pongo en muerte
 	for (auto it = units.begin(); it != units.end(); ++it){
 		unit *a = it->second;
 		int a_class = a->getClassId();
 		if (u.hasOnTop(a)){
-			if (a_class == ROBOT){
-				a->changeState(DEAD);
-			}
-			if (a_class == VEHICLE){
-				//unit *d = a->getDriver();
-				a->changeState(DEAD);
+			if (a_class == ROBOT || a_class == VEHICLE){
+				//std::cout << "clase" << a_class << std::endl;
+				a->changeState(READY_TO_DIE);
 			}
 		}
 	}
+	//seteo las casillas como bloqueadas
+	mapa.setUnitAsBlocking(&u);
 	//paso a destroyed
 	u.changeState(DESTROYED);
 	return 0;

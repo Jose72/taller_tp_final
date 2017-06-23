@@ -334,7 +334,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			
 			//solo robots o vehiculos
 			if (((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE)) {
-				if ((it2->second)->getUnitId() != FLAG){
+				if ((it2->second)->getUnitId() != FLAG && (it2->second)->getUnitId() != BULLET){
 					(it->second)->attack(it2->second);
 				} else {
 					//si la unidad no es atacable hago un follow
