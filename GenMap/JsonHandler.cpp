@@ -40,11 +40,12 @@ void JsonHandler::unitsToJson(std::vector<unit> units, std::string nameJson) {
     jsonFile.close();
 }
 
-void JsonHandler::dataToJson(std::string mapName, int cantEquipos, std::string nameJson) {
+void JsonHandler::dataToJson(std::string mapName, int cantEquipos,int tamanio, std::string nameJson) {
     std::ofstream jsonFile(nameJson);
     Json::StyledWriter writer;
     jsonFile << writer.write(Json::Value(mapName));
     jsonFile << writer.write(Json::Value(cantEquipos));
+    jsonFile << writer.write(Json::Value(tamanio));
     jsonFile.close();
 
 }

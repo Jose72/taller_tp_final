@@ -11,7 +11,7 @@ public:
     JsonHandler();
     void toJson(std::vector<int> descriptorVector, std::string nameJson);
     void unitsToJson(std::vector<unit> units, std::string nameJson);
-    void dataToJson(std::string mapName, int cantEquipos, std::string nameJson);
+    void dataToJson(std::string mapName, int cantEquipos,int tamanio, std::string nameJson);
 
 
 };

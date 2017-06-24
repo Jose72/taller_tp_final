@@ -156,7 +156,7 @@ int main() {
 
     jsonHandler.toJson(mapDescriptor.generate(), mapJsonName);
     jsonHandler.unitsToJson(mapDescriptor.unitsVector(),unitsJsonName);
-    jsonHandler.dataToJson(mapName,cantDeEquipos,dataJson);
+    jsonHandler.dataToJson(mapName,cantDeEquipos,tamanioMostrar,dataJson);
 
     std::cout<<"Mapa y archivos generado, ahora copie los archivos a la carpeta maps dentro de la carpeta server"<<"\n";
     return 0;
