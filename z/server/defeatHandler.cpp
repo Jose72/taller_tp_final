@@ -9,9 +9,18 @@
 int defeatHandler::defeatBuilding(unit *u){
 	if (!u->isAlive()) return -1;
 	if (u->getUnitId() == FORT){
-		u->changeState(DEAD);
+		
 	} else {
 		u->changeState(NO_STATE);
+	}
+	return 0;
+}
+
+
+int defeatHandler::defeatCommon(unit *u){
+	if (!u->isAlive()) return -1;
+	if (u->getState() != READY_TO_DIE){
+		u->changeState(DEFEATED);
 	}
 	return 0;
 }
@@ -27,12 +36,14 @@ int defeatHandler::defeatPlayer(int t_code, std::map<int, unit*> &units){
 			switch(c){
 				case BUILDING:
 					defeatBuilding(u);
-					return 0;
+					break;
 				case FLAG_C:
-					return 0;
-				default:
-					u->changeState(DEFEAT);
-					return 0;
+					break;
+				case VEHICLE:
+				case ROBOT:
+					//std::cout << "defeat robot or vehicle" << std::endl;
+					defeatCommon(u);
+					break;
 			}
 		}
 	}

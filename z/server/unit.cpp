@@ -130,6 +130,7 @@ void unit::drive(unit *vehicle){
 	if (target) target->removeFollower(this);
 	target = vehicle;
 	target->setFollower(this);
+	auto_attack = false;
 	//si estoy en rango lo conduzco, sino me pongo en moving
 	if (this->targetIsInRange() && this->canDriveTarget()){
 		this->driveTarget();

@@ -258,3 +258,12 @@ void infoGame::sendTeamNumbers(){
 		it->sendTeamNumber();
 	}
 }
+
+bool infoGame::teamDefeated(int team_n){
+	for (auto it = teams.begin(); it != teams.end(); ++it){
+		if (team_n == it->getTeamNumber()){
+			return it->isDefeated();
+		}
+	}
+	return false;
+}

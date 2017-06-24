@@ -13,6 +13,7 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 				if (target->getClassId() == ROBOT || target->getClassId() == VEHICLE){
 					//la seteo como target
 					//reseteo el timer
+					std::cout << "flag target: " << it->first << std::endl;
 					u.setFlagTarget(target);
 					u.resetTimer();
 				}
@@ -44,28 +45,3 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 	}
 }
 
-
-void captureHandler::captureActualize(int old_owner, int new_owner, std::map<int, unit*> &units, infoGame &ip){
-	//actualizo player info
-	/*
-	ip.updateTechLevels(old_owner,new_owner);
-	int tech_lvl_old = ip.getPlayerTechLevel(old_owner);
-	int tech_lvl_new = ip.getPlayerTechLevel(new_owner);
-	//recorro unidades
-	for (auto it = units.begin(); it != units.end(); ++it){
-		unit *u = it->second;
-		if (u->getClassId() == BUILDING){
-			//si es de viejo owner decremento tech lvlv
-			if (u->getOwner() == old_owner && old_owner != 0){
-				//std::cout << "old tech: "<< tech_lvl_old << std::endl;
-				u->setTechLvl(tech_lvl_old);
-			}
-			//si es de nuevo owner incremento tech lvlv
-			if (u->getOwner() == new_owner){
-				//std::cout << "new tech: "<< tech_lvl_new << std::endl;
-				u->setTechLvl(tech_lvl_new);
-			}
-		}
-	}
-	*/ 
-}

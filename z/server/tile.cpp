@@ -116,6 +116,9 @@ void tile::printTile(){
 }
 
 double tile::getTerrainFactor(){
+	if (unit_over){
+		return 1.5;
+	}
 	return terr.getTerrainFactor();
 }
 

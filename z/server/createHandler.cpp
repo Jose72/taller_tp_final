@@ -12,7 +12,7 @@ int createHandler::createRobotActualize(unit &creator, std::map<int, unit*> &uni
 	int dy = 24;
 	for (int i = 0; i < q_to_create; ++i){
 		unit *u = ub.build(creator.unitToCreate(), creator.getOwner(), 
-		creator.getCenterX() + creator.getRadius() + dx, creator.getCenterY() + dy*i);
+		creator.getX() + creator.getWidth() + dx, creator.getY() + dy*i);
 		//std::cout << "unti creted: " << creator.unitToCreate() << std::endl;
 		units.insert(std::pair<int,unit*>(unit_id_c,u));
 		unit_id_c++;//incremento id_units

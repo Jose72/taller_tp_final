@@ -15,7 +15,7 @@
 #define CODE_END_GAME 40
 
 enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE,
-    DEFEATED, DESTROYED, ERASED};
+    DEFEATED, DESTROYED, ERASED, READY_TO_DIE};
 
 
 Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner,SoundManager &soundManager):
@@ -238,6 +238,11 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     units[unitCode]->set_pos(-200,-200);
                     units[unitCode]->set_health(health);
                     units[unitCode]->set_state(DEAD1);
+                    break;
+                case DEFEATED:
+                    units[unitCode]->set_pos(posX,posY);
+                    units[unitCode]->set_health(health);
+                    units[unitCode]->set_state(DRINKING);
                     break;
 
             }

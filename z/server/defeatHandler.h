@@ -8,6 +8,7 @@
 class defeatHandler{
 	private:
 		int defeatBuilding(unit *u);
+		int defeatCommon(unit *u);
 		
 	public:
 		int defeatPlayer(int t_code, std::map<int, unit*> &units);

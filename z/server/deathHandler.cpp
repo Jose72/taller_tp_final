@@ -27,11 +27,15 @@ int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units, gameMap &ma
 	a->setPos(u.getX(), u.getY());
 		a->setTarget(nullptr);
 		//si el conductor esta en una casilla imposible
-		//(se destruyo puente y tiene que a aparecer ahi, va a DEAD)
+		//(se destruyo puente y tiene que aparecer ahi, va a READY_TO_DEAD)
 		if (mapa.impossibleTile(a->getX(), a->getY(), ROBOT)){
 			a->changeState(READY_TO_DIE);
 		} else {
-			a->changeState(STANDING);
+			//si estaba en DRIVING va a STANDING
+			//podria estar en DEFEATED, entonces quiero que siga asi
+			if (a->getState() == DRIVING) {
+				a->changeState(STANDING);
+			}
 		}
 	}
 	//u.releaseDriver();
@@ -77,7 +81,7 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 			deathBridge(u, units, mapa);
 			break;
 		default:
-		break;
+			break;
 	}
 	return 0;
 }

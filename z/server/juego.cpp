@@ -54,9 +54,11 @@ int juego::checkVictory(){
 	//para cada cliente
 	for (int i = 1; i <= teams; ++i){
 		if (DEFEAT == g_info.updateVictoryCond(i)){
-			//defeatHandler df;
+			defeatHandler df;
 			//si fue derrotado, hay que ver que hacer con las unidades
-			//df.defeatPlayer(i, units);
+			//team en vez de player
+			//std::cout << "DEFEAT: " << i << std::endl;
+			df.defeatPlayer(i, units);
 		}
 	}
 	//me fijo si hay ganador
@@ -270,7 +272,7 @@ void juego::sendInit(){
 	
 	/*
 	//probar con 3 juagdores
-	unit *u10 = builder.build(FORT ,3 ,128, 640);
+	unit *u10 = builder.build(FORT ,3 ,0, 640);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u10));
 	id_unit_counter++;
 	unit *u11 = builder.build(GRUNT ,3 ,200, 640);
@@ -304,8 +306,12 @@ void juego::sendInit(){
 void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 	std::map<int,unit*>::iterator it;
 	it = units.find(e.getUnitId());
+	unit *u1 = it->second;
 	
 	if (it->first != e.getUnitId()) return; //no encontro a la unidad
+	
+	//el equipo fue derrotado
+	if (g_info.teamDefeated(it->second->getOwner())) return;
 	
 	switch (e.getOpCode()){
 		case 0:
@@ -356,13 +362,12 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 		case 3: //conducir
 			{
 			//busco la unidad destino
-			//si no es robot salgo
 			std::cout << "drive order: " << e.getX() << std::endl;
+			//si no es robot salgo
 			if (it->second->getClassId() != ROBOT) return;
 			std::map<int,unit*>::iterator it2;
 			it2 = units.find(e.getX());
 			if (it2->first != e.getX()) return; //no encontro a la unidad
-			std::cout << "drive ok: " << e.getX() << std::endl;
 			(it->second)->drive(it2->second);
 			return;
 			}
