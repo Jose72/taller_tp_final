@@ -7,7 +7,6 @@ JsonHandler::JsonHandler() {}
 
 
 void JsonHandler::toJson(std::vector<int> descriptorVector, std::string nameJson) {
-
     std::ofstream jsonFile(nameJson);
 
     Json::Value vec(Json::arrayValue);
@@ -39,5 +38,14 @@ void JsonHandler::unitsToJson(std::vector<unit> units, std::string nameJson) {
     Json::StyledWriter writer;
     jsonFile << writer.write(unitsJ);
     jsonFile.close();
+}
+
+void JsonHandler::dataToJson(std::string mapName, int cantEquipos, std::string nameJson) {
+    std::ofstream jsonFile(nameJson);
+    Json::StyledWriter writer;
+    jsonFile << writer.write(Json::Value(mapName));
+    jsonFile << writer.write(Json::Value(cantEquipos));
+    jsonFile.close();
+
 }
 
