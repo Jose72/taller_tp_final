@@ -9,6 +9,11 @@
 #include "../common/Socket.h"
 #include "InfoGameSelection.h"
 
+
+#define CREATE_GAME 0
+#define JOIN_GAME 1
+#define DEATHMATCH 0
+#define TEAM_GAME 1
 #define RESPONSE_PROTOCOL_MENU_OK 0
 class ProtocolMenu {
 public:

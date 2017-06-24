@@ -182,22 +182,68 @@ void on_siguiente_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, ch
     }
 }
 
+void addButtonDeathMatch(MainWindow *pWindow,
+                         InfoGameSelection &infoGame,
+                         Glib::RefPtr<Gtk::Application> app,
+                         int argc,
+                         char **argv){
+    std::ostringstream datosPartida;
+    datosPartida << "DeathMatch | ";
+    datosPartida << "Creador: " << infoGame.idCreator;
+    datosPartida << " | Max Jugadores " << infoGame.maxPlayers;
+    datosPartida << " | Jugadores " << infoGame.joinedPlayers;
+    Gtk::Button* buttonJoin = new Gtk::Button(datosPartida.str());
+    buttonJoin->signal_clicked().connect(sigc::bind(
+            sigc::ptr_fun(on_siguiente_unirse_clicked),
+            app,
+            argc,
+            argv,
+            pWindow,
+            infoGame.idCreator));
+    pWindow->box->add(*buttonJoin);
+    pWindow->buttons.push_back(buttonJoin);
+}
+
+void addButtonTeamGame(MainWindow *pWindow,
+                         InfoGameSelection &infoGame,
+                         int team,
+                         Glib::RefPtr<Gtk::Application> app,
+                         int argc,
+                         char **argv){
+    std::ostringstream datosPartida;
+    datosPartida << "TeamGame";
+    datosPartida << " | Creador: " << infoGame.idCreator;
+    datosPartida << " | Equipo " << team;
+    datosPartida << " | Max Equipos " << infoGame.numTeams;
+    datosPartida << " | Max Jugadores " << infoGame.maxPlayers;
+    datosPartida << " | Jugadores " << infoGame.joinedPlayers;
+    Gtk::Button* buttonJoin = new Gtk::Button(datosPartida.str());
+    buttonJoin->signal_clicked().connect(sigc::bind(
+            sigc::ptr_fun(on_siguiente_unirse_clicked),
+            app,
+            argc,
+            argv,
+            pWindow,
+            infoGame.idCreator));
+    pWindow->box->add(*buttonJoin);
+    pWindow->buttons.push_back(buttonJoin);
+}
+
 void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
     ProtocolMenu protocolMenu(*(pWindow->socket));
     int response = protocolMenu.initJoinGame();
     if( response == RESPONSE_PROTOCOL_MENU_OK){
-        Gtk::Button* buttonJoin; //= new Gtk::Button("Unirse");
         protocolMenu.infoJoinGame();
         pWindow->cleanBox();
         for(int i = 0; i < protocolMenu.infoGames.size(); i++){
-            std::string buttonName = std::to_string(protocolMenu.infoGames[i]->idCreator);
-            buttonJoin = new Gtk::Button(buttonName);
-            buttonJoin->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_siguiente_unirse_clicked), app,argc,argv,pWindow,protocolMenu.infoGames[i]->idCreator));
-            pWindow->box->add(*buttonJoin);
-            pWindow->buttons.push_back(buttonJoin);
-            std::cout << protocolMenu.infoGames[i]->idCreator << std::endl;
+            if(protocolMenu.infoGames[i]->typeGame == TEAM_GAME){
+                for(int j = 0; j < protocolMenu.infoGames[i]->numTeams; j++){
+                    addButtonTeamGame(pWindow, *protocolMenu.infoGames[i], j, app, argc, argv);
+                }
+            } else {
+                addButtonDeathMatch(pWindow, *protocolMenu.infoGames[i], app, argc, argv);
+            }
         }
-        pWindow->box->add(*(pWindow->image));
         pWindow->add(*(pWindow->box));
         pWindow->show_all();
     } else{
