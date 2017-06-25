@@ -48,6 +48,12 @@ int serverProtocol::sendOKConfimation(){
 }
 
 void serverProtocol::sendMapsInfo(std::vector<dataMap> &maps) {
+	//envio cantidad de mapas
+	int cant_maps = maps.size();
+	cant_maps = htonl(cant_maps);
+	socket.send((char*)&cant_maps, INT_SIZE);
+	
+	//envio la info en un loop
 	for (unsigned int i = 0; i < maps.size(); ++i){
 		//nombre del mapa
 		std::string name = maps[i].mapName;
