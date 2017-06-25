@@ -53,6 +53,11 @@ void JsonHandler::jsonToUnits(int &unit_counter,
             int posY = root[i]["posY"].asInt();
             int owner = root[i]["owner"].asInt();
             unit *u = builder.build(unitCode,owner,posX,posY);
+			//si es un edificio seteo el tech lvl
+			if (unitCode == FORT || unitCode == VEHICLE_FACTORY || unitCode == ROBOT_FACTORY){
+				int techLvl = root[i]["techLevel"].asInt();
+				u->setTechLvl(techLvl);
+			}
             units.insert(std::pair<int,unit*>(unit_counter,u));
             unit_counter++;
 
