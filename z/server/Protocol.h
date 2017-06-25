@@ -3,9 +3,11 @@
 
 #include <vector>
 #include <map>
+//#include <dataMap>
 #include "../common/Socket.h"
 #include "unit.h"
 #include "Event.h"
+#include "JsonHandler.h"
 
 class serverProtocol {
 private:
@@ -30,6 +32,7 @@ public:
 	int sendUpdateTechLvl(int tech_lvl);
 	int sendVictory(int winner);
 	int sendOKConfimation();
+	void sendMapsInfo(std::vector<dataMap> &maps);
 };
 
 

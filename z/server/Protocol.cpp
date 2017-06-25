@@ -14,6 +14,7 @@ void serverProtocol::send_id_client(int id_client) {
     socket.send((char*)&id, INT_SIZE);
 }
 
+
 void serverProtocol::send_map(int * map_s, unsigned int size) {
     int map_size = htonl(size);
     socket.send((char*) &map_size, INT_SIZE);
@@ -46,6 +47,24 @@ int serverProtocol::sendOKConfimation(){
 	return socket.send((char*) &i,sizeof(int));
 }
 
+void serverProtocol::sendMapsInfo(std::vector<dataMap> &maps) {
+	for (unsigned int i = 0; i < maps.size(); ++i){
+		//nombre del mapa
+		std::string name = maps[i].mapName;
+		int name_size = name.size();
+		//envio cant de bytes y luego el string
+		socket.send((char*)&name_size, INT_SIZE);
+		socket.send((char*)&name[0u], name.size());
+		//dimensiones
+		int dim = maps[i].dimensiones;
+		dim = htonl(dim);
+		socket.send((char*)&dim, INT_SIZE);
+		//dimensiones
+		int cant_e = maps[i].cantEquipos;
+		cant_e = htonl(cant_e);
+		socket.send((char*)&cant_e, INT_SIZE);
+	}
+}
 
 void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
     int units_size = htonl(map_units.size());
