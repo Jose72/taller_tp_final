@@ -250,3 +250,66 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
     }
 }
 
+std::vector<mapData> Protocol::receiveMapsInfo() {
+    std::vector<mapData> vecMapsData;
+    int cantMaps;
+    socket.receive((char*) &cantMaps,4);
+    int cantMapsSC = ntohl(cantMaps);
+    for (int i = 0; i <cantMapsSC ; ++i) {
+        mapData data;
+        int nameSize;
+        socket.receive((char*) &nameSize,4);
+        int nameSizeSC = ntohl(nameSize);
+        char name [nameSizeSC];
+        socket.receive(name,nameSizeSC);
+        int dim;
+        socket.receive((char*) &dim,4);
+        int dimSC = ntohl(dim);
+        int equipos;
+        socket.receive((char*) &equipos,4);
+        int equiposSC = ntohl(equipos);
+        std::string nameMap(name);
+        data.mapName = nameMap;
+        data.dimensions = dimSC;
+        data.cantEquipos = equiposSC;
+        vecMapsData.push_back(data);
+    }
+    return vecMapsData;
+
+
+    /*
+    void serverProtocol::sendMapsInfo(std::vector<dataMap> &maps) {
+        //envio cantidad de mapas
+        int cant_maps = maps.size();
+        cant_maps = htonl(cant_maps);
+        socket.send((char*)&cant_maps, INT_SIZE);
+
+        //envio la info en un loop
+        for (unsigned int i = 0; i < maps.size(); ++i){
+            //nombre del mapa
+            std::string name = maps[i].mapName;
+            int name_size = name.size();
+            //envio cant de bytes y luego el string
+            socket.send((char*)&name_size, INT_SIZE);
+            socket.send((char*)&name[0u], name.size());
+            //dimensiones
+            int dim = maps[i].dimensiones;
+            dim = htonl(dim);
+            socket.send((char*)&dim, INT_SIZE);
+            //dimensiones
+            int cant_e = maps[i].cantEquipos;
+            cant_e = htonl(cant_e);
+            socket.send((char*)&cant_e, INT_SIZE);
+        }
+    }
+     */
+}
+
+void Protocol::sendMapName(std::string mapName) {
+    int name_size = mapName.size();
+    int nameSizeCS = htonl(name_size);
+    socket.send((char*)&nameSizeCS, 4);
+    socket.send(&mapName[0u], mapName.size());
+
+}
+

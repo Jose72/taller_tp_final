@@ -10,6 +10,12 @@
 #include "WinnerProtected.h"
 #include "SoundManager.h"
 
+struct mapData{
+    std::string mapName;
+    int cantEquipos;
+    int dimensions;
+};
+
 class Protocol {
 private:
     tSocket &socket;
@@ -27,6 +33,8 @@ public:
     void attackUnitCS(int cod_unit, int cod_objective);
     void driveUnitCS(int cod_unit, int drive_objetive);
     void create_map();
+    std::vector<mapData>receiveMapsInfo();
+    void sendMapName(std::string mapName);
     void set_units_game();
     void confirm_server(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
     void process_message();
