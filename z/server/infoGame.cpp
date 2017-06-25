@@ -282,3 +282,9 @@ void infoGame::initializeTeamsData(std::map<int, unit*> &units){
 		}
 	}
 }
+
+void  infoGame::sendInitialPos(){
+	for (auto it = teams.begin(); it != teams.end(); ++it){
+		it->sendInitialPos();
+	}
+}

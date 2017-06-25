@@ -39,7 +39,14 @@ void serverProtocol::send_map(std::vector<int> &map_s) {
 
 void serverProtocol::send_team_number(int t){
 	int team_n = htonl(t);
-	socket.send((char*) &team_n,sizeof(int));
+	socket.send((char*) &team_n,INT_SIZE);
+}
+
+void serverProtocol::send_init_pos(int x, int y){
+	int x_x = htonl(x);
+	socket.send((char*) &x_x, INT_SIZE);
+	int y_y = htonl(y);
+	socket.send((char*) &y_y, INT_SIZE);
 }
 
 int serverProtocol::sendOKConfimation(){

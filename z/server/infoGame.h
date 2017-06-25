@@ -56,6 +56,7 @@ class infoGame{
 		void updateCapturedTer(int old_owner, int new_owner);
 		void sendTeamNumbers();
 		bool teamDefeated(int team_n);
+		void sendInitialPos();
 };
 
 #endif

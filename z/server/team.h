@@ -45,6 +45,7 @@ class team {
 		void incrementCapturedTer();
 		void decrementCapturedTer();
 		void sendTeamNumber();
+		void sendInitialPos();
 		
 };
 

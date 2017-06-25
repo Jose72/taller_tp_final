@@ -241,17 +241,7 @@ void juego::sendInit(){
 		}
 	}
 	
-	/*
-    std::vector<unit*> forts_1;
-    forts_1.push_back(units[5]);
-    std::vector<unit*> forts_2;
-    forts_2.push_back(units[53]);
-    g_info.initializeTeam(1, units[5], 1);
-    g_info.initializeTeam(2, units[53], 1);
-	*/
-	
 
-	
 	/*
 	//probar con 3 juagdores
 	unit *u10 = builder.build(FORT ,3 ,0, 640);
@@ -273,8 +263,9 @@ void juego::sendInit(){
 	//ENVIAR NUMERO DE EQUIPO ANTES QUE TODO
 	g_info.sendTeamNumbers();
 	///////////////////////////////
-	
-	
+	//envio pos inicial
+	g_info.sendInitialPos();
+	///////////////////////////////
 	//envio el mapa y las unidades iniciales a todos lo jugadores
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		(*it)->send_map(mapDes);

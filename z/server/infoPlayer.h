@@ -31,6 +31,7 @@ class infoPlayer {
 		//int updateVictoryConditions();
 		//bool isDefeated();
 		void sendTeamNumber(int t);
+		void sendInitialPos(int x, int y);
 };
 
 

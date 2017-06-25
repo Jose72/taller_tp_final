@@ -26,6 +26,7 @@ public:
 	void send_map(std::vector<int> &map_s);
     void send_units_game(std::map<int,unit*> &map_units);
 	void send_team_number(int t);
+	void send_init_pos(int x, int y);
     void confirm_client(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
 	int sendActualization(std::map<int,unit*> &map_units);
     int receive_event(Event &e);

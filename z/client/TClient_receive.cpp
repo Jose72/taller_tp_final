@@ -21,10 +21,21 @@ void TClient_receive::run() {
 
 
     /////////////////////////
+    //RECIBO NUMERO DE TEAM
     int team_n;
     socket.receive((char*) &team_n, 4);
     team_n = ntohl(team_n);
     id_client = team_n;
+    /////////////////////////
+    //recibo pos inicial
+    int x_inicial;
+    int y_inicial;
+    socket.receive((char*) &x_inicial, 4);
+    socket.receive((char*) &y_inicial, 4);
+    x_inicial = ntohl(x_inicial);
+    y_inicial = ntohl(y_inicial);
+    std::cout << "x_initial: "<< x_inicial << std::endl;
+    std::cout << "y_initial: "<< x_inicial << std::endl;
     /////////////////////////
 
     protocol_client_server.create_map();

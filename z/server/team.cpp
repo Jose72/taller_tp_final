@@ -79,3 +79,9 @@ void team::sendTeamNumber(){
 		it->sendTeamNumber(team_n);
 	}
 }
+
+void team::sendInitialPos(){
+	for (auto it = players.begin(); it != players.end(); ++it){
+		it->sendInitialPos(fort->getX(), fort->getY());
+	}
+}
