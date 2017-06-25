@@ -7,9 +7,12 @@
 JsonHandler::JsonHandler() {}
 
 
-std::vector<int> JsonHandler::jsonToMap() {
+std::vector<int> JsonHandler::jsonToMap(std::string mapName) {
     std::vector<int> mapDescriptor;
-    std::ifstream jsonFile("server/maps/map.json");
+    std::string motherPath = "server/maps/";
+    std::string pointJson = ".json";
+    std::string directory = motherPath+mapName+pointJson;
+    std::ifstream jsonFile(directory);
 
     Json::Reader reader;
     Json::Value root;
@@ -27,8 +30,15 @@ std::vector<int> JsonHandler::jsonToMap() {
 }
 
 
-void JsonHandler::jsonToUnits(int &unit_counter, unitBuilder &builder, std::map<int, unit*> &units ) {
-    std::ifstream jsonFIle("server/maps/unitsMap.json");
+void JsonHandler::jsonToUnits(int &unit_counter,
+                              unitBuilder &builder,
+                              std::map<int, unit*> &units,
+                              std::string mapName ) {
+
+    std::string motherPath = "server/maps/units";
+    std::string pointJson = ".json";
+    std::string directory = motherPath+mapName+pointJson;
+    std::ifstream jsonFIle(directory);
 
     Json::Reader reader;
     Json::Value root;

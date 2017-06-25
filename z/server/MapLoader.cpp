@@ -14,6 +14,20 @@ void MapLoader::loadListData() {
         std::cout << this->dataMaps[i].mapName << "\n";
     }
 }
+std::vector<dataMap> MapLoader::mapsForTeams(int cantEquipos) {
+    std::vector<dataMap> vecDataMap;
+    for (int i = 0; i <this->dataMaps.size() ; ++i) {
+        if(this->dataMaps[i].cantEquipos == cantEquipos){
+            vecDataMap.push_back(this->dataMaps[i]);
+        }
+    }
+    return  vecDataMap;
+}
+
+void MapLoader::loadMap(std::string mapName) {
+    std::vector<int> mapDescriptor;
+}
+
 void MapLoader::loadDirectory(std::string path) {
     DIR *dir;
     struct dirent *ent;
@@ -50,7 +64,6 @@ void MapLoader::loadDirectory(std::string path) {
         full_dir.append(mother);
         full_dir.append("/");
         full_dir.append(list_dir[j]);
-        std::cout<< full_dir <<"\n";
         this->dataMaps.push_back(jsonHandler.jsonToDataMap(full_dir));
     }
 

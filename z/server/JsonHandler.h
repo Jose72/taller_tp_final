@@ -16,8 +16,11 @@ class JsonHandler {
 
 public:
     JsonHandler();
-    std::vector<int> jsonToMap();
-    void jsonToUnits(int &unit_counter,unitBuilder &builder, std::map<int, unit*> &units);
+    std::vector<int> jsonToMap(std::string mapName);
+    void jsonToUnits(int &unit_counter,
+                     unitBuilder &builder,
+                     std::map<int, unit*> &units,
+                     std::string mapName);
     dataMap jsonToDataMap(std::string directory);
 
 };
