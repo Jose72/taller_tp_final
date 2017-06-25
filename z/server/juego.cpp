@@ -168,7 +168,7 @@ void juego::sendInit(){
 	JsonHandler jsonHandler;
 	std::vector<int> mapDes = jsonHandler.jsonToMap(map_name);
 	mapa = gameMap(mapDes);
-    jsonHandler.jsonToUnits(id_unit_counter,builder,units,"Map");
+    jsonHandler.jsonToUnits(id_unit_counter,builder,units,map_name);
 
 	/*
 	///////////////////////HARDOCDEO UNODADES PARA TESTING
