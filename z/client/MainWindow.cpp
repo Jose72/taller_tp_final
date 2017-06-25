@@ -87,26 +87,40 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
 
     //socket->connect(argv[1],port_number);
     std::vector<tThread*> threads;
-    threads.push_back(new TClient_receive(*socket,game_map,all_units,factory,waiting_server, running, id_client,techLevel,winnerProtected,soundManager));
-    threads[0]->start();
 
-    Protocol protocol(*socket,all_units,game_map,factory,techLevel,winnerProtected,soundManager);
+    ///////////////////////
+    //espero confirmacion del server para empezar
+    ///////////////////////
+    int c = -1;
+    socket->receive((char*)&c,4);
+    c = ntohl(c);
+    if (c == 0) {
 
 
-    PlayerInterface playerInterface(screen,WINDOW_W,WINDOW_H,PLAYER_INTERFACE_W);
+        threads.push_back(new TClient_receive(*socket, game_map, all_units, factory, waiting_server, running, id_client,
+                                              techLevel, winnerProtected, soundManager));
+        threads[0]->start();
 
-   // while(waiting_server){}
-    sleep(5);
-    //main application loop
+        Protocol protocol(*socket, all_units, game_map, factory, techLevel, winnerProtected, soundManager);
 
-    threads.push_back(new EventHandler(screen,playerInterface,all_units,*socket, game_map, running,factory,id_client,techLevel,winnerProtected,soundManager));
-    threads[1]->start();
 
-    for (int i = 0; i <threads.size(); ++i) {
-        threads[i]->join();
+        PlayerInterface playerInterface(screen, WINDOW_W, WINDOW_H, PLAYER_INTERFACE_W);
+
+        // while(waiting_server){}
+
+        //sleep(5);
+        //main application loop
+        threads.push_back(
+                new EventHandler(screen, playerInterface, all_units, *socket, game_map, running, factory, id_client,
+                                 techLevel, winnerProtected, soundManager));
+        threads[1]->start();
+
+        for (int i = 0; i < threads.size(); ++i) {
+            threads[i]->join();
+
+        }
 
     }
-
     TTF_Quit();
     IMG_Quit();
     app->quit();

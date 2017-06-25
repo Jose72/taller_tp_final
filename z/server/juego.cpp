@@ -25,7 +25,7 @@
 juego::juego(int creator, int cant_players, int game_t, int cant_teams): 
 id_creator(creator), max_players(cant_players), teams(cant_teams), 
 game_type(game_t), builder(u_info), id_unit_counter(1), 
-g_info(infoGame(cant_players, game_t, cant_teams)), running(false), 
+g_info(infoGame(cant_players, game_t, cant_teams)), stop_signal(false), running(false), 
 started(false), ended(false) {}
 
 bool juego::gameStarted(){
@@ -81,6 +81,7 @@ int juego::checkVictory(){
 void juego::stop(){
 	std::cout << "juego stop" << std::endl;	
 	//rompo los sockets
+	stop_signal = true;
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
 			(*it)->shutdown(SHUT_WR);
 	}
@@ -309,7 +310,6 @@ void juego::sendInit(){
 void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 	std::map<int,unit*>::iterator it;
 	it = units.find(e.getUnitId());
-	unit *u1 = it->second;
 	
 	if (it->first != e.getUnitId()) return; //no encontro a la unidad
 	
@@ -380,13 +380,24 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 void juego::run(){
 	started = true;
 	running = true;
+	//////////////////////////////////////////////////////////////
+	//ENVIAR CONFIRMACIOND E QUE INICIO
+	//ENVIAR INICIALES
+	while(!this->readyToStart() && !stop_signal){
+		usleep(500000);
+	}
+	for (auto it = protocols.begin(); it != protocols.end(); ++it){
+		(*it)->sendOKConfimation();
+	}
+	this->sendInit();
+	//////////////////////////////////////////////////////////////
 	
 	//seteo el actualizador de unidades
 	actualizeUnit actualizer(builder, u_info);
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
-	while(s > 0 && running){
+	while(s > 0 && !stop_signal){
 			//tomo tiempo
 			clock_t Start = clock();
 			

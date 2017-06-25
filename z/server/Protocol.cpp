@@ -41,6 +41,12 @@ void serverProtocol::send_team_number(int t){
 	socket.send((char*) &team_n,sizeof(int));
 }
 
+int serverProtocol::sendOKConfimation(){
+	int i = htonl(0);
+	return socket.send((char*) &i,sizeof(int));
+}
+
+
 void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
     int units_size = htonl(map_units.size());
     socket.send((char*) &units_size, INT_SIZE);

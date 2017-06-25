@@ -32,8 +32,7 @@ int tClientManager::gameSelection(){
 
 	if (code == CREATE_GAME) {
 		//envio confirmacion
-		int confirm = htonl(0);
-		cli_skt.send((char*)&confirm, 4);
+		prot.sendOKConfimation();
 
 		//recibo datos
 		int cant_p = -1;
@@ -76,19 +75,7 @@ int tClientManager::gameSelection(){
 		juegos.push_back(j);
 
 		//envio confirmacion
-		cli_skt.send((char*)&confirm, 4);
-
-
-		//espero hasta que esten todos listos
-		while (!j->readyToStart() && !end_game){
-			usleep(200000);
-		}
-		//si sali del loop porque se acaba el juego, salgo del manager
-		if (end_game) return -1;
-
-
-		//que el juego envie datos iniciales
-		j->sendInit();
+		prot.sendOKConfimation();
 
 		//empiezo el juego
 		j->start();
@@ -98,8 +85,7 @@ int tClientManager::gameSelection(){
 	if (code == JOIN_GAME){ //si seleccione unirme
 
 		//envio confirmacion
-		int confirm = htonl(0);
-		cli_skt.send((char*)&confirm, 4);
+		prot.sendOKConfimation();
 
 
 		
@@ -121,7 +107,7 @@ int tClientManager::gameSelection(){
 		//recibir codigo
 		//mientras el socket siga vivo
 		int s = 1;
-		while (s > 0) {
+		while (s > 0 && !end_game) {
 			
 			//recibo numero de creador y de equipo
 			int g_to_join = 0;
@@ -139,16 +125,7 @@ int tClientManager::gameSelection(){
 			//SI JOINEO manda 0 al cliente, sale con codigo 0
 			//SI NO JOINE manda 1
 			if (0 == joineo) {
-				int confirm = htonl(0);
-				cli_skt.send((char*)&confirm, 4);
-				
-				//espero a que todos esten listos
-				while (!j->readyToStart() && !end_game){
-					usleep(200000);
-				}
-				
-				//si hubo error salgo
-				if (end_game) return -1;
+				prot.sendOKConfimation();
 				return 0;
 			} else {
 				//envio que salio mal
@@ -158,7 +135,7 @@ int tClientManager::gameSelection(){
 			}
 		}
 		
-		if (s <= 0) return -1;
+		if (s <= 0 || end_game) return -1;
 		//std::cout << "IS FULL " << std::endl;
 		/*
 		//RECIBIR EL TEAM!!!!!!!!!!

@@ -29,8 +29,7 @@ public:
     int receive_event(Event &e);
 	int sendUpdateTechLvl(int tech_lvl);
 	int sendVictory(int winner);
-
-
+	int sendOKConfimation();
 };
 
 
