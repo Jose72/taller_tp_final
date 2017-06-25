@@ -50,9 +50,18 @@ int ProtocolMenu::initJoinGame() {
     return ntohl(response);
 }
 
-int ProtocolMenu::joinGame(int idCreator) {
+int ProtocolMenu::joinGame(int idCreator, int team) {
     int idCreator_to_send = htonl(idCreator);
     socket.send((char*) &idCreator_to_send,sizeof(int));
+    //todo
+    //ENVIAR EQUIPO AL QUE SE UNE, SI ESTA OK ESPERA 0
+    //SI EL EQUIPO ESTA LLENO ESPERA -1 Y VUELVE A LA PANTALLA DE SELECCION DE EQUIPOS
+    //PARA VOLVER A MANDAR ID DEL CREADOR Y DEL EQUIPO
+    //PARA DEATHMATCH SE MANDA EQUIPO -1
+    //VER MAINWINDOW UNIRSE CUALQUIER COSA
+
+    //int idTeam_to_send = htonl(team);
+    //socket.send((char*) &idTeam_to_send,sizeof(int));
     int response;
     socket.receive((char*)&response,4);
     return ntohl(response);

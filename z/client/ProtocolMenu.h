@@ -15,6 +15,8 @@
 #define DEATHMATCH 0
 #define TEAM_GAME 1
 #define RESPONSE_PROTOCOL_MENU_OK 0
+#define RESPONSE_PROTOCOL_MENU_FULL_TEAM -1
+#define NO_TEAM_PARAM -1
 class ProtocolMenu {
 public:
     ProtocolMenu(tSocket &socket);
@@ -23,7 +25,7 @@ public:
     int createGame(int numPlayers, int typeGame, int numTeams);
     int initJoinGame();
     void infoJoinGame();
-    int joinGame(int idCreator);
+    int joinGame(int idCreator, int i);
     std::vector<InfoGameSelection*> infoGames;
     int receive_id_client();
 

@@ -12,6 +12,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/comboboxtext.h>
 #include <SDL_mixer.h>
+#include <gtkmm/messagedialog.h>
 #include "../common/Socket.h"
 
 class MainWindow : public Gtk::Window{
@@ -26,6 +27,7 @@ public:
     Gtk::Image* image;
     Gtk::Entry nombre;
     Gtk::ComboBoxText *combo;
+    Gtk::MessageDialog *messageDialog;
     tSocket* socket;
     std::vector<Gtk::Button*> buttons;
     int id_client;

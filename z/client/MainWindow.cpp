@@ -172,13 +172,17 @@ void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],
 
 }
 
-void on_siguiente_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow,int idCreator){
+void on_siguiente_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow,int idCreator,int team){
     ProtocolMenu protocolMenu(*(pWindow->socket));
-    int response = protocolMenu.joinGame(idCreator);
+    int response = protocolMenu.joinGame(idCreator, team);
     if(response == RESPONSE_PROTOCOL_MENU_OK){
         hideAndPlay(app,argc,argv,pWindow);
     } else {
-        std::cout << "siguiente unirse join game " << response << std::endl;
+        if(response == RESPONSE_PROTOCOL_MENU_FULL_TEAM){
+            pWindow->messageDialog->show();
+        } else {
+            std::cout << "siguiente unirse join game " << response << std::endl;
+        }
     }
 }
 
@@ -199,7 +203,8 @@ void addButtonDeathMatch(MainWindow *pWindow,
             argc,
             argv,
             pWindow,
-            infoGame.idCreator));
+            infoGame.idCreator,
+            NO_TEAM_PARAM));
     pWindow->box->add(*buttonJoin);
     pWindow->buttons.push_back(buttonJoin);
 }
@@ -224,7 +229,8 @@ void addButtonTeamGame(MainWindow *pWindow,
             argc,
             argv,
             pWindow,
-            infoGame.idCreator));
+            infoGame.idCreator,
+            team));
     pWindow->box->add(*buttonJoin);
     pWindow->buttons.push_back(buttonJoin);
 }
@@ -254,7 +260,6 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
 
 
 void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *argv[]) {
-
     cleanBox();
     set_default_size(700, 360);
     unirse->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv,this));
@@ -294,6 +299,12 @@ void MainWindow::createBox(){
     entry = new Gtk::Entry();
     entry2 = new Gtk::Entry();
     image = new Gtk::Image("client/splash/splash.jpg");
+    messageDialog = new Gtk::MessageDialog("Equipo lleno",
+                                           false,
+                                           Gtk::MessageType::MESSAGE_INFO,
+                                           Gtk::ButtonsType::BUTTONS_NONE,
+                                           true
+    );
 }
 
 void MainWindow::deleteBox(){
@@ -306,6 +317,7 @@ void MainWindow::deleteBox(){
     delete entry;
     delete entry2;
     delete image;
+    delete messageDialog;
 
     for (int i = 0; i < buttons.size(); i++){
         delete buttons[i];
