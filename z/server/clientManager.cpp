@@ -11,6 +11,7 @@
 #include "Protocol.h"
 #include "infoPlayer.h"
 #include "gameList.h"
+#include "MapLoader.h"
 
 #include "juego.h"
 
@@ -26,6 +27,7 @@ bool tClientManager::readyToClean(){
 int tClientManager::gameSelection(){
 	serverProtocol prot(cli_skt);
 
+	//recibo el codigo
 	int code = -1;
 	cli_skt.receive((char*)&code, 4);
 	code = ntohl(code);
@@ -65,13 +67,26 @@ int tClientManager::gameSelection(){
 			teams2 = cant_p;
 		} else {
 			//sino tienen que ser equipos parejos
-			if ((cant_p % teams) != 0 || teams <= 1) return 1;
+			// 1 < cant equipos < 4
+			if ((cant_p % teams) != 0 || teams <= 1 || teams > 4) return 1;
 		}
 		
-		//hardocdeado DEATHMATCH
-		j = new juego(id_client, cant_p, type_game, teams2);
+		//////////////////////////////////////////////////////////
+		//PARTE DE SELECCION DE MAPAS
+		//MapLoader m_loader;
+		
+		
+		
+		
+		
+		
+		
+		///////////////////////////////////////////////////////////
+		//*nombre del mapa harcodeado (arreglar cuando este la seleccion de mapas)
+		//creo el nuevo juego
+		j = new juego(id_client, cant_p, type_game, teams2, "nothing");
 		j->clientJoin(id_client, &cli_skt, 1);
-		//pusheo en el vector
+		//pusheo en el vector de juegos, para que quede listado
 		juegos.push_back(j);
 
 		//envio confirmacion
@@ -80,15 +95,13 @@ int tClientManager::gameSelection(){
 		//empiezo el juego
 		j->start();
 		return 0;
-
+		
+		///////////////////////CREATE-JOIN-GAME////////////////////////////////7
 	}
 	if (code == JOIN_GAME){ //si seleccione unirme
-
 		//envio confirmacion
 		prot.sendOKConfimation();
-
-
-		
+		//obtengo la descripcion de los juegos
 		int cant_games;
 		std::vector<int> des;
 		juegos.descriptionGames(des, cant_games);
@@ -105,7 +118,7 @@ int tClientManager::gameSelection(){
 		}
 		
 		//recibir codigo
-		//mientras el socket siga vivo
+		//mientras el socket siga vivo (y no me hagan stop en el manager)
 		int s = 1;
 		while (s > 0 && !end_game) {
 			
@@ -135,34 +148,10 @@ int tClientManager::gameSelection(){
 			}
 		}
 		
+		///////////////////////FIN-JOIN-GAME////////////////////////////////7
+		
 		if (s <= 0 || end_game) return -1;
-		//std::cout << "IS FULL " << std::endl;
-		/*
-		//RECIBIR EL TEAM!!!!!!!!!!
-		if (0 == juegos.joinGame(id_client, &cli_skt, &j, g_to_join, team_to_join)){ 
-			
-			//envio confirmacion de que me uni
-			int confirm = htonl(0);
-			cli_skt.send((char*)&confirm, 4);
-			
-			//espero a que todos esten listos
-			while (!j->readyToStart() && !end_game){
-				usleep(200000);
-			}
-			
-			//si hubo error salgo
-			if (end_game) return -1;
-			return 0;
-			
-		} else {
-			//envio que salio mal
-			std::cout << "no joineo: " << std::endl;
-			int confirm = htonl(1);
-			cli_skt.send((char*)&confirm, 4);
-			
-			return 1; 
-		}
-		*/
+
 	}
 	
 	int confirm = htonl(1);

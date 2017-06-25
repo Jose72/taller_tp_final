@@ -4,6 +4,9 @@
 clientMenu::clientMenu(int cli_id, tSocket &skt, gameList &gl, juego *j): 
 cli_id(cli_id), skt(skt), gl(gl), j(j){}
 
+
+///SE ENCARAGRIA DE LA SELECCION EN EL CLIETN MANAGER
+/// NO ESTA TERMINADO, N0 USAR !!!!!!!!!!!!!!!!!!!!!111
 int clientMenu::gameSelection(){
 	serverProtocol prot(skt);
 	int code = -1;
@@ -49,7 +52,7 @@ int clientMenu::gameSelection(){
 		}
 		
 		//hardocdeado DEATHMATCH
-		j = new juego(cli_id, cant_p, type_game, teams2);
+		j = new juego(cli_id, cant_p, type_game, teams2, "nothing");
 		j->clientJoin(cli_id, &skt, 1);
 		//pusheo en el vector
 		gl.push_back(j);

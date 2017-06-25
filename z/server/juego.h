@@ -20,13 +20,13 @@
 
 class juego: public tThread{
 	private:
-		int id_creator;
-		std::string creator; //creador del mapa
+		int id_creator; //id del creador (funciona como identificador del juego)
+		std::string map_name; //nombre del mapa
 		int max_players;  //cant de jugadores
 		int teams;
 		int game_type;
 		gameMap mapa; //mapa
-		infoUnits u_info;
+		infoUnits u_info; //estructura con la info de las unidades
 		unitBuilder builder;
 		int id_unit_counter;
 		std::queue<Event> event_list; //cola de eventos
@@ -35,10 +35,10 @@ class juego: public tThread{
 		std::vector<serverProtocol*> protocols;//vector de protocolos de clientes
 		std::vector<territory> territorios;
 		infoGame g_info; //info global de jugadores/equipos
-		std::vector<int> cli_ids; //vector id de clietnes, necesario??????
+		std::vector<int> cli_ids; //vector id de clientes
 		std::mutex event_m; //proteger eventos
 		std::mutex game_m;
-		bool stop_signal;
+		bool stop_signal; //cuando se hace un stop
 		bool running;
 		bool started;
 		bool ended;
@@ -49,7 +49,7 @@ class juego: public tThread{
 		void unitGameCreate();
 	
 	public:
-		juego(int creator, int cant_players, int game_type, int cant_teams);
+		juego(int creator, int cant_players, int game_type, int cant_teams, std::string map_name);
 		void run() override;
 		void stop();
 		void take_event(Event &e); //para pasarle los eventos desde los clientManager

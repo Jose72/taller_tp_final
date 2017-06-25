@@ -22,8 +22,8 @@
 //cant jugadores
 //tipo de juego(deathmatch o equipos)
 //cant equipos
-juego::juego(int creator, int cant_players, int game_t, int cant_teams): 
-id_creator(creator), max_players(cant_players), teams(cant_teams), 
+juego::juego(int creator, int cant_players, int game_t, int cant_teams, std::string map_name): 
+id_creator(creator), map_name(map_name), max_players(cant_players), teams(cant_teams), 
 game_type(game_t), builder(u_info), id_unit_counter(1), 
 g_info(infoGame(cant_players, game_t, cant_teams)), stop_signal(false), running(false), 
 started(false), ended(false) {}
@@ -164,50 +164,14 @@ int juego::clientJoin(int cli_id, tSocket *cli_s, int team_n){
 }
 
 void juego::sendInit(){
+	map_name = "map";
 	JsonHandler jsonHandler;
-	std::vector<int> mapDes = jsonHandler.jsonToMap();
+	std::vector<int> mapDes = jsonHandler.jsonToMap(map_name);
 	mapa = gameMap(mapDes);
-    jsonHandler.jsonToUnits(id_unit_counter,builder,units);
+    jsonHandler.jsonToUnits(id_unit_counter,builder,units,"Map");
 
-    /*
-	//unit* u1 = new unit(1, GRUNT, 60, 15);
-	unit *u1 = builder.build(GRUNT, 1, 300, 400);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
-	id_unit_counter++;
-
-	unit *u2 = builder.build(FLAG, 270, 15);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u2));
-	id_unit_counter++;
-
-	unit *u3 = builder.build(FORT, 1, 32, 32);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u3));
-	id_unit_counter++;
-
-	unit *u4 = builder.build(FORT ,2 ,640, 640);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u4));
-	id_unit_counter++;
-	
-	unit *u5 = builder.build(PYRO, 1, 300, 200);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
-	id_unit_counter++;
-	
-	unit *u6 = builder.build(PYRO, 1, 300, 180);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u6));
-	id_unit_counter++;
-	
-	unit *u7 = builder.build(PYRO, 1, 300, 220);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u7));
-	id_unit_counter++;
-	
-	unit *u8 = builder.build(GRUNT, 2, 10, 230);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
-	id_unit_counter++;
-
-	unit *u9 = builder.build(GRUNT, 2, 20, 230);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u9));
-	id_unit_counter++;
-     */
-	
+	/*
+	///////////////////////HARDOCDEO UNODADES PARA TESTING
 	unit *u1 = builder.build(PYRO, 1, 150, 400);
 	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
 	id_unit_counter++;
@@ -255,8 +219,8 @@ void juego::sendInit(){
 	fac.push_back(u4);
 	territory t(u2, fac);
 	territorios.push_back(t);
-	///////////////////////////////////
-	
+	//////////////////////FIN-HARDCODEO/////////////
+	*/
 	
 	
 	//hay que inicilizar la info de cada equipo
@@ -297,7 +261,7 @@ void juego::sendInit(){
 	///////////////////////////////
 	
 	
-	//protocol
+	//envio el mapa y las unidades iniciales a todos lo jugadores
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		(*it)->send_map(mapDes);
 		(*it)->send_units_game(units);

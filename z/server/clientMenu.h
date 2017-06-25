@@ -11,6 +11,9 @@
 #define CREATE_GAME 0
 #define JOIN_GAME 1
 
+
+// NO TERMINADO, NO USAR!!!!!!!!!
+
 class clientMenu {
 	private:
 		int cli_id;
