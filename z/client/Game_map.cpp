@@ -17,6 +17,9 @@ Game_map::~Game_map() {
     delete(tex2);
     delete(tex3);
     delete(tex4);
+    delete(tex5);
+    delete(tex6);
+    delete(tex7);
     delete(tex0);
 }
 
@@ -94,6 +97,4 @@ void Game_map::load_tex() {
 
 }
 
-void Game_map::set_screen(SDL_Surface *sc) {
-    this->screen = sc;
-}
+

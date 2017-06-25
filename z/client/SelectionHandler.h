@@ -13,8 +13,6 @@
 
 class SelectionHandler {
 private:
-    int destinyX;
-    int destinyY;
     bool unit_selected;
     Unit * unit;
     Protocol &protocol;
@@ -24,9 +22,8 @@ private:
 public:
     SelectionHandler(Protocol &p, int &id, Camera2 &cam);
     void select_unit(std::vector<Unit*> &units);
-    void set_objetive(int destX, int destY, Units_Protected &units);
+    void set_target(int destX, int destY, Units_Protected &units);
     void set_location(int posX, int posY,Units_Protected &units);
-    void move_unit();
     bool unit_select();
 
     Unit *getUnit();

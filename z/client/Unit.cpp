@@ -33,6 +33,10 @@ Unit::Unit(std::vector<Animation*> &a0,
     this->maxFrame4 = (animation4.size());
     this->maxFrame5 = (animation5.size());
     this->current_frame = 0;
+    this->posX_attack = 0;
+    this->posY_attack = 0;
+    this->posxO = 0;
+    this->posyO = 0;
 }
 
 
@@ -153,18 +157,7 @@ int Unit::get_posy() {
     return  this->posy;
 }
 
-void Unit::set_pos_camera(int x, int y) {
-    this->cameraPosX = x;
-    this->cameraPosY = y;
-}
 
-int Unit::get_cameraPosX() {
-    return this->cameraPosX;
-}
-
-int Unit::get_cameraPosY() {
-    return this->cameraPosY;
-}
 int Unit::get_unit_code() {
     return  this->cod_unit;
 }

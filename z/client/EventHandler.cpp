@@ -96,7 +96,7 @@ void EventHandler::run() {
                             destinoX = event.button.x + camera2.getPosCameraX();
                             destinoY = event.button.y + camera2.getPosCameraY();
                             std::cout << "X: "<< destinoX << " Y: " << destinoY <<"\n";
-                            sHandler.set_objetive(destinoX, destinoY,units);
+                            sHandler.set_target(destinoX, destinoY,units);
                             break;
                             //SDL_Quit()
                         }

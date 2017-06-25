@@ -49,8 +49,6 @@ protected:
     int posyO;
     int posX_attack;
     int posY_attack;
-    int cameraPosX;
-    int cameraPosY;
     int owner;
     Direction  direction;
     Attack_Direction attack_direction;
@@ -80,9 +78,6 @@ public:
     ~Unit();
     void animate(SDL_Rect &cameraRect);
     void set_pos(int x,int y);
-    void set_pos_camera(int x, int y);
-    int get_cameraPosX();
-    int get_cameraPosY();
     int get_posx();
     int get_posy();
     int get_unit_code();

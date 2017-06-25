@@ -16,8 +16,9 @@ TClient_receive::TClient_receive(tSocket &s,
 TClient_receive::~TClient_receive() {}
 
 void TClient_receive::run() {
-
+    done = true;
     Protocol protocol_client_server(socket,units,game_map,factory, techLevel, winner,soundManager);
+
 
     /////////////////////////
     int team_n;

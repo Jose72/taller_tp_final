@@ -2,6 +2,12 @@
 #include <vector>
 #include <dirent.h>
 #include "Animation.h"
+#define BIG_SPRITE_DIMENSION 32
+#define SMALL_SPRITE_DIMENSION 16
+#define FORT_DX 160
+#define FORT_DY 192
+#define FACTORY_DIM 80
+#define BRIDGE_DIM 64
 
 SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->screen = screen;
@@ -77,114 +83,142 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 MISILE_LAUNCHER_GREEN,
                                 MISILE_LAUNCHER_RED,
                                 MISILE_LAUNCHER_YELLOW,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/mlStand",
                                 MISILE_LAUNCHER_BLUE_STAND,
                                 MISILE_LAUNCHER_GREEN_STAND,
                                 MISILE_LAUNCHER_RED_STAND,
                                 MISILE_LAUNCHER_YELLOW_STAND,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
-    this->load_sprite("client/sprites/missile_launcher",MISILE_LAUNCHER_EMPTY,"empty",32,32);
+    this->load_sprite("client/sprites/missile_launcher",
+                      MISILE_LAUNCHER_EMPTY,
+                      "empty",
+                      BIG_SPRITE_DIMENSION,
+                      BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/heavyTank",
                                 HEAVY_TANK_BLUE,
                                 HEAVY_TANK_GREEN,
                                 HEAVY_TANK_RED,
                                 HEAVY_TANK_YELLOW,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/heavyStand",
                                 HEAVY_TANK_BLUE_STAND,
                                 HEAVY_TANK_GREEN_STAND,
                                 HEAVY_TANK_RED_STAND,
                                 HEAVY_TANK_YELLOW_STAND,
-                                32);
-    this->load_sprite("client/sprites/heavyTank",HEAVY_TANK_EMPTY,"empty",32,32);
+                                BIG_SPRITE_DIMENSION);
+
+    this->load_sprite("client/sprites/heavyTank",
+                      HEAVY_TANK_EMPTY,
+                      "empty",
+                      BIG_SPRITE_DIMENSION,
+                      BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/mediumTank",
                                 MEDIUM_TANK_BLUE,
                                 MEDIUM_TANK_GREEN,
                                 MEDIUM_TANK_RED,
                                 MEDIUM_TANK_YELLOW,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/mediumStand",
                                 MEDIUM_TANK_BLUE_STAND,
                                 MEDIUM_TANK_GREEN_STAND,
                                 MEDIUM_TANK_RED_STAND,
                                 MEDIUM_TANK_YELLOW_STAND,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
-    this->load_sprite("client/sprites/mediumTank",MEDIUM_TANK_EMPTY,"empty",32,32);
+    this->load_sprite("client/sprites/mediumTank",
+                      MEDIUM_TANK_EMPTY,
+                      "empty",
+                      BIG_SPRITE_DIMENSION,
+                      BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/lightTank",
                                 LIGHT_TANK_BLUE,
                                 LIGHT_TANK_GREEN,
                                 LIGHT_TANK_RED,
                                 LIGHT_TANK_YELLOW,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/lightStand",
                                 LIGHT_TANK_BLUE_STAND,
                                 LIGHT_TANK_GREEN_STAND,
                                 LIGHT_TANK_RED_STAND,
                                 LIGHT_TANK_YELLOW_STAND,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
-    this->load_sprite("client/sprites/lightTank",LIGHT_TANK_EMPTY,"empty",32,32);
+    this->load_sprite("client/sprites/lightTank",
+                      LIGHT_TANK_EMPTY,
+                      "empty",
+                      BIG_SPRITE_DIMENSION,
+                      BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/jeep",
                                 JEEP_BLUE,
                                 JEEP_GREEN,
                                 JEEP_RED,
                                 JEEP_YELLOW,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
     this->load_sprites_with_dim("client/sprites/jeepStand",
                                 JEEP_BLUE_STAND,
                                 JEEP_GREEN_STAND,
                                 JEEP_RED_STAND,
                                 JEEP_YELLOW_STAND,
-                                32);
+                                BIG_SPRITE_DIMENSION);
 
-    this->load_sprite("client/sprites/jeep",JEEP_EMPTY,"empty",32,32);
+    this->load_sprite("client/sprites/jeep",
+                      JEEP_EMPTY,
+                      "empty",
+                      BIG_SPRITE_DIMENSION,
+                      BIG_SPRITE_DIMENSION);
 
     this->load_sprite("client/sprites/laserBullet",
                       LASER_BULLET,
                       "laser",
-                      16, 16);
+                      SMALL_SPRITE_DIMENSION,
+                      SMALL_SPRITE_DIMENSION);
 
     this->load_sprite("client/sprites/pyroBullet",
                       PYRO_BULLET,
                       "bullet",
-                      16, 16);
+                      SMALL_SPRITE_DIMENSION,
+                      SMALL_SPRITE_DIMENSION);
 
     this->load_sprite("client/sprites/toughtBullet",
                       TOUGHT_BULLET,
                       "bullet",
-                      16, 16);
+                      SMALL_SPRITE_DIMENSION,
+                      SMALL_SPRITE_DIMENSION);
 
     this->load_sprite("client/sprites/fire",
                       BULLET_DEAD,
                       "fire",
-                      16, 16);
+                      SMALL_SPRITE_DIMENSION,
+                      SMALL_SPRITE_DIMENSION);
 
     this->load_sprite("client/sprites/fuerte",
                       FORT_ALIVE,
                       "alive",
-                      160, 192);
+                      FORT_DX,
+                      FORT_DY);
 
     this->load_sprite("client/sprites/fuerte",
                       FORT_DEAD,
                       "destroyed",
-                      160, 192);
+                      FORT_DX,
+                      FORT_DY);
 
     this->load_sprite("client/sprites/fabrica_robots",
                       FACTORY_ROBOTS_ALIVE,
                       "alive",
-                      80, 80);
+                      FACTORY_DIM,
+                      FACTORY_DIM);
 
     this->load_sprite("client/sprites/fabrica_robots",
                       FACTORY_ROBOTS_DEAD,
@@ -194,24 +228,74 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
     this->load_sprite("client/sprites/fabrica_vehiculos",
                       FACTORY_VEHICLES_ALIVE,
                       "alive",
-                      80, 80);
+                      FACTORY_DIM,
+                      FACTORY_DIM);
 
     this->load_sprite("client/sprites/fabrica_vehiculos",
                       FACTORY_VEHICLES_DEAD,
                       "destroyed",
-                      80, 80);
+                      FACTORY_DIM,
+                      FACTORY_DIM);
 
-    this->load_sprite("client/sprites/bridgeCH",BRIDGE_CONCRETE_HORIZONTAL,"bridge",64,64);
-    this->load_sprite("client/sprites/bridgeCH",BRIDGE_CONTRETE_HORIZONTAL_DESTROYED,"destroyed",64,64);
-    this->load_sprite("client/sprites/bridgeCV",BRIDGE_CONCRETE_VERTICAL,"bridge",64,64);
-    this->load_sprite("client/sprites/bridgeCV",BRIDGE_CONTRETE_VERTICAL_DESTROYED,"destroyed",64,64);
+    this->load_sprite("client/sprites/bridgeCH",
+                      BRIDGE_CONCRETE_HORIZONTAL,
+                      "bridge",
+                      BRIDGE_DIM,
+                      BRIDGE_DIM);
 
-    this->load_sprite("client/sprites/bridgeWH",BRIDGE_WOOD_HORIZONTAL,"bridge",64,64);
-    this->load_sprite("client/sprites/bridgeWH",BRIDGE_WOOD_HORIZONTAL_DESTROYED,"destroyed",64,64);
-    this->load_sprite("client/sprites/bridgeWV",BRIDGE_WOOD_VERTICAL,"bridge",64,64);
-    this->load_sprite("client/sprites/bridgeWV",BRIDGE_WOOD_VERTICAL_DESTROYED,"destroyed",64,64);
-    this->load_sprite("client/sprites/iceBlock",ICE_BLOCK,"ice",32,32);
-    this->load_sprite("client/sprites/rock",ROCK_BLOCK,"rock",32,32);
+    this->load_sprite("client/sprites/bridgeCH",
+                      BRIDGE_CONTRETE_HORIZONTAL_DESTROYED,
+                      "destroyed",
+                      BRIDGE_DIM,
+                      BRIDGE_DIM);
+
+    this->load_sprite("client/sprites/bridgeCV",
+                      BRIDGE_CONCRETE_VERTICAL,
+                      "bridge",
+                      BRIDGE_DIM,
+                      BRIDGE_DIM);
+
+    this->load_sprite("client/sprites/bridgeCV",
+                      BRIDGE_CONTRETE_VERTICAL_DESTROYED,
+                      "destroyed",
+                      BRIDGE_DIM,
+                      BRIDGE_DIM);
+
+    this->load_sprite("client/sprites/bridgeWH",
+                      BRIDGE_WOOD_HORIZONTAL,
+                      "bridge",
+                      BRIDGE_DIM,
+                      BRIDGE_DIM);
+
+    this->load_sprite("client/sprites/bridgeWH",
+                      BRIDGE_WOOD_HORIZONTAL_DESTROYED,
+                      "destroyed",
+                      BRIDGE_DIM,
+                      BRIDGE_DIM);
+
+    this->load_sprite("client/sprites/bridgeWV",
+                      BRIDGE_WOOD_VERTICAL,
+                      "bridge",
+                      BRIDGE_DIM,
+                      BRIDGE_DIM);
+
+    this->load_sprite("client/sprites/bridgeWV",
+                      BRIDGE_WOOD_VERTICAL_DESTROYED,
+                      "destroyed",
+                      BRIDGE_DIM,
+                      BRIDGE_DIM);
+
+    this->load_sprite("client/sprites/iceBlock",
+                      ICE_BLOCK,
+                      "ice",
+                      BIG_SPRITE_DIMENSION,
+                      BIG_SPRITE_DIMENSION);
+
+    this->load_sprite("client/sprites/rock",
+                      ROCK_BLOCK,
+                      "rock",
+                      BIG_SPRITE_DIMENSION,
+                      BIG_SPRITE_DIMENSION);
 }
 
 
@@ -231,7 +315,7 @@ void SpritesPool::load_sprites(std::string path,
     struct dirent *ent;
     std::vector<Animation*> b_grunt,g_grunt,r_grunt,y_grunt;
     std::vector<std::string> list_dir;
-    std::string mother(path);
+    std::string rootDirectory(path);
     const char * path2 = path.c_str();
     if ((dir = opendir (path2)) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
@@ -240,8 +324,7 @@ void SpritesPool::load_sprites(std::string path,
         }
         closedir (dir);
     } else {
-        /* could not open directory */
-        perror ("");
+        perror ("Could not open directory");
         //return EXIT_FAILURE;
     }
     std::string temp;
@@ -257,7 +340,7 @@ void SpritesPool::load_sprites(std::string path,
     }
     for (int j = 2; j <list_dir.size() ; ++j) {
         std::string full_dir;
-        full_dir.append(mother);
+        full_dir.append(rootDirectory);
         full_dir.append("/");
         full_dir.append(list_dir[j]);
         char * full_dirNoConst = const_cast<char*> (full_dir.c_str());
@@ -289,7 +372,7 @@ void SpritesPool::load_sprites_with_null(std::string path,
     struct dirent *ent;
     std::vector<Animation*> n_grunt,b_grunt,g_grunt,r_grunt,y_grunt;
     std::vector<std::string> list_dir;
-    std::string mother(path);
+    std::string rootDirectory(path);
     const char * path2 = path.c_str();
     if ((dir = opendir (path2)) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
@@ -298,8 +381,7 @@ void SpritesPool::load_sprites_with_null(std::string path,
         }
         closedir (dir);
     } else {
-        /* could not open directory */
-        perror ("");
+        perror ("Could not open directory");
         //return EXIT_FAILURE;
     }
     std::string temp;
@@ -315,7 +397,7 @@ void SpritesPool::load_sprites_with_null(std::string path,
     }
     for (int j = 2; j <list_dir.size() ; ++j) {
         std::string full_dir;
-        full_dir.append(mother);
+        full_dir.append(rootDirectory);
         full_dir.append("/");
         full_dir.append(list_dir[j]);
         char * full_dirNoConst = const_cast<char*> (full_dir.c_str());
@@ -349,7 +431,7 @@ void SpritesPool::load_sprites_with_dim(std::string path,
     struct dirent *ent;
     std::vector<Animation*> b_grunt,g_grunt,r_grunt,y_grunt;
     std::vector<std::string> list_dir;
-    std::string mother(path);
+    std::string rootDirectory(path);
     const char * path2 = path.c_str();
     if ((dir = opendir (path2)) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
@@ -358,8 +440,7 @@ void SpritesPool::load_sprites_with_dim(std::string path,
         }
         closedir (dir);
     } else {
-        /* could not open directory */
-        perror ("");
+        perror ("Could not open directory");
         //return EXIT_FAILURE;
     }
     std::string temp;
@@ -375,7 +456,7 @@ void SpritesPool::load_sprites_with_dim(std::string path,
     }
     for (int j = 2; j <list_dir.size() ; ++j) {
         std::string full_dir;
-        full_dir.append(mother);
+        full_dir.append(rootDirectory);
         full_dir.append("/");
         full_dir.append(list_dir[j]);
         char * full_dirNoConst = const_cast<char*> (full_dir.c_str());
@@ -406,7 +487,7 @@ void SpritesPool::load_sprite(std::string path,
     struct dirent *ent;
     std::vector<Animation*> aAnimation;
     std::vector<std::string> list_dir;
-    std::string mother(path);
+    std::string rootDirectory(path);
     const char * path2 = path.c_str();
     if ((dir = opendir (path2)) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
@@ -415,8 +496,8 @@ void SpritesPool::load_sprite(std::string path,
         }
         closedir (dir);
     } else {
-        /* could not open directory */
-        perror ("");
+
+        perror ("Could not open directory");
         //return EXIT_FAILURE;
     }
     std::string temp;
@@ -432,7 +513,7 @@ void SpritesPool::load_sprite(std::string path,
     }
     for (int j = 2; j <list_dir.size() ; ++j) {
         std::string full_dir;
-        full_dir.append(mother);
+        full_dir.append(rootDirectory);
         full_dir.append("/");
         full_dir.append(list_dir[j]);
         char * full_dirNoConst = const_cast<char*> (full_dir.c_str());

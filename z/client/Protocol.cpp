@@ -13,6 +13,8 @@
 #define CODE_DESTROYED 10
 #define CODE_CHANGE_TECH_LEVEL 35
 #define CODE_END_GAME 40
+#define CODE_OUTSIDE_MAP -200
+#define SIZE_INT 4
 
 enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE,
     DEFEATED, DESTROYED, ERASED, READY_TO_DIE};
@@ -31,44 +33,40 @@ void Protocol::moveUnitCS(int cod_unit, int posX, int posY) {
     int CU_to_send = htonl(cod_unit);
     int PX_to_send = htonl(posX);
     int PY_to_send = htonl((posY));
-    socket.send((char*) &CO_to_send,sizeof(int));
-    //std::cout << "cod op: " << CODE_MOVE_UNIT <<"\n";
-    socket.send((char*) &CU_to_send,sizeof(int));
-    //std::cout << "cod unit: " << cod_unit << "\n";
-    socket.send((char*) &PX_to_send,sizeof(int));
-    //std::cout << " x: " << posX << "\n";
-    socket.send((char*) &PY_to_send,sizeof(int));
-    //std::cout <<" y: " << posY << "\n";
+    socket.send((char*) &CO_to_send,SIZE_INT);
+    socket.send((char*) &CU_to_send,SIZE_INT);
+    socket.send((char*) &PX_to_send,SIZE_INT);
+    socket.send((char*) &PY_to_send,SIZE_INT);
 }
 
 void Protocol::attackUnitCS(int cod_unit, int cod_objective) {
     int CO_to_send = htonl(CODE_ATTACK);
     int CU_to_send = htonl(cod_unit);
     int O_to_send = htonl(cod_objective);
-    socket.send((char*) &CO_to_send,sizeof(int));
-    socket.send((char*) &CU_to_send,sizeof(int));
-    socket.send((char*) &O_to_send,sizeof(int));
-    socket.send((char*) &O_to_send,sizeof(int));
+    socket.send((char*) &CO_to_send,SIZE_INT);
+    socket.send((char*) &CU_to_send,SIZE_INT);
+    socket.send((char*) &O_to_send,SIZE_INT);
+    socket.send((char*) &O_to_send,SIZE_INT);
 }
 
 void Protocol::driveUnitCS(int cod_unit, int drive_objetive) {
     int CO_to_send = htonl(CODE_DRIVE);
     int CU_to_send = htonl(cod_unit);
     int O_to_send = htonl(drive_objetive);
-    socket.send((char*) &CO_to_send,sizeof(int));
-    socket.send((char*) &CU_to_send,sizeof(int));
-    socket.send((char*) &O_to_send,sizeof(int));
-    socket.send((char*) &O_to_send,sizeof(int));
+    socket.send((char*) &CO_to_send,SIZE_INT);
+    socket.send((char*) &CU_to_send,SIZE_INT);
+    socket.send((char*) &O_to_send,SIZE_INT);
+    socket.send((char*) &O_to_send,SIZE_INT);
 
 }
 void Protocol::create_map() {
     int tamanio_map;
-    socket.receive((char*)&tamanio_map,4);
+    socket.receive((char*)&tamanio_map,SIZE_INT);
     int tamanio_map_SC = ntohl(tamanio_map);
     //std::cout<< tamanio_map_SC << "\n";
     for (int i = 0; i <tamanio_map_SC ; ++i) {
         int tile;
-        socket.receive((char*)&tile,4);
+        socket.receive((char*)&tile,SIZE_INT);
         int tile_SC = ntohl(tile);
         //std::cout<< tile_SC <<"\n";
         game_map.add_tile(tile_SC);
@@ -77,7 +75,7 @@ void Protocol::create_map() {
 
 void Protocol::set_units_game() {
     int cant_unit;
-    socket.receive((char*)&cant_unit,4);
+    socket.receive((char*)&cant_unit,SIZE_INT);
     int cant_unit_SC = ntohl(cant_unit);
     for (int i = 0; i <cant_unit_SC ; ++i) {
         int unit_code_config;
@@ -85,16 +83,16 @@ void Protocol::set_units_game() {
         int owner;
         int posX;
         int posY;
-        socket.receive((char*)&unit_code,4);
+        socket.receive((char*)&unit_code,SIZE_INT);
         int unit_code_SC = ntohl(unit_code);
         std::cout<< unit_code_SC << "\n";
-        socket.receive((char*)&unit_code_config,4);
+        socket.receive((char*)&unit_code_config,SIZE_INT);
         int unit_code_config_SC = ntohl(unit_code_config);
-        socket.receive((char*)&owner,4);
+        socket.receive((char*)&owner,SIZE_INT);
         int owner_SC = ntohl(owner);
-        socket.receive((char*)&posX,4);
+        socket.receive((char*)&posX,SIZE_INT);
         int posX_SC = ntohl(posX);
-        socket.receive((char*)&posY,4);
+        socket.receive((char*)&posY,SIZE_INT);
         int posY_SC = ntohl(posY);
 
         
@@ -102,13 +100,13 @@ void Protocol::set_units_game() {
         //tech lvl de edificios
         //en unidades comunes deberia ser ignorado???
         int tl;
-        socket.receive((char*)&tl,4);
+        socket.receive((char*)&tl,SIZE_INT);
         int tl_SC = ntohl(tl);
          */
 
 
         //AGREGAR SWITCH
-        units.createIsNotExist(unit_code_SC,unit_code_config_SC,owner_SC,posX_SC,posY_SC,factory);
+        units.createIfDoesNotExist(unit_code_SC,unit_code_config_SC,owner_SC,posX_SC,posY_SC,factory);
 
     }
 }
@@ -116,32 +114,32 @@ void Protocol::set_units_game() {
 void Protocol::confirm_server() {
     int confirm = 280;
     int confirm_CS = htonl(confirm);
-    socket.send((char*)&confirm_CS,4);
-    socket.send((char*)&confirm_CS,4);
+    socket.send((char*)&confirm_CS,SIZE_INT);
+    socket.send((char*)&confirm_CS,SIZE_INT);
 }
 
 void Protocol::process_message() {
     int cod_act;
-    socket.receive((char*)&cod_act,4);
+    socket.receive((char*)&cod_act,SIZE_INT);
     int cod_act_SC = ntohl(cod_act);
 
 
     int cod_unit;
-    socket.receive((char*)&cod_unit,4);
+    socket.receive((char*)&cod_unit,SIZE_INT);
     int cod_unit_SC = ntohl(cod_unit);
 
     int unit_type;
-    socket.receive((char*)&unit_type,4);
+    socket.receive((char*)&unit_type,SIZE_INT);
     int unit_type_SC = ntohl(unit_type);
 
 
     int cod_unit_owner;
-    socket.receive((char*)&cod_unit_owner,4);
+    socket.receive((char*)&cod_unit_owner,SIZE_INT);
     int cod_unit_owner_SC = ntohl(cod_unit_owner);
 
     //salud de la unidad
     int message4;
-    socket.receive((char*)&message4,4);
+    socket.receive((char*)&message4,SIZE_INT);
     int message4_SC = ntohl(message4);
 
     /*
@@ -149,16 +147,16 @@ void Protocol::process_message() {
     //el codigo de unidad del conductor para los vehiculos
     //buscar otro uso para los demas??????
     int message5;
-    socket.receive((char*)&message5,4);
+    socket.receive((char*)&message5,SIZE_INT);
     int message5_SC = ntohl(message5);
     */
 
     int posX;
-    socket.receive((char*)&posX,4);
+    socket.receive((char*)&posX,SIZE_INT);
     int posX_SC = ntohl(posX);
 
     int posY;
-    socket.receive((char*)&posY,4);
+    socket.receive((char*)&posY,SIZE_INT);
     int posY_SC = ntohl(posY);
 
     translate_message(cod_act_SC,
@@ -176,10 +174,10 @@ void Protocol::create_unit(int idCreator, int idCreation) {
     int idCreator_to_send = htonl(idCreator);
     int idCreation_to_send = htonl(idCreation);
     int extra_to_send = htonl(0);
-    socket.send((char*) &CO_to_send,sizeof(int));
-    socket.send((char*) &idCreator_to_send,sizeof(int));
-    socket.send((char*) &idCreation_to_send,sizeof(int));
-    socket.send((char*) &extra_to_send,sizeof(int));
+    socket.send((char*) &CO_to_send,SIZE_INT);
+    socket.send((char*) &idCreator_to_send,SIZE_INT);
+    socket.send((char*) &idCreation_to_send,SIZE_INT);
+    socket.send((char*) &extra_to_send,SIZE_INT);
 }
 
 void Protocol::translate_message(int update, int unitCode, int unitType, int unitOwner, int health, int posX,
@@ -191,58 +189,58 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
         techLevel.setTechLevel(unitCode);
 
     } else {
-        if(units.createIsNotExist(unitCode, unitType, unitOwner, posX, posY, factory)){
+        if(units.createIfDoesNotExist(unitCode, unitType, unitOwner, posX, posY, factory)){
             soundManager.playCreationUnit(unitOwner, unitType);
         }
         if (units[unitCode]->get_state() != DEAD1) {
             switch (update) {
                 case MOVING:
-                    soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
-                    units[unitCode]->set_state(MOVING1);
-                    units[unitCode]->set_health(health);
-                    units[unitCode]->set_pos(posX, posY);
+                    soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
+                    units.setStateUnit(unitCode,MOVING1);
+                    units.setHealthUnit(unitCode,health);
+                    units.setPosUnit(unitCode,posX,posY);
                     break;
                 case ATTACKING:
-                    units[unitCode]->set_attack(posX, posY);
-                    units[unitCode]->set_state(ATTACKING1);
-                    units[unitCode]->set_health(health);
+                    units.setAttackUnit(unitCode,posX,posY);
+                    units.setStateUnit(unitCode,ATTACKING1);
+                    units.setHealthUnit(unitCode,health);
                     break;
                 case DEAD:
-                    units[unitCode]->set_state(DEAD1);
+                    units.setStateUnit(unitCode,DEAD1);
                     break;
                 case STANDING:
-                    soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
-                    units[unitCode]->set_health(health);
-                    units[unitCode]->set_state(DRINKING);
-                    units[unitCode]->set_pos(posX, posY);
+                    soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
+                    units.setHealthUnit(unitCode,health);
+                    units.setStateUnit(unitCode,DRINKING);
+                    units.setPosUnit(unitCode,posX,posY);
                     break;
                 case CHECKING_CAPTURE:
-                    if(units[unitCode]->get_owner() != unitOwner){
-                        soundManager.playCaptureFlag(unitOwner, units[unitCode]->get_owner());
+                    if(units.getOwnerUnit(unitCode) != unitOwner){
+                        soundManager.playCaptureFlag(unitOwner, units.getOwnerUnit(unitCode));
                     }
-                    units[unitCode]->set_owner(unitOwner);
+                    units.setOwnerUnit(unitCode,unitOwner);
                     break;
                 case DESTROYED:
-                    units[unitCode]->set_state(DESTROYED1);
+                    units.setStateUnit(unitCode,DESTROYED1);
                     break;
                 case DRIVING:
-                    units[unitCode]->set_state(DRINKING);
-                    units[unitCode]->set_pos(posX,posY);
+                    units.setStateUnit(unitCode,DRINKING);
+                    units.setPosUnit(unitCode,posX,posY);
                     break;
                 case CREATING:
-                    soundManager.playDamage(unitOwner,unitType,units[unitCode]->get_heatlh(),health);
-                    units[unitCode]->set_health(health);
-                    units[unitCode]->set_owner(unitOwner);
+                    soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
+                    units.setHealthUnit(unitCode,health);
+                    units.setOwnerUnit(unitCode,unitOwner);
                     break;
                 case ERASED:
-                    units[unitCode]->set_pos(-200,-200);
-                    units[unitCode]->set_health(health);
-                    units[unitCode]->set_state(DEAD1);
+                    units.setPosUnit(unitCode,CODE_OUTSIDE_MAP,CODE_OUTSIDE_MAP);
+                    units.setHealthUnit(unitCode,health);
+                    units.setStateUnit(unitCode,DEAD1);
                     break;
                 case DEFEATED:
-                    units[unitCode]->set_pos(posX,posY);
-                    units[unitCode]->set_health(health);
-                    units[unitCode]->set_state(DRINKING);
+                    units.setPosUnit(unitCode,posX,posY);
+                    units.setHealthUnit(unitCode,health);
+                    units.setStateUnit(unitCode,DRINKING);
                     break;
 
             }
@@ -253,20 +251,20 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
 std::vector<mapData> Protocol::receiveMapsInfo() {
     std::vector<mapData> vecMapsData;
     int cantMaps;
-    socket.receive((char*) &cantMaps,4);
+    socket.receive((char*) &cantMaps,SIZE_INT);
     int cantMapsSC = ntohl(cantMaps);
     for (int i = 0; i <cantMapsSC ; ++i) {
         mapData data;
         int nameSize;
-        socket.receive((char*) &nameSize,4);
+        socket.receive((char*) &nameSize,SIZE_INT);
         int nameSizeSC = ntohl(nameSize);
         char name [nameSizeSC];
         socket.receive(name,nameSizeSC);
         int dim;
-        socket.receive((char*) &dim,4);
+        socket.receive((char*) &dim,SIZE_INT);
         int dimSC = ntohl(dim);
         int equipos;
-        socket.receive((char*) &equipos,4);
+        socket.receive((char*) &equipos,SIZE_INT);
         int equiposSC = ntohl(equipos);
         std::string nameMap(name);
         data.mapName = nameMap;
@@ -275,40 +273,12 @@ std::vector<mapData> Protocol::receiveMapsInfo() {
         vecMapsData.push_back(data);
     }
     return vecMapsData;
-
-
-    /*
-    void serverProtocol::sendMapsInfo(std::vector<dataMap> &maps) {
-        //envio cantidad de mapas
-        int cant_maps = maps.size();
-        cant_maps = htonl(cant_maps);
-        socket.send((char*)&cant_maps, INT_SIZE);
-
-        //envio la info en un loop
-        for (unsigned int i = 0; i < maps.size(); ++i){
-            //nombre del mapa
-            std::string name = maps[i].mapName;
-            int name_size = name.size();
-            //envio cant de bytes y luego el string
-            socket.send((char*)&name_size, INT_SIZE);
-            socket.send((char*)&name[0u], name.size());
-            //dimensiones
-            int dim = maps[i].dimensiones;
-            dim = htonl(dim);
-            socket.send((char*)&dim, INT_SIZE);
-            //dimensiones
-            int cant_e = maps[i].cantEquipos;
-            cant_e = htonl(cant_e);
-            socket.send((char*)&cant_e, INT_SIZE);
-        }
-    }
-     */
 }
 
 void Protocol::sendMapName(std::string mapName) {
     int name_size = mapName.size();
     int nameSizeCS = htonl(name_size);
-    socket.send((char*)&nameSizeCS, 4);
+    socket.send((char*)&nameSizeCS, SIZE_INT);
     socket.send(&mapName[0u], mapName.size());
 
 }

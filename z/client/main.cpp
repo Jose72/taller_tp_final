@@ -7,7 +7,6 @@
 #include "Factory_Units.h"
 #include "../common/Socket.h"
 #include "../common/Thread.h"
-#include "T_Client.h"
 #include "TClient_receive.h"
 #include "Units_Protected.h"
 #include "ClickableButton.h"

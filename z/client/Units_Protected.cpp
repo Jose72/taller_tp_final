@@ -25,6 +25,40 @@ Unit* Units_Protected::operator[](int i) {
     return units_map[i];
 }
 
+void Units_Protected::setPosUnit(int unitCode, int posX, int posY) {
+    tLock(this->mut);
+    units_map[unitCode]->set_pos(posX,posY);
+}
+
+void Units_Protected::setAttackUnit(int unitCode, int posX, int posY) {
+    tLock(this->mut);
+    units_map[unitCode]->set_attack(posX,posY);
+}
+
+void Units_Protected::setHealthUnit(int unitCode, int health) {
+    tLock(this->mut);
+    units_map[unitCode]->set_health(health);
+}
+
+void Units_Protected::setOwnerUnit(int unitCode, int owner) {
+    tLock(this->mut);
+    units_map[unitCode]->set_owner(owner);
+}
+
+void Units_Protected::setStateUnit(int unitCode, State state) {
+    tLock(this->mut);
+    units_map[unitCode]->set_state(state);
+}
+
+int Units_Protected::getOwnerUnit(int unitCode) {
+    tLock(this->mut);
+    return units_map[unitCode]->get_owner();
+}
+int Units_Protected::getHealthUnit(int unitCode) {
+    tLock(this->mut);
+    return units_map[unitCode]->get_heatlh();
+}
+
 int Units_Protected::size() {
     tLock(this->mut);
     return units_map.size();
@@ -130,7 +164,7 @@ void Units_Protected::cleanDeadUnits() {
 }
 
 
-bool Units_Protected::createIsNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY,
+bool Units_Protected::createIfDoesNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY,
                                        Factory_Units &factory) {
     tLock(this->mut);
     bool result = false;
