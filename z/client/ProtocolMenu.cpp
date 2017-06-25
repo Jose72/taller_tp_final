@@ -125,7 +125,8 @@ std::vector<mapData> ProtocolMenu::receiveMapsInfo() {
         int nameSize;
         socket.receive((char*) &nameSize,SIZE_INT);
         int nameSizeSC = ntohl(nameSize);
-        char name [nameSizeSC];
+        char name [nameSizeSC+1];
+        name[nameSizeSC] = '\0';
         socket.receive(name,nameSizeSC);
         int dim;
         socket.receive((char*) &dim,SIZE_INT);
