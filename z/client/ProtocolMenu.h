@@ -17,6 +17,13 @@
 #define RESPONSE_PROTOCOL_MENU_OK 0
 #define RESPONSE_PROTOCOL_MENU_FULL_TEAM -1
 #define NO_TEAM_PARAM -1
+
+struct mapData{
+    std::string mapName;
+    int cantEquipos;
+    int dimensions;
+};
+
 class ProtocolMenu {
 public:
     ProtocolMenu(tSocket &socket);
@@ -28,6 +35,8 @@ public:
     int joinGame(int idCreator, int i);
     std::vector<InfoGameSelection*> infoGames;
     int receive_id_client();
+    std::vector<mapData>receiveMapsInfo();
+    void sendMapName(std::string mapName);
 
 private:
     tSocket &socket;

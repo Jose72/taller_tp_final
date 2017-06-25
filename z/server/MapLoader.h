@@ -16,21 +16,17 @@
 
 class MapLoader {
 private:
-    JsonHandler &jsonHandler;
-    std::map<int, unit*> &unitsVector;
-    gameMap &map;
-    std::vector<dataMap> &dataMaps;
+    JsonHandler jsonHandler;
+    gameMap map;
+    std::vector<dataMap> dataMaps;
 
 public:
-    MapLoader(JsonHandler &json,
-              std::map<int, unit*> &unitsVector,
-              gameMap &map,
-              std::vector<dataMap> &data);
-
 
     void loadListData();
     std::vector<dataMap> mapsForTeams(int cantEquipos);
     void loadMap(std::string mapName);
+
+    MapLoader();
 
 private:
 

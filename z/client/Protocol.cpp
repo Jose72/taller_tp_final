@@ -248,38 +248,4 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
     }
 }
 
-std::vector<mapData> Protocol::receiveMapsInfo() {
-    std::vector<mapData> vecMapsData;
-    int cantMaps;
-    socket.receive((char*) &cantMaps,SIZE_INT);
-    int cantMapsSC = ntohl(cantMaps);
-    for (int i = 0; i <cantMapsSC ; ++i) {
-        mapData data;
-        int nameSize;
-        socket.receive((char*) &nameSize,SIZE_INT);
-        int nameSizeSC = ntohl(nameSize);
-        char name [nameSizeSC];
-        socket.receive(name,nameSizeSC);
-        int dim;
-        socket.receive((char*) &dim,SIZE_INT);
-        int dimSC = ntohl(dim);
-        int equipos;
-        socket.receive((char*) &equipos,SIZE_INT);
-        int equiposSC = ntohl(equipos);
-        std::string nameMap(name);
-        data.mapName = nameMap;
-        data.dimensions = dimSC;
-        data.cantEquipos = equiposSC;
-        vecMapsData.push_back(data);
-    }
-    return vecMapsData;
-}
-
-void Protocol::sendMapName(std::string mapName) {
-    int name_size = mapName.size();
-    int nameSizeCS = htonl(name_size);
-    socket.send((char*)&nameSizeCS, SIZE_INT);
-    socket.send(&mapName[0u], mapName.size());
-
-}
 

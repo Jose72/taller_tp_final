@@ -137,22 +137,49 @@ void hideAndPlay(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainW
     jugar(app,argc,argv,pWindow);
 }
 
+
+void on_map_elegido_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow,std::string map) {
+    ProtocolMenu protocolMenu(*(pWindow->socket));
+    protocolMenu.sendMapName(map);
+    hideAndPlay(app,argc,argv,pWindow);
+}
+
 void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow) {
-
-     ProtocolMenu protocolMenu(*(pWindow->socket));
-
+    ProtocolMenu protocolMenu(*(pWindow->socket));
     int numPlayers = atoi(pWindow->entry->get_text().data());
     int typeGame = 0;
     if( std::strcmp(pWindow->combo->get_active_text().data(), "TEAM_GAME") == 0){
         typeGame = 1;
     }
-    int numTeams = atoi(pWindow->entry2->get_text().data());
+    int numTeams = atoi(pWindow->combo2->get_active_text().data());
     int response = protocolMenu.createGame(numPlayers,typeGame,numTeams);
     if(response == RESPONSE_PROTOCOL_MENU_OK){
-        hideAndPlay(app,argc,argv,pWindow);
+        pWindow->cleanBox();
+        std::vector<mapData> mapDatas = protocolMenu.receiveMapsInfo();
+        Gtk::Button* buttonMap;
+        for(int i = 0; i < mapDatas.size(); i++){
+            std::ostringstream texto;
+            texto << mapDatas[i].mapName;
+            texto << ";";
+            texto << mapDatas[i].dimensions;
+            texto << ";";
+            texto << mapDatas[i].cantEquipos;
+            buttonMap = new Gtk::Button(texto.str());
+            buttonMap->signal_clicked().connect(sigc::bind(
+                    sigc::ptr_fun(on_map_elegido_crear_clicked),
+                    app,
+                    argc,
+                    argv,
+                    pWindow,
+                    mapDatas[i].mapName));
+            pWindow->box->add(*buttonMap);
+            pWindow->buttons.push_back(buttonMap);
+            texto.clear();
+        }
+        pWindow->add(*(pWindow->box));
+        pWindow->show_all();
     } else {
         std::cout << "Crear juego: " << response << std::endl;
-        //pWindow->initial(app,argc,argv,pWindow);
     }
 }
 
@@ -167,14 +194,15 @@ void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],
         pWindow->combo->append("DEATHMATCH");
         pWindow->combo->append("TEAM_GAME");
 
-        pWindow->entry2->set_max_length(2);
-        pWindow->entry2->set_placeholder_text("Cantidad de equipos");
+        pWindow->combo2->append("2");
+        pWindow->combo2->append("3");
+        pWindow->combo2->append("4");
 
         pWindow->siguiente->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_siguiente_crear_clicked), app,argc,argv,pWindow));
 
         pWindow->box->add(*(pWindow->entry));
         pWindow->box->add(*(pWindow->combo));
-        pWindow->box->add(*(pWindow->entry2));
+        pWindow->box->add(*(pWindow->combo2));
         pWindow->box->add(*(pWindow->siguiente));
         pWindow->box->add(*(pWindow->image));
         pWindow->add(*(pWindow->box));
@@ -309,6 +337,7 @@ void MainWindow::createBox(){
     salir = new Gtk::Button("Salir");
     siguiente = new Gtk::Button("Siguiente");
     combo = new Gtk::ComboBoxText();
+    combo2 = new Gtk::ComboBoxText();
     entry = new Gtk::Entry();
     entry2 = new Gtk::Entry();
     image = new Gtk::Image("client/splash/splash.jpg");
@@ -327,6 +356,7 @@ void MainWindow::deleteBox(){
     delete crear;
     delete salir;
     delete combo;
+    delete combo2;
     delete entry;
     delete entry2;
     delete image;

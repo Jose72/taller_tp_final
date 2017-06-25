@@ -2,11 +2,10 @@
 #include <iostream>
 #include "MapLoader.h"
 
-MapLoader::MapLoader(JsonHandler &json,
-                     std::map<int, unit*> &unitsVector,
-                     gameMap &map,
-                     std::vector<dataMap> &data):
-jsonHandler(json),unitsVector(unitsVector),map(map),dataMaps(data){}
+
+MapLoader::MapLoader() {
+
+}
 
 void MapLoader::loadListData() {
     loadDirectory("server/maps");
@@ -68,3 +67,5 @@ void MapLoader::loadDirectory(std::string path) {
     }
 
 }
+
+

@@ -73,12 +73,18 @@ int tClientManager::gameSelection(){
 		
 		//////////////////////////////////////////////////////////
 		//PARTE DE SELECCION DE MAPAS
-		
-		
-		/*
+
+
+        //envio confirmacion
+
+        prot.sendOKConfimation();
+
 		MapLoader m_loader;
-		std::vector<dataMap> &maps_info = m_loader.mapsForTeams(teams2);
+		m_loader.loadListData();
+		std::vector<dataMap> maps_info = m_loader.mapsForTeams(teams2);
 		prot.sendMapsInfo(maps_info);
+
+
 
 		//recibo tamanio del nombre
 		int name_size = 0;
@@ -88,7 +94,8 @@ int tClientManager::gameSelection(){
 		char buff[100] = {'\0'};
 		cli_skt.receive((char*)&buff[0], name_size);
 		std::string mapa_nombre(&buff[0]);
-		*/
+
+		std::cout << mapa_nombre << std::endl;
 		
 		
 		///////////////////////////////////////////////////////////

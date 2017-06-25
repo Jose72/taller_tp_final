@@ -27,6 +27,7 @@ public:
     Gtk::Image* image;
     Gtk::Entry nombre;
     Gtk::ComboBoxText *combo;
+    Gtk::ComboBoxText *combo2;
     Gtk::MessageDialog *messageDialog;
     tSocket* socket;
     std::vector<Gtk::Button*> buttons;
