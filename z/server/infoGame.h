@@ -28,9 +28,11 @@ class infoGame{
 		//std::map<int,infoPlayer> players_info;
 		//tener vector por cada equipo
 		std::vector<team> teams;
+		
+		void initializeTeams();
+		
 	public:
 		infoGame(int max_p, int game_type, int teams);
-		//void initializePlayer(int id_p, unit *fort, int units_count);
 		
 		void addNewPlayer(int id_p); //no usar
 		void addNewPlayer(int id_p, serverProtocol *prot);
@@ -41,14 +43,15 @@ class infoGame{
 		//bool maxPopulationReached(int id_p);
 		//int checkForWinner();
 		
-		void initializeTeams();
+		void initializeTeamsData(std::map<int, unit*> &units);
 		int addNewPlayer(int id_p, serverProtocol *prot, int team_n);
 		int updateVictoryCond(int team_n);
 		bool maxPopReached(int team_n);
 		void incrementUnitsCount(int team_n);
 		void decrementUnitsCount(int team_n);
+		void setFort(int team_n, unit* f);
 		int getCapturedTer(int team_n);
-		void initializeTeam(int team_n, std::vector<unit*> forts, int unit_count);
+		void initializeTeam(int team_n, unit* fort, int unit_count);
 		int checkForWinner();
 		void updateCapturedTer(int old_owner, int new_owner);
 		void sendTeamNumbers();

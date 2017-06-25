@@ -73,12 +73,22 @@ int tClientManager::gameSelection(){
 		
 		//////////////////////////////////////////////////////////
 		//PARTE DE SELECCION DE MAPAS
-		//MapLoader m_loader;
 		
 		
-		
-		
-		
+		/*
+		MapLoader m_loader;
+		std::vector<dataMap> &maps_info = m_loader.mapsForTeams(teams2);
+		prot.sendMapsInfo(maps_info);
+
+		//recibo tamanio del nombre
+		int name_size = 0;
+		cli_skt.receive((char*)&name_size, 4);
+		name_size = ntohl(name_size);
+		//recibo el nombre
+		char buff[100] = {'\0'};
+		cli_skt.receive((char*)&buff[0], name_size);
+		std::string mapa_nombre(&buff[0]);
+		*/
 		
 		
 		///////////////////////////////////////////////////////////
@@ -96,7 +106,7 @@ int tClientManager::gameSelection(){
 		j->start();
 		return 0;
 		
-		///////////////////////CREATE-JOIN-GAME////////////////////////////////7
+		///////////////////////FIN-CREATE-GAME////////////////////////////////7
 	}
 	if (code == JOIN_GAME){ //si seleccione unirme
 		//envio confirmacion
@@ -174,9 +184,7 @@ void tClientManager::run(){
 	protocolo.send_id_client(id_client);
 	
 	///////////////////////////////////////////////////////////
-	////PROTOCOLO NUEVO
-	
-	
+	////SELECCION DE JUEGO
 	bool ok = false;
 	while (!ok && !end_game){
 		int i = this->gameSelection();
@@ -186,11 +194,9 @@ void tClientManager::run(){
 			return; //se rompio algo y hay que salir del manager
 		}
 	}
-	
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	
-	std::cout << "empezo client: " << id_client << std::endl;	
+	//std::cout << "empezo client: " << id_client << std::endl;	
 	
 	int s = 1;
 	while (s > 0 && !end_game) {

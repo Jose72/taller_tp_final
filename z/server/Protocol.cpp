@@ -57,7 +57,7 @@ void serverProtocol::sendMapsInfo(std::vector<dataMap> &maps) {
 	for (unsigned int i = 0; i < maps.size(); ++i){
 		//nombre del mapa
 		std::string name = maps[i].mapName;
-		int name_size = name.size();
+		int name_size = htonl(name.size());
 		//envio cant de bytes y luego el string
 		socket.send((char*)&name_size, INT_SIZE);
 		socket.send((char*)&name[0u], name.size());

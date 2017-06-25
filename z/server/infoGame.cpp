@@ -184,6 +184,14 @@ bool infoGame::maxPopReached(int team_n){
 	return false;
 }
 
+void infoGame::setFort(int team_n, unit* f){
+	for (auto it = teams.begin(); it != teams.end(); ++it){
+		if (team_n == it->getTeamNumber()){
+			it->setFort(f);
+		}
+	}
+}
+
 void infoGame::incrementUnitsCount(int team_n){
 	for (auto it = teams.begin(); it != teams.end(); ++it){
 		if (team_n == it->getTeamNumber()){
@@ -209,10 +217,10 @@ int infoGame::getCapturedTer(int team_n){
 	return 0;
 }
 
-void infoGame::initializeTeam(int team_n, std::vector<unit*> forts, int unit_count){
+void infoGame::initializeTeam(int team_n, unit* fort, int unit_count){
 	for (auto it = teams.begin(); it != teams.end(); ++it){
 		if (team_n == it->getTeamNumber()){
-			it->initialize(forts, unit_count);
+			it->initialize(fort, unit_count);
 		}
 	}
 }
@@ -258,4 +266,19 @@ bool infoGame::teamDefeated(int team_n){
 		}
 	}
 	return false;
+}
+
+void infoGame::initializeTeamsData(std::map<int, unit*> &units){
+	for (auto it = units.begin(); it != units.end(); ++it){
+		unit *u = it->second;
+		int team_n = u->getOwner();
+		//si es un fuerte lo seteo
+		if (u->getUnitId() == FORT){
+			this->setFort(team_n, u);
+		}
+		//si es un robot(unidad) aumento el contador
+		if (u->getClassId() == ROBOT){
+			this->incrementUnitsCount(team_n);
+		}
+	}
 }

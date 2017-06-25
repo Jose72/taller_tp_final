@@ -192,3 +192,27 @@ bool gameMap::impossibleTile(int x, int y, int class_u){
 	tile *t = getTilePFromUnit(x, y);
 	return !t->isPassable(class_u);
 }
+
+void gameMap::releaseUnitBlocking(unit *u){
+	int h = u->getHeight();
+	int w = u->getWidth();
+			
+	int counter_y = (h / TILE_LENGHT);
+	if (counter_y < 1) counter_y = 1;
+	int counter_x = (w / TILE_LENGHT);
+	if (counter_x < 1) counter_x = 1;
+			
+	int x_pos = u->getX();
+	int y_pos = u->getY();
+			
+	tile *t = this->getTilePFromUnit(x_pos, y_pos);
+	int x_tile = t->getX();
+	int y_tile = t->getY();
+			
+	for (int i = x_tile; i < x_tile+counter_x; ++i){
+		for (int j = y_tile; j< y_tile+counter_y; ++j){
+			tile *t2 = this->getTileP(i,j);
+			t2->releaseUnitOver();
+		}
+	}
+}

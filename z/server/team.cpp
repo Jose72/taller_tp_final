@@ -6,6 +6,7 @@ team::team(int team_n, int max_p): team_n(team_n), max_p(max_p){
 	this->unit_count = 0;
 	this->state = OK;
 	this->captured_territories = max_p;
+	this->fort = nullptr;
 }
 
 int team::addPlayer(int p_id, serverProtocol *prot){
@@ -18,6 +19,10 @@ int team::getTeamNumber(){
 	return team_n;
 }
 
+void team::setFort(unit *f){
+	this->fort = f;
+}
+
 bool team::isFull(){
 	return (max_p == players.size());
 }
@@ -27,19 +32,13 @@ bool team::isDefeated(){
 	return (state == DEFEAT);
 }
 
-bool team::fortsAlive(){
-	int c = 0;
-	for (auto it = forts.begin(); it != forts.end(); ++it){
-		if ((*it)->isAlive()){
-			c++;
-		}
-	}
-	return (c > 0);
+bool team::fortIsAlive(){
+	return (fort->isAlive());
 }
 
 int team::updateVictoryConditions(){
 	//std::cout << "team: " << team_n << " u: " << unit_count << " fa: " << this->fortsAlive() << std::endl;
-	if ((unit_count == 0 || !this->fortsAlive())) {
+	if ((unit_count == 0 || !this->fortIsAlive())) {
 		state = DEFEAT;
 		return DEFEAT;
 	}
@@ -62,8 +61,8 @@ int team::getCapturedTer(){
 	return captured_territories;
 }
 
-void team::initialize(std::vector<unit*> forts, int unit_count){
-	this->forts = forts;
+void team::initialize(unit* fort, int unit_count){
+	this->fort = fort;
 	this->unit_count = unit_count;
 }
 

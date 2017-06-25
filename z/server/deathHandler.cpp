@@ -61,6 +61,13 @@ int deathHandler::deathBridge(unit &u, std::map<int, unit*> &units, gameMap &map
 	return 0;
 }
 
+
+int deathHandler::deathBlock(unit &u, gameMap &mapa){
+	//seteo las casillas como bloqueadas
+	mapa.releaseUnitBlocking(&u);
+	return 0;
+}
+
 int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_counter, gameMap &mapa, infoGame &ip){
 	int status = u.getState();
 	if (status != DEAD) return 1;
@@ -79,6 +86,9 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 			break;
 		case BRIDGE_C:
 			deathBridge(u, units, mapa);
+			break;
+		case BLOCK:
+			deathBlock(u, mapa);
 			break;
 		default:
 			break;

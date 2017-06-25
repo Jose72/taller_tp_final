@@ -228,13 +228,16 @@ void juego::sendInit(){
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
 	
 	//un solo fuerte por equipo
-    std::vector<unit*> forts_1;
-    forts_1.push_back(units[1]);
-    std::vector<unit*> forts_2;
-    forts_2.push_back(units[2]);
-    g_info.initializeTeam(1,forts_1, 1);
-    g_info.initializeTeam(2,forts_2, 1);
+	g_info.initializeTeamsData(units);
 	
+	/*
+    std::vector<unit*> forts_1;
+    forts_1.push_back(units[5]);
+    std::vector<unit*> forts_2;
+    forts_2.push_back(units[53]);
+    g_info.initializeTeam(1, units[5], 1);
+    g_info.initializeTeam(2, units[53], 1);
+	*/
 	
 
 	

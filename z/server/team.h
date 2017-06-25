@@ -25,14 +25,14 @@ class team {
 		int unit_count;
 		int state;
 		int captured_territories;
-		std::vector<unit*> forts;
+		unit* fort;
 		std::vector<infoPlayer> players;
 	public:
 		team(int team_n, int max_p);
 		int addPlayer(int p_id, serverProtocol *prot);
 		int getTeamNumber();
 		bool isFull();
-		bool fortsAlive();
+		bool fortIsAlive();
 		bool isDefeated();
 		int updateVictoryConditions();
 		bool maxUnitsReached();
@@ -40,7 +40,8 @@ class team {
 		void decrementUnitsCount();
 		int getTechLvl();
 		int getCapturedTer();
-		void initialize(std::vector<unit*> forts, int unit_count);
+		void initialize(unit* forts, int unit_count);
+		void setFort(unit *);
 		void incrementCapturedTer();
 		void decrementCapturedTer();
 		void sendTeamNumber();
