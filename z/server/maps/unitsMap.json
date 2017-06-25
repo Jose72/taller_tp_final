@@ -1,34 +1,34 @@
 [
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 1,
       "posX" : 16,
       "posY" : 0,
       "techLevel" : 0
    },
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 1,
       "posX" : 16,
       "posY" : 32,
       "techLevel" : 0
    },
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 1,
       "posX" : 16,
       "posY" : 64,
       "techLevel" : 0
    },
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 1,
       "posX" : 16,
       "posY" : 96,
       "techLevel" : 0
    },
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 1,
       "posX" : 16,
       "posY" : 128,
@@ -44,163 +44,72 @@
    {
       "id" : 14,
       "owner" : 0,
-      "posX" : 544,
-      "posY" : 160,
+      "posX" : 352,
+      "posY" : 224,
       "techLevel" : 0
    },
    {
       "id" : 12,
       "owner" : 0,
-      "posX" : 416,
-      "posY" : 96,
+      "posX" : 352,
+      "posY" : 32,
       "techLevel" : 2
    },
    {
-      "id" : 21,
+      "id" : 14,
       "owner" : 0,
-      "posX" : 368,
-      "posY" : 224,
+      "posX" : 896,
+      "posY" : 160,
       "techLevel" : 0
    },
    {
       "id" : 13,
       "owner" : 0,
+      "posX" : 736,
+      "posY" : 96,
+      "techLevel" : 2
+   },
+   {
+      "id" : 20,
+      "owner" : 0,
       "posX" : 672,
       "posY" : 32,
-      "techLevel" : 3
+      "techLevel" : 0
+   },
+   {
+      "id" : 20,
+      "owner" : 0,
+      "posX" : 672,
+      "posY" : 256,
+      "techLevel" : 0
    },
    {
       "id" : 14,
       "owner" : 0,
-      "posX" : 672,
-      "posY" : 224,
+      "posX" : 32,
+      "posY" : 544,
       "techLevel" : 0
    },
    {
-      "id" : 20,
+      "id" : 12,
       "owner" : 0,
       "posX" : 32,
       "posY" : 352,
-      "techLevel" : 0
+      "techLevel" : 2
    },
    {
-      "id" : 20,
+      "id" : 14,
       "owner" : 0,
-      "posX" : 32,
-      "posY" : 576,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 416,
-      "posY" : 416,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 416,
-      "posY" : 448,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 416,
-      "posY" : 480,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 416,
-      "posY" : 512,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 416,
+      "posX" : 352,
       "posY" : 544,
       "techLevel" : 0
    },
    {
-      "id" : 23,
+      "id" : 12,
       "owner" : 0,
-      "posX" : 448,
-      "posY" : 416,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 480,
-      "posY" : 416,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 512,
-      "posY" : 416,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 544,
-      "posY" : 416,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 544,
-      "posY" : 448,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 544,
-      "posY" : 480,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 544,
-      "posY" : 512,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 544,
-      "posY" : 544,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 448,
-      "posY" : 544,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 480,
-      "posY" : 544,
-      "techLevel" : 0
-   },
-   {
-      "id" : 23,
-      "owner" : 0,
-      "posX" : 512,
-      "posY" : 544,
-      "techLevel" : 0
+      "posX" : 352,
+      "posY" : 352,
+      "techLevel" : 2
    },
    {
       "id" : 23,
@@ -313,6 +222,34 @@
       "posX" : 832,
       "posY" : 544,
       "techLevel" : 0
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 800,
+      "posY" : 480,
+      "techLevel" : 0
+   },
+   {
+      "id" : 13,
+      "owner" : 0,
+      "posX" : 640,
+      "posY" : 320,
+      "techLevel" : 2
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 224,
+      "posY" : 800,
+      "techLevel" : 0
+   },
+   {
+      "id" : 12,
+      "owner" : 0,
+      "posX" : 96,
+      "posY" : 736,
+      "techLevel" : 2
    },
    {
       "id" : 21,
@@ -322,49 +259,42 @@
       "techLevel" : 0
    },
    {
-      "id" : 20,
+      "id" : 21,
       "owner" : 0,
-      "posX" : 352,
-      "posY" : 672,
+      "posX" : 368,
+      "posY" : 864,
       "techLevel" : 0
    },
    {
-      "id" : 20,
-      "owner" : 0,
-      "posX" : 352,
-      "posY" : 896,
-      "techLevel" : 0
-   },
-   {
-      "id" : 1,
+      "id" : 0,
       "owner" : 2,
       "posX" : 656,
       "posY" : 640,
       "techLevel" : 0
    },
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 2,
       "posX" : 656,
       "posY" : 672,
       "techLevel" : 0
    },
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 2,
       "posX" : 656,
       "posY" : 704,
       "techLevel" : 0
    },
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 2,
       "posX" : 656,
       "posY" : 736,
       "techLevel" : 0
    },
    {
-      "id" : 1,
+      "id" : 0,
       "owner" : 2,
       "posX" : 656,
       "posY" : 768,
@@ -381,41 +311,13 @@
       "id" : 6,
       "owner" : 0,
       "posX" : 320,
-      "posY" : 320,
-      "techLevel" : 0
-   },
-   {
-      "id" : 7,
-      "owner" : 0,
-      "posX" : 640,
       "posY" : 640,
       "techLevel" : 0
    },
    {
-      "id" : 8,
-      "owner" : 0,
-      "posX" : 640,
-      "posY" : 320,
-      "techLevel" : 0
-   },
-   {
-      "id" : 8,
-      "owner" : 0,
-      "posX" : 320,
-      "posY" : 320,
-      "techLevel" : 0
-   },
-   {
       "id" : 9,
       "owner" : 0,
       "posX" : 640,
-      "posY" : 320,
-      "techLevel" : 0
-   },
-   {
-      "id" : 9,
-      "owner" : 0,
-      "posX" : 320,
       "posY" : 640,
       "techLevel" : 0
    },
@@ -423,27 +325,13 @@
       "id" : 9,
       "owner" : 0,
       "posX" : 320,
-      "posY" : 320,
-      "techLevel" : 0
-   },
-   {
-      "id" : 6,
-      "owner" : 0,
-      "posX" : 320,
-      "posY" : 640,
-      "techLevel" : 0
-   },
-   {
-      "id" : 10,
-      "owner" : 0,
-      "posX" : 640,
       "posY" : 640,
       "techLevel" : 0
    },
    {
       "id" : 6,
       "owner" : 0,
-      "posX" : 320,
+      "posX" : 640,
       "posY" : 320,
       "techLevel" : 0
    }
