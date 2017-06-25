@@ -397,7 +397,7 @@ void juego::run(){
 	
 	//bucle leo eventos, ejecuto y envio cambios a jugadores
 	int s = 1;
-	while(s > 0 && !stop_signal){
+	while(s > 0 && !stop_signal && running){
 			//tomo tiempo
 			clock_t Start = clock();
 			
