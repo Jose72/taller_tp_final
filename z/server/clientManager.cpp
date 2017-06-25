@@ -107,7 +107,7 @@ int tClientManager::gameSelection(){
 		juegos.push_back(j);
 
 		//envio confirmacion
-		prot.sendOKConfimation();
+		//prot.sendOKConfimation(); //cliente no espera confirmacion despues de elegir el mapa
 
 		//empiezo el juego
 		j->start();
