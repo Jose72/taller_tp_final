@@ -78,6 +78,14 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 MISILE_LAUNCHER_RED,
                                 MISILE_LAUNCHER_YELLOW,
                                 32);
+
+    this->load_sprites_with_dim("client/sprites/mlStand",
+                                MISILE_LAUNCHER_BLUE_STAND,
+                                MISILE_LAUNCHER_GREEN_STAND,
+                                MISILE_LAUNCHER_RED_STAND,
+                                MISILE_LAUNCHER_YELLOW_STAND,
+                                32);
+
     this->load_sprite("client/sprites/missile_launcher",MISILE_LAUNCHER_EMPTY,"empty",32,32);
 
     this->load_sprites_with_dim("client/sprites/heavyTank",
@@ -86,6 +94,13 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 HEAVY_TANK_RED,
                                 HEAVY_TANK_YELLOW,
                                 32);
+
+    this->load_sprites_with_dim("client/sprites/heavyStand",
+                                HEAVY_TANK_BLUE_STAND,
+                                HEAVY_TANK_GREEN_STAND,
+                                HEAVY_TANK_RED_STAND,
+                                HEAVY_TANK_YELLOW_STAND,
+                                32);
     this->load_sprite("client/sprites/heavyTank",HEAVY_TANK_EMPTY,"empty",32,32);
 
     this->load_sprites_with_dim("client/sprites/mediumTank",
@@ -93,6 +108,13 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 MEDIUM_TANK_GREEN,
                                 MEDIUM_TANK_RED,
                                 MEDIUM_TANK_YELLOW,
+                                32);
+
+    this->load_sprites_with_dim("client/sprites/mediumStand",
+                                MEDIUM_TANK_BLUE_STAND,
+                                MEDIUM_TANK_GREEN_STAND,
+                                MEDIUM_TANK_RED_STAND,
+                                MEDIUM_TANK_YELLOW_STAND,
                                 32);
 
     this->load_sprite("client/sprites/mediumTank",MEDIUM_TANK_EMPTY,"empty",32,32);
@@ -104,6 +126,13 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 LIGHT_TANK_YELLOW,
                                 32);
 
+    this->load_sprites_with_dim("client/sprites/lightStand",
+                                LIGHT_TANK_BLUE_STAND,
+                                LIGHT_TANK_GREEN_STAND,
+                                LIGHT_TANK_RED_STAND,
+                                LIGHT_TANK_YELLOW_STAND,
+                                32);
+
     this->load_sprite("client/sprites/lightTank",LIGHT_TANK_EMPTY,"empty",32,32);
 
     this->load_sprites_with_dim("client/sprites/jeep",
@@ -111,6 +140,13 @@ SpritesPool::SpritesPool(SDL_Surface *screen) {
                                 JEEP_GREEN,
                                 JEEP_RED,
                                 JEEP_YELLOW,
+                                32);
+
+    this->load_sprites_with_dim("client/sprites/jeepStand",
+                                JEEP_BLUE_STAND,
+                                JEEP_GREEN_STAND,
+                                JEEP_RED_STAND,
+                                JEEP_YELLOW_STAND,
                                 32);
 
     this->load_sprite("client/sprites/jeep",JEEP_EMPTY,"empty",32,32);

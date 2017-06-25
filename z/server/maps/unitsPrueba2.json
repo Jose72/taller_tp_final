@@ -1,0 +1,261 @@
+[
+   {
+      "id" : 1,
+      "owner" : 1,
+      "posX" : 16,
+      "posY" : 0,
+      "techLevel" : 0
+   },
+   {
+      "id" : 11,
+      "owner" : 1,
+      "posX" : 64,
+      "posY" : 64,
+      "techLevel" : 0
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 576,
+      "posY" : 160,
+      "techLevel" : 0
+   },
+   {
+      "id" : 13,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 96,
+      "techLevel" : 1
+   },
+   {
+      "id" : 20,
+      "owner" : 0,
+      "posX" : 352,
+      "posY" : 32,
+      "techLevel" : 0
+   },
+   {
+      "id" : 20,
+      "owner" : 0,
+      "posX" : 352,
+      "posY" : 256,
+      "techLevel" : 0
+   },
+   {
+      "id" : 12,
+      "owner" : 0,
+      "posX" : 672,
+      "posY" : 32,
+      "techLevel" : 1
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 672,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 96,
+      "posY" : 416,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 96,
+      "posY" : 448,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 96,
+      "posY" : 480,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 96,
+      "posY" : 512,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 96,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 128,
+      "posY" : 416,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 160,
+      "posY" : 416,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 192,
+      "posY" : 416,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 224,
+      "posY" : 416,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 224,
+      "posY" : 448,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 224,
+      "posY" : 480,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 224,
+      "posY" : 512,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 224,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 128,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 160,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 22,
+      "owner" : 0,
+      "posX" : 192,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 160,
+      "posY" : 480,
+      "techLevel" : 0
+   },
+   {
+      "id" : 12,
+      "owner" : 0,
+      "posX" : 0,
+      "posY" : 320,
+      "techLevel" : 1
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 576,
+      "posY" : 480,
+      "techLevel" : 0
+   },
+   {
+      "id" : 12,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 416,
+      "techLevel" : 1
+   },
+   {
+      "id" : 20,
+      "owner" : 0,
+      "posX" : 352,
+      "posY" : 352,
+      "techLevel" : 0
+   },
+   {
+      "id" : 20,
+      "owner" : 0,
+      "posX" : 352,
+      "posY" : 576,
+      "techLevel" : 0
+   },
+   {
+      "id" : 13,
+      "owner" : 0,
+      "posX" : 672,
+      "posY" : 352,
+      "techLevel" : 1
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 672,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 21,
+      "owner" : 0,
+      "posX" : 48,
+      "posY" : 864,
+      "techLevel" : 0
+   },
+   {
+      "id" : 21,
+      "owner" : 0,
+      "posX" : 368,
+      "posY" : 864,
+      "techLevel" : 0
+   },
+   {
+      "id" : 1,
+      "owner" : 2,
+      "posX" : 656,
+      "posY" : 640,
+      "techLevel" : 0
+   },
+   {
+      "id" : 11,
+      "owner" : 2,
+      "posX" : 704,
+      "posY" : 704,
+      "techLevel" : 0
+   },
+   {
+      "id" : 7,
+      "owner" : 0,
+      "posX" : 640,
+      "posY" : 640,
+      "techLevel" : 0
+   }
+]

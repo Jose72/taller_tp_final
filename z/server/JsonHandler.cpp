@@ -49,3 +49,27 @@ void JsonHandler::jsonToUnits(int &unit_counter, unitBuilder &builder, std::map<
         }
     }
 }
+
+dataMap JsonHandler::jsonToDataMap(std::string directory) {
+    std::ifstream jsonFIle(directory);
+    Json::Reader reader;
+    Json::Value root;
+    std::string mapName1;
+    int cantEquipos1;
+    int dimentisones1;
+    if (!reader.parse(jsonFIle, root)) {
+        std::cout << reader.getFormattedErrorMessages();
+        exit(1);
+    } else {
+        mapName1 = root[0]["mapName"].asString();
+        cantEquipos1 = root[0]["equipos"].asInt();
+        dimentisones1 = root[0]["tamanio"].asInt();
+    }
+    dataMap data;
+    data.mapName = mapName1;
+    data.cantEquipos = cantEquipos1;
+    data.dimensiones = dimentisones1;
+
+    return data;
+}
+

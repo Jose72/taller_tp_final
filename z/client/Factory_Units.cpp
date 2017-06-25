@@ -197,7 +197,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(HEAVY_TANK_BLUE),
                             this->pool.get_animations(HEAVY_TANK_BLUE),
                             this->pool.get_animations(HEAVY_TANK_BLUE),
-                            this->pool.get_animations(HEAVY_TANK_BLUE),
+                            this->pool.get_animations(HEAVY_TANK_BLUE_STAND),
                             this->pool.get_animations(HEAVY_TANK_BLUE),
                             unit_code,posx,posy,MOVING1,HEAVY_TANK_BLUE, unit_owner);
 
@@ -205,7 +205,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(HEAVY_TANK_GREEN),
                              this->pool.get_animations(HEAVY_TANK_GREEN),
                              this->pool.get_animations(HEAVY_TANK_GREEN),
-                             this->pool.get_animations(HEAVY_TANK_GREEN),
+                             this->pool.get_animations(HEAVY_TANK_GREEN_STAND),
                              this->pool.get_animations(HEAVY_TANK_GREEN),
                              unit_code,posx,posy,MOVING1,HEAVY_TANK_GREEN, unit_owner);
 
@@ -213,7 +213,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(HEAVY_TANK_RED),
                             this->pool.get_animations(HEAVY_TANK_RED),
                             this->pool.get_animations(HEAVY_TANK_RED),
-                            this->pool.get_animations(HEAVY_TANK_RED),
+                            this->pool.get_animations(HEAVY_TANK_RED_STAND),
                             this->pool.get_animations(HEAVY_TANK_RED),
                             unit_code,posx,posy,MOVING1,HEAVY_TANK_RED , unit_owner);
 
@@ -221,7 +221,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(HEAVY_TANK_YELLOW),
                              this->pool.get_animations(HEAVY_TANK_YELLOW),
                              this->pool.get_animations(HEAVY_TANK_YELLOW),
-                             this->pool.get_animations(HEAVY_TANK_YELLOW),
+                             this->pool.get_animations(HEAVY_TANK_YELLOW_STAND),
                              this->pool.get_animations(HEAVY_TANK_YELLOW),
                              unit_code,posx,posy,MOVING1, HEAVY_TANK_YELLOW, unit_owner);
 
@@ -237,7 +237,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(MEDIUM_TANK_BLUE),
                             this->pool.get_animations(MEDIUM_TANK_BLUE),
                             this->pool.get_animations(MEDIUM_TANK_BLUE),
-                            this->pool.get_animations(MEDIUM_TANK_BLUE),
+                            this->pool.get_animations(MEDIUM_TANK_BLUE_STAND),
                             this->pool.get_animations(MEDIUM_TANK_BLUE),
                             unit_code,posx,posy,MOVING1,MEDIUM_TANK_BLUE, unit_owner);
 
@@ -245,7 +245,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(MEDIUM_TANK_GREEN),
                              this->pool.get_animations(MEDIUM_TANK_GREEN),
                              this->pool.get_animations(MEDIUM_TANK_GREEN),
-                             this->pool.get_animations(MEDIUM_TANK_GREEN),
+                             this->pool.get_animations(MEDIUM_TANK_GREEN_STAND),
                              this->pool.get_animations(MEDIUM_TANK_GREEN),
                              unit_code,posx,posy,MOVING1,MEDIUM_TANK_GREEN, unit_owner);
 
@@ -253,7 +253,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(MEDIUM_TANK_RED),
                             this->pool.get_animations(MEDIUM_TANK_RED),
                             this->pool.get_animations(MEDIUM_TANK_RED),
-                            this->pool.get_animations(MEDIUM_TANK_RED),
+                            this->pool.get_animations(MEDIUM_TANK_RED_STAND),
                             this->pool.get_animations(MEDIUM_TANK_RED),
                             unit_code,posx,posy,MOVING1,MEDIUM_TANK_RED , unit_owner);
 
@@ -261,7 +261,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(MEDIUM_TANK_YELLOW),
                              this->pool.get_animations(MEDIUM_TANK_YELLOW),
                              this->pool.get_animations(MEDIUM_TANK_YELLOW),
-                             this->pool.get_animations(MEDIUM_TANK_YELLOW),
+                             this->pool.get_animations(MEDIUM_TANK_YELLOW_STAND),
                              this->pool.get_animations(MEDIUM_TANK_YELLOW),
                              unit_code,posx,posy,MOVING1, MEDIUM_TANK_YELLOW, unit_owner);
 
@@ -277,7 +277,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(LIGHT_TANK_BLUE),
                             this->pool.get_animations(LIGHT_TANK_BLUE),
                             this->pool.get_animations(LIGHT_TANK_BLUE),
-                            this->pool.get_animations(LIGHT_TANK_BLUE),
+                            this->pool.get_animations(LIGHT_TANK_BLUE_STAND),
                             this->pool.get_animations(LIGHT_TANK_BLUE),
                             unit_code,posx,posy,MOVING1,LIGHT_TANK_BLUE, unit_owner);
 
@@ -285,7 +285,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(LIGHT_TANK_GREEN),
                              this->pool.get_animations(LIGHT_TANK_GREEN),
                              this->pool.get_animations(LIGHT_TANK_GREEN),
-                             this->pool.get_animations(LIGHT_TANK_GREEN),
+                             this->pool.get_animations(LIGHT_TANK_GREEN_STAND),
                              this->pool.get_animations(LIGHT_TANK_GREEN),
                              unit_code,posx,posy,MOVING1,LIGHT_TANK_GREEN, unit_owner);
 
@@ -293,7 +293,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(LIGHT_TANK_RED),
                             this->pool.get_animations(LIGHT_TANK_RED),
                             this->pool.get_animations(LIGHT_TANK_RED),
-                            this->pool.get_animations(LIGHT_TANK_RED),
+                            this->pool.get_animations(LIGHT_TANK_RED_STAND),
                             this->pool.get_animations(LIGHT_TANK_RED),
                             unit_code,posx,posy,MOVING1,LIGHT_TANK_RED, unit_owner);
 
@@ -301,7 +301,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(LIGHT_TANK_YELLOW),
                              this->pool.get_animations(LIGHT_TANK_YELLOW),
                              this->pool.get_animations(LIGHT_TANK_YELLOW),
-                             this->pool.get_animations(LIGHT_TANK_YELLOW),
+                             this->pool.get_animations(LIGHT_TANK_YELLOW_STAND),
                              this->pool.get_animations(LIGHT_TANK_YELLOW),
                              unit_code,posx,posy,MOVING1,LIGHT_TANK_YELLOW , unit_owner);
 
@@ -317,7 +317,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(JEEP_BLUE),
                             this->pool.get_animations(JEEP_BLUE),
                             this->pool.get_animations(JEEP_BLUE),
-                            this->pool.get_animations(JEEP_BLUE),
+                            this->pool.get_animations(JEEP_BLUE_STAND),
                             this->pool.get_animations(JEEP_BLUE),
                             unit_code,posx,posy,MOVING1,JEEP_BLUE, unit_owner);
 
@@ -325,7 +325,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(JEEP_GREEN),
                              this->pool.get_animations(JEEP_GREEN),
                              this->pool.get_animations(JEEP_GREEN),
-                             this->pool.get_animations(JEEP_GREEN),
+                             this->pool.get_animations(JEEP_GREEN_STAND),
                              this->pool.get_animations(JEEP_GREEN),
                              unit_code,posx,posy,MOVING1,JEEP_GREEN, unit_owner);
 
@@ -333,7 +333,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(JEEP_RED),
                             this->pool.get_animations(JEEP_RED),
                             this->pool.get_animations(JEEP_RED),
-                            this->pool.get_animations(JEEP_RED),
+                            this->pool.get_animations(JEEP_RED_STAND),
                             this->pool.get_animations(JEEP_RED),
                             unit_code,posx,posy,MOVING1,JEEP_RED, unit_owner);
 
@@ -341,7 +341,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(JEEP_YELLOW),
                              this->pool.get_animations(JEEP_YELLOW),
                              this->pool.get_animations(JEEP_YELLOW),
-                             this->pool.get_animations(JEEP_YELLOW),
+                             this->pool.get_animations(JEEP_YELLOW_STAND),
                              this->pool.get_animations(JEEP_YELLOW),
                              unit_code,posx,posy,MOVING1, JEEP_YELLOW, unit_owner);
 
@@ -360,7 +360,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(MISILE_LAUNCHER_BLUE),
                             this->pool.get_animations(MISILE_LAUNCHER_BLUE),
                             this->pool.get_animations(MISILE_LAUNCHER_BLUE),
-                            this->pool.get_animations(MISILE_LAUNCHER_BLUE),
+                            this->pool.get_animations(MISILE_LAUNCHER_BLUE_STAND),
                             this->pool.get_animations(MISILE_LAUNCHER_BLUE),
                             unit_code,posx,posy,MOVING1,MISILE_LAUNCHER_BLUE, unit_owner);
 
@@ -368,7 +368,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(MISILE_LAUNCHER_GREEN),
                              this->pool.get_animations(MISILE_LAUNCHER_GREEN),
                              this->pool.get_animations(MISILE_LAUNCHER_GREEN),
-                             this->pool.get_animations(MISILE_LAUNCHER_GREEN),
+                             this->pool.get_animations(MISILE_LAUNCHER_GREEN_STAND),
                              this->pool.get_animations(MISILE_LAUNCHER_GREEN),
                              unit_code,posx,posy,MOVING1,MISILE_LAUNCHER_GREEN, unit_owner);
 
@@ -376,7 +376,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return new Unit(this->pool.get_animations(MISILE_LAUNCHER_RED),
                             this->pool.get_animations(MISILE_LAUNCHER_RED),
                             this->pool.get_animations(MISILE_LAUNCHER_RED),
-                            this->pool.get_animations(MISILE_LAUNCHER_RED),
+                            this->pool.get_animations(MISILE_LAUNCHER_RED_STAND),
                             this->pool.get_animations(MISILE_LAUNCHER_RED),
                             unit_code,posx,posy,MOVING1, MISILE_LAUNCHER_RED, unit_owner);
 
@@ -384,7 +384,7 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
             return  new Unit(this->pool.get_animations(MISILE_LAUNCHER_YELLOW),
                              this->pool.get_animations(MISILE_LAUNCHER_YELLOW),
                              this->pool.get_animations(MISILE_LAUNCHER_YELLOW),
-                             this->pool.get_animations(MISILE_LAUNCHER_YELLOW),
+                             this->pool.get_animations(MISILE_LAUNCHER_YELLOW_STAND),
                              this->pool.get_animations(MISILE_LAUNCHER_YELLOW),
                              unit_code,posx,posy,MOVING1, MISILE_LAUNCHER_YELLOW, unit_owner);
 
