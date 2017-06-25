@@ -243,7 +243,7 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
         pWindow->cleanBox();
         for(int i = 0; i < protocolMenu.infoGames.size(); i++){
             if(protocolMenu.infoGames[i]->typeGame == TEAM_GAME){
-                for(int j = 0; j < protocolMenu.infoGames[i]->numTeams; j++){
+                for(int j = 1; j <= protocolMenu.infoGames[i]->numTeams; j++){
                     addButtonTeamGame(pWindow, *protocolMenu.infoGames[i], j, app, argc, argv);
                 }
             } else {

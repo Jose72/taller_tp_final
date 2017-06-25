@@ -6,6 +6,8 @@
 
 gameMap::gameMap(){}
 
+
+
 gameMap::gameMap(std::vector<int> &casilla_code){
 	height = sqrt(casilla_code.size());
 	width = sqrt(casilla_code.size());
@@ -14,11 +16,14 @@ gameMap::gameMap(std::vector<int> &casilla_code){
 			casillas.push_back(tile(j, i, casilla_code[j + i * width]));
 		}
 	}
-	//this->setHighResMap();
 }
+
+
 
 gameMap::gameMap(int height, int width, std::vector<tile> &casillas): height(height), 
 width(width), casillas(casillas) {};
+
+
 
 gameMap::gameMap(int *cas, int size) {
 	height = sqrt(size);
@@ -28,7 +33,6 @@ gameMap::gameMap(int *cas, int size) {
 			casillas.push_back(tile(j, i, *(cas + j + i * width)));
 		}
 	}
-	//this->setHighResMap();
 };
 
 
@@ -39,7 +43,6 @@ gameMap::gameMap(int *cas, int size) {
 // x-1, y   | x, y     | x+1, y   |
 //-----------------------------------
 // x-1, y+1 | x, y+1   | x+1, y+1 | 
-
 
 void gameMap::getNeightboors(tile &q, std::vector<tile*> &ady){
 	//tomo el x,y de la casilla
@@ -62,6 +65,7 @@ void gameMap::getNeightboors(tile &q, std::vector<tile*> &ady){
 	
 }
 
+
 void gameMap::getNeightboorsNoDiagonal(tile &q, std::vector<tile*> &ady){
 	this->getNeightboors(q, ady);
 	for (auto it = ady.begin(); it != ady.end(); ++it){
@@ -71,10 +75,13 @@ void gameMap::getNeightboorsNoDiagonal(tile &q, std::vector<tile*> &ady){
 	}
 }
 
+
+//puntero a la casilla con las coordenadas indicadas
 tile* gameMap::getTileP(int x, int y){
 	return &casillas[x + y * width];
 }
 
+//puntero a la casilla donde se encuentra la unidad con las coordenadas indicadas
 tile* gameMap::getTilePFromUnit(double x, double y){
 	double px;
 	double py;
@@ -91,13 +98,16 @@ tile* gameMap::getTilePFromUnit(double x, double y){
 	return &casillas[px + py * width];
 }
 
+
+//imprime las casilla (para testing)
 void gameMap::printMap(){
 	for (unsigned int i = 0; i < casillas.size(); i++){
 		casillas[i].printTile();
 	}
 }
 
-
+//recibe el mapa de unidades, y bloquea o "desbloquea"
+//las casillas correspondientes
 void gameMap::setBlocking(std::map<int,unit*> &units){
 	for (auto it = units.begin(); it != units.end(); ++it){
 		unit *u = it->second;
@@ -142,12 +152,16 @@ void gameMap::setBlocking(std::map<int,unit*> &units){
 	}
 }
 
+//para testing
 void gameMap::seePassableForUnit(int unit_code){
 	for (auto it = casillas.begin(); it != casillas.end(); ++it){
 		std::cout << "x: " << it->getX() << " y: " << it->getY() << " - " << it->isPassable(unit_code) << std::endl;
 	}
 }
 
+
+//bloquea la/las casillas que ocupa la unidad
+//(ej: cuando se destruye un puente)
 void gameMap::setUnitAsBlocking(unit *u){
 	int h = u->getHeight();
 	int w = u->getWidth();
@@ -173,8 +187,7 @@ void gameMap::setUnitAsBlocking(unit *u){
 	}
 }
 
-//si la unidad esta en una casilla en la que no podria (es bloqueante)
-//(por ej se destruyo el puente)
+//si la unidad esta en una casilla en la que no podria (esta bloqueada)
 bool gameMap::impossibleTile(int x, int y, int class_u){
 	tile *t = getTilePFromUnit(x, y);
 	return !t->isPassable(class_u);

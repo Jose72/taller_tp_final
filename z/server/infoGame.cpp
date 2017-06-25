@@ -142,13 +142,6 @@ int infoGame::addNewPlayer(int id_p, serverProtocol *prot, int team_n){
 			}
 		}
 	} else{
-		for (auto it = teams.begin(); it != teams.end(); ++it){
-			if (!it->isFull()){
-				it->addPlayer(id_p, prot);
-				return 0;
-			}
-		}
-		/*
 		//busco team con el id, si no esta lleno meto al jugador
 		for (auto it = teams.begin(); it != teams.end(); ++it){
 			if (it->getTeamNumber() == team_n){
@@ -158,7 +151,6 @@ int infoGame::addNewPlayer(int id_p, serverProtocol *prot, int team_n){
 				}
 			}
 		}
-		*/
 	}
 	return -1;
 }

@@ -25,14 +25,12 @@ class infoGame{
 		unsigned int max_players;
 		unsigned int max_teams;
 		int game_type;
-		std::map<int,infoPlayer> players_info;
-		
-		
+		//std::map<int,infoPlayer> players_info;
 		//tener vector por cada equipo
 		std::vector<team> teams;
 	public:
 		infoGame(int max_p, int game_type, int teams);
-		void initializePlayer(int id_p, unit *fort, int units_count);
+		//void initializePlayer(int id_p, unit *fort, int units_count);
 		
 		void addNewPlayer(int id_p); //no usar
 		void addNewPlayer(int id_p, serverProtocol *prot);

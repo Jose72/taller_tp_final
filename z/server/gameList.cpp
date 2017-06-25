@@ -22,6 +22,17 @@ void gameList::stopGames(){
 	}
 }
 
+
+bool gameList::gameIsFull(int g_id){
+	tLock l(m);
+	for (auto it = juegos.begin(); it != juegos.end(); ++it){
+		if ((*it)->isCreator(g_id)){
+			return ((*it)->isFull());
+		}
+	}
+	return true;
+}
+
 void gameList::cleanGames(){
 	tLock l(m);
 	for (auto it = juegos.begin(); it != juegos.end(); ++it){

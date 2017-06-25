@@ -22,17 +22,14 @@ class infoPlayer {
 	private:
 		int player_id;
 		serverProtocol *prot;
-		int state;
+		//int state;
 		
 	public:
 		infoPlayer(int id, serverProtocol *prot);
 		infoPlayer(int id); //no usar
 		int getPlayerId();
-		bool maxUnitsReached();
-		void incrementUnitsCount();
-		void decrementUnitsCount();
-		int updateVictoryConditions();
-		bool isDefeated();
+		//int updateVictoryConditions();
+		//bool isDefeated();
 		void sendTeamNumber(int t);
 };
 

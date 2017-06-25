@@ -42,6 +42,10 @@ void juego::getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int
 	
 }
 
+bool juego::isFull(){
+	return ((unsigned int)max_players == cli_skts.size());
+}
+
 bool juego::isCreator(int c){
 	return (id_creator == c);
 }
@@ -146,15 +150,14 @@ bool juego::readyToStart(){
 int juego::clientJoin(int cli_id, tSocket *cli_s, int team_n){
 	tLock l(game_m);
 	if (cli_skts.size() < (unsigned int) max_players){
-		cli_skts.push_back(cli_s);
-		
-		// protocolos
 		serverProtocol *p = new serverProtocol(*cli_s);
-		protocols.push_back(p);
-		
-		cli_ids.push_back(cli_id);
-		g_info.addNewPlayer(cli_id, p, team_n);
-		return 0;
+		int res = g_info.addNewPlayer(cli_id, p, team_n);
+		if (res == 0){
+			cli_skts.push_back(cli_s);
+			protocols.push_back(p);
+			cli_ids.push_back(cli_id);
+		}
+		return res;
 	}
 	return 1;
 }

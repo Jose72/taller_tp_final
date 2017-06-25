@@ -119,13 +119,50 @@ int tClientManager::gameSelection(){
 		}
 		
 		//recibir codigo
-		int g_to_join;
-		cli_skt.receive((char*)&g_to_join, 4);
-		g_to_join = ntohl(g_to_join);
-		std::cout << "g_to join: "  << g_to_join << std::endl;
+		//mientras el socket siga vivo
+		int s = 1;
+		while (s > 0) {
+			
+			//recibo numero de creador y de equipo
+			int g_to_join = 0;
+			s = cli_skt.receive((char*)&g_to_join, 4);
+			g_to_join = ntohl(g_to_join);
+			int team_to_join = 0;
+			s = cli_skt.receive((char*)&team_to_join, 4);
+			team_to_join = ntohl(team_to_join);
+			std::cout << "g_to join: "  << g_to_join << std::endl;
+			std::cout << "team_to_join: "  << team_to_join << std::endl;
 
+			//intento unirme al juego
+			int joineo = juegos.joinGame(id_client, &cli_skt, &j, g_to_join, team_to_join);
+			
+			//SI JOINEO manda 0 al cliente, sale con codigo 0
+			//SI NO JOINE manda 1
+			if (0 == joineo) {
+				int confirm = htonl(0);
+				cli_skt.send((char*)&confirm, 4);
+				
+				//espero a que todos esten listos
+				while (!j->readyToStart() && !end_game){
+					usleep(200000);
+				}
+				
+				//si hubo error salgo
+				if (end_game) return -1;
+				return 0;
+			} else {
+				//envio que salio mal
+				std::cout << "no joineo: " << std::endl;
+				int confirm = htonl(-1);
+				s = cli_skt.send((char*)&confirm, 4);
+			}
+		}
+		
+		if (s <= 0) return -1;
+		//std::cout << "IS FULL " << std::endl;
+		/*
 		//RECIBIR EL TEAM!!!!!!!!!!
-		if (0 == juegos.joinGame(id_client, &cli_skt, &j, g_to_join, 2)){ 
+		if (0 == juegos.joinGame(id_client, &cli_skt, &j, g_to_join, team_to_join)){ 
 			
 			//envio confirmacion de que me uni
 			int confirm = htonl(0);
@@ -148,7 +185,7 @@ int tClientManager::gameSelection(){
 			
 			return 1; 
 		}
-		return 0;
+		*/
 	}
 	
 	int confirm = htonl(1);

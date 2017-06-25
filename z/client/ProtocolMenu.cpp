@@ -60,8 +60,8 @@ int ProtocolMenu::joinGame(int idCreator, int team) {
     //PARA DEATHMATCH SE MANDA EQUIPO -1
     //VER MAINWINDOW UNIRSE CUALQUIER COSA
 
-    //int idTeam_to_send = htonl(team);
-    //socket.send((char*) &idTeam_to_send,sizeof(int));
+    int idTeam_to_send = htonl(team);
+    socket.send((char*) &idTeam_to_send,sizeof(int));
     int response;
     socket.receive((char*)&response,4);
     return ntohl(response);

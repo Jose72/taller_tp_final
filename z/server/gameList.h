@@ -19,6 +19,7 @@ class gameList {
 		void push_back(juego* j);
 		size_t size();
 		void stopGames();
+		bool gameIsFull(int g_id);
 		void cleanGames();
 		int joinGame(int my_id, tSocket *s, juego **j, int creator, int team);
 		void descriptionGames(std::vector<int> &des, int &c);
