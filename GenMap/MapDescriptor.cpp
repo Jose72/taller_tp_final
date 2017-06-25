@@ -144,13 +144,13 @@ void MapDescriptor::createDescriptor(int equipos, int setTiles){
 
 std::vector<int> MapDescriptor::randomize2() {
     int techLevelCounter = 0;
-    int territoriosCounter = 0;
+    int territoriosCounter = 1;
     int dim = lado*SUBDIM;
     int descriptorFinal[MAX_DIM][MAX_DIM];
     for (int i = 0; i <lado ; ++i) {
         for (int j = 0; j <lado ; ++j) {
             int subKey = obtenerCase();
-            if(territoriosCounter >= cantTerritorios){
+            if(territoriosCounter > cantTerritorios){
                 subKey = subKey + MAP_INDEX_CONST_TERRAIN;
             }
             territoriosCounter++;
@@ -229,18 +229,14 @@ void MapDescriptor::assingUnits(int i, int j, int subKey, int &techLevelCounter)
     for (unsigned int k = 0; k <this->subDescriptors[subKey].units.size() ; ++k) {
         unit unitK =this->subDescriptors[subKey].units[k];
         if(!this->techLevels.empty()) {
-            if ((unitK.id = CODE_VF) || (unitK.id = CODE_RF)) {
+            if ((unitK.id == CODE_VF) || (unitK.id == CODE_RF)) {
                 unitK.techLevel = this->techLevels[techLevelCounter];
                 techLevelCounter++;
             }
         }
-        int positionMapX = unitK.posX;
-        positionMapX = positionMapX + ((i)*320);
-        int positionMapY = unitK.posY;
-        positionMapY = positionMapY + ((j)*320);
+        unitK.posX = unitK.posX + ((j)*320);
+        unitK.posY = unitK.posY + ((i)*320);
         this->unitsInMap.push_back(unitK);
-        this->unitsInMap.back().posX = positionMapX;
-        this->unitsInMap.back().posY = positionMapY;
     }
 
 }

@@ -23,9 +23,10 @@ int main() {
     std::cout<<"Empecemos con el nombre"<<"\n";
     std::cout<<"Ingrese el nombre del mapa" <<"\n";
     std::cin >>mapName;
-    std::cout << mapName << ".json y units"<<mapName<<".json seran los nombres de los archivos del mapa"<<"\n";
+    std::cout << mapName << ".json , units"<<mapName<<".json y data" <<mapName <<".json seran los nombres de los archivos del mapa"<<"\n";
     std::string mapJsonName = mapName+".json";
     std::string unitsJsonName = "units"+mapName+".json";
+    std::string dataJson = "data"+mapName+".json";
     std::cout<<"Los mapas de Z se componen de piezas y son cuadrados"<<"\n";
     std::cout<<"Ingresa cuantas piezas conformaran un lado de tu cuadrado"<<"\n";
     std::cout<<"Quizas te sirva saber que por ejemplo un mapa de lado 3, tiene unas dimension de 960x960"<<"\n";
@@ -155,6 +156,7 @@ int main() {
 
     jsonHandler.toJson(mapDescriptor.generate(), mapJsonName);
     jsonHandler.unitsToJson(mapDescriptor.unitsVector(),unitsJsonName);
+    jsonHandler.dataToJson(mapName,cantDeEquipos,tamanioMostrar,dataJson);
 
     std::cout<<"Mapa y archivos generado, ahora copie los archivos a la carpeta maps dentro de la carpeta server"<<"\n";
     return 0;
