@@ -114,11 +114,13 @@ Unit* Units_Protected::selectUnit(int dx1, int dx2, int dy1, int dy2, bool &foun
     found = false;
     std::map<int, Unit*>::iterator it;
     for (it = units_map.begin();it != units_map.end() ; ++it) {
-        if (BETWEEN(it->second->get_posx(), dx1, dx2)) {
-            if (BETWEEN(it->second->get_posy(), dy1, dy2)) {
-                if(it->second->get_owner() == id_client){
-                    unitSelected = it->second;
-                    found = true;
+        if(it->second->get_type() != COLORLESS_FLAG) {
+            if (BETWEEN(it->second->get_posx(), dx1, dx2)) {
+                if (BETWEEN(it->second->get_posy(), dy1, dy2)) {
+                    if (it->second->get_owner() == id_client) {
+                        unitSelected = it->second;
+                        found = true;
+                    }
                 }
             }
         }
@@ -132,19 +134,21 @@ Unit* Units_Protected::selectEnemy(int dx1, int dx2, int dy1, int dy2, Action &a
     std::map<int, Unit*>::iterator it;
     action = MOVE;
     for (it = units_map.begin();it != units_map.end() ; ++it) {
-        if (BETWEEN(it->second->get_posx(), dx1, dx2)) {
-            if (BETWEEN(it->second->get_posy(), dy1, dy2)) {
-                if(it->second->get_owner() != id_client){
-                    if((it->second->get_type() == HEAVY_TANK_EMPTY) ||
-                       (it->second->get_type() == MEDIUM_TANK_EMPTY)||
-                       (it->second->get_type() == LIGHT_TANK_EMPTY) ||
-                       (it->second->get_type() == JEEP_EMPTY)||
-                       (it->second->get_type() == MISILE_LAUNCHER_EMPTY)){
-                        action = DRIVE;
-                    } else{
-                        action = ATTACK;
+        if(it->second->get_type() != COLORLESS_FLAG) {
+            if (BETWEEN(it->second->get_posx(), dx1, dx2)) {
+                if (BETWEEN(it->second->get_posy(), dy1, dy2)) {
+                    if (it->second->get_owner() != id_client) {
+                        if ((it->second->get_type() == HEAVY_TANK_EMPTY) ||
+                            (it->second->get_type() == MEDIUM_TANK_EMPTY) ||
+                            (it->second->get_type() == LIGHT_TANK_EMPTY) ||
+                            (it->second->get_type() == JEEP_EMPTY) ||
+                            (it->second->get_type() == MISILE_LAUNCHER_EMPTY)) {
+                            action = DRIVE;
+                        } else {
+                            action = ATTACK;
+                        }
+                        enemy = it->second;
                     }
-                    enemy = it->second;
                 }
             }
         }

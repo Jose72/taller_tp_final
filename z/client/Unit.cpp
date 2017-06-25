@@ -57,7 +57,7 @@ void Unit::animate(SDL_Rect &cameraRect) {
             break;
         case DEAD1:
             animate_static(cameraRect,animation3,maxFrame3);
-            if((current_frame == FRAME_LIMIT_DEAD)){
+            if((current_frame == (animation3.size()-1))){
                 this->set_state(DEAD2);
             }
             break;

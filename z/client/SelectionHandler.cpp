@@ -2,7 +2,7 @@
 #include "SelectionHandler.h"
 #include "Units_Protected.h"
 
-#define SIZE_OF_DELTA 20
+#define SIZE_OF_DELTA 8
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
 
