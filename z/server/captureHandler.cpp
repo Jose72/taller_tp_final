@@ -13,7 +13,7 @@ void captureHandler::checkingCaptureActualize(unit &u, std::map<int, unit*> &uni
 				if (target->getClassId() == ROBOT || target->getClassId() == VEHICLE){
 					//la seteo como target
 					//reseteo el timer
-					std::cout << "flag target: " << it->first << std::endl;
+					//std::cout << "flag target: " << it->first << std::endl;
 					u.setFlagTarget(target);
 					u.resetTimer();
 				}

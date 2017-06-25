@@ -250,7 +250,7 @@
       "explosive":0,
       "u_to_create":-1,
       "fab_time":0,
-      "shoot_freq":2000,
+      "shoot_freq":7000,
       "tech_lvl":0,
       "quant_to_create":0
    },

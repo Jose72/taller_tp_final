@@ -8,9 +8,9 @@
 class territory {
 	private:
 		unit *flag;
-		std::vector<unit*> factories;
+		unit *factory;
 	public:
-		territory(unit *f, std::vector<unit*> &facts);
+		territory(unit *f, unit *factory);
 		bool flagBelongToTerritory(unit *f);
 		void changeOwnership();
 };

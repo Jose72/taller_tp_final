@@ -1,6 +1,6 @@
 #include "territory.h"
 
-territory::territory(unit *f, std::vector<unit*> &facts): flag(f), factories(facts){}
+territory::territory(unit *f, unit *factory): flag(f), factory(factory){}
 
 
 //chequea si la bandera es del territorio
@@ -14,14 +14,12 @@ bool territory::flagBelongToTerritory(unit *f){
 //si el nuevo owner es distinto de 0 (es un team) pasa a CREATING y reseteo el timer
 void territory::changeOwnership(){
 	int n_owner = flag->getOwner();
-	for (auto it = factories.begin(); it != factories.end(); ++it){
-		unit *factory = (*it);
-		if(n_owner != factory->getOwner()){
-			factory->changeOwner(n_owner);
-			if (factory->getOwner() != 0){
-				factory->changeState(CREATING);
-				factory->resetTimer();
-			}
+	if(n_owner != factory->getOwner()){
+		factory->changeOwner(n_owner);
+		if (factory->getOwner() != 0){
+			factory->changeState(CREATING);
+			factory->resetTimer();
 		}
 	}
+
 }

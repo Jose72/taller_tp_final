@@ -230,6 +230,17 @@ void juego::sendInit(){
 	//un solo fuerte por equipo
 	g_info.initializeTeamsData(units);
 	
+	for (auto it = units.begin(); it != units.end(); ++it){
+		unit *u = it->second;
+		if (u->getUnitId() == FLAG){
+			auto it2 = it;
+			it2++;
+			std::cout << "fat_n: " << it2->second->getUnitId() << std::endl;
+			territory t(u, (it2->second));
+			territorios.push_back(t);
+		}
+	}
+	
 	/*
     std::vector<unit*> forts_1;
     forts_1.push_back(units[5]);
