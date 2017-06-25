@@ -164,7 +164,7 @@ int juego::clientJoin(int cli_id, tSocket *cli_s, int team_n){
 }
 
 void juego::sendInit(){
-	map_name = "map";
+	//map_name = "map";
 	JsonHandler jsonHandler;
 	std::vector<int> mapDes = jsonHandler.jsonToMap(map_name);
 	mapa = gameMap(mapDes);

@@ -101,7 +101,7 @@ int tClientManager::gameSelection(){
 		///////////////////////////////////////////////////////////
 		//*nombre del mapa harcodeado (arreglar cuando este la seleccion de mapas)
 		//creo el nuevo juego
-		j = new juego(id_client, cant_p, type_game, teams2, "nothing");
+		j = new juego(id_client, cant_p, type_game, teams2, mapa_nombre);
 		j->clientJoin(id_client, &cli_skt, 1);
 		//pusheo en el vector de juegos, para que quede listado
 		juegos.push_back(j);
