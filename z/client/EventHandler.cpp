@@ -35,6 +35,10 @@ void EventHandler::run() {
     Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,WINDOW_W,WINDOW_H,factory);
     SelectionHandler sHandler(protocol,id_client,camera2);
     int destinoX, destinoY, seleccionX, seleccionY;
+    int selectionStartX;
+    int selectionStartY;
+    int selectionEndX;
+    int selectionEndY;
 
     while(running == true) {
         //MOSTRAR
@@ -43,7 +47,7 @@ void EventHandler::run() {
         posCameraX = camera2.getPosCameraX();
         posCameraY = camera2.getPosCameraY();
         camera2.draw(units,gameMap,soundManager);
-        playerInterface.show(sHandler, techLevel,winner,id_client);
+        //playerInterface.show(sHandler, techLevel,winner,id_client);
         SDL_Flip(screen);
 
 
@@ -100,13 +104,46 @@ void EventHandler::run() {
                             //SDL_Quit()
                         }
                         if (event.button.button == RIGHT_BUTTON) {
+                            selectionStartX =event.button.x + camera2.getPosCameraX();
+                            selectionStartY = event.button.y + camera2.getPosCameraY();
+                            /*
                             seleccionX = event.button.x + camera2.getPosCameraX();
                             seleccionY = event.button.y + camera2.getPosCameraY();
                             std::cout << "X: "<< seleccionX << " Y: " << seleccionY <<"\n";
                             sHandler.set_location(seleccionX, seleccionY, units);
+
                             if(sHandler.unit_select()){
                                 soundManager.play((int) sHandler.getUnit()->get_type());
                             }
+                             */
+                            /*
+                             * selectionStartX =event.button.x + camera2.getPosCameraX();
+                             * selectionStartY = event.button.y + camera2.getPosCameraY();
+                             */
+                            break;
+                        }
+                    }
+                case SDL_MOUSEBUTTONUP:
+                    if (!playerInterface.checkClickedButtons(event.button.x, event.button.y,protocol)) {
+                        if (event.button.button == RIGHT_BUTTON) {
+                            selectionEndX = event.button.x + camera2.getPosCameraX();
+                            selectionEndY = event.button.y + camera2.getPosCameraY();
+                            sHandler.selectUnits(selectionStartX,selectionEndX,selectionStartY,selectionEndY,units);
+                            /*
+                            seleccionX = event.button.x + camera2.getPosCameraX();
+                            seleccionY = event.button.y + camera2.getPosCameraY();
+                            std::cout << "X: "<< seleccionX << " Y: " << seleccionY <<"\n";
+                            sHandler.set_location(seleccionX, seleccionY, units);
+                             */
+                            /*
+                            if(sHandler.unit_select()){
+                                soundManager.play((int) sHandler.getUnit()->get_type());
+                            }
+                             */
+                            /*
+                             * selectionEndX =event.button.x + camera2.getPosCameraX();
+                             * selectionEndY = event.button.y + camera2.getPosCameraY();
+                             */
                             break;
                         }
                     }

@@ -22,6 +22,30 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     unit = units.selectUnit(posX,posY,unit_selected, id_client);
 }
 
+void SelectionHandler::selectUnits(int startX, int endX, int startY, int endY, Units_Protected &units) {
+    int rangeX1;
+    int rangeX2;
+    int rangeY1;
+    int rangeY2;
+    if(startX<= endX){
+        rangeX1 = startX;
+        rangeX2 = endX;
+    } else{
+        rangeX1 = endX;
+        rangeX2 = startX;
+    }
+    if(startY <= endY){
+        rangeY1 = startY;
+        rangeY2 = endY;
+    } else{
+        rangeY1 = endY;
+        rangeY2 = startY;
+    }
+
+    this->unitsSelected = units.selectUnits(rangeX1,rangeX2,rangeY1,rangeY2,unit_selected,id_client);
+
+}
+
 Unit* SelectionHandler::getUnit(){
     return this->unit;
 }
@@ -31,10 +55,6 @@ bool SelectionHandler::unit_select() {
 }
 
 void SelectionHandler::set_target(int destX, int destY, Units_Protected &units) {
-    int dx1 = destX - SIZE_OF_DELTA;
-    int dx2 = destX + SIZE_OF_DELTA;
-    int dy1 = destY - SIZE_OF_DELTA;
-    int dy2 = destY + SIZE_OF_DELTA;
     Action action;
     Unit * enemy;
 
@@ -42,21 +62,41 @@ void SelectionHandler::set_target(int destX, int destY, Units_Protected &units) 
         enemy = units.selectEnemy(destX,destY,action, id_client);
         switch (action){
             case MOVE:
-                protocol.moveUnitCS(unit->get_unit_code(),destX,destY);
+                for (int i = 0; i <this->unitsSelected.size() ; ++i) {
+                    protocol.moveUnitCS(this->unitsSelected[i]->get_unit_code(),destX,destY);
+                }
                 break;
             case ATTACK:
                 if((enemy->get_state() != DEAD2) && (enemy->get_state() != DEAD1)) {
-                    protocol.attackUnitCS(unit->get_unit_code(), enemy->get_unit_code());
+                    for (int i = 0; i <this->unitsSelected.size() ; ++i) {
+                        protocol.attackUnitCS(this->unitsSelected[i]->get_unit_code(), enemy->get_unit_code());
+                    }
                 }
                 break;
             case DRIVE:
-                protocol.driveUnitCS(unit->get_unit_code(),enemy->get_unit_code());
-                unit = nullptr;
-                unit_selected = false;
+                bool finded = false;
+                Unit *driver = getDriver(finded);
+                if(finded){
+                    protocol.driveUnitCS(driver->get_unit_code(),enemy->get_unit_code());
+                    unit_selected = false;
+                }
                 break;
         }
 
     }
+}
+
+Unit* SelectionHandler::getDriver(bool &finded) {
+    for (int i = 0; i <this->unitsSelected.size() ; ++i) {
+        FlagsUnitType type = this->unitsSelected[i]->get_type();
+        if((type!=FACTORY_ROBOTS_ALIVE) &&
+           (type != FACTORY_VEHICLES_ALIVE) &&
+                (type != FORT_ALIVE)){
+            finded = true;
+            return this->unitsSelected[i];
+        }
+    }
+    return nullptr;
 }
 
 
