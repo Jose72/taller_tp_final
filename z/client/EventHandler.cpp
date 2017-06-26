@@ -31,8 +31,10 @@ void EventHandler::run() {
     Protocol protocol(socket,units,gameMap,factory, techLevel,winner,soundManager);
 
     SDL_Event event;
-    int posCameraX = 0;
-    int posCameraY = 0;
+    Unit* fortPlayer = units.getFortPlayer(id_client);
+    int posCameraX = fortPlayer->get_posx();
+    int posCameraY = fortPlayer->get_posy();
+
     Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,WINDOW_W,WINDOW_H,factory);
     SelectionHandler sHandler(protocol,id_client,camera2);
     int destinoX, destinoY, seleccionX, seleccionY;
@@ -107,20 +109,6 @@ void EventHandler::run() {
                         if (event.button.button == RIGHT_BUTTON) {
                             selectionStartX =event.button.x + camera2.getPosCameraX();
                             selectionStartY = event.button.y + camera2.getPosCameraY();
-                            /*
-                            seleccionX = event.button.x + camera2.getPosCameraX();
-                            seleccionY = event.button.y + camera2.getPosCameraY();
-                            std::cout << "X: "<< seleccionX << " Y: " << seleccionY <<"\n";
-                            sHandler.set_location(seleccionX, seleccionY, units);
-
-                            if(sHandler.unit_select()){
-                                soundManager.play((int) sHandler.getUnit()->get_type());
-                            }
-                             */
-                            /*
-                             * selectionStartX =event.button.x + camera2.getPosCameraX();
-                             * selectionStartY = event.button.y + camera2.getPosCameraY();
-                             */
                             break;
                         }
                     }
@@ -130,44 +118,32 @@ void EventHandler::run() {
                             selectionEndX = event.button.x + camera2.getPosCameraX();
                             selectionEndY = event.button.y + camera2.getPosCameraY();
                             sHandler.selectUnits(selectionStartX,selectionEndX,selectionStartY,selectionEndY,units);
-                            /*
-                            seleccionX = event.button.x + camera2.getPosCameraX();
-                            seleccionY = event.button.y + camera2.getPosCameraY();
-                            std::cout << "X: "<< seleccionX << " Y: " << seleccionY <<"\n";
-                            sHandler.set_location(seleccionX, seleccionY, units);
-                             */
-
                             if(sHandler.unit_select()){
                                 soundManager.play((int) sHandler.getUnit()->get_type());
                             }
-
-                            /*
-                             * selectionEndX =event.button.x + camera2.getPosCameraX();
-                             * selectionEndY = event.button.y + camera2.getPosCameraY();
-                             */
                             break;
                         }
                     }
                 case SDL_MOUSEMOTION:
-                    if(event.motion.y < (MOVE_MOUSE_LIMIT)){
+                    if((event.motion.y < (MOVE_MOUSE_LIMIT)) &&(event.motion.y > 0)){
                         camera2.startMovingUp();
                     } else{
                         camera2.stopMovingUp();
                     }
 
-                    if(event.motion.y > (CAMERADX-MOVE_MOUSE_LIMIT)){
+                    if((event.motion.y > (CAMERADY-MOVE_MOUSE_LIMIT)) && (event.motion.y <CAMERADY)){
                         camera2.startMovingDown();
                     }else{
                         camera2.stopMovingDown();
                     }
 
-                    if(event.motion.x < (MOVE_MOUSE_LIMIT)){
+                    if((event.motion.x < (MOVE_MOUSE_LIMIT)) && (event.motion.x >0)){
                         camera2.startMovingLeft();
                     }else {
                         camera2.stopMovingLeft();
                     }
 
-                    if(event.motion.x > (CAMERADY-MOVE_MOUSE_LIMIT)){
+                    if((event.motion.x > (CAMERADX-MOVE_MOUSE_LIMIT)) && (event.motion.x <CAMERADX)){
                         camera2.startMovingRight();
                     } else{
                         camera2.stopMovingRight();

@@ -462,3 +462,15 @@ void Units_Protected::endGame(int winner) {
     }
 
 }
+
+Unit* Units_Protected::getFortPlayer(int idClient) {
+    tLock(this->mut);
+    std::map<int, Unit*>::iterator it;
+    for (it = units_map.begin();it != units_map.end() ; ++it) {
+        if(it->second->get_type()==FORT_ALIVE){
+            if(it->second->get_owner()== idClient){
+                return it->second;
+            }
+        }
+    }
+}
