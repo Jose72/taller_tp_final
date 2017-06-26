@@ -324,6 +324,7 @@ bool Units_Protected::createIfDoesNotExist(int cod_unit, int unit_type, int unit
 
             case FORT:
                 units_map[cod_unit] = factory.createUnit(FORT_ALIVE,cod_unit,posX,posY, unit_owner);
+                units_map[cod_unit]->set_techLevel(techLevel);
                 break;
 
             case ROBOT_FACTORY:
