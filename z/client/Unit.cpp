@@ -37,6 +37,7 @@ Unit::Unit(std::vector<Animation*> &a0,
     this->posY_attack = 0;
     this->posxO = 0;
     this->posyO = 0;
+    this->techLevel = 0;
 }
 
 
