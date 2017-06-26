@@ -101,7 +101,7 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 
 		//envia tl de la unidad (pasa saber en que estan los edificios)
 		//id del conduciotr en el caso de los vehiculos
-		int m = 0;
+		int m = -1;
 		int c = it->second->getClassId();
 		switch(c){
 			case(BUILDING):{
@@ -215,7 +215,7 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
         s = socket.send((char*) &health, INT_SIZE);
 
 
-		int m = 0;
+		int m = -1;
 		int c = it->second->getClassId();
 		switch(c){
 			case(BUILDING):{
