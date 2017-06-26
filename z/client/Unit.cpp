@@ -162,6 +162,14 @@ int Unit::get_unit_code() {
     return  this->cod_unit;
 }
 
+void Unit::set_techLevel(int techLevel) {
+    this->techLevel = techLevel;
+}
+
+int Unit::get_techLevel() {
+    return this->techLevel;
+}
+
 void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
     if(current_frame < max_frame-1){
         current_frame ++;

@@ -9,7 +9,6 @@
 #include "Protocol.h"
 #include "Camera2.h"
 
-#define SELECTOR_D 20
 
 class SelectionHandler {
 private:

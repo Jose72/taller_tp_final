@@ -169,7 +169,7 @@ void Units_Protected::cleanDeadUnits() {
 
 
 bool Units_Protected::createIfDoesNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY,
-                                       Factory_Units &factory) {
+                                       Factory_Units &factory, int techLevel) {
     tLock(this->mut);
     bool result = false;
     if(units_map.find(cod_unit) == units_map.end()){
@@ -261,10 +261,12 @@ bool Units_Protected::createIfDoesNotExist(int cod_unit, int unit_type, int unit
 
             case ROBOT_FACTORY:
                 units_map[cod_unit] = factory.createUnit(FACTORY_ROBOTS_ALIVE,cod_unit,posX,posY, unit_owner);
+                units_map[cod_unit]->set_techLevel(techLevel);
                 break;
 
             case VEHICLE_FACTORY:
                 units_map[cod_unit] = factory.createUnit(FACTORY_VEHICLES_ALIVE,cod_unit,posX,posY,unit_owner);
+                units_map[cod_unit]->set_techLevel(techLevel);
                 break;
 
             case LASER:

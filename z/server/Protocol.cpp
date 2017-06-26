@@ -98,7 +98,7 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
         int posY = htonl(it->second->getY());
         socket.send((char*) &posY, INT_SIZE);
 		
-		/*
+
 		//envia tl de la unidad (pasa saber en que estan los edificios)
 		//id del conduciotr en el caso de los vehiculos
 		int m = 0;
@@ -118,7 +118,7 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 		}
 		m = htonl(m);
         socket.send((char*) &m, sizeof(int));
-		*/
+
     }
 }
 

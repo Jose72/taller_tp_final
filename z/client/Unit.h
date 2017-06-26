@@ -50,6 +50,7 @@ protected:
     int posX_attack;
     int posY_attack;
     int owner;
+    int techLevel;
     Direction  direction;
     Attack_Direction attack_direction;
     State state;
@@ -91,6 +92,8 @@ public:
     void set_attack(int posX, int posY);
     int get_owner();
     void set_owner(int owner);
+    int get_techLevel();
+    void set_techLevel(int techLevel);
     FlagsUnitType get_type();
 };
 

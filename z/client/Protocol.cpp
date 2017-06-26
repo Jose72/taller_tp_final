@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Protocol.h"
 
+#define TECH_LEVEL_ZERO 0
 #define CODE_MOVE_UNIT 0
 #define CODE_ATTACK 1
 #define CODE_DRIVE 3
@@ -95,18 +96,16 @@ void Protocol::set_units_game() {
         socket.receive((char*)&posY,SIZE_INT);
         int posY_SC = ntohl(posY);
 
-        
-        /*
         //tech lvl de edificios
         //en unidades comunes deberia ser ignorado???
-        int tl;
-        socket.receive((char*)&tl,SIZE_INT);
-        int tl_SC = ntohl(tl);
-         */
+        int techLevel;
+        socket.receive((char*)&techLevel,SIZE_INT);
+        int techLevel_SC = ntohl(techLevel);
+
 
 
         //AGREGAR SWITCH
-        units.createIfDoesNotExist(unit_code_SC,unit_code_config_SC,owner_SC,posX_SC,posY_SC,factory);
+        units.createIfDoesNotExist(unit_code_SC,unit_code_config_SC,owner_SC,posX_SC,posY_SC,factory,techLevel_SC);
 
     }
 }
@@ -189,7 +188,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
         techLevel.setTechLevel(unitCode);
 
     } else {
-        if(units.createIfDoesNotExist(unitCode, unitType, unitOwner, posX, posY, factory)){
+        if(units.createIfDoesNotExist(unitCode, unitType, unitOwner, posX, posY, factory,TECH_LEVEL_ZERO)){
             soundManager.playCreationUnit(unitOwner, unitType);
         }
         if (units[unitCode]->get_state() != DEAD1) {
