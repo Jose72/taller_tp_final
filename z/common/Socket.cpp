@@ -47,7 +47,7 @@ void tSocket::bindAndListen(int port_number) {
 		throw 1;}
 }
 
-void tSocket::connect(char *ip_address, int port_number) {
+void tSocket::connect(const char *ip_address, int port_number) {
 	struct sockaddr_in serv;
 	serv.sin_addr.s_addr = inet_addr(ip_address);
         serv.sin_family = AF_INET;

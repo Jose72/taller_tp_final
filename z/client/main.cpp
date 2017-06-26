@@ -14,16 +14,15 @@
 #include "EventHandler.h"
 #include "ProtocolMenu.h"
 #include "MainWindow.h"
+#include "LoginWindow.h"
 #include <gtkmm.h>
 
 
 
 
 int main(int argc, char *argv[]){
-    tSocket socket;
-    int port_number = atoi(argv[2]);
-    socket.connect(argv[1],port_number);
     auto app = Gtk::Application::create();
-    MainWindow mainWindow(&socket, argc, argv, app);
-    return app->run(mainWindow);
+    tSocket socket;
+    LoginWindow loginWindow(&socket,argc,argv,app);
+    return app->run(loginWindow);
 }

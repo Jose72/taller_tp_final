@@ -12,7 +12,7 @@ class tSocket {
 		explicit tSocket(int fd);
 		~tSocket();
 		void bindAndListen(int port_number);
-		void connect(char *ip_address, int port_number);
+		void connect(const char *ip_address, int port_number);
 		tSocket accept();
 		int send(const char* buffer, size_t length);
 		int receive(char* buffer, size_t length);
