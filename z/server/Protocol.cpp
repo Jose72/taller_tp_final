@@ -104,11 +104,15 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 		int m = -1;
 		int c = it->second->getClassId();
 		switch(c){
-			case(BUILDING):{
+			case BUILDING:{
 				m = it->second->getTechLvl();
+				if (it->second->getUnitId() == FORT){
+					std::cout << "unit: " << it->first << std::endl;
+					std::cout << "fort_t: " << it->second->getTechLvl() << std::endl;
+				}
 				break;
 			}
-			case(VEHICLE):{
+			case VEHICLE:{
 				unit *d = it->second->getDriver();
 				if (d){
 					m = d->getUnitId();
@@ -117,7 +121,7 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 			}
 		}
 		m = htonl(m);
-        socket.send((char*) &m, sizeof(int));
+        socket.send((char*) &m, INT_SIZE);
 
     }
 }
@@ -218,18 +222,18 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 		int m = -1;
 		int c = it->second->getClassId();
 		switch(c){
-			case(BUILDING):{
+			case BUILDING:{
 				m = it->second->getTimeToCompletion();
 				break;
 			}
-				case(VEHICLE):{
-                    unit *d = it->second->getDriver();
-                    if (d){
-                        m = d->getUnitId();
-                    }
-                    break;
-                }
-            }
+			case VEHICLE:{
+				unit *d = it->second->getDriver();
+				if (d){
+					m = d->getUnitId();
+				}
+				break;
+			}
+		}
 		m = htonl(m);
 		socket.send((char*) &m, sizeof(int));
 

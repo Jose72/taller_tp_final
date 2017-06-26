@@ -522,7 +522,7 @@ unit* unit::getDriver(){
 }
 
 bool unit::isAttackable(unit *u){
-	return (this->isEnemy(u) || u->owner == 0);
+	return (this->isEnemy(u) || (u->owner == 0 && u->class_id != VEHICLE));
 	
 }
 
