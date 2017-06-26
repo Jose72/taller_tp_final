@@ -15,13 +15,15 @@
 class tServer: public tThread{
 	private:
 		int port_number;
+		std::string map_folder;
+		std::string unit_info_path;
 		tSocket serv_skt;
 		bool acepter_open;
 		std::vector<tClientManager*> client_mngrs;
 		gameList g_list;
 		std::mutex m;
 	public:
-		tServer(int port);
+		tServer(int port, std::string &map_folder, std::string &unit_info_path);
 		void run() override;
 		void stop() override;
 		int processClient();

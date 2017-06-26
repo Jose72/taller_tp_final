@@ -13,9 +13,9 @@ struct dataMap{
 };
 
 class JsonHandler {
-
+	std::string folderPath;
 public:
-    JsonHandler();
+    JsonHandler(std::string &folderPath);
     std::vector<int> jsonToMap(std::string mapName);
     void jsonToUnits(int &unit_counter,
                      unitBuilder &builder,

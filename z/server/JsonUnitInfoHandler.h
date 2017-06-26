@@ -11,7 +11,7 @@ class JsonUnitInfoHandler {
 
 public:
     JsonUnitInfoHandler();
-    void jsonToUnitsInfo(infoUnits &iu);
+    void jsonToUnitsInfo(std::string &file_path, infoUnits &iu);
 
 };
 

@@ -16,8 +16,12 @@
 #include "juego.h"
 
 tClientManager::tClientManager(int id, tSocket cli_s, gameList &jgs, 
-std::mutex &manager_m): id_client(id), cli_skt(std::move(cli_s)), 
-manager_m(manager_m), juegos(jgs), end_game(false), j(nullptr), ended(false) {}
+std::mutex &manager_m, std::string &map_folder, std::string &unit_info_path): 
+id_client(id), cli_skt(std::move(cli_s)), manager_m(manager_m), 
+juegos(jgs), map_folder(map_folder), unit_info_path(unit_info_path), 
+end_game(false), j(nullptr), ended(false) {
+	std::cout <<"iniciao manager" << std::endl;
+	}
 
 
 bool tClientManager::readyToClean(){
@@ -79,9 +83,12 @@ int tClientManager::gameSelection(){
 
         prot.sendOKConfimation();
 
-		MapLoader m_loader;
+		MapLoader m_loader(map_folder);
+		std::cout << map_folder << std::endl;
 		m_loader.loadListData();
+		std::cout << "tatamamamaam" << std::endl;
 		std::vector<dataMap> maps_info = m_loader.mapsForTeams(teams2);
+		std::cout << "tatamamamaam" << std::endl;
 		prot.sendMapsInfo(maps_info);
 
 
@@ -101,7 +108,7 @@ int tClientManager::gameSelection(){
 		///////////////////////////////////////////////////////////
 		//*nombre del mapa harcodeado (arreglar cuando este la seleccion de mapas)
 		//creo el nuevo juego
-		j = new juego(id_client, cant_p, type_game, teams2, mapa_nombre);
+		j = new juego(id_client, cant_p, type_game, teams2, mapa_nombre, map_folder, unit_info_path);
 		j->clientJoin(id_client, &cli_skt, 1);
 		//pusheo en el vector de juegos, para que quede listado
 		juegos.push_back(j);

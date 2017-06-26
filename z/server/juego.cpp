@@ -22,9 +22,10 @@
 //cant jugadores
 //tipo de juego(deathmatch o equipos)
 //cant equipos
-juego::juego(int creator, int cant_players, int game_t, int cant_teams, std::string map_name): 
+juego::juego(int creator, int cant_players, int game_t, int cant_teams, std::string &map_name, 
+std::string &map_folder, std::string &unit_info_path): 
 id_creator(creator), map_name(map_name), max_players(cant_players), teams(cant_teams), 
-game_type(game_t), builder(u_info), id_unit_counter(1), 
+game_type(game_t), map_folder(map_folder), u_info(unit_info_path), builder(u_info), id_unit_counter(1), 
 g_info(infoGame(cant_players, game_t, cant_teams)), stop_signal(false), started(false), 
 running(false) {}
 
@@ -152,7 +153,7 @@ int juego::clientJoin(int cli_id, tSocket *cli_s, int team_n){
 
 void juego::sendInit(){
 	//map_name = "map";
-	JsonHandler jsonHandler;
+	JsonHandler jsonHandler(map_folder);
 	std::vector<int> mapDes = jsonHandler.jsonToMap(map_name);
 	mapa = gameMap(mapDes);
     jsonHandler.jsonToUnits(id_unit_counter,builder,units,map_name);
@@ -245,11 +246,13 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			it2 = units.find(e.getX());
 			int unit_uniq_code = it2->first;
 			if (unit_uniq_code != e.getX()) return; //no encontro a la unidad
-			
+			unit *target = it2->second;
 			//solo robots o vehiculos
-			if (((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE)) {
-				if ((it2->second)->getUnitId() != FLAG && (it2->second)->getUnitId() != BULLET){
-					(it->second)->attack(it2->second);
+			if (((it->second)->getClassId() == ROBOT) || ((it->second)->getClassId() == VEHICLE)) {
+				if ((target->getUnitId() != FLAG) 
+				&& (target->getUnitId() != BULLET) 
+				&& !(target->getClassId() == VEHICLE && target->getOwner() == 0)){
+					(it->second)->attack(target);
 				} else {
 					//si la unidad no es atacable
 				}

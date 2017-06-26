@@ -51,8 +51,10 @@ int clientMenu::gameSelection(){
 			if ((cant_p % teams) != 0 || teams <= 1) return 1;
 		}
 		
+		std::string map_name;
+		
 		//hardocdeado DEATHMATCH
-		j = new juego(cli_id, cant_p, type_game, teams2, "nothing");
+		j = new juego(cli_id, cant_p, type_game, teams2, map_name, map_name, map_name);
 		j->clientJoin(cli_id, &skt, 1);
 		//pusheo en el vector
 		gl.push_back(j);

@@ -526,8 +526,8 @@ unit* unit::getDriver(){
 //o una unidad con owner 0 (que no sea un vehiculo)
 //tampoco puede ser una bala
 bool unit::isAttackable(unit *u){
-	return (this->isEnemy(u) || 
-	(u->owner == 0 && u->class_id != VEHICLE)|| 
+	return ((this->isEnemy(u) || 
+	(u->owner == 0 && u->class_id != VEHICLE)) && 
 	(u->class_id != BULLET));
 	
 }

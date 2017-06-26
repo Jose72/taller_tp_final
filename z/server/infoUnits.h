@@ -49,7 +49,7 @@ class infoUnits {
 private:
 	std::vector<unitPlantilla> plantillas;
 public:
-    infoUnits();
+    infoUnits(std::string &file_path);
 	void print();
 	void addInfo(unitPlantilla &up);
 	int getClassCode(int unit_c);

@@ -26,6 +26,7 @@ class juego: public tThread{
 		int teams;
 		int game_type;
 		gameMap mapa; //mapa
+		std::string map_folder; //nombre del mapa
 		infoUnits u_info; //estructura con la info de las unidades
 		unitBuilder builder;
 		int id_unit_counter;
@@ -48,7 +49,8 @@ class juego: public tThread{
 		void unitGameCreate();
 	
 	public:
-		juego(int creator, int cant_players, int game_type, int cant_teams, std::string map_name);
+		juego(int creator, int cant_players, int game_type, int cant_teams, std::string &map_name, 
+		std::string &map_folder, std::string &unit_info_path);
 		void run() override;
 		void stop();
 		void take_event(Event &e); //para pasarle los eventos desde los clientManager

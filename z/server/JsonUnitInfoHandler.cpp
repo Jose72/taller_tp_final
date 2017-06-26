@@ -5,9 +5,10 @@
 
 JsonUnitInfoHandler::JsonUnitInfoHandler(){}
 
-void JsonUnitInfoHandler::jsonToUnitsInfo(infoUnits &iu){
-	//std::ifstream jsonFile("/home/jjjtony/TALLER_TP_FINAL/z/server/unitsInfo/unitsInfo.json");
-	std::ifstream jsonFile("server/unitsInfo/unitsInfo.json");
+void JsonUnitInfoHandler::jsonToUnitsInfo(std::string &file_path, infoUnits &iu){
+	
+	std::ifstream jsonFile(file_path);
+	//std::ifstream jsonFile("server/unitsInfo/unitsInfo.json");
 
     Json::Reader reader;
     Json::Value root;

@@ -3,12 +3,12 @@
 #include "MapLoader.h"
 
 
-MapLoader::MapLoader() {
+MapLoader::MapLoader(std::string &path): pathFolder(path), jsonHandler(path) {
 
 }
 
 void MapLoader::loadListData() {
-    loadDirectory("server/maps");
+    loadDirectory(pathFolder);
     for (int i = 0; i <this->dataMaps.size() ; ++i) {
         std::cout << this->dataMaps[i].mapName << "\n";
     }

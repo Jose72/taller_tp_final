@@ -299,7 +299,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			if (u.getTarget()){
 				//si estoy en el rango
 				if (u.targetIsInRange()){
-					//si es enemigo
+					//si es atacable
 					if (u.targetIsAttackable()){
 						//ataco
 						u.changeState(ATTACKING);

@@ -7,10 +7,9 @@
 
 
 
-tServer::tServer(int port) : serv_skt(tSocket()) {
-	port_number = port;
-	acepter_open = true;
-}
+tServer::tServer(int port, std::string &map_folder, std::string &unit_info_path): 
+port_number(port), map_folder(map_folder), unit_info_path(unit_info_path), 
+serv_skt(tSocket()), acepter_open(true) {}
 
 
 void tServer::stop(){
@@ -34,17 +33,17 @@ void tServer::stop(){
 //este es el while aceptador
 int tServer::processClient(){
 	int client_id_count = 1;
-	
+	std::cout << "server in" << std::endl;
 	while (acepter_open){ //mientras aceptador abierto
 		try {
 		serv_skt.bindAndListen(port_number);
 			try {
 				//creo socket para cliente
 				tSocket new_skt = serv_skt.accept();
-				//std::cout << "new client" << std::endl;
+				std::cout << "new client" << std::endl;
 				
 				tClientManager *cli_man = new tClientManager(client_id_count, std::move(new_skt),
-				g_list, m); //paso al manager
+				g_list, m, map_folder, unit_info_path); //paso al manager
 				client_id_count++;
 				client_mngrs.push_back(cli_man);
 				cli_man->start();

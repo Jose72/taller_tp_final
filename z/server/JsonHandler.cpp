@@ -4,12 +4,13 @@
 #include "json.h"
 #include "unitBuilder.h"
 
-JsonHandler::JsonHandler() {}
+JsonHandler::JsonHandler(std::string &folderPath): folderPath(folderPath) {}
 
 
 std::vector<int> JsonHandler::jsonToMap(std::string mapName) {
     std::vector<int> mapDescriptor;
-    std::string motherPath = "server/maps/";
+    //std::string motherPath = "server/maps/";
+	std::string motherPath = folderPath + "/";
     std::string pointJson = ".json";
     std::string directory = motherPath+mapName+pointJson;
     std::ifstream jsonFile(directory);
@@ -35,7 +36,8 @@ void JsonHandler::jsonToUnits(int &unit_counter,
                               std::map<int, unit*> &units,
                               std::string mapName ) {
 
-    std::string motherPath = "server/maps/units";
+    //std::string motherPath = "server/maps/units";
+	std::string motherPath = folderPath + "/units";
     std::string pointJson = ".json";
     std::string directory = motherPath+mapName+pointJson;
     std::ifstream jsonFIle(directory);

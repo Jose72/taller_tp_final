@@ -14,7 +14,7 @@
 #include "infoUnits.h"
 
 #include <unistd.h>
-
+/*
 int test_load_u_data(){
 	JsonUnitInfoHandler j;
 	infoUnits u_info;
@@ -22,7 +22,7 @@ int test_load_u_data(){
 	u_info.print();
 	return 0;
 	}
-
+*/
 /*
 int test_map_h(){
 	gameMap mapa;
