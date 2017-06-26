@@ -55,6 +55,11 @@ void Units_Protected::setStateUnit(int unitCode, State state) {
     units_map[unitCode]->set_state(state);
 }
 
+void Units_Protected::setTypeDriver(int unitCode, int typeDriver) {
+    tLock(this->mut);
+    units_map[unitCode]->setTypeDriver(typeDriver);
+}
+
 int Units_Protected::getOwnerUnit(int unitCode) {
     tLock(this->mut);
     return units_map[unitCode]->get_owner();

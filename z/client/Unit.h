@@ -54,6 +54,7 @@ protected:
     int rangoX;
     int rangoY;
     int completionTime;
+    int typeDriver;
     Direction  direction;
     Attack_Direction attack_direction;
     State state;
@@ -104,6 +105,10 @@ public:
     int getCompletionTime() const;
 
     void setCompletionTime(int completionTime);
+
+    int getTypeDriver() const;
+
+    void setTypeDriver(int typeDriver);
 };
 
 

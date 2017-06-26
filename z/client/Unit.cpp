@@ -41,6 +41,7 @@ Unit::Unit(std::vector<Animation*> &a0,
     this->rangoX = a0[0]->getFrameW_X();
     this->rangoY = a0[0]->getFrameH_Y();
     this->completionTime = 0;
+    this->typeDriver = -1;
 }
 
 
@@ -172,6 +173,14 @@ void Unit::set_techLevel(int techLevel) {
 
 int Unit::get_techLevel() {
     return this->techLevel;
+}
+
+int Unit::getTypeDriver() const {
+    return typeDriver;
+}
+
+void Unit::setTypeDriver(int typeDriver) {
+    Unit::typeDriver = typeDriver;
 }
 
 void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {

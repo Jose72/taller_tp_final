@@ -48,6 +48,7 @@ public:
     int getOwnerUnit(int unitCode);
     int getHealthUnit(int unitCode);
     int getCompletionTime(int unitCode);
+    void setTypeDriver(int unitCode, int typeDriver);
 
 private:
     void createUnit(int cod_unit,int unit_owner,int posX, int posY, Factory_Units &factory,

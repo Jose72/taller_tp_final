@@ -221,14 +221,14 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 			case(BUILDING):{
 				m = it->second->getTimeToCompletion();
 				break;
-			}/*
+			}
 				case(VEHICLE):{
                     unit *d = it->second->getDriver();
                     if (d){
                         m = d->getUnitId();
                     }
                     break;
-                }*/
+                }
             }
 		m = htonl(m);
 		socket.send((char*) &m, sizeof(int));

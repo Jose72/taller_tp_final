@@ -65,3 +65,9 @@ int ConstantsInterpretor::getType(FlagsUnitType color){
 
     return GRUNT;
 }
+
+int ConstantsInterpretor::getColor(FlagsUnitType flag){
+    //hacer que retorne el color del flag
+    //BLUEGRUNT -> TEAMBLUE
+    return 0;
+}

@@ -183,7 +183,7 @@ void Protocol::create_unit(int idCreator, int idCreation) {
 }
 
 void Protocol::translate_message(int update, int unitCode, int unitType, int unitOwner, int health, int posX,
-                                 int posY, int completionTime) {
+                                 int posY, int timeOrDriver) {
     if (update == CODE_END_GAME) {
         units.endGame(unitCode);
         winner.setWinner(unitCode);
@@ -200,11 +200,13 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
                     units.setStateUnit(unitCode,MOVING1);
                     units.setHealthUnit(unitCode,health);
+                    units.setTypeDriver(unitCode,timeOrDriver);
                     units.setPosUnit(unitCode,posX,posY);
                     break;
                 case ATTACKING:
                     units.setAttackUnit(unitCode,posX,posY);
                     units.setStateUnit(unitCode,ATTACKING1);
+                    units.setTypeDriver(unitCode,timeOrDriver);
                     units.setHealthUnit(unitCode,health);
                     break;
                 case DEAD:
@@ -214,6 +216,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
                     units.setHealthUnit(unitCode,health);
                     units.setStateUnit(unitCode,DRINKING);
+                    units.setTypeDriver(unitCode,timeOrDriver);
                     units.setPosUnit(unitCode,posX,posY);
                     break;
                 case CHECKING_CAPTURE:
@@ -227,13 +230,14 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     break;
                 case DRIVING:
                     units.setStateUnit(unitCode,DRINKING);
+                    units.setTypeDriver(unitCode,timeOrDriver);
                     units.setPosUnit(unitCode,posX,posY);
                     break;
                 case CREATING:
                     soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
                     units.setHealthUnit(unitCode,health);
                     units.setOwnerUnit(unitCode,unitOwner);
-                    units.setCompletionTime(unitCode,completionTime);
+                    units.setCompletionTime(unitCode,timeOrDriver);
                     break;
                 case ERASED:
                     units.setPosUnit(unitCode,CODE_OUTSIDE_MAP,CODE_OUTSIDE_MAP);

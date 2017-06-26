@@ -47,6 +47,12 @@ bool PlayerInterface::checkClickedButtons(int x, int y,Protocol protocol){
 std::string getUnitPortrait(FlagsUnitType type){
     std::string path;
     switch(type) {
+        case FACTORY_ROBOTS_ALIVE:
+            path = "client/sprites/portraits/factory_robots.png";
+            break;
+        case FACTORY_VEHICLES_ALIVE:
+            path = "client/sprites/portraits/factory_vehicle.png";
+            break;
         case BLUE_GRUNT:
             path = "client/sprites/portraits/grunt_blue.png";
             break;
@@ -55,12 +61,6 @@ std::string getUnitPortrait(FlagsUnitType type){
             break;
         case FORT_ALIVE:
             path = "client/sprites/portraits/fort.png";
-            break;
-        case FACTORY_ROBOTS_ALIVE:
-            path = "client/sprites/portraits/factory_robots.png";
-            break;
-        case FACTORY_VEHICLES_ALIVE:
-            path = "client/sprites/portraits/factory_vehicle.png";
             break;
         default:
             path = "client/sprites/portraits/grunt_red.png";
@@ -183,6 +183,10 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_heatlh()),getCol(3,2,0),190);
         drawer.drawText(screen,"Tipo: ",getCol(3,1,0),210);
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_type()),getCol(3,2,0),210);
+        if(selectionHandler.getUnit()->getTypeDriver() > -1){
+            drawer.drawText(screen,"Conductor: ",getCol(3,1,0),230);
+            drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->getTypeDriver()),getCol(3,2,0),230);
+        }
     } else {
         drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),150);
     }
