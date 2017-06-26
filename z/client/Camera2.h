@@ -22,6 +22,10 @@ private:
     int levelWidth;
     int levelHeight;
     Factory_Units &factory;
+    bool movingLeft;
+    bool movingRight;
+    bool movingUp;
+    bool movingDown;
 
 
 public:
@@ -31,6 +35,18 @@ public:
     void draw(Units_Protected &units, Game_map &game_map,SoundManager &soundManager);
     int getPosCameraX();
     int getPosCameraY();
+
+    void startMovingRight();
+    void stopMovingRight();
+    void startMovingLeft();
+    void stopMovingLeft();
+    void startMovingUp();
+    void stopMovingUp();
+    void startMovingDown();
+    void stopMovingDown();
+
+    void updateCameraPos();
+
 
 
 
