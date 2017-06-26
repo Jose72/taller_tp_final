@@ -362,7 +362,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 				//si estoy en el rango
 				if (u.targetIsInRange()){
 					//si es enemigo
-					if (u.targetIsEnemy()){
+					if (u.targetIsAttackable()){
 						//ataco
 						u.changeState(ATTACKING);
 						//std::cout << "ataq mov" << std::endl;
