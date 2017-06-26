@@ -10,6 +10,7 @@
 #define WINDOW_W 960
 #define CAMERADX 600
 #define CAMERADY 600
+#define MOVE_MOUSE_LIMIT 32
 
 EventHandler::EventHandler(SDL_Surface *screen,
                            PlayerInterface &p,
@@ -146,6 +147,30 @@ void EventHandler::run() {
                              */
                             break;
                         }
+                    }
+                case SDL_MOUSEMOTION:
+                    if(event.motion.y < (MOVE_MOUSE_LIMIT)){
+                        camera2.startMovingUp();
+                    } else{
+                        camera2.stopMovingUp();
+                    }
+
+                    if(event.motion.y > (CAMERADX-MOVE_MOUSE_LIMIT)){
+                        camera2.startMovingDown();
+                    }else{
+                        camera2.stopMovingDown();
+                    }
+
+                    if(event.motion.x < (MOVE_MOUSE_LIMIT)){
+                        camera2.startMovingLeft();
+                    }else {
+                        camera2.stopMovingLeft();
+                    }
+
+                    if(event.motion.x > (CAMERADY-MOVE_MOUSE_LIMIT)){
+                        camera2.startMovingRight();
+                    } else{
+                        camera2.stopMovingRight();
                     }
             }
         }
