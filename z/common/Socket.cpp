@@ -55,14 +55,14 @@ void tSocket::connect(char *ip_address, int port_number) {
 	int s = ::connect(skt , (struct sockaddr *)&serv , sizeof(serv));
 	if (s == -1) {
 		std::cout << "tSocket: error connect: "<< strerror(errno) << std::endl;
-		throw 1;}
+		throw std::runtime_error(strerror(errno));}
 }
 
 tSocket tSocket::accept(){
 	int skt_ret = ::accept(skt, NULL, NULL);
 	if (skt_ret == -1) {
 		//std::cout << "tSocket: error accept" << std::endl;
-		throw 1;}
+		throw std::runtime_error("Socket error aceptador");}
         tSocket accepted(skt_ret);
         return accepted;
 }
