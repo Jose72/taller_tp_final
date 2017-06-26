@@ -12,7 +12,7 @@ class ClickableButtonCreateUnit : public ClickableButton {
 private:
     int unitType;
 public:
-    ClickableButtonCreateUnit(int x, int y, int width, int height, std::string text,int idUnit, int typeUnit);
+    ClickableButtonCreateUnit(int x, int y, int width, int height, const std::string &text,int idUnit, int typeUnit);
 
     void click(Protocol aProtocol);
 };

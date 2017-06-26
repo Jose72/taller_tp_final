@@ -6,9 +6,12 @@
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
 
-SelectionHandler::SelectionHandler(Protocol &p, int &id, Camera2 &cam):protocol(p), id_client(id), cam(cam){
-    this->unit_selected = false;
-    this->unit = nullptr;
+SelectionHandler::SelectionHandler(Protocol &p, int &id, Camera2 &cam):protocol(p),
+                                                                       id_client(id),
+                                                                       cam(cam),
+                                                                       unit_selected(false),
+                                                                       unit(nullptr){
+
 }
 
 void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
@@ -17,24 +20,6 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     int dy1 = posY - SIZE_OF_DELTA;
     int dy2 = posY + SIZE_OF_DELTA;
     unit = units.selectUnit(posX,posY,unit_selected, id_client);
-    //ampliar area de seleccion para edificios
-    //todo revisar, tira segmentation fault
-    /*
-    if(!unit_selected){
-        dx1 -= SIZE_OF_DELTA;
-        dy1 -= SIZE_OF_DELTA;
-        dx2 += SIZE_OF_DELTA;
-        dy2 += SIZE_OF_DELTA;
-        unit = units.selectUnit(dx1,dx2,dy1,dy2,unit_selected, id_client);
-        if(unit != nullptr && unit->get_type() != FACTORY_VEHICLES_ALIVE &&
-                unit->get_type() != FACTORY_ROBOTS_ALIVE &&
-                unit->get_type() != FORT_ALIVE){
-            unit = 0;
-            unit_selected = false;
-        }
-    }
-     */
-
 }
 
 Unit* SelectionHandler::getUnit(){

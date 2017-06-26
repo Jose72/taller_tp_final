@@ -53,7 +53,7 @@ int Drawer::drawImage(SDL_Surface *surface, const char *image_path, Sint16 x_pos
     return 0;
 }
 
-void Drawer::drawButton(SDL_Surface *screen, ClickableButton *&pButton){
+void Drawer::drawButton(SDL_Surface *screen, ClickableButton *pButton){
     drawImage(screen,"client/sprites/buttons/fus_top.png",pButton->getX(),pButton->getY());
     drawText(screen,pButton->getText(),pButton->getX()+20,pButton->getY());
 }

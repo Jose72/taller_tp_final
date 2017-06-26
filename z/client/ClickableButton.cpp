@@ -6,13 +6,14 @@
 #include "ClickableButton.h"
 #include "Protocol.h"
 
-ClickableButton::ClickableButton(int x, int y, int width, int height, std::string text,int idUnit):text(std::move(text)) {
-    this->x = x;
-    this->y = y;
-    this->idUnit = idUnit;
-    this->width = width;
-    this->height = height;
-    this->next = 0;
+ClickableButton::ClickableButton(int x, int y, int width, int height, std::string text,int idUnit):text(std::move(text))
+        ,x(x)
+        ,y(y)
+        ,idUnit(idUnit)
+        ,width(width)
+        ,height(height)
+        ,next(0) {
+
 }
 
 ClickableButton::~ClickableButton() {
@@ -41,10 +42,3 @@ int ClickableButton::getY() const {
     return y;
 }
 
-int ClickableButton::getWidth() const {
-    return width;
-}
-
-int ClickableButton::getHeight() const {
-    return height;
-}

@@ -25,7 +25,7 @@ public:
 
     int drawImage(SDL_Surface *surface, const char *image_path, Sint16 x_pos, Sint16 y_pos);
 
-    void drawButton(SDL_Surface *screen,ClickableButton *&pButton);
+    void drawButton(SDL_Surface *screen,ClickableButton *pButton);
 
     void drawGiantText(SDL_Surface *screen, std::string msj, int x, int y);
 };

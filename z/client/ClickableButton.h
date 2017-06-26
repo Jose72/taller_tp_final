@@ -27,10 +27,6 @@ class ClickableButton {
 
     int getY() const;
 
-    int getWidth() const;
-
-    int getHeight() const;
-
     const std::string &getText() const;
 
     virtual void click(Protocol aProtocol) = 0;

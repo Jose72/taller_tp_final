@@ -43,7 +43,6 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
 
     SDL_Surface *screen;
 
-    std::vector<Unit*> u;
     std::map<int, Unit*>um;
     Units_Protected all_units(um);
     bool running = true;
@@ -82,9 +81,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     SpritesPool pool(screen);
     Factory_Units factory(pool);
     Game_map game_map(screen);
-    int port_number = atoi(argv[2]);
 
-    //socket->connect(argv[1],port_number);
     std::vector<tThread*> threads;
 
     ///////////////////////
@@ -156,8 +153,8 @@ void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, cha
     if(response == RESPONSE_PROTOCOL_MENU_OK){
         pWindow->cleanBox();
         std::vector<mapData> mapDatas = protocolMenu.receiveMapsInfo();
-        Gtk::Button* buttonMap;
         for(int i = 0; i < mapDatas.size(); i++){
+            Gtk::Button* buttonMap;
             std::ostringstream texto;
             texto << mapDatas[i].mapName;
             texto << ";";
@@ -282,7 +279,7 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
     if( response == RESPONSE_PROTOCOL_MENU_OK){
         protocolMenu.infoJoinGame();
         pWindow->cleanBox();
-        for(int i = 0; i < protocolMenu.infoGames.size(); i++){
+        for(unsigned int i = 0; i < protocolMenu.infoGames.size(); i++){
             if(protocolMenu.infoGames[i]->typeGame == TEAM_GAME){
                 for(int j = 1; j <= protocolMenu.infoGames[i]->numTeams; j++){
                     addButtonTeamGame(pWindow, *protocolMenu.infoGames[i], j, app, argc, argv);
@@ -324,10 +321,6 @@ MainWindow::MainWindow(tSocket *socketParam, int argc, char *argv[], Glib::RefPt
 
 tSocket *MainWindow::getSocket() {
     return socket;
-}
-
-Gtk::Box * MainWindow::getBox() {
-    return box;
 }
 
 void MainWindow::createBox(){

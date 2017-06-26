@@ -6,10 +6,6 @@
 #include <SDL_ttf.h>
 #include "PlayerInterface.h"
 #include "Animation.h"
-#include "ClickableButtonGrunt.h"
-#include "ClickableButtonLaser.h"
-#include "ClickableButtonHeavyTank.h"
-#include "ClickableButtonJeep.h"
 #include "ClickableButtonCreateUnit.h"
 
 

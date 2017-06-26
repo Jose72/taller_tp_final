@@ -7,7 +7,7 @@
 
 #include "../common/constants.h"
 
-ClickableButtonCreateUnit::ClickableButtonCreateUnit(int x, int y, int width, int height, std::string text,int idUnit,int unitType)
+ClickableButtonCreateUnit::ClickableButtonCreateUnit(int x, int y, int width, int height,const std::string &text,int idUnit,int unitType)
         : ClickableButton(x, y, width, height, text, idUnit),unitType(unitType) {
 
 }
