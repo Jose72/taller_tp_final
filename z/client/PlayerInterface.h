@@ -33,21 +33,9 @@ public:
 
     virtual ~PlayerInterface();
 
-    int getCol(int division, int offset);
-
     int getCol(int division, int offset, int sizeElement, int leftPadding);
 
-    bool checkClickedButtons(int x, int y);
-
-    void loadButtons(FlagsUnitType type);
-
-    void loadButtons(FlagsUnitType type, int tech);
-
-    int loadRobotsButtons(int pos, int tech);
-
-    int loadVehicleButtons(int pos, int tech);
-
-    int loadVehiclesButtons(int pos, int tech);
+    void loadButtons(Unit * unit);
 
     void cleanButtons();
 
@@ -57,9 +45,9 @@ public:
 
     int loadVehiclesButtons(int pos, int unitCode, int tech);
 
-    void loadButtons(FlagsUnitType type, int unitCode, int tech);
-
     int getCol(int division, int offset, int sizeElement);
+
+    void drawTech(int tech);
 };
 
 
