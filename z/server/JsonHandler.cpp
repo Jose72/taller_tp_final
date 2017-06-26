@@ -90,3 +90,24 @@ dataMap JsonHandler::jsonToDataMap(std::string directory) {
     return data;
 }
 
+
+int JsonHandler::getMapDimension(std::string &mapName) {
+	std::string motherPath = folderPath + "/data";
+    std::string pointJson = ".json";
+    std::string directory = motherPath+mapName+pointJson;
+    std::ifstream jsonFIle(directory);
+    Json::Reader reader;
+    Json::Value root;
+    std::string mapName1;
+    int cantEquipos1;
+    int dimentisones1;
+    if (!reader.parse(jsonFIle, root)) {
+        std::cout << reader.getFormattedErrorMessages();
+        exit(1);
+    } else {
+        mapName1 = root[0]["mapName"].asString();
+        cantEquipos1 = root[0]["equipos"].asInt();
+        dimentisones1 = root[0]["tamanio"].asInt();
+    }
+    return dimentisones1;
+}

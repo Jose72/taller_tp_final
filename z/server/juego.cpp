@@ -201,6 +201,15 @@ void juego::sendInit(){
 	g_info.sendTeamNumbers();
 	///////////////////////////////
 	//envio pos inicial
+	
+	int dim_m = jsonHandler.getMapDimension(map_name);
+	for (auto it = protocols.begin(); it != protocols.end(); ++it){
+		//std::cout << dim_m << std::endl;
+		(*it)->send_map_dim(dim_m);
+	}
+	
+	///////////////////////////////
+	//envio pos inicial
 	g_info.sendInitialPos();
 	
 	

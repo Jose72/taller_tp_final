@@ -27,6 +27,12 @@ void TClient_receive::run() {
     team_n = ntohl(team_n);
     id_client = team_n;
     /////////////////////////
+    //recibo dimension de mapa
+    int map_dim;
+    socket.receive((char*) &map_dim, 4);
+    map_dim = ntohl(map_dim);
+    std::cout << map_dim << std::endl;
+    /////////////////////////
     //recibo pos inicial
     int x_inicial;
     int y_inicial;

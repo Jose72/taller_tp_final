@@ -126,6 +126,12 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
     }
 }
 
+
+void serverProtocol::send_map_dim(int map_dim) {
+    int md = htonl(map_dim);
+    socket.send((char*)&md, INT_SIZE);
+}
+
 int serverProtocol::receive_event(Event &e) {
     std::cout << "recibe event" << std::endl;
 	int s = 0;

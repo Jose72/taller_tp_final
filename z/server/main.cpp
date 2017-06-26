@@ -22,12 +22,6 @@ int main(int argc, char **argv)
 	cp.parse(port, map_folder, unit_info_path);
 	con_file.close();
 	
-	std::cout << port << std::endl;
-	std::cout << map_folder << std::endl;
-	std::cout << unit_info_path << std::endl;
-	
-	
-	
 	tServer server(port, map_folder, unit_info_path);
 	
 	char c = '0';

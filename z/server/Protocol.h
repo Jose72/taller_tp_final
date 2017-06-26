@@ -34,6 +34,7 @@ public:
 	int sendVictory(int winner);
 	int sendOKConfimation();
 	void sendMapsInfo(std::vector<dataMap> &maps);
+	void send_map_dim(int map_dim);
 };
 
 

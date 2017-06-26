@@ -21,7 +21,8 @@ public:
                      unitBuilder &builder,
                      std::map<int, unit*> &units,
                      std::string mapName);
-    dataMap jsonToDataMap(std::string directory);
+    dataMap jsonToDataMap(std::string mapName);
+	int getMapDimension(std::string &map_name);
 
 };
 

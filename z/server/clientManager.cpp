@@ -84,12 +84,13 @@ int tClientManager::gameSelection(){
         prot.sendOKConfimation();
 
 		MapLoader m_loader(map_folder);
-		std::cout << map_folder << std::endl;
+		std::cout << "tatatat" << std::endl;
 		m_loader.loadListData();
-		std::cout << "tatamamamaam" << std::endl;
+		std::cout << "tatatat" << std::endl;
 		std::vector<dataMap> maps_info = m_loader.mapsForTeams(teams2);
-		std::cout << "tatamamamaam" << std::endl;
+		std::cout << "tatatata" << std::endl;
 		prot.sendMapsInfo(maps_info);
+		std::cout << "tatatat" << std::endl;
 
 
 
