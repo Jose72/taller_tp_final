@@ -48,7 +48,7 @@ void EventHandler::run() {
         posCameraX = camera2.getPosCameraX();
         posCameraY = camera2.getPosCameraY();
         camera2.draw(units,gameMap,soundManager);
-        //playerInterface.show(sHandler, techLevel,winner,id_client);
+        playerInterface.show(sHandler, techLevel,winner,id_client);
         SDL_Flip(screen);
 
 
@@ -136,11 +136,11 @@ void EventHandler::run() {
                             std::cout << "X: "<< seleccionX << " Y: " << seleccionY <<"\n";
                             sHandler.set_location(seleccionX, seleccionY, units);
                              */
-                            /*
+
                             if(sHandler.unit_select()){
                                 soundManager.play((int) sHandler.getUnit()->get_type());
                             }
-                             */
+
                             /*
                              * selectionEndX =event.button.x + camera2.getPosCameraX();
                              * selectionEndY = event.button.y + camera2.getPosCameraY();

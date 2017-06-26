@@ -47,6 +47,9 @@ void SelectionHandler::selectUnits(int startX, int endX, int startY, int endY, U
 }
 
 Unit* SelectionHandler::getUnit(){
+    if(unitsSelected.size() > 0){
+        return unitsSelected[0];
+    }
     return this->unit;
 }
 
