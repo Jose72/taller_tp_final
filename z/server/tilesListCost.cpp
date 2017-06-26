@@ -76,3 +76,15 @@ void tilesListCost::print(){
 			(*it)->printTile();
 		}
 	}
+
+tile* tilesListCost::getClosesTileToDestiny(){
+	int h = 50000;
+	tile *aux = nullptr;
+	for (auto it = casillas.begin(); it != casillas.end(); ++it){
+		if (h > (*it)->getH()){
+			aux = (*it);
+		}
+		
+	}
+	return aux;
+}

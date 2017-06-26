@@ -216,3 +216,16 @@ void gameMap::releaseUnitBlocking(unit *u){
 		}
 	}
 }
+
+tile* gameMap::getClosestPassableTile(int x, int y, int c_unit){
+	tile *dest = this->getTileP(x,y);
+	tile *t = nullptr;
+	int dist = width*height*32;
+	for (auto it = casillas.begin(); it != casillas.end(); ++it){
+		if (dist > dest->euclideanDist(&(*it)) && (dest != &(*it))){
+			dist = dest->euclideanDist(&(*it));
+			t = &(*it);
+		}
+	}
+	return t;
+}

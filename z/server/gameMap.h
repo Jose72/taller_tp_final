@@ -29,6 +29,7 @@ class gameMap {
 		void seePassableForUnit(int unit_code);
 		bool impossibleTile(int x, int y, int class_u);
 		void releaseUnitBlocking(unit *u);
+		tile* getClosestPassableTile(int x, int y, int c_unit);
 };
 
 #endif

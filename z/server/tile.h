@@ -46,6 +46,7 @@ class tile{
 		double getTerrainFactor();
 		void putUnitOver(bool b);
 		void releaseUnitOver();
+		double euclideanDist(tile*);
 
 };
 

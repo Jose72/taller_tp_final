@@ -195,6 +195,11 @@ void unit::setAttack(unit *u){
 	
 }
 
+void unit::setDestiny(int x, int y){
+	dest_x = x;
+	dest_y = y;
+}
+
 int unit::attackRange(){
 	return attack_range;
 }

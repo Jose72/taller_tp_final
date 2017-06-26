@@ -141,3 +141,10 @@ void tile::releaseUnitOver(){
 void tile::setTerrain(int t_code){
 	terr = terrain(t_code);
 }
+
+double tile::euclideanDist(tile *t){
+	if (t){
+		return sqrt(pow((this->x_cord - t->x_cord),2) + pow((this->y_cord - t->y_cord),2));
+	}
+	return 0;
+}

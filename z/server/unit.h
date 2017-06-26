@@ -95,6 +95,7 @@ class unit {
 		void setTechLvl(int tl);
 		void changeOwner(int o);
 		void setDriver(unit *);
+		void setDestiny(int x, int y);
 		
 		//events
 		void move(int d_x, int d_y);
