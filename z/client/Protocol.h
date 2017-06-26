@@ -31,7 +31,7 @@ public:
     void set_units_game();
     void confirm_server(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
     void process_message();
-    void translate_message(int update, int unitCode,int unitType,int unitOwner,int health,int posX, int posY);
+    void translate_message(int update, int unitCode,int unitType,int unitOwner,int health,int posX, int posY,int completionTime);
 
 
     void create_unit(int i, int i1);

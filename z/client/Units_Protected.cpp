@@ -45,6 +45,11 @@ void Units_Protected::setOwnerUnit(int unitCode, int owner) {
     units_map[unitCode]->set_owner(owner);
 }
 
+void Units_Protected::setCompletionTime(int unitCode, int completionTime) {
+    tLock(this->mut);
+    units_map[unitCode]->setCompletionTime(completionTime);
+}
+
 void Units_Protected::setStateUnit(int unitCode, State state) {
     tLock(this->mut);
     units_map[unitCode]->set_state(state);
@@ -57,6 +62,11 @@ int Units_Protected::getOwnerUnit(int unitCode) {
 int Units_Protected::getHealthUnit(int unitCode) {
     tLock(this->mut);
     return units_map[unitCode]->get_heatlh();
+}
+
+int Units_Protected::getCompletionTime(int unitCode) {
+    tLock(this->mut);
+    return units_map[unitCode]->getCompletionTime();
 }
 
 int Units_Protected::size() {

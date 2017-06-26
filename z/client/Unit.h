@@ -53,6 +53,7 @@ protected:
     int techLevel;
     int rangoX;
     int rangoY;
+    int completionTime;
     Direction  direction;
     Attack_Direction attack_direction;
     State state;
@@ -99,6 +100,10 @@ public:
     FlagsUnitType get_type();
     int getRangoX();
     int getRangoY();
+
+    int getCompletionTime() const;
+
+    void setCompletionTime(int completionTime);
 };
 
 

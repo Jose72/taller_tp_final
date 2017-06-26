@@ -40,6 +40,7 @@ Unit::Unit(std::vector<Animation*> &a0,
     this->techLevel = 0;
     this->rangoX = a0[0]->getFrameW_X();
     this->rangoY = a0[0]->getFrameH_Y();
+    this->completionTime = 0;
 }
 
 
@@ -305,6 +306,13 @@ void Unit::animate_attacking(SDL_Rect &cameraRect, std::vector<Animation *> &a, 
     }
 }
 
+int Unit::getCompletionTime() const {
+    return completionTime;
+}
+
+void Unit::setCompletionTime(int completionTime) {
+    Unit::completionTime = completionTime;
+}
 
 void Unit::set_state(State s) {
     this->state = s;

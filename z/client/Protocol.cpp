@@ -141,14 +141,15 @@ void Protocol::process_message() {
     socket.receive((char*)&message4,SIZE_INT);
     int message4_SC = ntohl(message4);
 
-    /*
+
     //seria el porcentage de tiempo que falta para la creacion de la unidad (en edificios)
     //el codigo de unidad del conductor para los vehiculos
     //buscar otro uso para los demas??????
     int message5;
     socket.receive((char*)&message5,SIZE_INT);
     int message5_SC = ntohl(message5);
-    */
+    //int message5_SC = 0;
+
 
     int posX;
     socket.receive((char*)&posX,SIZE_INT);
@@ -158,13 +159,15 @@ void Protocol::process_message() {
     socket.receive((char*)&posY,SIZE_INT);
     int posY_SC = ntohl(posY);
 
+
     translate_message(cod_act_SC,
                       cod_unit_SC,
                       unit_type_SC,
                       cod_unit_owner_SC,
                       message4_SC,
                       posX_SC,
-                      posY_SC);
+                      posY_SC,
+                      message5_SC);
 
 }
 
@@ -180,7 +183,7 @@ void Protocol::create_unit(int idCreator, int idCreation) {
 }
 
 void Protocol::translate_message(int update, int unitCode, int unitType, int unitOwner, int health, int posX,
-                                 int posY) {
+                                 int posY, int completionTime) {
     if (update == CODE_END_GAME) {
         units.endGame(unitCode);
         winner.setWinner(unitCode);
@@ -230,6 +233,7 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
                     units.setHealthUnit(unitCode,health);
                     units.setOwnerUnit(unitCode,unitOwner);
+                    units.setCompletionTime(unitCode,completionTime);
                     break;
                 case ERASED:
                     units.setPosUnit(unitCode,CODE_OUTSIDE_MAP,CODE_OUTSIDE_MAP);

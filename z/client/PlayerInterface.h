@@ -48,6 +48,8 @@ public:
     int getCol(int division, int offset, int sizeElement);
 
     void drawTech(int tech);
+
+    void drawCompletionTime(int time);
 };
 
 

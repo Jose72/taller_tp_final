@@ -133,8 +133,13 @@ void PlayerInterface::cleanButtons(){
 }
 
 void PlayerInterface::drawTech(int tech){
-    drawer.drawText(screen,"Tech Lv:",getCol(3,1,0),20);
-    drawer.drawText(screen,std::to_string(tech),getCol(3,2,0),20);
+    drawer.drawText(screen,"Tech Lv:",getCol(3,1,0),0);
+    drawer.drawText(screen,std::to_string(tech),getCol(3,2,0),0);
+}
+
+void PlayerInterface::drawCompletionTime(int time){
+    drawer.drawText(screen,"Unit Creation:",getCol(3,1,0),20);
+    drawer.drawText(screen,std::to_string(100 - time) + "%",getCol(3,2,0),20);
 }
 
 void PlayerInterface::loadButtons(Unit* unit){
@@ -143,15 +148,18 @@ void PlayerInterface::loadButtons(Unit* unit){
         case FACTORY_ROBOTS_ALIVE:
             loadRobotsButtons(initialYPos,unit->get_unit_code(),unit->get_techLevel());
             drawTech(unit->get_techLevel());
+            drawCompletionTime(unit->getCompletionTime());
             break;
         case FACTORY_VEHICLES_ALIVE:
             loadVehiclesButtons(initialYPos,unit->get_unit_code(),unit->get_techLevel());
             drawTech(unit->get_techLevel());
+            drawCompletionTime(unit->getCompletionTime());
             break;
         case FORT_ALIVE:
             int newYpos = loadRobotsButtons(initialYPos,unit->get_unit_code(),unit->get_techLevel());
             loadVehiclesButtons(newYpos,unit->get_unit_code(),unit->get_techLevel());
             drawTech(unit->get_techLevel());
+            drawCompletionTime(unit->getCompletionTime());
             break;
     }
 
@@ -164,7 +172,6 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
     cleanButtons();
     drawer.drawBackground(gameWidth,gameHeight,width,background);
     drawer.drawLine(screen,gameWidth);
-    drawer.drawText(screen,"Z",getCol(2,1,0),0);
     if(selectionHandler.unit_select()){
         loadButtons(selectionHandler.getUnit());
         drawer.drawImage(screen,getUnitPortrait(selectionHandler.getUnit()->get_type()).c_str(), getCol(2,1,32), 50);

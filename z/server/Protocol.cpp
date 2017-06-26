@@ -166,6 +166,7 @@ int serverProtocol::sendVictory(int w){
 	s = socket.send((char*) &trash, INT_SIZE);
 	s = socket.send((char*) &trash, INT_SIZE);
 	s = socket.send((char*) &trash, INT_SIZE);
+	s = socket.send((char*) &trash, INT_SIZE);
     //std::cout << "finish act - s: " << s << std::endl;
 	return s;
 }
@@ -182,6 +183,7 @@ int serverProtocol::sendUpdateTechLvl(int tech_lvl){
 	//basura
 	int trash = htonl(0);
 	socket.send((char*) &trash, INT_SIZE);
+	s = socket.send((char*) &trash, INT_SIZE);
 	s = socket.send((char*) &trash, INT_SIZE);
 	s = socket.send((char*) &trash, INT_SIZE);
 	s = socket.send((char*) &trash, INT_SIZE);
@@ -211,26 +213,26 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 		//vida de la unidad
 		int health = htonl(it->second->getHealth());
         s = socket.send((char*) &health, INT_SIZE);
-		
-		/*
+
+
 		int m = 0;
 		int c = it->second->getClassId();
 		switch(c){
 			case(BUILDING):{
 				m = it->second->getTimeToCompletion();
 				break;
-			}
-			case(VEHICLE):{
-				unit *d = it->second->getDriver();
-				if (d){
-					m = d->getUnitId();
-				}
-				break;
-			}
-		}
+			}/*
+				case(VEHICLE):{
+                    unit *d = it->second->getDriver();
+                    if (d){
+                        m = d->getUnitId();
+                    }
+                    break;
+                }*/
+            }
 		m = htonl(m);
-        socket.send((char*) &m, sizeof(int));
-		*/
+		socket.send((char*) &m, sizeof(int));
+
 		 
 		//pos x de la unidad
         int posX = htonl(it->second->getX());
