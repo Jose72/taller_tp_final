@@ -156,6 +156,58 @@ Unit* Units_Protected::selectEnemy(int dx1, int dx2, int dy1, int dy2, Action &a
     return enemy;
 }
 
+Unit* Units_Protected::selectUnit(int posX, int posY, bool &found, int id_client) {
+    tLock(this->mut);
+    Unit *unitSelected;
+    found = false;
+    std::map<int, Unit*>::iterator it;
+    for (it = units_map.begin();it != units_map.end() ; ++it) {
+        if(it->second->get_type() != COLORLESS_FLAG) {
+            int rangoX = it->second->get_posx() + it->second->getRangoX();
+            int rangoY = it->second->get_posy() + it->second->getRangoY();
+            if (BETWEEN(posX, it->second->get_posx(), rangoX)) {
+                if (BETWEEN(posY, it->second->get_posy(), rangoY)) {
+                    if (it->second->get_owner() == id_client) {
+                        unitSelected = it->second;
+                        found = true;
+                    }
+                }
+            }
+        }
+    }
+    return unitSelected;
+}
+
+Unit* Units_Protected::selectEnemy(int posX,int posY, Action &action, int id_client) {
+    tLock(this->mut);
+    Unit *enemy;
+    std::map<int, Unit*>::iterator it;
+    action = MOVE;
+    for (it = units_map.begin();it != units_map.end() ; ++it) {
+        if(it->second->get_type() != COLORLESS_FLAG) {
+            int rangoX = it->second->get_posx() + it->second->getRangoX();
+            int rangoY = it->second->get_posy() + it->second->getRangoY();
+            if (BETWEEN(posX, it->second->get_posx(), rangoX)) {
+                if (BETWEEN(posY, it->second->get_posy(), rangoY)) {
+                    if (it->second->get_owner() != id_client) {
+                        if ((it->second->get_type() == HEAVY_TANK_EMPTY) ||
+                            (it->second->get_type() == MEDIUM_TANK_EMPTY) ||
+                            (it->second->get_type() == LIGHT_TANK_EMPTY) ||
+                            (it->second->get_type() == JEEP_EMPTY) ||
+                            (it->second->get_type() == MISILE_LAUNCHER_EMPTY)) {
+                            action = DRIVE;
+                        } else {
+                            action = ATTACK;
+                        }
+                        enemy = it->second;
+                    }
+                }
+            }
+        }
+    }
+    return enemy;
+}
+
 void Units_Protected::cleanDeadUnits() {
     tLock(this->mut);
     std::map<int, Unit*>::iterator it;

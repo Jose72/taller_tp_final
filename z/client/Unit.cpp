@@ -38,6 +38,8 @@ Unit::Unit(std::vector<Animation*> &a0,
     this->posxO = 0;
     this->posyO = 0;
     this->techLevel = 0;
+    this->rangoX = a0[0]->getFrameW_X();
+    this->rangoY = a0[0]->getFrameH_Y();
 }
 
 
@@ -332,3 +334,10 @@ void Unit::set_owner(int owner) {
     this->owner = owner;
 }
 
+int Unit::getRangoX() {
+    return this->rangoX;
+}
+
+int Unit::getRangoY() {
+    return this->rangoY;
+}

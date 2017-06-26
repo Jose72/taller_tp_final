@@ -26,6 +26,8 @@ public:
     void animate(int limitXL, int limitXR, int limitYU, int limitYD, SDL_Rect cameraRect,SoundManager &soundManager);
     Unit* selectUnit(int dx1, int dx2, int dy1, int dy2, bool &found, int id_client);
     Unit* selectEnemy(int dx1, int dx2, int dy1, int dy2,Action &action, int id_client);
+    Unit* selectUnit(int posX,int posY, bool &found, int id_client);
+    Unit* selectEnemy(int posX,int posY,Action &action, int id_client);
     bool createIfDoesNotExist(int cod_unit,
                               int unit_type,
                               int unit_owner,

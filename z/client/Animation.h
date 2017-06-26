@@ -9,6 +9,8 @@ private:
     SDL_Surface *screen;
     SDL_Surface *image;
     SDL_Rect frame;
+    int frameW_X;
+    int frameH_Y;
 
 
 public:
@@ -17,6 +19,13 @@ public:
     ~Animation();
     void animate_static(int posx, int posy);
     void animate(int posx, int posy, SDL_Rect & cameraRect);
+
+    void setFrameW_X(int frameW);
+    void setFrameH_Y(int frameH);
+
+    int getFrameW_X();
+    int getFrameH_Y();
+
 };
 
 
