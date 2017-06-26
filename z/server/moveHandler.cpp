@@ -219,8 +219,14 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		//std::cout << camino.size() << std::endl;
 
 		if (camino.size() == 0) {
+			std::cout << "-------" << std::endl;
+			orig->printTile();
+			dest->printTile();
+			std::cout << "-------" << std::endl;
 			//busco camino a la casila pasable mas cercana
 			tile *new_dest = mapa.getClosestPassableTile(dest->getX(), dest->getY(), c_id);
+			new_dest->printTile();
+			std::cout << "-------" << std::endl;
 			a_Start(orig, new_dest, mapa, c_id, camino);
 			
 			if (camino.size() == 0) {
@@ -346,7 +352,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 				}
 			}
 		}
-		u.printPos();
+		//u.printPos();
 		
 		
 		////status check
@@ -374,7 +380,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 					u.moveToTarget();
 				}
 			} else{
-				std::cout << "sigo mov" << std::endl;
+				//std::cout << "sigo mov" << std::endl;
 			}
 		} else {//si llegue a destino
 			u.changeState(STANDING);

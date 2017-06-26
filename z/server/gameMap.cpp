@@ -222,7 +222,7 @@ tile* gameMap::getClosestPassableTile(int x, int y, int c_unit){
 	tile *t = nullptr;
 	int dist = width*height*32;
 	for (auto it = casillas.begin(); it != casillas.end(); ++it){
-		if (dist > dest->euclideanDist(&(*it)) && (dest != &(*it))){
+		if (dist > dest->euclideanDist(&(*it)) && (dest != &(*it)) && (*it).isPassable(c_unit)){
 			dist = dest->euclideanDist(&(*it));
 			t = &(*it);
 		}

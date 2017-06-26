@@ -100,6 +100,7 @@ class unit {
 		//events
 		void move(int d_x, int d_y);
 		void moveToTarget();
+		void moveToCenterTarget();
 		void attack(unit *u);
 		void follow(unit *u);
 		void stop();

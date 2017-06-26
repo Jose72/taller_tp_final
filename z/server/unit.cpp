@@ -280,6 +280,18 @@ bool unit::targetIsInRange(){
 	return false;
 }
 
+
+void unit::moveToCenterTarget(){
+	if (target){
+		this->dest_x = target->getCenterX();
+		this->dest_y = target->getCenterY();
+		state = MOVING;
+	} else {
+		state = STANDING;
+	}
+}
+
+
 //si tengo taget lo pongo como destino
 //sino me quedo quieto
 void unit::moveToTarget(){
