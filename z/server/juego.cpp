@@ -25,12 +25,8 @@
 juego::juego(int creator, int cant_players, int game_t, int cant_teams, std::string map_name): 
 id_creator(creator), map_name(map_name), max_players(cant_players), teams(cant_teams), 
 game_type(game_t), builder(u_info), id_unit_counter(1), 
-g_info(infoGame(cant_players, game_t, cant_teams)), stop_signal(false), running(false), 
-started(false), ended(false) {}
-
-bool juego::gameStarted(){
-	return started;
-}
+g_info(infoGame(cant_players, game_t, cant_teams)), stop_signal(false), started(false), 
+running(false) {}
 
 void juego::getDescription(int &creat, int &max_p, int &cant_p, int &game_t, int &cant_t){
     tLock l(game_m);
@@ -50,8 +46,13 @@ bool juego::isCreator(int c){
 	return (id_creator == c);
 }
 
+bool juego::gameStarted(){
+	return started;
+}
+
+//si empezo y termino de correr
 bool juego::readyToClean(){
-	return ended;
+	return (started && !running);
 }
 
 int juego::checkVictory(){
@@ -64,18 +65,18 @@ int juego::checkVictory(){
 			//std::cout << "DEFEAT: " << i << std::endl;
 			df.defeatPlayer(i, units);
 		}
+		//me fijo si hay ganador
+		int winner = g_info.checkForWinner();
+		if (winner != NO_WINNER){
+			std::cout << "WINNER: " << winner << std::endl;
+			for (auto it = protocols.begin(); it != protocols.end(); ++it){
+				//hay que enviarles a todos que termino la partida
+				(*it)->sendVictory(winner);
+			}
+			return winner;
+		}	
 	}
-	//me fijo si hay ganador
-	int winner = g_info.checkForWinner();
-	if (winner != NO_WINNER){
-		std::cout << "WINNER: " << winner << std::endl;
-		for (auto it = protocols.begin(); it != protocols.end(); ++it){
-			//hay que enviarles a todos que termino la partida
-			(*it)->sendVictory(winner);
-		}
-		
-	}
-	return winner;
+	return NO_WINNER;
 }
 
 void juego::stop(){
@@ -118,20 +119,6 @@ void juego::unit_cleaner(){
 			}
 			
 		}
-		/*
-		//si la unidad esta muerta o fue borrada
-		if (u->isDead() || u.getState() == ERASED) {
-			death_h.death(*u, units, id_unit_counter, mapa, g_info);//handler por si tiene q hacer algo
-			//si no es un edificio lo elimino
-			if (not_edificio){
-				delete it->second;
-				it = units.erase(it); // borro de la lista
-				
-			}
-		} else {
-			
-		}
-		*/ 
 	}
 }
 
@@ -170,90 +157,39 @@ void juego::sendInit(){
 	mapa = gameMap(mapDes);
     jsonHandler.jsonToUnits(id_unit_counter,builder,units,map_name);
 
-	/*
-	///////////////////////HARDOCDEO UNODADES PARA TESTING
-	unit *u1 = builder.build(PYRO, 1, 150, 400);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u1));
-	id_unit_counter++;
-	
-	unit *u8 = builder.build(GRUNT, 2, 10, 230);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u8));
-	id_unit_counter++;
-	
-	///////////////77
-	//TERRITORIOS HARDCODEADO
-	unit *u2 = builder.build(FLAG, 50, 500);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u2));
-	id_unit_counter++;
-	
-	unit *u3 = builder.build(VEHICLE_FACTORY, 0, 104, 520);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u3));
-	id_unit_counter++;
-	
-	unit *u4 = builder.build(ROBOT_FACTORY, 0, 104, 680);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u4));
-	id_unit_counter++;
 
-	unit *u5 = builder.build(BRIDGE_H, 320, 680);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
-	id_unit_counter++;
-	u5 = builder.build(BRIDGE_H, 384, 680);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
-	id_unit_counter++;
-	u5 = builder.build(BRIDGE_H, 448, 680);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
-	id_unit_counter++;
-	u5 = builder.build(BRIDGE_H, 512, 680);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
-	id_unit_counter++;
-	u5 = builder.build(BRIDGE_H, 576, 680);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
-	id_unit_counter++;
-	
-	u5 = builder.build(JEEP, 0, 104, 800);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u5));
-	id_unit_counter++;
-	
-	std::vector<unit*> fac;
-	fac.push_back(u3);
-	fac.push_back(u4);
-	territory t(u2, fac);
-	territorios.push_back(t);
-	//////////////////////FIN-HARDCODEO/////////////
-	*/
 	
 	
 	//hay que inicilizar la info de cada equipo
 	//codigo de equipo (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
-	
 	//un solo fuerte por equipo
 	g_info.initializeTeamsData(units);
 	
+	//inicializaciond e lso territorios
 	for (auto it = units.begin(); it != units.end(); ++it){
 		unit *u = it->second;
 		if (u->getUnitId() == FLAG){
 			auto it2 = it;
 			it2++;
-			std::cout << "fat_n: " << it2->second->getUnitId() << std::endl;
 			territory t(u, (it2->second));
 			territorios.push_back(t);
 		}
 	}
 	
+	//inicializacion de los vehiculos
+	//hay que crearles un conductor y agregarlo al mapa de unidades (grunt por defecto)
+	for (auto it = units.begin(); it != units.end(); ++it){
+		unit *u = it->second;
+		if (VEHICLE == u->getClassId() && u->getOwner() != 0){
+			unit *driv = builder.build(GRUNT, u->getOwner(), u->getX(), u->getY());
+			driv->instantDrive(u);
+			units.insert(std::pair<int,unit*>(id_unit_counter, driv));
+			id_unit_counter++;//incremento id_unit
+			g_info.incrementUnitsCount(u->getOwner());
+		}
+	}
 
-	/*
-	//probar con 3 juagdores
-	unit *u10 = builder.build(FORT ,3 ,0, 640);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u10));
-	id_unit_counter++;
-	unit *u11 = builder.build(GRUNT ,3 ,200, 640);
-	units.insert(std::pair<int,unit*>(id_unit_counter,u11));
-	id_unit_counter++;
-	std::vector<unit*> forts_3;
-	forts_3.push_back(u10);
-	g_info.initializeTeam(3,forts_3, 1);
-	*/
 
 	//seteo en el mapa las casillas bloqueadas (o desbloqueadas por unidades)
 	mapa.setBlocking(units);
@@ -266,18 +202,7 @@ void juego::sendInit(){
 	//envio pos inicial
 	g_info.sendInitialPos();
 	
-	for (auto it = units.begin(); it != units.end(); ++it){
-		unit *u = it->second;
-		if (VEHICLE == u->getClassId() && u->getOwner() != 0){
-			//unit *d = builder.build(GRUNT);
-			unit *driv = builder.build(GRUNT, u->getOwner(), u->getX(), u->getY());
-			driv->instantDrive(u);
-			units.insert(std::pair<int,unit*>(id_unit_counter, driv));
-			id_unit_counter++;//incremento id_unit
-			g_info.incrementUnitsCount(u->getOwner());
-			//std::cout << "new_driver: "
-		}
-	}
+	
 	///////////////////////////////
 	//envio el mapa y las unidades iniciales a todos lo jugadores
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
@@ -308,7 +233,6 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
 				(it->second)->move(e.getX(),e.getY());
 			}
-			
 			}
 			return;
 			
@@ -327,8 +251,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 				if ((it2->second)->getUnitId() != FLAG && (it2->second)->getUnitId() != BULLET){
 					(it->second)->attack(it2->second);
 				} else {
-					//si la unidad no es atacable hago un follow
-					//(it->second)->follow(it2->second);
+					//si la unidad no es atacable
 				}
 			} 
 			}
@@ -338,16 +261,13 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			//crear
             std::cout << "create order: " << e.getX() << std::endl;
 			int u_to_create = e.getX();
-			//si el tech level no le da salgo
-			//if ((it->second)->getTechLvl() < getTechLvlFromUnit(u_to_create)) return;
-			(it->second)->create(u_to_create, u_info.getFabTime(u_to_create)/100);
-			
+			//
+			(it->second)->create(u_to_create, (u_info.getFabTime(u_to_create) / 10));
 			return;
 			}
 		case 3: //conducir
 			{
 			//busco la unidad destino
-			std::cout << "drive order: " << e.getX() << std::endl;
 			//si no es robot salgo
 			if (it->second->getClassId() != ROBOT) return;
 			std::map<int,unit*>::iterator it2;
@@ -396,7 +316,7 @@ void juego::run(){
                 i++;
             }
 
-			//actualizo las undiades (pendiente: crear una func aparte)
+			//actualizo las undiades
 			for (auto it = units.begin(); it != units.end(); ++it){
 				unit *u = it->second;
 				actualizer(it->first, *u, units, mapa, MILISEC_SLICE, id_unit_counter, g_info);
@@ -407,15 +327,10 @@ void juego::run(){
 				it->changeOwnership();
 			}
 			
-			//HARCIDEO - CAMBIAR
-			//envio los tech levels -----  NO NECESARIO - ARREGLAR
-			for (auto it = protocols.begin(); it != protocols.end(); ++it){
-                 s = (*it)->sendUpdateTechLvl(5);
-            }
-			
 			//envio actualizacion de las unidades
+			s = 0;
             for (auto it = protocols.begin(); it != protocols.end(); ++it){
-                 s = (*it)->sendActualization(units);
+                 s += (*it)->sendActualization(units);
             }
 			
 			//limpio los fiambres
@@ -423,6 +338,9 @@ void juego::run(){
 			
 			//check si gano alguien, o si perdio
 			if (NO_WINNER != checkVictory()){
+				for (auto it = protocols.begin(); it != protocols.end(); ++it){
+					(*it)->sendActualization(units);
+				}
 				running = false;
 			}
 			
@@ -435,6 +353,10 @@ void juego::run(){
 			
 	}
 	
+	//po si salio por otras razones
+	running = false;
+	
+	
 	//limpio unidades al final del juego
 	std::cout << "delete units" << std::endl;
 	for (auto it = units.begin(); it != units.end(); ++it){
@@ -446,7 +368,5 @@ void juego::run(){
 	}
 	
 	std::cout << "juego out" << std::endl;	
-	
-	ended = true;
 	return;
 }

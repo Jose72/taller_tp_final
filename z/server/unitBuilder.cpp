@@ -2,13 +2,12 @@
 
 #define NO_OWNER 0
 
-#define RANGE_MULTIPLIER 10
-#define RANGE_FLAG_MULTIPLIER 16
+#define RANGE_MULTIPLIER 7
+#define RANGE_FLAG_MULTIPLIER 10
+#define FAB_TIME_DIVISOR 10
 
 
-unitBuilder::unitBuilder(infoUnits &u_info): u_info(u_info) {
-	//u_info.print();
-	}
+unitBuilder::unitBuilder(infoUnits &u_info): u_info(u_info) {}
 
 unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 	switch (unit_code){
@@ -62,7 +61,7 @@ unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 			u_info.getRange(unit_code),
 			u_info.getDamage(unit_code),
 			u_info.getExplosive(unit_code),
-			u_info.getFabTime(u_info.getUnitToCreate(unit_code)),
+			u_info.getFabTime(u_info.getUnitToCreate(unit_code) / FAB_TIME_DIVISOR),
 			u_info.getUnitToCreate(unit_code),
 			u_info.getTechLvl(unit_code)
 			);
@@ -83,7 +82,7 @@ unit* unitBuilder::build(int unit_code, int owner, int x, int y){
 			u_info.getRange(unit_code),
 			u_info.getDamage(unit_code),
 			u_info.getExplosive(unit_code),
-			u_info.getFabTime(u_info.getUnitToCreate(unit_code)),
+			u_info.getFabTime(u_info.getUnitToCreate(unit_code) / FAB_TIME_DIVISOR),
 			u_info.getUnitToCreate(unit_code),
 			u_info.getTechLvl(unit_code)
 			);

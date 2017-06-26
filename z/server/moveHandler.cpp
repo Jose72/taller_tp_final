@@ -17,20 +17,6 @@ int a_Start(tile *orig, tile *dest, gameMap &gmap, int unit_code, std::vector<ti
 //h = costo por moverme desde la casilla actual hasta el destino (se aproxima en gral, por ej distancia euclidea)
 
 
-
-/////////////////////////////////////////////7
-/////////////////////////////////////////////7
-//NUEVO
-/*
-//si no la casilla no es pasable debo encontrar la mas cercana a la que pueda ir
-if (!dest->isPassable(unit_code)){
-	dest = gmap.getClosestPassableTile(dest->getX(), dest->getY(), unit_code);
-
-}
-*/ 
-/////////////////////////////////////////////7
-
-
 //usar punteros, sino se rompe todo
 //nodos visitados, pero no expandidos (no chequee vecinos)
 tilesListCost open;
@@ -116,14 +102,9 @@ while (!open.empty()){//mientras al lista no este vacia
 //si se me acabaron los open
 //salgo, no hay camino
 
-
-//si no hay cmaino
-
 //hay que retornar la lista de punteros
 
 //std::cout << "last: " << last << std::endl;
-
-
 
 //voy hacia  atras con parent
 while (last != nullptr){
@@ -148,6 +129,10 @@ tile* getClosestPassableTile(tile* dest, gameMap &gmap, int c_code){
 	return nullptr;
 }
 
+
+//correccion de camino
+//en el caso de que se mueva en diagonal y alguna de las 2 casillas que son
+//adyacentes a ambas sea bloqueante hayq ue hacer una correccion
 void correctPath(gameMap &mapa, int c_code ,std::vector<tile*> &path){
 	std::vector<tile*> path_aux;
 	int s = path.size();
@@ -219,14 +204,9 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		//std::cout << camino.size() << std::endl;
 
 		if (camino.size() == 0) {
-			std::cout << "-------" << std::endl;
-			orig->printTile();
-			dest->printTile();
-			std::cout << "-------" << std::endl;
-			//busco camino a la casila pasable mas cercana
+			//busco camino a la cassila pasable mas cercana
 			tile *new_dest = mapa.getClosestPassableTile(dest->getX(), dest->getY(), c_id);
-			new_dest->printTile();
-			std::cout << "-------" << std::endl;
+
 			a_Start(orig, new_dest, mapa, c_id, camino);
 			
 			if (camino.size() == 0) {
@@ -239,61 +219,32 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			}
 			
 			tile *last_tile = camino[0];
-			//last_tile->printTile();
+			//setea la ultiam casilla del nuevo camino como destino
 			u.setDestiny(last_tile->getX()*32+15, last_tile->getY()*32+15);
+			/*
 			for (auto it = camino.begin(); it != camino.end(); ++it){
 				(*it)->printTile();
 			}
-			
-			/*
-			u.stop();
-			u.changeState(STANDING);
-            std::cout << "no camino" << std::endl;
-			return 1;
 			*/
 		}
 		
-		/*
-		if (camino.size() == 0) {
-			u.stop();
-			u.changeState(STANDING);
-            std::cout << "no camino" << std::endl;
-			return 1;
-		}
-		*/ 
-		
+
+
 		//correcion de camino
 		correctPath(mapa, c_id, camino);
 
+		//busco la casilla mas cercana del camino
 		tile *closer_tile = camino[camino.size() - 1];
 		if (camino.size() > 1){
 			closer_tile = camino[camino.size() - 2];
-			
 		}
 		
 		
-		///////////////////////////////////////////////////////////
-		////////NUEVO
-		/*
-		int s_c = camino.size();
-		tile *last_tile = camino[s_c - 1];
-		u.setDestiny(last_tile->getX(), last_tile->getY());
-		*/
-		///////////////////////////////////////////////////////////
-		
-		
-		
-		//std::cout << "closer tile" << std::endl;
-		//closer_tile->printTile();
-		//u.printPos();
-		
-		//conseguir el borde de la casilla (coord pixel)
-		//int x_closer = 15 + 32 * closer_tile->getX();
-		//int y_closer = 15 + 32 * closer_tile->getY(); 
+		//conseguir el centro de la casilla (coord pixel)
 		int x_closer = 15 + 32 * closer_tile->getX();
 		int y_closer = 15 + 32 * closer_tile->getY(); 
 		//si hay una sola casilla (estas en la casilla destino)
-		//los yx que queres son los de destino, no el borde de la casilla
+		//los yx que queres son los de destino
 		if (camino.size() == 1){
 			x_closer = u.getDestX(); 
 			y_closer = u.getDestY();
@@ -304,14 +255,19 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		
 		//distancia a esa coord (euclidea)
 		double dist = sqrt(pow((x_unit - x_closer),2) + pow((y_unit - y_closer),2));
-		//std::cout << x_unit - x_closer << std::endl;
-		//std::cout << y_unit - y_closer << std::endl;
 		
 		if (dist != 0) { // si no  estoy en el destino
 			//seteo velocidad
 			//multiplico por el factor de terreno de la casilla actual
-			//y por
-			double speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
+			//y por lo demas si es vehiculo
+			
+			double speed = 0;
+			if (c_id == ROBOT){
+				speed = std::max(u.getSpeed() * orig->getTerrainFactor(), 1.0);
+			}
+			if (c_id == VEHICLE){
+				speed = std::max(u.getSpeed() * orig->getTerrainFactor() * (1 - u.getRelativeDamage()), 1.0);
+			}
 			//si es una unidad no movible hay un error
 			if (speed == 0) return 1; //no deberia suceder
 
@@ -319,31 +275,13 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			double new_x = x_unit + ((x_closer - x_unit) / dist ) * time * speed;
 			double new_y = y_unit + ((y_closer - y_unit) / dist ) * time * speed;
 			
-			
-			//si los nuevos xy van por una casilla no pasable hay que recalcular
-			tile *t_t = mapa.getTilePFromUnit(new_x, new_y);
-			if (!t_t->isPassable(c_id)){
-				//tile *dest_prox = mapa.getTilePFromUnit(x_closer, y_closer);
-				//std::vector<tile*> mini_camino;
-				//a_Start_No_Diagonal(orig,dest_prox,mapa,c_id,mini_camino);
-				
-			}
-			
-			/*
-			std::cout << "time " << time << std::endl;
-			std::cout << "speed " << speed << std::endl;
-			std::cout << "dist " << dist << std::endl;
-			std::cout << "new_x " << new_x << std::endl;
-			std::cout << "new_y " << new_y << std::endl;
-			*/
-			
 			//si la distancia a los xy mas cercanos es mayor
 			//a la distancia hacia el destino, seteo el destino como pos
 			if (sqrt(pow((u.getDestX() - x_unit),2) + pow((u.getDestY() - y_unit),2)) <= dist){
 				u.setPos(u.getDestX(), u.getDestY());
 			} else {
 				//si la dist de los nuevos xy con la pos de partida es mayor o igual
-				//a la de partida con los xy mas cercanos, seteo los ams cercanos como pos actual
+				//a la de partida con los xy mas cercanos, seteo los mas cercanos como pos actual
 				//sino seteo los nuevos xy
 				if (sqrt(pow((new_x - x_closer),2) + pow((new_y - y_closer),2)) <= dist){
 					u.setPos(new_x, new_y);
@@ -404,12 +342,10 @@ int moveHandler::moveBulletActualize(unit &u, double time){
 		u.setPos(x_dest, y_dest);
 	}
 	
-	//u.printPos();
 	//status check
 	if (!u.isMoving()){
 		u.changeState(ATTACKING);
 	}
-	
 	
 	return 0;
 }

@@ -39,9 +39,8 @@ class juego: public tThread{
 		std::mutex event_m; //proteger eventos
 		std::mutex game_m;
 		bool stop_signal; //cuando se hace un stop
-		bool running;
-		bool started;
-		bool ended;
+		bool started; //si el juego empezo
+		bool running; //si se esta jugando en el momento
 		
 		void eventHandle(Event &e, std::map<int, unit*> &units);
 		int checkVictory();

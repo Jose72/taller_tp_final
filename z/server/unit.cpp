@@ -79,7 +79,10 @@ int unit::getSpeed(){
 }
 
 double unit::getRelativeDamage(){
-	return ((b_health - health) / (double) b_health);
+	if (b_health != 0){
+		return ((b_health - health) / (double) b_health);
+	}
+	return 1;
 }
 
 
@@ -234,6 +237,9 @@ int unit::getOwner(){
 	return owner;
 }
 
+
+//chequeo el estado tambien porque 
+//puedo haberlo seteado sin que la vida sea 0
 bool unit::isAlive(){
 	if (health > 0 && state != DEAD) return true;
 	return false;
@@ -353,7 +359,7 @@ void unit::removeFollower(unit* u){
 	}
 }
 
-//le digo a mis followers que np me sigan, que seteen su target a null
+//le digo a mis followers que no me sigan, que seteen su target a null
 void unit::stopFollowers(){
 	for (auto it = followers.begin(); it != followers.end(); ++it){
 		(*it)->removeTarget(this);
@@ -407,14 +413,6 @@ int unit::getTargetOwner(){
 	return -1;
 }
 
-void unit::decreaseTechLvl(){
-	tech_level--;
-}
-
-void unit::increaseTechLvl(){
-	tech_level++;
-}
-
 int unit::getTechLvl(){
 	return tech_level;
 }
@@ -441,14 +439,17 @@ void unit::driveTarget(){
 }
 
 bool unit::isDriving(){
-	if (state == DRIVING) return true;
-	return false;
+	return (state == DRIVING);
 }
 
 bool unit::isExplosiveDamage(){
 	return explosive_damage;
 }
 
+
+//el tiempo se descuenta del timer
+//cuantos mas territorios tenga o menos daño realtivo
+//mas tiempo se descuenta -> mas rapido se crea la unidad
 void unit::updateCreationTimer(int time, int t_count){
 	if (countdown - time < 0){
 		countdown = 0;
@@ -501,7 +502,7 @@ double unit::getCenterY_D(){
 	return y + (height / 2);
 }
 
-//el mas pequeño
+//tomo el radio mas pequeño
 double unit::getRadius(){
 	if (height < width){
 		return (height / 2);
@@ -521,8 +522,13 @@ unit* unit::getDriver(){
 	return driver;
 }
 
+//una unidad atacable es un enemigo
+//o una unidad con owner 0 (que no sea un vehiculo)
+//tampoco puede ser una bala
 bool unit::isAttackable(unit *u){
-	return (this->isEnemy(u) || (u->owner == 0 && u->class_id != VEHICLE));
+	return (this->isEnemy(u) || 
+	(u->owner == 0 && u->class_id != VEHICLE)|| 
+	(u->class_id != BULLET));
 	
 }
 
@@ -533,6 +539,9 @@ bool unit::targetIsAttackable(){
 	return false;
 }
 
+
+//cuanto falta para que se complete la unidad que se esta creando
+//devuele un porcentage del 0 al 100
 int unit::getTimeToCompletion(){
 	if (base_time != 0){
 		return round((countdown/base_time)*100);
@@ -540,12 +549,17 @@ int unit::getTimeToCompletion(){
 	return 0;
 }
 
+
+//si la unidad recibida como parametro esta "encima"
 bool unit::hasOnTop(unit *u){
 	bool dx = ((this->x) < (u->x) &&  (u->x) < (this->x + this->width));
 	bool dy = ((this->y) < (u->y) && (u->y) < (this->y + this->height));
 	return (dx && dy);
 }
 
+
+//setea a la unidad como conductor del vehiculo instantaneamente
+//para inicializar los vehiculos cuando se crean
 void unit::instantDrive(unit *vehicle){
 	if (target) target->removeFollower(this);
 	target = vehicle;
@@ -558,6 +572,7 @@ void unit::instantDrive(unit *vehicle){
 void unit::setDriver(unit *u){
 	driver = u;
 }
+
 
 bool unit::timerComplete(){
 	return (countdown <= 0);

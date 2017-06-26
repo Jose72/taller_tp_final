@@ -201,25 +201,16 @@ void tClientManager::run(){
 			return; //se rompio algo y hay que salir del manager
 		}
 	}
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	//std::cout << "empezo client: " << id_client << std::endl;	
 	
 	int s = 1;
 	while (s > 0 && !end_game) {
-		/*
-		std::cout << "start taking event: " << std::endl;
-		*/
-		
 		Event e;
 		s = protocolo.receive_event(e);
-		
 		if (s > 0) {
 			//el juego tiene el mutex
 			j->take_event(e);
 		}
 	}
-	
 	
 	std::cout << "manager out" << std::endl;	
 	ended = true;

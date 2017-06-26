@@ -128,17 +128,17 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 
 int serverProtocol::receive_event(Event &e) {
     std::cout << "recibe event" << std::endl;
-	int s = 1;
+	int s = 0;
     int cod_operation;
-    s = socket.receive((char*)&cod_operation, INT_SIZE);
+    socket.receive((char*)&cod_operation, INT_SIZE);
     int cod_operation_CS = ntohl(cod_operation);
 
     int cod_unit;
-    s = socket.receive((char*)&cod_unit, INT_SIZE);
+    socket.receive((char*)&cod_unit, INT_SIZE);
     int cod_unit_CS = ntohl(cod_unit);
 
     int posX;
-    s = socket.receive((char*)&posX, INT_SIZE);
+    socket.receive((char*)&posX, INT_SIZE);
     int posX_CS = ntohl(posX);
 
     int posY;
@@ -155,42 +155,21 @@ int serverProtocol::receive_event(Event &e) {
 
 
 int serverProtocol::sendVictory(int w){
-	int s = 1;
+	int s = 0;
 	int code = 40;
 	//codigo de actualizacion
 	int state_code = htonl(code);
-	s = socket.send((char*) &state_code, INT_SIZE);
+	socket.send((char*) &state_code, INT_SIZE);
 	//winner
 	int winner = htonl(w);
-	s = socket.send((char*) &winner, INT_SIZE);
-	//basura
-	int trash = htonl(0);
-	s = socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
-    //std::cout << "finish act - s: " << s << std::endl;
-	return s;
-}
-
-int serverProtocol::sendUpdateTechLvl(int tech_lvl){
-	int s = 1;
-	int code = 35;
-	//codigo de actualizacion
-	int state_code = htonl(code);
-	s = socket.send((char*) &state_code, INT_SIZE);
-	//tech lvl
-	int tech_l = htonl(tech_lvl);
-	s = socket.send((char*) &tech_l, INT_SIZE);
+	socket.send((char*) &winner, INT_SIZE);
 	//basura
 	int trash = htonl(0);
 	socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
-	s = socket.send((char*) &trash, INT_SIZE);
+	socket.send((char*) &trash, INT_SIZE);
+	socket.send((char*) &trash, INT_SIZE);
+	socket.send((char*) &trash, INT_SIZE);
+	socket.send((char*) &trash, INT_SIZE);
 	s = socket.send((char*) &trash, INT_SIZE);
     //std::cout << "finish act - s: " << s << std::endl;
 	return s;
@@ -200,23 +179,23 @@ int serverProtocol::sendUpdateTechLvl(int tech_lvl){
 int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 	//int units_size = htonl(map_units.size());
     //socket.send((char*) &units_size,4);
-	int s = 1;
+	int s = 0;
     for (auto it = map_units.begin(); it != map_units.end() ; ++it) {
 		//codigo de estado
 		int state_code = htonl(it->second->getState());
-        s = socket.send((char*) &state_code, INT_SIZE);
+        socket.send((char*) &state_code, INT_SIZE);
 		//codigo unico de unidad en el juego
         int game_unit_id = htonl(it->first);
-        s = socket.send((char*) &game_unit_id, INT_SIZE);
+        socket.send((char*) &game_unit_id, INT_SIZE);
 		//codigo de unidad
 		int unit_id = htonl(it->second->getUnitId());
-        s = socket.send((char*) &unit_id, INT_SIZE);
+        socket.send((char*) &unit_id, INT_SIZE);
 		//dueño de la unidad
         int owner_id = htonl(it->second->getOwner());
-		s = socket.send((char*) &owner_id, INT_SIZE);
+		socket.send((char*) &owner_id, INT_SIZE);
 		//vida de la unidad
 		int health = htonl(it->second->getHealth());
-        s = socket.send((char*) &health, INT_SIZE);
+        socket.send((char*) &health, INT_SIZE);
 
 
 		int m = -1;
@@ -240,7 +219,7 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 		 
 		//pos x de la unidad
         int posX = htonl(it->second->getX());
-        s = socket.send((char*) &posX,sizeof(int));
+        socket.send((char*) &posX,sizeof(int));
 		//pos y de la unidad
         int posY = htonl(it->second->getY());
         s = socket.send((char*) &posY, sizeof(int));
