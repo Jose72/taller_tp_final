@@ -328,7 +328,7 @@ subDescriptor MapDescriptor::random1(int tile1, int tile2) {
     randomSub.descriptor[6][4] = tile2;
     randomSub.descriptor[7][4] = tile2;
     randomSub.descriptor[8][4] = tile2;
-    unit vehiclef1 ={CODE_VF,224,32,0};
+    unit vehiclef1 ={CODE_VF,160,32,0};
     unit flagVF1 ={CODE_FLAG,32,224,0};
     randomSub.units.push_back(flagVF1);
     randomSub.units.push_back(vehiclef1);
@@ -358,7 +358,7 @@ subDescriptor MapDescriptor::random2(int tile1, int tile2) {
     randomSub2.descriptor[6][4] = tile2;
     randomSub2.descriptor[7][4] = tile2;
     randomSub2.descriptor[8][4] = tile2;
-    unit robotF2 ={CODE_RF,224,32,0};
+    unit robotF2 ={CODE_RF,160,32,0};
     unit flagRF2 ={CODE_FLAG,32,224,0};
     randomSub2.units.push_back(flagRF2);
     randomSub2.units.push_back(robotF2);
