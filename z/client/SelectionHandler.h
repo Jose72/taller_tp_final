@@ -17,6 +17,7 @@ private:
     Protocol &protocol;
     int &id_client;
     Camera2 &cam;
+    std::vector<Unit*> unitsSelected;
 
 public:
     SelectionHandler(Protocol &p, int &id, Camera2 &cam);
@@ -24,8 +25,12 @@ public:
     void set_target(int destX, int destY, Units_Protected &units);
     void set_location(int posX, int posY,Units_Protected &units);
     bool unit_select();
-
+    void selectUnits(int startX, int endX, int startY, int endY, Units_Protected &units);
     Unit *getUnit();
+
+private:
+    Unit* getDriver(bool &finded);
+
 };
 
 

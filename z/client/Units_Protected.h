@@ -49,6 +49,7 @@ public:
     int getHealthUnit(int unitCode);
     int getCompletionTime(int unitCode);
     void setTypeDriver(int unitCode, int typeDriver);
+    std::vector<Unit*> selectUnits(int rangeX1, int rangeX2, int rangeY1, int rangeY2, bool &found, int id_client);
 
 private:
     void createUnit(int cod_unit,int unit_owner,int posX, int posY, Factory_Units &factory,
@@ -61,6 +62,8 @@ private:
                        FlagsUnitType red,
                        FlagsUnitType yellow,
                        FlagsUnitType empty);
+
+    void addToUnitsSelected(std::vector<Unit*> &vectorUnits, Unit* unit);
 
 
 

@@ -123,24 +123,48 @@ void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD
     soundManager.playLaser();
 }
 
-Unit* Units_Protected::selectUnit(int dx1, int dx2, int dy1, int dy2, bool &found, int id_client) {
+std::vector<Unit*> Units_Protected::selectUnits(int rangeX1,
+                                                int rangeX2,
+                                                int rangeY1,
+                                                int rangeY2,
+                                                bool &found,
+                                                int id_client) {
     tLock(this->mut);
-    Unit *unitSelected;
+    std::vector<Unit*> unitsSelected;
     found = false;
     std::map<int, Unit*>::iterator it;
     for (it = units_map.begin();it != units_map.end() ; ++it) {
         if(it->second->get_type() != COLORLESS_FLAG) {
-            if (BETWEEN(it->second->get_posx(), dx1, dx2)) {
-                if (BETWEEN(it->second->get_posy(), dy1, dy2)) {
-                    if (it->second->get_owner() == id_client) {
-                        unitSelected = it->second;
-                        found = true;
+            int rangoX = it->second->get_posx() + it->second->getRangoX();
+            int rangoY = it->second->get_posy() + it->second->getRangoY();
+            for (int i = rangeX1; i <=rangeX2 ; ++i) {
+                for (int j = rangeY1; j <=rangeY2 ; ++j) {
+                    if (BETWEEN(i, it->second->get_posx(), rangoX)) {
+                        if (BETWEEN(j, it->second->get_posy(), rangoY)) {
+                            if (it->second->get_owner() == id_client) {
+                                addToUnitsSelected(unitsSelected,it->second);
+                                found = true;
+                            }
+                        }
                     }
                 }
+
             }
         }
     }
-    return unitSelected;
+    return  unitsSelected;
+}
+
+void Units_Protected::addToUnitsSelected(std::vector<Unit *> &vectorUnits, Unit *unit) {
+    bool alreadyInVector = false;
+    for (int i = 0; i <vectorUnits.size() ; ++i) {
+        if(vectorUnits[i]->get_unit_code() == unit->get_unit_code()){
+            alreadyInVector = true;
+        }
+    }
+    if(!alreadyInVector){
+        vectorUnits.push_back(unit);
+    }
 }
 
 Unit* Units_Protected::selectEnemy(int dx1, int dx2, int dy1, int dy2, Action &action, int id_client) {
