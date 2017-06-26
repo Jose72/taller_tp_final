@@ -265,6 +265,19 @@ void juego::sendInit(){
 	///////////////////////////////
 	//envio pos inicial
 	g_info.sendInitialPos();
+	
+	for (auto it = units.begin(); it != units.end(); ++it){
+		unit *u = it->second;
+		if (VEHICLE == u->getClassId() && u->getOwner() != 0){
+			//unit *d = builder.build(GRUNT);
+			unit *driv = builder.build(GRUNT, u->getOwner(), u->getX(), u->getY());
+			driv->instantDrive(u);
+			units.insert(std::pair<int,unit*>(id_unit_counter, driv));
+			id_unit_counter++;//incremento id_unit
+			g_info.incrementUnitsCount(u->getOwner());
+			//std::cout << "new_driver: "
+		}
+	}
 	///////////////////////////////
 	//envio el mapa y las unidades iniciales a todos lo jugadores
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){

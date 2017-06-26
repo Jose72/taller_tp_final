@@ -2,7 +2,7 @@
 
 #define NO_OWNER 0
 
-#define RANGE_MULTIPLIER 5
+#define RANGE_MULTIPLIER 10
 #define RANGE_FLAG_MULTIPLIER 16
 
 

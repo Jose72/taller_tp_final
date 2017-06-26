@@ -21,6 +21,7 @@ class tilesListCost{
 		int foundReplaceOrInsert(tile *t);
 		int size();
 		void print();
+		tile* getClosesTileToDestiny();
 };
 
 #endif

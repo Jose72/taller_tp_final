@@ -17,6 +17,20 @@ int a_Start(tile *orig, tile *dest, gameMap &gmap, int unit_code, std::vector<ti
 //h = costo por moverme desde la casilla actual hasta el destino (se aproxima en gral, por ej distancia euclidea)
 
 
+
+/////////////////////////////////////////////7
+/////////////////////////////////////////////7
+//NUEVO
+/*
+//si no la casilla no es pasable debo encontrar la mas cercana a la que pueda ir
+if (!dest->isPassable(unit_code)){
+	dest = gmap.getClosestPassableTile(dest->getX(), dest->getY(), unit_code);
+
+}
+*/ 
+/////////////////////////////////////////////7
+
+
 //usar punteros, sino se rompe todo
 //nodos visitados, pero no expandidos (no chequee vecinos)
 tilesListCost open;
@@ -102,9 +116,14 @@ while (!open.empty()){//mientras al lista no este vacia
 //si se me acabaron los open
 //salgo, no hay camino
 
+
+//si no hay cmaino
+
 //hay que retornar la lista de punteros
 
 //std::cout << "last: " << last << std::endl;
+
+
 
 //voy hacia  atras con parent
 while (last != nullptr){
@@ -116,6 +135,18 @@ while (last != nullptr){
 return 0;
 }
 
+
+tile* getClosestPassableTile(tile* dest, gameMap &gmap, int c_code){
+	std::vector<tile*> ady;
+	gmap.getNeightboors(*dest, ady);
+	for (auto it = ady.begin(); it != ady.end(); ++it){
+		tile *t = (*it);
+		if (t->isPassable(c_code)){
+			return t;
+		}
+	}
+	return nullptr;
+}
 
 void correctPath(gameMap &mapa, int c_code ,std::vector<tile*> &path){
 	std::vector<tile*> path_aux;
@@ -141,16 +172,6 @@ void correctPath(gameMap &mapa, int c_code ,std::vector<tile*> &path){
 		}
 		path_aux.push_back(t_next);
 	}
-	/*
-	std::cout << "path--------" << std::endl;
-	for (auto it = path.begin(); it != path.end(); ++it){
-		(*it)->printTile();
-	}
-	std::cout << "path--aux------" << std::endl;
-	for (auto it = path_aux.begin(); it != path_aux.end(); ++it){
-		(*it)->printTile();
-	}
-	*/ 
 	path = path_aux;
 	return;
 }
@@ -198,13 +219,42 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 		//std::cout << camino.size() << std::endl;
 
 		if (camino.size() == 0) {
-			//si no hay camino (selecione lava por ej)
-			//me quedo donde estoy y paso a standing
+			//busco camino a la casila pasable mas cercana
+			tile *new_dest = mapa.getClosestPassableTile(dest->getX(), dest->getY(), c_id);
+			a_Start(orig, new_dest, mapa, c_id, camino);
+			
+			if (camino.size() == 0) {
+				//si no hay camino 
+				//me quedo donde estoy y paso a standing
+				u.stop();
+				u.changeState(STANDING);
+				std::cout << "no camino" << std::endl;
+				return 1;
+			}
+			
+			tile *last_tile = camino[0];
+			//last_tile->printTile();
+			u.setDestiny(last_tile->getX()*32+15, last_tile->getY()*32+15);
+			for (auto it = camino.begin(); it != camino.end(); ++it){
+				(*it)->printTile();
+			}
+			
+			/*
+			u.stop();
+			u.changeState(STANDING);
+            std::cout << "no camino" << std::endl;
+			return 1;
+			*/
+		}
+		
+		/*
+		if (camino.size() == 0) {
 			u.stop();
 			u.changeState(STANDING);
             std::cout << "no camino" << std::endl;
 			return 1;
 		}
+		*/ 
 		
 		//correcion de camino
 		correctPath(mapa, c_id, camino);
@@ -214,6 +264,18 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			closer_tile = camino[camino.size() - 2];
 			
 		}
+		
+		
+		///////////////////////////////////////////////////////////
+		////////NUEVO
+		/*
+		int s_c = camino.size();
+		tile *last_tile = camino[s_c - 1];
+		u.setDestiny(last_tile->getX(), last_tile->getY());
+		*/
+		///////////////////////////////////////////////////////////
+		
+		
 		
 		//std::cout << "closer tile" << std::endl;
 		//closer_tile->printTile();
@@ -284,7 +346,7 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 				}
 			}
 		}
-		//u.printPos();
+		u.printPos();
 		
 		
 		////status check
@@ -311,7 +373,9 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 				} else {
 					u.moveToTarget();
 				}
-			} 
+			} else{
+				std::cout << "sigo mov" << std::endl;
+			}
 		} else {//si llegue a destino
 			u.changeState(STANDING);
 		}
