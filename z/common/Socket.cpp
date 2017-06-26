@@ -112,7 +112,7 @@ tSocket::tSocket(tSocket&& other){
 }
 
 tSocket& tSocket::operator=(tSocket&& other){
-		this->skt = std::move(other.skt);
+		this->skt = other.skt;
                 other.skt = -1;
 		return *this;
 }
