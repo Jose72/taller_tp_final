@@ -18,6 +18,7 @@ int main() {
     std::vector<int> unitIniciales;
     int setTiles;
     bool datosIngresados = false;
+    int techLevelFuerte;
     std::cout<<"Bienvenido al generador de mapas Z:THE GAME"<<"\n";
     std::cout<<"Crear un mapa es muy facil, solo sigue las siguientes instrucciones"<<"\n";
     std::cout<<"Empecemos con el nombre"<<"\n";
@@ -66,6 +67,16 @@ int main() {
         }
     }
     cantMaximaTerritorios = ((tamanioLado*tamanioLado)-cantDeEquipos);
+
+    std::cout<< "Ahora ingrese el nivel de tecnologia inicial de cada jugador" <<"\n";
+    std::cout<< "un nivel de tecnologia mayor permitira acceder a unidades mas complejas al inicio de la partida" <<"\n";
+    std::cout << "(Niveles de tecnologia permitidos de 1 a 5)" <<"\n";
+    std::cin >> techLevelFuerte;
+    while((techLevelFuerte<0) ||(techLevelFuerte>5)){
+        std::cout <<"Nivel de tecnologia invalido"<<"\n";
+        std::cout<<"Ingrese el nivel de tecnologia inicial (1 A 5)"<<"\n";
+        std::cin >>techLevelFuerte;
+    }
 
     std::cout<<"Ahora debes ingresar la cantidad de territorios del mapa"<<"\n";
     std::cout<<"Un territorio es una pieza del mapa que contiene un objetivo de interes para los jugadores"<<"\n";
@@ -150,7 +161,7 @@ int main() {
 
     MapDescriptor mapDescriptor(tamanioLado,cantDeEquipos,cantTerritorios,
                                 techLevelFabricas,cantVehiculosAbandonados,
-                                unitIniciales,setTiles);
+                                unitIniciales,setTiles, techLevelFuerte);
 
     JsonHandler jsonHandler;
 

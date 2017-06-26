@@ -30,14 +30,20 @@ private:
     int setTiles;
     std::vector<unit> unitsInMap;
     std::map<int,subDescriptor> subDescriptors;
+    int techLevelFuerte;
 
 
 
 public:
 
-    MapDescriptor(int lado,int equipos, int cantTerritorios,
-                  std::vector<int> &techLevels,int vehiculosAbandonados,
-                  std::vector<int> &unidadesIniciales, int setTiles);
+    MapDescriptor(int lado,
+                  int equipos,
+                  int cantTerritorios,
+                  std::vector<int> &techLevels,
+                  int vehiculosAbandonados,
+                  std::vector<int> &unidadesIniciales,
+                  int setTiles,
+                  int techLevelFuerte);
     std::vector<int> generate();
     void show(std::vector<int> &descriptor);
     int  obtenerCase();

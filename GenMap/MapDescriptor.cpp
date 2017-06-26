@@ -45,12 +45,14 @@ MapDescriptor::MapDescriptor(int lado,
                              std::vector<int> &techLevels,
                              int vehiculosAbandonados,
                              std::vector<int> &unidadesIniciales,
-                             int setTiles):techLevels(techLevels),unidadesIniciales(unidadesIniciales) {
+                             int setTiles,
+                             int techLevelFuerte):techLevels(techLevels),unidadesIniciales(unidadesIniciales) {
     this->lado = lado;
     this->cantEquipos = equipos;
     this->cantTerritorios = cantTerritorios;
     this->cantVehiculosAbandonados = vehiculosAbandonados;
     this->setTiles = setTiles;
+    this->techLevelFuerte =techLevelFuerte;
 
 }
 
@@ -297,7 +299,7 @@ subDescriptor MapDescriptor::base(int team) {
         unit unit = {this->unidadesIniciales[k],posX,posY,team};
         base.units.push_back(unit);
     }
-    unit fort={FORT_CODE,64,64,team};
+    unit fort={FORT_CODE,64,64,team,this->techLevelFuerte};
     base.units.push_back(fort);
 
     return base;
@@ -326,7 +328,7 @@ subDescriptor MapDescriptor::random1(int tile1, int tile2) {
     randomSub.descriptor[6][4] = tile2;
     randomSub.descriptor[7][4] = tile2;
     randomSub.descriptor[8][4] = tile2;
-    unit vehiclef1 ={CODE_VF,32,32,0};
+    unit vehiclef1 ={CODE_VF,224,32,0};
     unit flagVF1 ={CODE_FLAG,32,224,0};
     randomSub.units.push_back(flagVF1);
     randomSub.units.push_back(vehiclef1);
@@ -356,7 +358,7 @@ subDescriptor MapDescriptor::random2(int tile1, int tile2) {
     randomSub2.descriptor[6][4] = tile2;
     randomSub2.descriptor[7][4] = tile2;
     randomSub2.descriptor[8][4] = tile2;
-    unit robotF2 ={CODE_RF,32,32,0};
+    unit robotF2 ={CODE_RF,224,32,0};
     unit flagRF2 ={CODE_FLAG,32,224,0};
     randomSub2.units.push_back(flagRF2);
     randomSub2.units.push_back(robotF2);
