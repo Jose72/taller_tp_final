@@ -38,7 +38,8 @@ void EventHandler::run() {
 
     while(running == true) {
         //MOSTRAR
-        camera2.set_position_cameraRect(posCameraX,posCameraY);
+        camera2.updateCameraPos();
+        //camera2.set_position_cameraRect(posCameraX,posCameraY);
         posCameraX = camera2.getPosCameraX();
         posCameraY = camera2.getPosCameraY();
         camera2.draw(units,gameMap,soundManager);
@@ -57,39 +58,37 @@ void EventHandler::run() {
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_LEFT:
-                            //camera2.startMovingLeft()
-                            posCameraX = posCameraX -20;
+                            camera2.startMovingLeft();
                             break;
                         case SDLK_RIGHT:
-                            posCameraX = posCameraX + 20;
+                            camera2.startMovingRight();
                             break;
                         case SDLK_UP:
-                            posCameraY = posCameraY - 20;
+                            camera2.startMovingUp();
                             break;
                         case SDLK_DOWN:
-                            posCameraY = posCameraY + 20;
+                            camera2.startMovingDown();
                             break;
                     }
                     break;
-                    /*
+
                 case SDL_KEYUP:
                     switch (event.key.keysym.sym) {
                         case SDLK_LEFT:
-                           // camera2.stopMovingLeft()
-                            posCameraX = posCameraX -20;
+                            camera2.stopMovingLeft();
                             break;
                         case SDLK_RIGHT:
-                            posCameraX = posCameraX + 20;
+                            camera2.stopMovingRight();
                             break;
                         case SDLK_UP:
-                            posCameraY = posCameraY - 20;
+                            camera2.stopMovingUp();
                             break;
                         case SDLK_DOWN:
-                            posCameraY = posCameraY + 20;
+                            camera2.stopMovingDown();
                             break;
                     }
                     break;
-                     */
+
                 case SDL_MOUSEBUTTONDOWN:
                     if (!playerInterface.checkClickedButtons(event.button.x, event.button.y,protocol)) {
                         if (event.button.button == LEFT_BUTTON) {
