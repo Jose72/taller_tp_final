@@ -66,10 +66,75 @@ int ConstantsInterpretor::getType(FlagsUnitType color){
     return GRUNT;
 }
 
+ConstantsInterpretor::ConstantsInterpretor(){
+    blue.insert(BLUE_GRUNT);
+    blue.insert(JEEP_BLUE);
+    blue.insert(MEDIUM_TANK_BLUE);
+    blue.insert(LIGHT_TANK_BLUE);
+    blue.insert(HEAVY_TANK_BLUE);
+    blue.insert(MISILE_LAUNCHER_BLUE);
+    blue.insert(BLUE_PSYCHO);
+    blue.insert(BLUE_TOUGHT);
+    blue.insert(BLUE_PYRO);
+    blue.insert(BLUE_SNIPER);
+    blue.insert(BLUE_LASER);
+
+    green.insert(GREEN_GRUNT);
+    green.insert(JEEP_GREEN);
+    green.insert(MEDIUM_TANK_GREEN);
+    green.insert(LIGHT_TANK_GREEN);
+    green.insert(HEAVY_TANK_GREEN);
+    green.insert(MISILE_LAUNCHER_GREEN);
+    green.insert(GREEN_PSYCHO);
+    green.insert(GREEN_TOUGHT);
+    green.insert(GREEN_PYRO);
+    green.insert(GREEN_SNIPER);
+    green.insert(GREEN_LASER);
+
+    red.insert(RED_GRUNT);
+    red.insert(JEEP_RED);
+    red.insert(MEDIUM_TANK_RED);
+    red.insert(LIGHT_TANK_RED);
+    red.insert(HEAVY_TANK_RED);
+    red.insert(MISILE_LAUNCHER_RED);
+    red.insert(RED_PSYCHO);
+    red.insert(RED_TOUGHT);
+    red.insert(RED_PYRO);
+    red.insert(RED_SNIPER);
+    red.insert(RED_LASER);
+
+    yellow.insert(YELLOW_GRUNT);
+    yellow.insert(JEEP_YELLOW);
+    yellow.insert(MEDIUM_TANK_YELLOW);
+    yellow.insert(LIGHT_TANK_YELLOW);
+    yellow.insert(HEAVY_TANK_YELLOW);
+    yellow.insert(MISILE_LAUNCHER_YELLOW);
+    yellow.insert(YELLOW_PSYCHO);
+    yellow.insert(YELLOW_TOUGHT);
+    yellow.insert(YELLOW_PYRO);
+    yellow.insert(YELLOW_SNIPER);
+    yellow.insert(YELLOW_LASER);
+
+}
+
 int ConstantsInterpretor::getColor(FlagsUnitType flag){
-    //hacer que retorne el color del flag
-    //BLUEGRUNT -> TEAMBLUE
-    return 0;
+    if(blue.find(flag) != blue.end()){
+        return TEAM_BLUE;
+    }
+
+    if(green.find(flag) != green.end()){
+        return TEAM_GREEN;
+    }
+
+    if(yellow.find(flag) != yellow.end()){
+        return TEAM_YELLOW;
+    }
+
+    if(red.find(flag) != red.end()){
+        return TEAM_RED;
+    }
+
+    return NO_COLOR;
 }
 
 std::string ConstantsInterpretor::idToString(int id){

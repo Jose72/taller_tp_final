@@ -13,6 +13,7 @@
 #include "TTF_Writter.h"
 #include "Drawer.h"
 #include "ClickableButton.h"
+#include "ConstantsInterpretor.h"
 
 class PlayerInterface {
 private:
@@ -24,6 +25,7 @@ private:
     Drawer drawer;
     std::vector<ClickableButton*> buttons;
     std::map<int,int> factoriesCreating;
+    ConstantsInterpretor constantsInterpretor;
 public:
     PlayerInterface(SDL_Surface* screen,
                         int gameWidth,
@@ -36,7 +38,7 @@ public:
 
     int getCol(int division, int offset, int sizeElement, int leftPadding);
 
-    void loadButtons(Unit * unit);
+    void loadButtons(Unit *unit);
 
     void cleanButtons();
 
@@ -51,6 +53,8 @@ public:
     void drawTech(int tech);
 
     void drawCompletionTime(int time, int idUnit);
+
+    std::string getUnitPortrait(FlagsUnitType type);
 };
 
 
