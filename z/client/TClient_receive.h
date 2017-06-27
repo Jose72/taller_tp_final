@@ -22,16 +22,25 @@ private:
     bool &done;
     bool &running;
     int &id_client;
+    int &dimensions;
+    int &posXI;
+    int &posYI;
     TechLevelProtected &techLevel;
     WinnerProtected &winner;
     SoundManager &soundManager;
+
 
 public:
     TClient_receive(tSocket &s,
                     Game_map &game_map,
                     Units_Protected &u,
                     Factory_Units &f,
-                    bool &done, bool &r, int &id_c,
+                    bool &done,
+                    bool &r,
+                    int &id_c,
+                    int &dimensions,
+                    int &posXI,
+                    int &posYI,
                     TechLevelProtected &tech,
                     WinnerProtected &winner,
                     SoundManager &soundManager);

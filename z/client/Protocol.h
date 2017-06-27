@@ -22,7 +22,14 @@ private:
     SoundManager &soundManager;
 
 public:
-    Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech, WinnerProtected &winner, SoundManager &soundManager);
+    Protocol(tSocket &s,
+             Units_Protected &u,
+             Game_map &g,
+             Factory_Units &f,
+             TechLevelProtected &tech,
+             WinnerProtected &winner,
+             SoundManager &soundManager);
+
     ~Protocol();
     void moveUnitCS(int cod_unit, int posX, int posY);
     void attackUnitCS(int cod_unit, int cod_objective);
@@ -32,6 +39,8 @@ public:
     void confirm_server(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
     void process_message();
     void translate_message(int update, int unitCode,int unitType,int unitOwner,int health,int posX, int posY,int timeOrDriver);
+    void mapDataInitial(int &id_client, int &dimensions,int &posXI, int &posYI);
+
 
 
     void create_unit(int i, int i1);

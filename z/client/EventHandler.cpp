@@ -19,9 +19,24 @@ EventHandler::EventHandler(SDL_Surface *screen,
                            Game_map &m,
                            bool &b,
                            Factory_Units &f,
-                           int &id, TechLevelProtected &tech,WinnerProtected &winner,
+                           int &id,int &dim, int &posXI, int &posYI,
+                           TechLevelProtected &tech,WinnerProtected &winner,
                             SoundManager &soundManager):
-        playerInterface(p),units(u),socket(s), gameMap(m),running(b), factory(f), id_client(id), techLevel(tech), winner(winner),soundManager(soundManager){
+
+        playerInterface(p),
+        units(u),
+        socket(s),
+        gameMap(m),
+        running(b),
+        factory(f),
+        id_client(id),
+        dimensions(dim),
+        posXI(posXI),
+        posYI(posYI),
+        techLevel(tech),
+        winner(winner),
+        soundManager(soundManager){
+
     this->screen = screen;
 }
 
@@ -35,7 +50,7 @@ void EventHandler::run() {
     int posCameraX = fortPlayer->get_posx();
     int posCameraY = fortPlayer->get_posy();
 
-    Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,WINDOW_W,WINDOW_H,factory);
+    Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,dimensions,dimensions,factory);
     SelectionHandler sHandler(protocol,id_client,camera2);
     int destinoX, destinoY, seleccionX, seleccionY;
     int selectionStartX;
@@ -46,6 +61,7 @@ void EventHandler::run() {
     while(running == true) {
         //MOSTRAR
         camera2.updateCameraPos();
+        int  ticks =SDL_GetTicks();
         //camera2.set_position_cameraRect(posCameraX,posCameraY);
         posCameraX = camera2.getPosCameraX();
         posCameraY = camera2.getPosCameraY();
@@ -151,7 +167,12 @@ void EventHandler::run() {
             }
         }
         checkDead();
-        //SDL_Delay((1000/10 )-(SDL_GetTicks()-ticks));
+        int sleepTime = (1000/35 )-(SDL_GetTicks()-ticks);
+        if(sleepTime<0){
+            sleepTime = 0;
+        }
+        std::cout <<sleepTime <<"\n";
+        SDL_Delay(sleepTime);
         //camera2.update_pos();
     }
 }

@@ -255,4 +255,26 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
     }
 }
 
+void Protocol::mapDataInitial(int &id_client, int &dimensions, int &posXI, int &posYI) {
+    //RECIBO NUMERO DE TEAM
+    int team_n;
+    socket.receive((char*) &team_n, 4);
+    team_n = ntohl(team_n);
+    id_client = team_n;
 
+    //recibo dimension de mapa
+    int map_dim;
+    socket.receive((char*) &map_dim, 4);
+    map_dim = ntohl(map_dim);
+    dimensions = map_dim;
+
+    //recibo pos inicial
+    int x_inicial;
+    int y_inicial;
+    socket.receive((char*) &x_inicial, 4);
+    socket.receive((char*) &y_inicial, 4);
+    x_inicial = ntohl(x_inicial);
+    y_inicial = ntohl(y_inicial);
+    posXI = x_inicial;
+    posYI = y_inicial;
+}

@@ -17,6 +17,9 @@ private:
     bool &running;
     Factory_Units &factory;
     int &id_client;
+    int &dimensions;
+    int &posXI;
+    int &posYI;
     TechLevelProtected &techLevel;
     WinnerProtected &winner;
     SoundManager &soundManager;
@@ -29,8 +32,14 @@ public:
                  tSocket &s,
                  Game_map &m, bool &b,
                  Factory_Units &f,
-                 int &id_client, TechLevelProtected &tech,WinnerProtected &winner,
-                SoundManager &soundManager);
+                 int &id_client,
+                 int &dimensions,
+                 int &posXI,
+                 int &posYI,
+                 TechLevelProtected &tech,
+                 WinnerProtected &winner,
+                 SoundManager &soundManager);
+
     ~EventHandler();
     void run();
     void stop();

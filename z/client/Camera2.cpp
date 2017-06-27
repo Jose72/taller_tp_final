@@ -69,16 +69,14 @@ void Camera2::updateCameraPos() {
 }
 
 void Camera2::draw(Units_Protected &units, Game_map &game_map, SoundManager &soundManager) {
-    unsigned int ticks = SDL_GetTicks();
-    if((ticks % 20 ) == 0) {
-        SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
-        int limitXL = cameraRect.x - (cameraW);
-        int limitXR = cameraRect.x + (cameraW );
-        int limitYU = cameraRect.y - (cameraH );
-        int limitYD = cameraRect.y + (cameraH);
-        game_map.draw_map(limitXL, limitXR, limitYU, limitYD, cameraRect);
-        units.animate(limitXL, limitXR, limitYU, limitYD, cameraRect, soundManager);
-    }
+    SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
+    int limitXL = cameraRect.x - (cameraW);
+    int limitXR = cameraRect.x + (cameraW );
+    int limitYU = cameraRect.y - (cameraH );
+    int limitYD = cameraRect.y + (cameraH);
+    game_map.draw_map(limitXL, limitXR, limitYU, limitYD, cameraRect);
+    units.animate(limitXL, limitXR, limitYU, limitYD, cameraRect, soundManager);
+
 }
 
 int Camera2::getPosCameraX() {
