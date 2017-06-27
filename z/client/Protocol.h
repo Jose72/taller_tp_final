@@ -36,13 +36,10 @@ public:
     void driveUnitCS(int cod_unit, int drive_objetive);
     void create_map();
     void set_units_game();
-    void confirm_server(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
+    void confirm_server();
     void process_message();
     void translate_message(int update, int unitCode,int unitType,int unitOwner,int health,int posX, int posY,int timeOrDriver);
     void mapDataInitial(int &id_client, int &dimensions,int &posXI, int &posYI);
-
-
-
     void create_unit(int i, int i1);
 };
 

@@ -12,7 +12,8 @@ private:
 
 public:
     Factory_Units(SpritesPool &pool);
-    Unit* createUnit(FlagsUnitType unit,int unit_code, int posx, int posy, int unit_owner);
+    Unit* createUnit(FlagsUnitType unit,int unit_code,
+                     int posx, int posy, int unit_owner);
 
 };
 

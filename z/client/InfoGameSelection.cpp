@@ -9,5 +9,6 @@ InfoGameSelection::InfoGameSelection(int idCreator,
                                  int joinedPlayers,
                                  int typeGame,
                                  int numTeams):
-        idCreator(idCreator),maxPlayers(maxPlayers),joinedPlayers(joinedPlayers), typeGame(typeGame), numTeams(numTeams){}
+        idCreator(idCreator),maxPlayers(maxPlayers),
+        joinedPlayers(joinedPlayers), typeGame(typeGame), numTeams(numTeams){}
 

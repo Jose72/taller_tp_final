@@ -7,7 +7,7 @@
 
 Sound::Sound(std::string path, int duration){
     this->duration = duration;
-    sound = Mix_LoadWAV(path.c_str());//"client/sounds/acknowledge_01.wav"
+    sound = Mix_LoadWAV(path.c_str());
 }
 
 void Sound::play(){

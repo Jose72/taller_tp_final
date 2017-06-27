@@ -29,9 +29,17 @@ private:
 
 
 public:
-    Camera2(SDL_Surface *screen,int posX, int posY, int W, int H, int lW, int lH, Factory_Units &f);
+    Camera2(SDL_Surface *screen,
+            int posX,
+            int posY,
+            int W,
+            int H,
+            int lW,
+            int lH,
+            Factory_Units &f);
     ~Camera2();
-    void draw(Units_Protected &units, Game_map &game_map,SoundManager &soundManager);
+    void draw(Units_Protected &units, Game_map &game_map,
+              SoundManager &soundManager);
     int getPosCameraX();
     int getPosCameraY();
     void startMovingRight();
@@ -42,11 +50,7 @@ public:
     void stopMovingUp();
     void startMovingDown();
     void stopMovingDown();
-
     void updateCameraPos();
-
-
-
 
 };
 

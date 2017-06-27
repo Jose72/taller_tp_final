@@ -18,7 +18,8 @@ void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
     unit = units.selectUnit(posX,posY,unit_selected, id_client);
 }
 
-void SelectionHandler::selectUnits(int startX, int endX, int startY, int endY, Units_Protected &units) {
+void SelectionHandler::selectUnits(int startX, int endX,
+                                   int startY, int endY, Units_Protected &units) {
     int rangeX1;
     int rangeX2;
     int rangeY1;
@@ -38,7 +39,8 @@ void SelectionHandler::selectUnits(int startX, int endX, int startY, int endY, U
         rangeY2 = startY;
     }
 
-    this->unitsSelected = units.selectUnits(rangeX1,rangeX2,rangeY1,rangeY2,unit_selected,id_client);
+    this->unitsSelected = units.selectUnits(rangeX1,rangeX2,
+                                            rangeY1,rangeY2,unit_selected,id_client);
 
 }
 
@@ -53,7 +55,8 @@ bool SelectionHandler::unit_select() {
     return this->unit_selected;
 }
 
-void SelectionHandler::set_target(int destX, int destY, Units_Protected &units) {
+void SelectionHandler::set_target(int destX, int destY,
+                                  Units_Protected &units) {
     Action action;
     Unit * enemy;
 
@@ -62,13 +65,15 @@ void SelectionHandler::set_target(int destX, int destY, Units_Protected &units) 
         switch (action){
             case MOVE:
                 for (unsigned int i = 0; i <this->unitsSelected.size() ; ++i) {
-                    protocol.moveUnitCS(this->unitsSelected[i]->get_unit_code(),destX,destY);
+                    protocol.moveUnitCS
+                            (this->unitsSelected[i]->get_unit_code(),destX,destY);
                 }
                 break;
             case ATTACK:
                 if((enemy->get_state() != DEAD2) && (enemy->get_state() != DEAD1)) {
                     for (unsigned int i = 0; i <this->unitsSelected.size() ; ++i) {
-                        protocol.attackUnitCS(this->unitsSelected[i]->get_unit_code(), enemy->get_unit_code());
+                        protocol.attackUnitCS
+                                (this->unitsSelected[i]->get_unit_code(), enemy->get_unit_code());
                     }
                 }
                 break;

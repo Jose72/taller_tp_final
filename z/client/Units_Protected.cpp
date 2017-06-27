@@ -79,7 +79,12 @@ int Units_Protected::size() {
     return units_map.size();
 }
 
-void Units_Protected::animate(int limitXL, int limitXR, int limitYU, int limitYD , SDL_Rect cameraRect, SoundManager &soundManager) {
+void Units_Protected::animate(int limitXL,
+                              int limitXR,
+                              int limitYU,
+                              int limitYD,
+                              SDL_Rect cameraRect,
+                              SoundManager &soundManager) {
     tLock(this->mut);
     std::map<int, Unit*>::iterator it;
     for (it = units_map.begin();it != units_map.end() ; ++it) {
@@ -155,7 +160,8 @@ std::vector<Unit*> Units_Protected::selectUnits(int rangeX1,
     return  unitsSelected;
 }
 
-void Units_Protected::addToUnitsSelected(std::vector<Unit *> &vectorUnits, Unit *unit) {
+void Units_Protected::addToUnitsSelected(std::vector<Unit *> &vectorUnits,
+                                         Unit *unit) {
     bool alreadyInVector = false;
     for (unsigned int i = 0; i <vectorUnits.size() ; ++i) {
         if(vectorUnits[i]->get_unit_code() == unit->get_unit_code()){
@@ -167,7 +173,12 @@ void Units_Protected::addToUnitsSelected(std::vector<Unit *> &vectorUnits, Unit 
     }
 }
 
-Unit* Units_Protected::selectEnemy(int dx1, int dx2, int dy1, int dy2, Action &action, int id_client) {
+Unit* Units_Protected::selectEnemy(int dx1,
+                                   int dx2,
+                                   int dy1,
+                                   int dy2,
+                                   Action &action,
+                                   int id_client) {
     tLock(this->mut);
     Unit *enemy;
     std::map<int, Unit*>::iterator it;
@@ -259,8 +270,13 @@ void Units_Protected::cleanDeadUnits() {
 }
 
 
-bool Units_Protected::createIfDoesNotExist(int cod_unit, int unit_type, int unit_owner, int posX, int posY,
-                                       Factory_Units &factory, int techLevel) {
+bool Units_Protected::createIfDoesNotExist(int cod_unit,
+                                           int unit_type,
+                                           int unit_owner,
+                                           int posX,
+                                           int posY,
+                                           Factory_Units &factory,
+                                           int techLevel) {
     tLock(this->mut);
     bool result = false;
     if(units_map.find(cod_unit) == units_map.end()){

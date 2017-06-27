@@ -21,7 +21,13 @@ Unit::Unit(std::vector<Animation*> &a0,
            int posy,
            State state,
            FlagsUnitType unitType, int owner):
-        animation(a0),animation2(a1),animation3(a2),animation4(a3),animation5(a4),posx(posx),posy(posy) {
+        animation(a0),
+        animation2(a1),
+        animation3(a2),
+        animation4(a3),
+        animation5(a4),
+        posx(posx),
+        posy(posy) {
 
     this->cod_unit = cu;
     this->state = state;
@@ -183,7 +189,8 @@ void Unit::setTypeDriver(int typeDriver) {
     Unit::typeDriver = typeDriver;
 }
 
-void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
+void Unit::animate_static(SDL_Rect &cameraRect,
+                          std::vector<Animation *> &a, int max_frame) {
     if(current_frame < max_frame-1){
         current_frame ++;
     } else{
@@ -192,7 +199,8 @@ void Unit::animate_static(SDL_Rect &cameraRect, std::vector<Animation *> &a, int
     a[current_frame]->animate(posx,posy,cameraRect);
 }
 
-void Unit::animate_moving(SDL_Rect &cameraRect, std::vector<Animation *> &a, int max_frame) {
+void Unit::animate_moving(SDL_Rect &cameraRect,
+                          std::vector<Animation *> &a, int max_frame) {
     int framePos = max_frame;
     if(current_frame< max_frame-1){
         ++current_frame;

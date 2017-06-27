@@ -27,7 +27,8 @@ void Game_map::add_tile(int tile) {
    map_des.push_back(tile);
 }
 
-void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD, SDL_Rect &cameraRect) {
+void Game_map::draw_map(int limitXL, int limitXR, int limitYU,
+                        int limitYD, SDL_Rect &cameraRect) {
     int mapDimensions = sqrt(map_des.size());
     int x,y,t;
 

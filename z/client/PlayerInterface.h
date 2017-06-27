@@ -32,7 +32,10 @@ public:
                         int gameHeight,
                         int width);
 
-    void show(SelectionHandler selectionHandler, TechLevelProtected &techProtected, WinnerProtected &winnerProtected,int idClient);
+    void show(SelectionHandler selectionHandler,
+              TechLevelProtected &techProtected,
+              WinnerProtected &winnerProtected,
+              int idClient);
 
     virtual ~PlayerInterface();
 

@@ -134,7 +134,8 @@ SoundManager::SoundManager(int idClient) {
 
 }
 
-void SoundManager::playDamage(int unitOwner,int unitType,int preHeatlh,int postHealth){
+void SoundManager::playDamage(int unitOwner,int unitType,
+                              int preHeatlh,int postHealth){
     if(unitOwner == idClient){
         if(postHealth < preHeatlh){
             std::chrono::time_point<std::chrono::system_clock> newSound;
@@ -213,13 +214,15 @@ void SoundManager::play(int flag){
 
 
 void SoundManager::addToughBullet(int id) {
-    if(std::find(toughBullets.begin(), toughBullets.end(), id) == toughBullets.end()) {
+    if(std::find(toughBullets.begin(),
+                 toughBullets.end(), id) == toughBullets.end()) {
         toughBullets.push_back(id);
     }
 }
 
 void SoundManager::addLaserBullet(int id) {
-    if(std::find(laserBullets.begin(), laserBullets.end(), id) == laserBullets.end()) {
+    if(std::find(laserBullets.begin(),
+                 laserBullets.end(), id) == laserBullets.end()) {
         laserBullets.push_back(id);
     }
 }
@@ -228,7 +231,9 @@ void SoundManager::playLaser(){
     unsigned int i = 0;
     bool newLaser = false;
     while(i < laserBullets.size() && !newLaser) {
-        if(std::find(previousLaserBullets.begin(), previousLaserBullets.end(), laserBullets[i]) == previousLaserBullets.end()) {
+        if(std::find(previousLaserBullets.begin(),
+                     previousLaserBullets.end(),
+                     laserBullets[i]) == previousLaserBullets.end()) {
             playGuns(LASER_BULLET);
             newLaser = true;
         }
@@ -236,7 +241,6 @@ void SoundManager::playLaser(){
     }
 
     previousLaserBullets.clear();
-    // std::copy(toughBullets.begin(), toughBullets.end(), previousToughBullets.begin());
     previousLaserBullets = laserBullets;
     laserBullets.clear();
 
@@ -247,7 +251,9 @@ void SoundManager::playToughBullets(){
     bool newBullet = false;
     bool explosion = false;
     while(i < toughBullets.size() && !newBullet) {
-        if(std::find(previousToughBullets.begin(), previousToughBullets.end(), toughBullets[i]) == previousToughBullets.end()) {
+        if(std::find(previousToughBullets.begin(),
+                     previousToughBullets.end(),
+                     toughBullets[i]) == previousToughBullets.end()) {
             playGuns(TOUGHT_BULLET);
             newBullet = true;
         }
@@ -256,14 +262,15 @@ void SoundManager::playToughBullets(){
 
     i=0;
     while(i < previousToughBullets.size() && !explosion) {
-        if(std::find(toughBullets.begin(), toughBullets.end(), previousToughBullets[i]) == toughBullets.end()) {
+        if(std::find(toughBullets.begin(),
+                     toughBullets.end(),
+                     previousToughBullets[i]) == toughBullets.end()) {
             playGuns(TOUGHT_BULLET_EXPLOSION);
             explosion = true;
         }
         i++;
     }
     previousToughBullets.clear();
-   // std::copy(toughBullets.begin(), toughBullets.end(), previousToughBullets.begin());
     previousToughBullets = toughBullets;
     toughBullets.clear();
 }

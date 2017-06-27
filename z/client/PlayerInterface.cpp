@@ -84,31 +84,37 @@ int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
     //pos += PADDING para los saltos de linea
     if(tech >= 1){
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
-                                                        pos,50,30,"Grunt",unitCode,GRUNT,factoriesCreating));
+                                                        pos,50,30,"Grunt",
+                                                        unitCode,GRUNT,factoriesCreating));
     }
 
     if(tech >= 2){
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
-                                                        pos,50,30,"Psycho",unitCode,PSYCHO,factoriesCreating));
+                                                        pos,50,30,"Psycho",
+                                                        unitCode,PSYCHO,factoriesCreating));
         pos += PADDING;
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
-                                                        pos,50,30,"Tough",unitCode,TOUGHT,factoriesCreating));
+                                                        pos,50,30,"Tough",
+                                                        unitCode,TOUGHT,factoriesCreating));
     }
 
     if(tech >= 3){
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
-                                                        pos,50,30,"Sniper",unitCode,SNIPER,factoriesCreating));
+                                                        pos,50,30,"Sniper",
+                                                        unitCode,SNIPER,factoriesCreating));
     }
 
     if(tech >= 4){
         pos += PADDING;
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
-                                                        pos,50,30,"Pyro",unitCode,PYRO,factoriesCreating));
+                                                        pos,50,30,"Pyro",
+                                                        unitCode,PYRO,factoriesCreating));
     }
 
     if(tech >= 5){
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
-                                                        pos,50,30,"Laser",unitCode,LAZER,factoriesCreating));
+                                                        pos,50,30,"Laser",
+                                                        unitCode,LAZER,factoriesCreating));
     }
 
     pos += PADDING;
@@ -118,29 +124,34 @@ int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
 int PlayerInterface::loadVehiclesButtons(int pos,int unitCode, int tech){
     if(tech >= 1){
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
-                                                        pos,50,30,"Jeep",unitCode,JEEP,factoriesCreating));
+                                                        pos,50,30,"Jeep",
+                                                        unitCode,JEEP,factoriesCreating));
     }
 
     if(tech >= 2){
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
-                                                        pos,50,30,"Light Tank",unitCode,LIGHT_TANK,factoriesCreating));
+                                                        pos,50,30,"Light Tank",
+                                                        unitCode,LIGHT_TANK,factoriesCreating));
     }
 
     if(tech >= 3){
         pos += PADDING;
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
-                                                        pos,50,30,"Medium Tank",unitCode,MEDIUM_TANK,factoriesCreating));
+                                                        pos,50,30,"Medium Tank",
+                                                        unitCode,MEDIUM_TANK,factoriesCreating));
     }
 
     if(tech >= 4){
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
-                                                        pos,50,30,"Heavy Tank",unitCode,HEAVY_TANK,factoriesCreating));
+                                                        pos,50,30,"Heavy Tank",
+                                                        unitCode,HEAVY_TANK,factoriesCreating));
     }
 
     if(tech >= 5){
         pos += PADDING;
         buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
-                                                        pos,50,30,"MML",unitCode,MML,factoriesCreating));
+                                                        pos,50,30,"MML",
+                                                        unitCode,MML,factoriesCreating));
     }
 
     pos += PADDING;
@@ -194,7 +205,10 @@ void PlayerInterface::loadButtons(Unit *unit) {
 
 }
 
-void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected &techProtected, WinnerProtected &winnerProtected,int idClient) {
+void PlayerInterface::show(SelectionHandler selectionHandler,
+                           TechLevelProtected &techProtected,
+                           WinnerProtected &winnerProtected,
+                           int idClient) {
     bool locked = SDL_MUSTLOCK(screen);
     if(locked)
         SDL_LockSurface(screen);

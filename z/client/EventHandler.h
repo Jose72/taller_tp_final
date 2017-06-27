@@ -24,7 +24,6 @@ private:
     WinnerProtected &winner;
     SoundManager &soundManager;
 
-
 public:
     EventHandler(SDL_Surface *screen,
                  PlayerInterface &p,

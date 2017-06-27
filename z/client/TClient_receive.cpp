@@ -34,19 +34,19 @@ TClient_receive::~TClient_receive() {}
 
 void TClient_receive::run() {
     done = true;
-    Protocol protocol_client_server(socket,units,game_map,factory, techLevel, winner,soundManager);
+    Protocol protocol_client_server(socket,units,
+                                    game_map,factory,
+                                    techLevel, winner,soundManager);
     protocol_client_server.mapDataInitial(id_client,dimensions,posXI,posYI);
 
     protocol_client_server.create_map();
     protocol_client_server.set_units_game();
 
     done = false;
-    //protocol_client_server.attackUnitCS(1, 2);
+
 
     while (running){
        protocol_client_server.process_message();
-        //Agregar intervalo de tiempo
-
     }
 
 }

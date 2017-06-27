@@ -43,14 +43,16 @@ EventHandler::EventHandler(SDL_Surface *screen,
 EventHandler::~EventHandler() {}
 
 void EventHandler::run() {
-    Protocol protocol(socket,units,gameMap,factory, techLevel,winner,soundManager);
+    Protocol protocol(socket,units,gameMap,factory,
+                      techLevel,winner,soundManager);
 
     SDL_Event event;
     Unit* fortPlayer = units.getFortPlayer(id_client);
     int posCameraX = fortPlayer->get_posx();
     int posCameraY = fortPlayer->get_posy();
 
-    Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,dimensions,dimensions,factory);
+    Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,
+                    CAMERADY,dimensions,dimensions,factory);
     SelectionHandler sHandler(protocol,id_client,camera2);
     int destinoX, destinoY;
     int selectionStartX;
@@ -115,10 +117,8 @@ void EventHandler::run() {
                         if (event.button.button == LEFT_BUTTON) {
                             destinoX = event.button.x + camera2.getPosCameraX();
                             destinoY = event.button.y + camera2.getPosCameraY();
-                            std::cout << "X: "<< destinoX << " Y: " << destinoY <<"\n";
                             sHandler.set_target(destinoX, destinoY,units);
                             break;
-                            //SDL_Quit()
                         }
                         if (event.button.button == RIGHT_BUTTON) {
                             selectionStartX =event.button.x + camera2.getPosCameraX();
@@ -165,13 +165,6 @@ void EventHandler::run() {
             }
         }
         checkDead();
-        /**int sleepTime = (1000/35 )-(SDL_GetTicks()-ticks);
-        if(sleepTime<0){
-            sleepTime = 0;
-        }
-        std::cout <<sleepTime <<"\n";
-        SDL_Delay(sleepTime);*/
-        //camera2.update_pos();
     }
 }
 

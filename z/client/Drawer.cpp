@@ -21,7 +21,8 @@ void Drawer::drawLine(SDL_Surface* screen,int y) {
     }
 }
 
-void Drawer::drawBackground(int gameWidth,int gameHeight, int width, Animation* background) {
+void Drawer::drawBackground(int gameWidth,int gameHeight,
+                            int width, Animation* background) {
     for (int j = gameWidth; j < gameWidth + width; j = j +32) {
         for (int k = 0; k < gameHeight; k = k+32) {
             background->animate_static(j, k);
@@ -30,15 +31,18 @@ void Drawer::drawBackground(int gameWidth,int gameHeight, int width, Animation* 
 }
 
 
-void Drawer::drawText(SDL_Surface *screen, std::string msj, int x, int y){
+void Drawer::drawText(SDL_Surface *screen, std::string msj,
+                      int x, int y){
     writter.drawText(screen,msj,x-(msj.size()*3),y);
 }
 
-void Drawer::drawGiantText(SDL_Surface *screen, std::string msj, int x, int y){
+void Drawer::drawGiantText(SDL_Surface *screen, std::string msj,
+                           int x, int y){
     writter.drawGiantText(screen,msj,x-(msj.size()*3),y);
 }
 
-int Drawer::drawImage(SDL_Surface *surface, const char *image_path, Sint16 x_pos, Sint16 y_pos) {
+int Drawer::drawImage(SDL_Surface *surface, const char *image_path,
+                      Sint16 x_pos, Sint16 y_pos) {
     SDL_Surface *image = IMG_Load ( image_path );
     if ( !image ) {
         printf ( "IMG_Load: %s, path: %s\n", IMG_GetError (),image_path );
@@ -54,6 +58,7 @@ int Drawer::drawImage(SDL_Surface *surface, const char *image_path, Sint16 x_pos
 }
 
 void Drawer::drawButton(SDL_Surface *screen, ClickableButton *pButton){
-    drawImage(screen,"client/sprites/buttons/fus_top.png",pButton->getX(),pButton->getY());
+    drawImage(screen,"client/sprites/buttons/fus_top.png",
+              pButton->getX(),pButton->getY());
     drawText(screen,pButton->getText(),pButton->getX()+30,pButton->getY());
 }

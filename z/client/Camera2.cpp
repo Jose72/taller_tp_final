@@ -3,7 +3,14 @@
 
 #define BETWEEN(value, min, max) (((value) < (max)) && ((value) > (min)))
 
-Camera2::Camera2(SDL_Surface *screen,int posX, int posY, int W, int H, int lW, int lH, Factory_Units &f):factory(f) {
+Camera2::Camera2(SDL_Surface *screen,
+                 int posX,
+                 int posY,
+                 int W,
+                 int H,
+                 int lW,
+                 int lH,
+                 Factory_Units &f):factory(f) {
     this->screen = screen;
     this->cameraRect.x = posX;
     this->cameraRect.y = posY;
@@ -52,7 +59,8 @@ void Camera2::updateCameraPos() {
 
 }
 
-void Camera2::draw(Units_Protected &units, Game_map &game_map, SoundManager &soundManager) {
+void Camera2::draw(Units_Protected &units, Game_map &game_map,
+                   SoundManager &soundManager) {
     int ticks = SDL_GetTicks();
     if((ticks%30)==0) {
         SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
@@ -61,7 +69,8 @@ void Camera2::draw(Units_Protected &units, Game_map &game_map, SoundManager &sou
         int limitYU = cameraRect.y - (cameraH);
         int limitYD = cameraRect.y + (cameraH);
         game_map.draw_map(limitXL, limitXR, limitYU, limitYD, cameraRect);
-        units.animate(limitXL, limitXR, limitYU, limitYD, cameraRect, soundManager);
+        units.animate(limitXL, limitXR, limitYU, limitYD, cameraRect,
+                      soundManager);
     }
 
 }

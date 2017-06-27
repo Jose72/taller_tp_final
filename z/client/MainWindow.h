@@ -37,16 +37,9 @@ public:
 
     MainWindow(tSocket *socket, int argc, char *argv[], Glib::RefPtr<Gtk::Application> ptr);
 
-    void initial(Glib::RefPtr<Gtk::Application> ptr, int i, char *pString[], MainWindow *pWindow);
-
     tSocket *getSocket();
 
-
-    void setBox(const Gtk::Box &box);
-
     void initial(Glib::RefPtr<Gtk::Application> app, int argc, char **argv);
-
-    Gtk::Box * getBox();
 
     void cleanBox();
 

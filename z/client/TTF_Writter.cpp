@@ -18,7 +18,6 @@ TTF_Writter::TTF_Writter() {
 }
 
 TTF_Writter::~TTF_Writter() {
-    //TTF_CloseFont(font);
     font=NULL;
     giantFont=NULL;
 }

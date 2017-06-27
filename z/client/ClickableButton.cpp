@@ -6,7 +6,12 @@
 #include "ClickableButton.h"
 #include "Protocol.h"
 
-ClickableButton::ClickableButton(int x, int y, int width, int height, std::string text,int idUnit):text(std::move(text))
+ClickableButton::ClickableButton(int x,
+                                 int y,
+                                 int width,
+                                 int height,
+                                 std::string text,
+                                 int idUnit):text(std::move(text))
         ,x(x)
         ,y(y)
         ,width(width)
@@ -20,7 +25,7 @@ ClickableButton::~ClickableButton() {
 
 }
 
-bool ClickableButton::checkBounds(int posX, int posY, Protocol aProtocol) {
+bool ClickableButton::checkBounds(int posX, int posY, Protocol aProtocol){
     if ( posX >= x && posX <= x+width) {
         if ( posY >= y && posY <= y+height) {
             click(aProtocol);

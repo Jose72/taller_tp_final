@@ -94,7 +94,8 @@ void ProtocolMenu::infoJoinGame(){
         socket.receive((char*)&numTeamsNet,SIZE_INT);
         numTeams = ntohl(numTeamsNet);
 
-        infoGames.push_back(new InfoGameSelection(idCreator,maxPlayers,joinedPlayers,typeGame,numTeams));
+        infoGames.push_back(new InfoGameSelection(idCreator,maxPlayers,
+                                                  joinedPlayers,typeGame,numTeams));
     }
 
 }

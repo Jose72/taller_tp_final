@@ -14,7 +14,8 @@
 
 class LoginWindow : public Gtk::Window {
 public:
-    LoginWindow(tSocket *socket,int argc, char *argv[],Glib::RefPtr<Gtk::Application> app);
+    LoginWindow(tSocket *socket,int argc, char *argv[],
+                Glib::RefPtr<Gtk::Application> app);
     Gtk::Box* box;
     Gtk::Button* siguiente;
     Gtk::Entry *entryIp;

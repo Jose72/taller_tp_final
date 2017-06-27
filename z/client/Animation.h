@@ -14,7 +14,8 @@ private:
 
 
 public:
-   Animation(SDL_Surface *screen,std::string imagepath, int frame_w, int frame_h);
+   Animation(SDL_Surface *screen,std::string imagepath,
+             int frame_w, int frame_h);
 
     ~Animation();
     void animate_static(int posx, int posy);

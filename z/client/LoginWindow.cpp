@@ -6,7 +6,8 @@
 #include <iostream>
 #include "LoginWindow.h"
 
-void on_siguiente_clicked(Glib::RefPtr<Gtk::Application> app, int argc, char *argv[], LoginWindow *pWindow) {
+void on_siguiente_clicked(Glib::RefPtr<Gtk::Application> app,
+                          int argc, char *argv[], LoginWindow *pWindow) {
     try{
         int port_number = atoi(pWindow->entryPuerto->get_text().data());
         pWindow->socket->connect(pWindow->entryIp->get_text().data(),port_number);
@@ -19,7 +20,8 @@ void on_siguiente_clicked(Glib::RefPtr<Gtk::Application> app, int argc, char *ar
 
 }
 
-LoginWindow::LoginWindow(tSocket *socketParam, int argc, char *argv[], Glib::RefPtr<Gtk::Application> app) {
+LoginWindow::LoginWindow(tSocket *socketParam, int argc,
+                         char *argv[], Glib::RefPtr<Gtk::Application> app) {
     socket = socketParam;
     mainWindow = nullptr;
     messageDialog = new Gtk::MessageDialog("No se encontro servidor",
@@ -36,7 +38,8 @@ LoginWindow::LoginWindow(tSocket *socketParam, int argc, char *argv[], Glib::Ref
     entryIp->set_placeholder_text("Ingrese IP servidor");
     entryPuerto->set_max_length(6);
     entryPuerto->set_placeholder_text("Ingrese Puerto servidor");
-    siguiente->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_siguiente_clicked),app,argc,argv,this));
+    siguiente->signal_clicked().connect
+            (sigc::bind(sigc::ptr_fun(on_siguiente_clicked),app,argc,argv,this));
     box->add(*entryIp);
     box->add(*entryPuerto);
     box->add(*siguiente);

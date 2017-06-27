@@ -86,9 +86,12 @@ public:
     int get_posx();
     int get_posy();
     int get_unit_code();
-    void animate_static(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
-    void animate_moving(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
-    void animate_attacking(SDL_Rect &cameraRect, std::vector<Animation*> &a, int max_frame);
+    void animate_static(SDL_Rect &cameraRect,
+                        std::vector<Animation*> &a, int max_frame);
+    void animate_moving(SDL_Rect &cameraRect,
+                        std::vector<Animation*> &a, int max_frame);
+    void animate_attacking(SDL_Rect &cameraRect,
+                           std::vector<Animation*> &a, int max_frame);
     void set_state(State s);
     State get_state();
     void set_health(int health);

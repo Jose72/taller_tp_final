@@ -17,19 +17,26 @@
 #define CODE_OUTSIDE_MAP -200
 #define SIZE_INT 4
 
-enum states {NO_STATE, MOVING, ATTACKING, CREATING, DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE,
+enum states {NO_STATE, MOVING, ATTACKING, CREATING,
+    DRIVING, DEAD, STANDING, CAPTURED, CHECKING_CAPTURE,
     DEFEATED, DESTROYED, ERASED, READY_TO_DIE};
 
 
-Protocol::Protocol(tSocket &s, Units_Protected &u, Game_map &g, Factory_Units &f, TechLevelProtected &tech,WinnerProtected &winner,SoundManager &soundManager):
-        socket(s), units(u), game_map(g),factory(f), techLevel(tech),winner(winner), soundManager(soundManager) {}
+Protocol::Protocol(tSocket &s,
+                   Units_Protected &u,
+                   Game_map &g,
+                   Factory_Units &f,
+                   TechLevelProtected &tech,
+                   WinnerProtected &winner,
+                   SoundManager &soundManager):
+        socket(s), units(u), game_map(g),factory(f),
+        techLevel(tech),winner(winner), soundManager(soundManager) {}
 
 Protocol::~Protocol() {}
 
 
 
 void Protocol::moveUnitCS(int cod_unit, int posX, int posY) {
-    std::cout << "cod unit: " << cod_unit << " x: " << posX << " y: " << posY << "\n";
     int CO_to_send = htonl(CODE_MOVE_UNIT);
     int CU_to_send = htonl(cod_unit);
     int PX_to_send = htonl(posX);
@@ -64,12 +71,10 @@ void Protocol::create_map() {
     int tamanio_map;
     socket.receive((char*)&tamanio_map,SIZE_INT);
     int tamanio_map_SC = ntohl(tamanio_map);
-    //std::cout<< tamanio_map_SC << "\n";
     for (int i = 0; i <tamanio_map_SC ; ++i) {
         int tile;
         socket.receive((char*)&tile,SIZE_INT);
         int tile_SC = ntohl(tile);
-        //std::cout<< tile_SC <<"\n";
         game_map.add_tile(tile_SC);
     }
 }
@@ -86,7 +91,6 @@ void Protocol::set_units_game() {
         int posY;
         socket.receive((char*)&unit_code,SIZE_INT);
         int unit_code_SC = ntohl(unit_code);
-        std::cout<< unit_code_SC << "\n";
         socket.receive((char*)&unit_code_config,SIZE_INT);
         int unit_code_config_SC = ntohl(unit_code_config);
         socket.receive((char*)&owner,SIZE_INT);
@@ -96,16 +100,14 @@ void Protocol::set_units_game() {
         socket.receive((char*)&posY,SIZE_INT);
         int posY_SC = ntohl(posY);
 
-        //tech lvl de edificios
-        //en unidades comunes deberia ser ignorado???
+
         int techLevel;
         socket.receive((char*)&techLevel,SIZE_INT);
         int techLevel_SC = ntohl(techLevel);
 
 
-
-        //AGREGAR SWITCH
-        units.createIfDoesNotExist(unit_code_SC,unit_code_config_SC,owner_SC,posX_SC,posY_SC,factory,techLevel_SC);
+        units.createIfDoesNotExist(unit_code_SC,unit_code_config_SC,
+                                   owner_SC,posX_SC,posY_SC,factory,techLevel_SC);
 
     }
 }
@@ -141,14 +143,9 @@ void Protocol::process_message() {
     socket.receive((char*)&message4,SIZE_INT);
     int message4_SC = ntohl(message4);
 
-
-    //seria el porcentage de tiempo que falta para la creacion de la unidad (en edificios)
-    //el codigo de unidad del conductor para los vehiculos
-    //buscar otro uso para los demas??????
     int message5;
     socket.receive((char*)&message5,SIZE_INT);
     int message5_SC = ntohl(message5);
-    //int message5_SC = 0;
 
 
     int posX;
@@ -182,7 +179,9 @@ void Protocol::create_unit(int idCreator, int idCreation) {
     socket.send((char*) &extra_to_send,SIZE_INT);
 }
 
-void Protocol::translate_message(int update, int unitCode, int unitType, int unitOwner, int health, int posX,
+void Protocol::translate_message(int update, int unitCode,
+                                 int unitType, int unitOwner,
+                                 int health, int posX,
                                  int posY, int timeOrDriver) {
     if (update == CODE_END_GAME) {
         units.endGame(unitCode);
@@ -191,13 +190,16 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
         techLevel.setTechLevel(unitCode);
 
     } else {
-        if(units.createIfDoesNotExist(unitCode, unitType, unitOwner, posX, posY, factory,TECH_LEVEL_ZERO)){
+        if(units.createIfDoesNotExist(unitCode, unitType,
+                                      unitOwner, posX, posY,
+                                      factory,TECH_LEVEL_ZERO)){
             soundManager.playCreationUnit(unitOwner, unitType);
         }
         if (units[unitCode]->get_state() != DEAD1) {
             switch (update) {
                 case MOVING:
-                    soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
+                    soundManager.playDamage(unitOwner,unitType,
+                                            units.getHealthUnit(unitCode),health);
                     units.setStateUnit(unitCode,MOVING1);
                     units.setHealthUnit(unitCode,health);
                     units.setTypeDriver(unitCode,timeOrDriver);
@@ -213,7 +215,8 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     units.setStateUnit(unitCode,DEAD1);
                     break;
                 case STANDING:
-                    soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
+                    soundManager.playDamage(unitOwner,unitType,
+                                            units.getHealthUnit(unitCode),health);
                     units.setHealthUnit(unitCode,health);
                     units.setStateUnit(unitCode,DRINKING);
                     units.setTypeDriver(unitCode,timeOrDriver);
@@ -234,7 +237,8 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
                     units.setPosUnit(unitCode,posX,posY);
                     break;
                 case CREATING:
-                    soundManager.playDamage(unitOwner,unitType,units.getHealthUnit(unitCode),health);
+                    soundManager.playDamage(unitOwner,unitType,
+                                            units.getHealthUnit(unitCode),health);
                     units.setHealthUnit(unitCode,health);
                     units.setOwnerUnit(unitCode,unitOwner);
                     units.setCompletionTime(unitCode,timeOrDriver);
@@ -255,7 +259,8 @@ void Protocol::translate_message(int update, int unitCode, int unitType, int uni
     }
 }
 
-void Protocol::mapDataInitial(int &id_client, int &dimensions, int &posXI, int &posYI) {
+void Protocol::mapDataInitial(int &id_client,
+                              int &dimensions, int &posXI, int &posYI) {
     //RECIBO NUMERO DE TEAM
     int team_n;
     socket.receive((char*) &team_n, 4);

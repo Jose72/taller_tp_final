@@ -7,15 +7,21 @@
 
 #include "../common/constants.h"
 
-ClickableButtonCreateUnit::ClickableButtonCreateUnit(int x,
-                                                     int y,
-                                                     int width,
-                                                     int height,
-                                                     const std::string &text,
-                                                     int idUnit,
-                                                     int unitType,
-                                                     std::map<int,int> &creating)
-        : ClickableButton(x, y, width, height, text, idUnit),unitType(unitType),creating(creating) {
+ClickableButtonCreateUnit::ClickableButtonCreateUnit
+        (int x,
+         int y,
+         int width,
+         int height,
+         const std::string &text,
+         int idUnit,
+         int unitType,
+         std::map<int,int> &creating): ClickableButton(
+                          x,
+                          y,
+                          width,
+                          height,
+                          text,
+                          idUnit),unitType(unitType),creating(creating) {
 
 }
 

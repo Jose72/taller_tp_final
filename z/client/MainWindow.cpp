@@ -75,7 +75,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     if(screen == NULL){
         std::cout<<"No se puede inicializar el modo grafico\n" <<SDL_GetError();
     }
-   // atexit(SDL_Quit);
+
     SpritesPool pool(screen);
     Factory_Units factory(pool);
     Game_map game_map(screen);
@@ -152,7 +152,6 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
 
 
 void on_salir_clicked(Glib::RefPtr<Gtk::Application> app){
-    std::cout << "Chau!" << std::endl;
     app->quit();
 }
 
@@ -163,13 +162,19 @@ void hideAndPlay(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainW
 }
 
 
-void on_map_elegido_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow,std::string map) {
+void on_map_elegido_crear_clicked(Glib::RefPtr<Gtk::Application> app,
+                                  int argc, char* argv[],
+                                  MainWindow *pWindow,
+                                  std::string map) {
     ProtocolMenu protocolMenu(*(pWindow->socket));
     protocolMenu.sendMapName(map);
     hideAndPlay(app,argc,argv,pWindow);
 }
 
-void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow) {
+void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,
+                                int argc,
+                                char* argv[],
+                                MainWindow *pWindow) {
     ProtocolMenu protocolMenu(*(pWindow->socket));
     int numPlayers = atoi(pWindow->entry->get_text().data());
     int typeGame = 0;
@@ -207,7 +212,7 @@ void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, cha
         pWindow->add(*(pWindow->box));
         pWindow->show_all();
     } else {
-        std::cout << "Crear juego: " << response << std::endl;
+
     }
 }
 
@@ -226,7 +231,8 @@ void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],
         pWindow->combo2->append("3");
         pWindow->combo2->append("4");
 
-        pWindow->siguiente->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_siguiente_crear_clicked), app,argc,argv,pWindow));
+        pWindow->siguiente->signal_clicked().connect
+                (sigc::bind(sigc::ptr_fun(on_siguiente_crear_clicked), app,argc,argv,pWindow));
 
         pWindow->box->add(*(pWindow->entry));
         pWindow->box->add(*(pWindow->combo));
@@ -236,12 +242,17 @@ void on_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],
         pWindow->add(*(pWindow->box));
         pWindow->show_all();
     } else {
-        std::cout << "Respuesta server iniciar creacion " << response <<std::endl;
+
     }
 
 }
 
-void on_siguiente_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow,int idCreator,int team){
+void on_siguiente_unirse_clicked(Glib::RefPtr<Gtk::Application> app,
+                                 int argc,
+                                 char* argv[],
+                                 MainWindow *pWindow,
+                                 int idCreator,
+                                 int team){
     ProtocolMenu protocolMenu(*(pWindow->socket));
     int response = protocolMenu.joinGame(idCreator, team);
     if(response == RESPONSE_PROTOCOL_MENU_OK){
@@ -250,7 +261,7 @@ void on_siguiente_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, ch
         if(response == RESPONSE_PROTOCOL_MENU_FULL_TEAM){
             pWindow->messageDialog->show();
         } else {
-            std::cout << "siguiente unirse join game " << response << std::endl;
+
         }
     }
 }
@@ -304,7 +315,10 @@ void addButtonTeamGame(MainWindow *pWindow,
     pWindow->buttons.push_back(buttonJoin);
 }
 
-void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow *pWindow){
+void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,
+                       int argc,
+                       char* argv[],
+                       MainWindow *pWindow){
     ProtocolMenu protocolMenu(*(pWindow->socket));
     int response = protocolMenu.initJoinGame();
     if( response == RESPONSE_PROTOCOL_MENU_OK){
@@ -322,7 +336,7 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
         pWindow->add(*(pWindow->box));
         pWindow->show_all();
     } else{
-        std::cout << "respuesta init unirse "<< response << std::endl;
+
     }
 }
 
@@ -331,9 +345,12 @@ void on_unirse_clicked(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[]
 void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *argv[]) {
     cleanBox();
     set_default_size(700, 360);
-    unirse->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv,this));
-    crear->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,this));
-    salir->signal_clicked().connect(sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
+    unirse->signal_clicked().connect
+            (sigc::bind(sigc::ptr_fun(on_unirse_clicked), app,argc,argv,this));
+    crear->signal_clicked().connect
+            (sigc::bind(sigc::ptr_fun(on_crear_clicked), app,argc,argv,this));
+    salir->signal_clicked().connect
+            (sigc::bind(sigc::ptr_fun(on_salir_clicked), app));
     box->add(*crear);
     box->add(*image);
     box->add(*unirse);
@@ -342,7 +359,10 @@ void MainWindow::initial(Glib::RefPtr<Gtk::Application> app, int argc, char *arg
     show_all();
 }
 
-MainWindow::MainWindow(tSocket *socketParam, int argc, char *argv[], Glib::RefPtr<Gtk::Application> app) {
+MainWindow::MainWindow(tSocket *socketParam,
+                       int argc,
+                       char *argv[],
+                       Glib::RefPtr<Gtk::Application> app) {
     socket = socketParam;
     ProtocolMenu protocolMenu(*socket);
     id_client = protocolMenu.receive_id_client();

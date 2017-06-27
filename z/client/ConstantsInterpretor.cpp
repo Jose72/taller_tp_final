@@ -7,12 +7,14 @@
 #include "SpritesPool.h"
 #include "../common/constants.h"
 
-bool isColor(FlagsUnitType a ,FlagsUnitType b ,FlagsUnitType c , FlagsUnitType d, FlagsUnitType color){
+bool isColor(FlagsUnitType a ,FlagsUnitType b ,
+             FlagsUnitType c , FlagsUnitType d, FlagsUnitType color){
     return (color == a || color == b || color == c || color == d);
 }
 
 bool ConstantsInterpretor::isRobotUnit(int t){
-    return (t == GRUNT || t == PYRO || t == LAZER || t == PSYCHO || t == TOUGHT || t == SNIPER);
+    return (t == GRUNT || t == PYRO || t == LAZER ||
+            t == PSYCHO || t == TOUGHT || t == SNIPER);
 }
 
 int ConstantsInterpretor::getType(FlagsUnitType color){
@@ -23,16 +25,20 @@ int ConstantsInterpretor::getType(FlagsUnitType color){
     if(isColor(JEEP_BLUE,JEEP_GREEN,JEEP_RED,JEEP_YELLOW,color))
         return JEEP;
 
-    if(isColor(MEDIUM_TANK_BLUE,MEDIUM_TANK_GREEN,MEDIUM_TANK_RED,MEDIUM_TANK_YELLOW,color))
+    if(isColor(MEDIUM_TANK_BLUE,MEDIUM_TANK_GREEN,MEDIUM_TANK_RED,
+               MEDIUM_TANK_YELLOW,color))
         return MEDIUM_TANK;
 
-    if(isColor(LIGHT_TANK_BLUE,LIGHT_TANK_GREEN,LIGHT_TANK_RED,LIGHT_TANK_YELLOW,color))
+    if(isColor(LIGHT_TANK_BLUE,LIGHT_TANK_GREEN,LIGHT_TANK_RED,
+               LIGHT_TANK_YELLOW,color))
         return LIGHT_TANK;
 
-    if(isColor(HEAVY_TANK_BLUE,HEAVY_TANK_GREEN,HEAVY_TANK_RED,HEAVY_TANK_YELLOW,color))
+    if(isColor(HEAVY_TANK_BLUE,HEAVY_TANK_GREEN,HEAVY_TANK_RED,
+               HEAVY_TANK_YELLOW,color))
         return HEAVY_TANK;
 
-    if(isColor(MISILE_LAUNCHER_BLUE,MISILE_LAUNCHER_GREEN,MISILE_LAUNCHER_RED,MISILE_LAUNCHER_YELLOW,color))
+    if(isColor(MISILE_LAUNCHER_BLUE,MISILE_LAUNCHER_GREEN,
+               MISILE_LAUNCHER_RED,MISILE_LAUNCHER_YELLOW,color))
         return MML;
 
     if(isColor(BLUE_PSYCHO,GREEN_PSYCHO,RED_PSYCHO,YELLOW_PSYCHO,color))
