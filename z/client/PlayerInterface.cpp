@@ -211,7 +211,7 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
         drawer.drawText(screen,"Vida: ",getCol(3,1,0),200);
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_heatlh()),getCol(3,2,0),200);
         drawer.drawText(screen,"Tipo: ",getCol(3,1,0),220);
-        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_type()),getCol(3,2,0),220);
+        drawer.drawText(screen,constantsInterpretor.flagToString(selectionHandler.getUnit()->get_type()),getCol(3,2,0),220);
         if(selectionHandler.getUnit()->getTypeDriver() > -1){
             drawer.drawText(screen,"Conductor: ",getCol(3,1,0),240);
             drawer.drawText(screen,

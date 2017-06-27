@@ -115,6 +115,61 @@ ConstantsInterpretor::ConstantsInterpretor(){
     yellow.insert(YELLOW_SNIPER);
     yellow.insert(YELLOW_LASER);
 
+    grunt.insert(GREEN_GRUNT);
+    grunt.insert(RED_GRUNT);
+    grunt.insert(YELLOW_GRUNT);
+    grunt.insert(BLUE_GRUNT);
+
+    jeep.insert(JEEP_GREEN);
+    jeep.insert(JEEP_BLUE);
+    jeep.insert(JEEP_RED);
+    jeep.insert(JEEP_YELLOW);
+
+    medium_tank.insert(MEDIUM_TANK_BLUE);
+    medium_tank.insert(MEDIUM_TANK_GREEN);
+    medium_tank.insert(MEDIUM_TANK_RED);
+    medium_tank.insert(MEDIUM_TANK_YELLOW);
+
+    light_tank.insert(LIGHT_TANK_BLUE);
+    light_tank.insert(LIGHT_TANK_GREEN);
+    light_tank.insert(LIGHT_TANK_RED);
+    light_tank.insert(LIGHT_TANK_YELLOW);
+
+    heavy_tank.insert(HEAVY_TANK_BLUE);
+    heavy_tank.insert(HEAVY_TANK_GREEN);
+    heavy_tank.insert(HEAVY_TANK_RED);
+    heavy_tank.insert(HEAVY_TANK_YELLOW);
+
+    misile_launcher.insert(MISILE_LAUNCHER_BLUE);
+    misile_launcher.insert(MISILE_LAUNCHER_GREEN);
+    misile_launcher.insert(MISILE_LAUNCHER_YELLOW);
+    misile_launcher.insert(MISILE_LAUNCHER_RED);
+
+    psycho.insert(BLUE_PSYCHO);
+    psycho.insert(RED_PSYCHO);
+    psycho.insert(YELLOW_PSYCHO);
+    psycho.insert(GREEN_PSYCHO);
+
+    tought.insert(BLUE_TOUGHT);
+    tought.insert(GREEN_TOUGHT);
+    tought.insert(YELLOW_TOUGHT);
+    tought.insert(RED_TOUGHT);
+
+    pyro.insert(BLUE_PYRO);
+    pyro.insert(RED_PYRO);
+    pyro.insert(YELLOW_PYRO);
+    pyro.insert(GREEN_PYRO);
+
+    sniper.insert(BLUE_SNIPER);
+    sniper.insert(YELLOW_SNIPER);
+    sniper.insert(GREEN_SNIPER);
+    sniper.insert(RED_SNIPER);
+
+    laser.insert(BLUE_LASER);
+    laser.insert(GREEN_LASER);
+    laser.insert(RED_LASER);
+    laser.insert(YELLOW_LASER);
+
 }
 
 int ConstantsInterpretor::getColor(FlagsUnitType flag){
@@ -135,6 +190,67 @@ int ConstantsInterpretor::getColor(FlagsUnitType flag){
     }
 
     return NO_COLOR;
+}
+
+std::string ConstantsInterpretor::flagToString(FlagsUnitType flag){
+    if(flag == FORT_ALIVE){
+        return "Fort";
+    }
+
+    if(flag == FACTORY_ROBOTS_ALIVE){
+        return "Robot Factory";
+    }
+
+    if(flag == FACTORY_VEHICLES_ALIVE){
+        return "Vehicle Factory";
+    }
+
+    if(grunt.find(flag) != grunt.end()){
+        return "Grunt";
+    }
+
+    if(jeep.find(flag) != jeep.end()){
+        return "Jeep";
+    }
+
+    if(medium_tank.find(flag) != medium_tank.end()){
+        return "Medium Tank";
+    }
+
+    if(light_tank.find(flag) != light_tank.end()){
+        return "Light Tank";
+    }
+
+    if(heavy_tank.find(flag) != heavy_tank.end()){
+        return "Heavy Tank";
+    }
+
+    if(misile_launcher.find(flag) != misile_launcher.end()){
+        return "MML";
+    }
+
+    if(psycho.find(flag) != psycho.end()){
+        return "Psycho";
+    }
+
+    if(tought.find(flag) != tought.end()){
+        return "Tought";
+    }
+
+    if(pyro.find(flag) != pyro.end()){
+        return "Pyro";
+    }
+
+    if(sniper.find(flag) != sniper.end()){
+        return "Sniper";
+    }
+
+    if(laser.find(flag) != laser.end()){
+        return "Lazer";
+    }
+
+    return std::to_string(flag);
+
 }
 
 std::string ConstantsInterpretor::idToString(int id){
