@@ -9,7 +9,7 @@ int createHandler::createRobotActualize(unit &creator, std::map<int, unit*> &uni
 	//chequear donde se va a crear la unidad (posicion)
 	int q_to_create = u_info.getQuantToFab(creator.unitToCreate());
 	int dx = 16;
-	int dy = 24;
+	int dy = 18;
 	for (int i = 0; i < q_to_create; ++i){
 		unit *u = ub.build(creator.unitToCreate(), creator.getOwner(), 
 		creator.getX() + creator.getWidth() + dx, creator.getY() + dy*i);
