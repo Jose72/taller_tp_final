@@ -6,7 +6,6 @@
 
 infoPlayer::infoPlayer(int id, serverProtocol *prot): player_id(id), prot(prot) {}
 
-infoPlayer::infoPlayer(int id): player_id(id) {}
 
 int infoPlayer::getPlayerId(){
 	return player_id;

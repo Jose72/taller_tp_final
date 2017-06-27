@@ -8,25 +8,25 @@ serverProtocol::serverProtocol(tSocket &s):socket(s) {}
 
 serverProtocol::~serverProtocol() {}
 
-
+//envio de la id al cliente
 void serverProtocol::send_id_client(int id_client) {
     int id = htonl(id_client);
     socket.send((char*)&id, INT_SIZE);
 }
 
 
+//envio de mapa a los jugadores
 void serverProtocol::send_map(int * map_s, unsigned int size) {
     int map_size = htonl(size);
     socket.send((char*) &map_size, INT_SIZE);
 
-
     for (unsigned int i = 0; i < size ; ++i) {
         int tile = htonl(*(map_s+ i));
         socket.send((char*) &tile, INT_SIZE);
-        //std::cout<< "map size: "<<*(map_s+ i) << "\n";
     }
 }
 
+//envio de mapa a los jugadores
 void serverProtocol::send_map(std::vector<int> &map_s) {
     int map_size = htonl(map_s.size());
     socket.send((char*) &map_size, INT_SIZE);
@@ -37,11 +37,13 @@ void serverProtocol::send_map(std::vector<int> &map_s) {
     }
 }
 
+//envio del numero de equipo a los jugadores
 void serverProtocol::send_team_number(int t){
 	int team_n = htonl(t);
 	socket.send((char*) &team_n,INT_SIZE);
 }
 
+//envio de la posicion inicial a los jugadores
 void serverProtocol::send_init_pos(int x, int y){
 	int x_x = htonl(x);
 	socket.send((char*) &x_x, INT_SIZE);
@@ -49,11 +51,13 @@ void serverProtocol::send_init_pos(int x, int y){
 	socket.send((char*) &y_y, INT_SIZE);
 }
 
+//codigo de confirmacion OK
 int serverProtocol::sendOKConfimation(){
 	int i = htonl(0);
 	return socket.send((char*) &i,sizeof(int));
 }
 
+//envio de informacion de los mapas disponibles 
 void serverProtocol::sendMapsInfo(std::vector<dataMap> &maps) {
 	//envio cantidad de mapas
 	int cant_maps = maps.size();
@@ -79,6 +83,7 @@ void serverProtocol::sendMapsInfo(std::vector<dataMap> &maps) {
 	}
 }
 
+//envio de las unidades iniciales a los jugadores
 void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
     int units_size = htonl(map_units.size());
     socket.send((char*) &units_size, INT_SIZE);
@@ -126,12 +131,14 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
     }
 }
 
-
+//envio de la dimensiond el mapa a los jugadores
 void serverProtocol::send_map_dim(int map_dim) {
     int md = htonl(map_dim);
     socket.send((char*)&md, INT_SIZE);
 }
 
+
+//recepcion de un evento
 int serverProtocol::receive_event(Event &e) {
     std::cout << "recibe event" << std::endl;
 	int s = 0;
@@ -159,7 +166,7 @@ int serverProtocol::receive_event(Event &e) {
 }
 
 
-
+//envio de codigo de victoria con el numerod el equipo ganador
 int serverProtocol::sendVictory(int w){
 	int s = 0;
 	int code = 40;
@@ -181,7 +188,7 @@ int serverProtocol::sendVictory(int w){
 	return s;
 }
 
-
+//envio de las actualizaciones de las unidades
 int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 	//int units_size = htonl(map_units.size());
     //socket.send((char*) &units_size,4);
@@ -230,6 +237,6 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
         int posY = htonl(it->second->getY());
         s = socket.send((char*) &posY, sizeof(int));
     }
-    //std::cout << "finish act - s: " << s << std::endl;
+	
 	return s;
 }

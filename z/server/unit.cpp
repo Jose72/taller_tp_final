@@ -154,9 +154,11 @@ void unit::drive(unit *vehicle){
 //chequear tiempo correcto
 void unit::create(int u_id, int time){
 	if (class_id != BUILDING) return;
-	unit_code_to_create = u_id;
-	base_time = time;
-	this->resetTimer();
+	if (unit_code_to_create != u_id){
+		this->unit_code_to_create = u_id;
+		this->base_time = time;
+		this->resetTimer();
+	}
 }
 
 

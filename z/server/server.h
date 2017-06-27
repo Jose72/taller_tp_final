@@ -21,7 +21,6 @@ class tServer: public tThread{
 		bool acepter_open;
 		std::vector<tClientManager*> client_mngrs;
 		gameList g_list;
-		std::mutex m;
 	public:
 		tServer(int port, std::string &map_folder, std::string &unit_info_path);
 		void run() override;

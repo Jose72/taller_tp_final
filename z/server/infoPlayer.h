@@ -26,10 +26,7 @@ class infoPlayer {
 		
 	public:
 		infoPlayer(int id, serverProtocol *prot);
-		infoPlayer(int id); //no usar
 		int getPlayerId();
-		//int updateVictoryConditions();
-		//bool isDefeated();
 		void sendTeamNumber(int t);
 		void sendInitialPos(int x, int y);
 };

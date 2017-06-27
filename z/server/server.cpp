@@ -43,7 +43,7 @@ int tServer::processClient(){
 				std::cout << "new client" << std::endl;
 				
 				tClientManager *cli_man = new tClientManager(client_id_count, std::move(new_skt),
-				g_list, m, map_folder, unit_info_path); //paso al manager
+				g_list, map_folder, unit_info_path); //paso al manager
 				client_id_count++;
 				client_mngrs.push_back(cli_man);
 				cli_man->start();

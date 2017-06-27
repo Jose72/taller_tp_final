@@ -219,14 +219,32 @@ void gameMap::releaseUnitBlocking(unit *u){
 	}
 }
 
-tile* gameMap::getClosestPassableTile(int x, int y, int c_unit){
-	tile *dest = this->getTileP(x,y);
+//devuelve un puntero la casilla pasable mas cercana a la casilla 
+//cuyas cordenadas ingreso
+tile* gameMap::getClosestPassableTile(int x, int y, unit *u){
+	int c_unit = u->getClassId();
+	tile *dest = this->getTileP(x,y); 
 	tile *t = nullptr;
-	int dist = width*height*32;
+	int dist = width*height*32; //seteo una distancia muy alta
 	for (auto it = casillas.begin(); it != casillas.end(); ++it){
+		//si la distancia al destino es menor que la que tenia
+		//y la nueva casilla es pasable (y no es el destino)
+		//la seteo como la ams cercana
 		if (dist > dest->euclideanDist(&(*it)) && (dest != &(*it)) && (*it).isPassable(c_unit)){
 			dist = dest->euclideanDist(&(*it));
 			t = &(*it);
+		}
+		//si la distancia es igual
+		//me fijo cual es mas cercana a la unidad
+		if (dist == dest->euclideanDist(&(*it)) && (dest != &(*it)) && (*it).isPassable(c_unit)){
+			tile *orig = this->getTilePFromUnit(u->getX(),u->getY());
+			if (t){
+				double d_1 = orig->euclideanDist(t);
+				double d_2 = orig->euclideanDist(&(*it));
+				if (d_1 > d_2){
+					t = &(*it);
+				}
+			}
 		}
 	}
 	return t;

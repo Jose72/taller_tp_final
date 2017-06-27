@@ -38,7 +38,6 @@ class team {
 		bool maxUnitsReached();
 		void incrementUnitsCount();
 		void decrementUnitsCount();
-		int getTechLvl();
 		int getCapturedTer();
 		void initialize(unit* forts, int unit_count);
 		void setFort(unit *);

@@ -16,8 +16,8 @@
 #include "juego.h"
 
 tClientManager::tClientManager(int id, tSocket cli_s, gameList &jgs, 
-std::mutex &manager_m, std::string &map_folder, std::string &unit_info_path): 
-id_client(id), cli_skt(std::move(cli_s)), manager_m(manager_m), 
+std::string &map_folder, std::string &unit_info_path): 
+id_client(id), cli_skt(std::move(cli_s)), 
 juegos(jgs), map_folder(map_folder), unit_info_path(unit_info_path), 
 end_game(false), j(nullptr), ended(false) {
 	std::cout <<"iniciao manager" << std::endl;

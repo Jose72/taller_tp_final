@@ -69,7 +69,7 @@ int juego::checkVictory(){
 		//me fijo si hay ganador
 		int winner = g_info.checkForWinner();
 		if (winner != NO_WINNER){
-			std::cout << "WINNER: " << winner << std::endl;
+			//std::cout << "WINNER: " << winner << std::endl;
 			for (auto it = protocols.begin(); it != protocols.end(); ++it){
 				//hay que enviarles a todos que termino la partida
 				(*it)->sendVictory(winner);
@@ -199,28 +199,22 @@ void juego::sendInit(){
 	////////////////////////////////
 	//ENVIAR NUMERO DE EQUIPO ANTES QUE TODO
 	g_info.sendTeamNumbers();
-	///////////////////////////////
-	//envio pos inicial
 	
+	///////////////////////////////
+	//envio la dimension del mapa
 	int dim_m = jsonHandler.getMapDimension(map_name);
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
-		//std::cout << dim_m << std::endl;
 		(*it)->send_map_dim(dim_m);
 	}
 	
-	///////////////////////////////
 	//envio pos inicial
 	g_info.sendInitialPos();
 	
-	
-	///////////////////////////////
 	//envio el mapa y las unidades iniciales a todos lo jugadores
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		(*it)->send_map(mapDes);
 		(*it)->send_units_game(units);
 	}
-
-
 }
 
 
@@ -230,6 +224,9 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 	
 	if (it->first != e.getUnitId()) return; //no encontro a la unidad
 	
+	int st = it->second->getState();
+	if (st == DRIVING || st == DEAD) return; //si esta muerta o onduciendo no puede 
+		
 	//el equipo fue derrotado
 	if (g_info.teamDefeated(it->second->getOwner())) return;
 	
@@ -238,8 +235,8 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 			{
 			//moverse
 			//solo robots o vehiculos
-			std::cout << "move order" << std::endl;
-            std::cout << "move u: " << it->first << " x: " << e.getX() << " y: " << e.getY() << std::endl;
+			//std::cout << "move order" << std::endl;
+            //std::cout << "move u: " << it->first << " x: " << e.getX() << " y: " << e.getY() << std::endl;
 			if ((it->second)->getClassId() == ROBOT || (it->second)->getClassId() == VEHICLE) {
 				(it->second)->move(e.getX(),e.getY());
 			}
@@ -249,8 +246,7 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 		case 1:
 			{
 			//ataque
-            std::cout << "ataq order" << std::endl;
-			//moverse
+            //std::cout << "ataq order" << std::endl;
 			std::map<int,unit*>::iterator it2;
 			it2 = units.find(e.getX());
 			int unit_uniq_code = it2->first;
@@ -271,9 +267,8 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 		case 2: 
 			{
 			//crear
-            std::cout << "create order: " << e.getX() << std::endl;
+            //std::cout << "create order: " << e.getX() << std::endl;
 			int u_to_create = e.getX();
-			//
 			(it->second)->create(u_to_create, (u_info.getFabTime(u_to_create) / 10));
 			return;
 			}
@@ -294,17 +289,17 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 void juego::run(){
 	started = true;
 	running = true;
-	//////////////////////////////////////////////////////////////
-	//ENVIAR CONFIRMACIOND E QUE INICIO
-	//ENVIAR INICIALES
+	
+	//espero a que el juego este listo
 	while(!this->readyToStart() && !stop_signal){
 		usleep(500000);
 	}
+	//envio confirmacion a los clientes apra que empiezen a recibir
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		(*it)->sendOKConfimation();
 	}
+	//envio de mapa, unidades iniciales y cosas basicas
 	this->sendInit();
-	//////////////////////////////////////////////////////////////
 	
 	//seteo el actualizador de unidades
 	actualizeUnit actualizer(builder, u_info);
@@ -350,6 +345,7 @@ void juego::run(){
 			
 			//check si gano alguien, o si perdio
 			if (NO_WINNER != checkVictory()){
+				//si hubo ganador envio una ultima actualizacion de unidades
 				for (auto it = protocols.begin(); it != protocols.end(); ++it){
 					(*it)->sendActualization(units);
 				}
@@ -365,20 +361,20 @@ void juego::run(){
 			
 	}
 	
-	//po si salio por otras razones
+	//por si salio por otras razones
 	running = false;
 	
-	
 	//limpio unidades al final del juego
-	std::cout << "delete units" << std::endl;
+	//std::cout << "delete units" << std::endl;
 	for (auto it = units.begin(); it != units.end(); ++it){
 		delete it->second;
 	}
+	
 	//y los protocolos
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		delete (*it);
 	}
 	
-	std::cout << "juego out" << std::endl;	
+	//std::cout << "juego out" << std::endl;	
 	return;
 }

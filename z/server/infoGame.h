@@ -34,8 +34,8 @@ class infoGame{
 	public:
 		infoGame(int max_p, int game_type, int teams);
 		
-		void addNewPlayer(int id_p); //no usar
-		void addNewPlayer(int id_p, serverProtocol *prot);
+		//void addNewPlayer(int id_p); //no usar
+		//void addNewPlayer(int id_p, serverProtocol *prot);
 		//int updateVictoryConditions(int id_p);
 		//void incrementUnitsCount(int id_p);
 		//void decrementUnitsCount(int id_p);

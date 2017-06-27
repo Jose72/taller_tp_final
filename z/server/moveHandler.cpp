@@ -6,8 +6,6 @@
 #include <math.h>  
 #include <algorithm> 
 
-//hay que ver que tipo de unidad es para ver si puede pasar por determinadas casillas !!!!
-
 //buscar el mejor camino a la casilla destino
 int a_Start(tile *orig, tile *dest, gameMap &gmap, int unit_code, std::vector<tile*> &path){
 //se ordena con el f, seria una especie de costo por moverse
@@ -30,13 +28,10 @@ orig->setParent(nullptr); //padre a null, es el origen
 open.insert(orig); //inserto en open
 
 tile *last = nullptr;
-//std::cout << "empieza while" << std::endl;
 while (!open.empty()){//mientras al lista no este vacia
 	//saco la primera casilla del open list (la de menor f);
 	
 	tile *q = open.begin();
-	//std::cout << "current" << std::endl;
-	//q->printTile();
 	
 	//borro q de open y lo inserto el closed
 	open.eraseIfFound(q);
@@ -55,13 +50,8 @@ while (!open.empty()){//mientras al lista no este vacia
 	//para todos los adyacentes
 	for (auto it = ady.begin(); it != ady.end(); ++it){
 		//si no esta en closed y es pasable
-		
-		
-		
 		if (!closed.found(*it) && (*it)->isPassable(unit_code)){
 			
-			
-			///////////////////////////////////////////////////
 			int new_g = q->getG() + q->dist(**it);
 			if (open.found((*it))){
 				//si el g nuevo es mejor, reemplzo
@@ -76,23 +66,6 @@ while (!open.empty()){//mientras al lista no este vacia
 				(*it)->setH(*dest);
 				open.insert((*it));
 			}
-			
-			
-			
-			/////////////////////////////////////////////////////////////////
-			/*
-			//seteo de padre a q
-			(*it)->setParent(q);
-			
-			//saco g y h
-			//dist() es solo para casilla adyacentes!
-			
-			(*it)->setG(); 
-			(*it)->setH(*dest);
-			//si el sucesor no esta en open agrego
-			//si esta, pero este es mejor (menor f), reemplazo
-			open.foundReplaceOrInsert(*it);
-			*/
 		}
 		
 	}
@@ -182,52 +155,37 @@ int moveHandler::moveActualize(unit &u, gameMap &mapa, double time){
 int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 	
 		if (u.getClassId() != ROBOT && u.getClassId() != VEHICLE) return 1;
-		//necesito clse de unidad
+		//necesito la clase de unidad
 		int c_id = u.getClassId();
 		double x_unit = u.getX_D();
 		double y_unit = u.getY_D();
-		//std::cout << "dest_x: " << u.getDestX() << std::endl;
-		//std::cout << "dest_y: " << u.getDestY() << std::endl;
 		//saco casillas origen y destino 
 		tile *orig = mapa.getTilePFromUnit(x_unit, y_unit);
 		tile *dest = mapa.getTilePFromUnit(u.getDestX(), u.getDestY());
-		//orig->printTile();
-		//dest->printTile();
 		std::vector<tile*> camino;
 		
 		//corro el astart para obtener el camino
 		a_Start(orig, dest, mapa, c_id, camino);
 		
-		//se tiene que mover hasta el centro de la siguiente casilla del camino
-		//que seria la segunda guardada en camino (la primera en el origen)
-		//si no hay mas de 1 es el origen
-		//std::cout << camino.size() << std::endl;
 
 		if (camino.size() == 0) {
 			//busco camino a la cassila pasable mas cercana
-			tile *new_dest = mapa.getClosestPassableTile(dest->getX(), dest->getY(), c_id);
+			tile *new_dest = mapa.getClosestPassableTile(dest->getX(), dest->getY(), &u);
 
 			a_Start(orig, new_dest, mapa, c_id, camino);
 			
+			//si de nuevo no encontre camino, detengo la unidad
 			if (camino.size() == 0) {
-				//si no hay camino 
-				//me quedo donde estoy y paso a standing
 				u.stop();
 				u.changeState(STANDING);
-				std::cout << "no camino" << std::endl;
+				//std::cout << "no path" << std::endl;
 				return 1;
 			}
 			
 			tile *last_tile = camino[0];
 			//setea la ultiam casilla del nuevo camino como destino
 			u.setDestiny(last_tile->getX()*32+15, last_tile->getY()*32+15);
-			/*
-			for (auto it = camino.begin(); it != camino.end(); ++it){
-				(*it)->printTile();
-			}
-			*/
 		}
-		
 
 
 		//correcion de camino
@@ -239,7 +197,6 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			closer_tile = camino[camino.size() - 2];
 		}
 		
-		
 		//conseguir el centro de la casilla (coord pixel)
 		int x_closer = 15 + 32 * closer_tile->getX();
 		int y_closer = 15 + 32 * closer_tile->getY(); 
@@ -249,9 +206,6 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 			x_closer = u.getDestX(); 
 			y_closer = u.getDestY();
 		}
-		
-		//std::cout << "x_closer" << x_closer << std::endl;
-		//std::cout << "y_closer" << y_closer << std::endl;
 		
 		//distancia a esa coord (euclidea)
 		double dist = sqrt(pow((x_unit - x_closer),2) + pow((y_unit - y_closer),2));
@@ -303,7 +257,6 @@ int moveHandler::moveCommonActualize(unit &u, gameMap &mapa, double time){
 					if (u.targetIsAttackable()){
 						//ataco
 						u.changeState(ATTACKING);
-						//std::cout << "ataq mov" << std::endl;
 					} else{
 						//si puedo conducir al target lo ahgo
 						if (u.canDriveTarget()){

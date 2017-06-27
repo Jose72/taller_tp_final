@@ -15,7 +15,6 @@ class tClientManager: public tThread{
 	private:
 		int id_client;
 		tSocket cli_skt;
-		std::mutex &manager_m;
 		gameList &juegos;
 		std::string map_folder;
 		std::string unit_info_path;
@@ -26,7 +25,7 @@ class tClientManager: public tThread{
 		int gameSelection();
 	public:
 		tClientManager(int id, tSocket cli_skt, gameList &jgs, 
-		std::mutex &manager_m, std::string &map_folder, std::string &unit_info_path);
+		std::string &map_folder, std::string &unit_info_path);
 		void run() override;
 		void stop();
 		bool readyToClean();
