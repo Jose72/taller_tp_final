@@ -71,3 +71,54 @@ int ConstantsInterpretor::getColor(FlagsUnitType flag){
     //BLUEGRUNT -> TEAMBLUE
     return 0;
 }
+
+std::string ConstantsInterpretor::idToString(int id){
+    switch (id){
+        case GRUNT:
+            return "Grunt";
+            break;
+        case JEEP:
+            return "Jeep";
+            break;
+        case MEDIUM_TANK:
+            return "Medium tank";
+            break;
+        case LIGHT_TANK:
+            return "Light Tank";
+            break;
+        case HEAVY_TANK:
+            return "Heavy Tank";
+            break;
+        case MML:
+            return "MML";
+            break;
+        case PSYCHO:
+            return "Psycho";
+            break;
+        case TOUGHT:
+            return "Tought";
+            break;
+        case PYRO:
+            return "Pyro";
+            break;
+        case SNIPER:
+            return "Sniper";
+            break;
+        case LAZER:
+            return "Lazer";
+            break;
+        case FORT:
+            return "Fort";
+            break;
+        case ROBOT_FACTORY:
+            return "Robot Factory";
+            break;
+        case VEHICLE_FACTORY:
+            return "Vehicle Factory";
+            break;
+        default:
+            return std::to_string(id);
+
+    }
+
+}

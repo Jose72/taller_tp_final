@@ -156,10 +156,13 @@ void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, cha
         for(int i = 0; i < mapDatas.size(); i++){
             Gtk::Button* buttonMap;
             std::ostringstream texto;
+            texto << "Nombre: ";
             texto << mapDatas[i].mapName;
-            texto << ";";
+            texto << "; Dimensiones: ";
             texto << mapDatas[i].dimensions;
-            texto << ";";
+            texto << "x";
+            texto << mapDatas[i].dimensions;
+            texto << "; Equipos: ";
             texto << mapDatas[i].cantEquipos;
             buttonMap = new Gtk::Button(texto.str());
             buttonMap->signal_clicked().connect(sigc::bind(

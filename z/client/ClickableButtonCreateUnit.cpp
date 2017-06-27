@@ -7,12 +7,19 @@
 
 #include "../common/constants.h"
 
-ClickableButtonCreateUnit::ClickableButtonCreateUnit(int x, int y, int width, int height,const std::string &text,int idUnit,int unitType)
-        : ClickableButton(x, y, width, height, text, idUnit),unitType(unitType) {
+ClickableButtonCreateUnit::ClickableButtonCreateUnit(int x,
+                                                     int y,
+                                                     int width,
+                                                     int height,
+                                                     const std::string &text,
+                                                     int idUnit,
+                                                     int unitType,
+                                                     std::map<int,int> &creating)
+        : ClickableButton(x, y, width, height, text, idUnit),unitType(unitType),creating(creating) {
 
 }
 
 void ClickableButtonCreateUnit::click(Protocol aProtocol) {
     aProtocol.create_unit(idUnit,unitType);
-    std::cout << "Crear " << unitType << " (Mensaje al server)" << std::endl;
+    creating[idUnit] = unitType;
 }

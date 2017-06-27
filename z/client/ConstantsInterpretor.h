@@ -20,6 +20,8 @@ public:
     bool isRobotUnit(int t);
 
     int getColor(FlagsUnitType);
+
+    std::string idToString(int id);
 };
 
 

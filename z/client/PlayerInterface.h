@@ -23,6 +23,7 @@ private:
     Animation *background;
     Drawer drawer;
     std::vector<ClickableButton*> buttons;
+    std::map<int,int> factoriesCreating;
 public:
     PlayerInterface(SDL_Surface* screen,
                         int gameWidth,
@@ -49,7 +50,7 @@ public:
 
     void drawTech(int tech);
 
-    void drawCompletionTime(int time);
+    void drawCompletionTime(int time, int idUnit);
 };
 
 

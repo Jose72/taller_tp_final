@@ -11,8 +11,15 @@
 class ClickableButtonCreateUnit : public ClickableButton {
 private:
     int unitType;
+    std::map<int,int> &creating;
 public:
-    ClickableButtonCreateUnit(int x, int y, int width, int height, const std::string &text,int idUnit, int typeUnit);
+    ClickableButtonCreateUnit(int x,
+                              int y,
+                              int width,
+                              int height,
+                              const std::string &text,
+                              int idUnit,
+                              int typeUnit,std::map<int,int> &creating);
 
     void click(Protocol aProtocol);
 };

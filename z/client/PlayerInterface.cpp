@@ -7,6 +7,7 @@
 #include "PlayerInterface.h"
 #include "Animation.h"
 #include "ClickableButtonCreateUnit.h"
+#include "ConstantsInterpretor.h"
 
 
 #define PADDING 40
@@ -68,26 +69,32 @@ std::string getUnitPortrait(FlagsUnitType type){
 int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
     //pos += PADDING para los saltos de linea
     if(tech >= 1){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Grunt",unitCode,GRUNT));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
+                                                        pos,50,30,"Grunt",unitCode,GRUNT,factoriesCreating));
     }
 
     if(tech >= 2){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Psycho",unitCode,PSYCHO));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
+                                                        pos,50,30,"Psycho",unitCode,PSYCHO,factoriesCreating));
         pos += PADDING;
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Tough",unitCode,TOUGHT));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
+                                                        pos,50,30,"Tough",unitCode,TOUGHT,factoriesCreating));
     }
 
     if(tech >= 3){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Sniper",unitCode,SNIPER));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
+                                                        pos,50,30,"Sniper",unitCode,SNIPER,factoriesCreating));
     }
 
     if(tech >= 4){
         pos += PADDING;
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Pyro",unitCode,PYRO));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
+                                                        pos,50,30,"Pyro",unitCode,PYRO,factoriesCreating));
     }
 
     if(tech >= 5){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Laser",unitCode,LAZER));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
+                                                        pos,50,30,"Laser",unitCode,LAZER,factoriesCreating));
     }
 
     pos += PADDING;
@@ -96,25 +103,30 @@ int PlayerInterface::loadRobotsButtons(int pos, int unitCode,int tech){
 
 int PlayerInterface::loadVehiclesButtons(int pos,int unitCode, int tech){
     if(tech >= 1){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Jeep",unitCode,JEEP));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
+                                                        pos,50,30,"Jeep",unitCode,JEEP,factoriesCreating));
     }
 
     if(tech >= 2){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Light Tank",unitCode,LIGHT_TANK));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
+                                                        pos,50,30,"Light Tank",unitCode,LIGHT_TANK,factoriesCreating));
     }
 
     if(tech >= 3){
         pos += PADDING;
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"Medium Tank",unitCode,MEDIUM_TANK));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
+                                                        pos,50,30,"Medium Tank",unitCode,MEDIUM_TANK,factoriesCreating));
     }
 
     if(tech >= 4){
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),pos,50,30,"Heavy Tank",unitCode,HEAVY_TANK));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,2,100,LEFT_PADDING),
+                                                        pos,50,30,"Heavy Tank",unitCode,HEAVY_TANK,factoriesCreating));
     }
 
     if(tech >= 5){
         pos += PADDING;
-        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),pos,50,30,"MML",unitCode,MML));
+        buttons.push_back(new ClickableButtonCreateUnit(getCol(3,1,100,LEFT_PADDING),
+                                                        pos,50,30,"MML",unitCode,MML,factoriesCreating));
     }
 
     pos += PADDING;
@@ -133,9 +145,17 @@ void PlayerInterface::drawTech(int tech){
     drawer.drawText(screen,std::to_string(tech),getCol(3,2,0),0);
 }
 
-void PlayerInterface::drawCompletionTime(int time){
+void PlayerInterface::drawCompletionTime(int time,int idUnit){
+    ConstantsInterpretor constantsInterpretor;
     drawer.drawText(screen,"Unit Creation:",getCol(3,1,0),20);
     drawer.drawText(screen,std::to_string(100 - time) + "%",getCol(3,2,0),20);
+    if ( factoriesCreating.find(idUnit) != factoriesCreating.end() ) {
+        drawer.drawText(screen,
+                        constantsInterpretor.idToString(factoriesCreating[idUnit]),
+                        getCol(3,2,0),
+                        40);
+    }
+
 }
 
 void PlayerInterface::loadButtons(Unit* unit){
@@ -144,24 +164,25 @@ void PlayerInterface::loadButtons(Unit* unit){
         case FACTORY_ROBOTS_ALIVE:
             loadRobotsButtons(initialYPos,unit->get_unit_code(),unit->get_techLevel());
             drawTech(unit->get_techLevel());
-            drawCompletionTime(unit->getCompletionTime());
+            drawCompletionTime(unit->getCompletionTime(),unit->get_unit_code());
             break;
         case FACTORY_VEHICLES_ALIVE:
             loadVehiclesButtons(initialYPos,unit->get_unit_code(),unit->get_techLevel());
             drawTech(unit->get_techLevel());
-            drawCompletionTime(unit->getCompletionTime());
+            drawCompletionTime(unit->getCompletionTime(),unit->get_unit_code());
             break;
         case FORT_ALIVE:
             int newYpos = loadRobotsButtons(initialYPos,unit->get_unit_code(),unit->get_techLevel());
             loadVehiclesButtons(newYpos,unit->get_unit_code(),unit->get_techLevel());
             drawTech(unit->get_techLevel());
-            drawCompletionTime(unit->getCompletionTime());
+            drawCompletionTime(unit->getCompletionTime(),unit->get_unit_code());
             break;
     }
 
 }
 
 void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected &techProtected, WinnerProtected &winnerProtected,int idClient) {
+    ConstantsInterpretor constantsInterpretor;
     bool locked = SDL_MUSTLOCK(screen);
     if(locked)
         SDL_LockSurface(screen);
@@ -170,21 +191,24 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
     drawer.drawLine(screen,gameWidth);
     if(selectionHandler.unit_select()){
         loadButtons(selectionHandler.getUnit());
-        drawer.drawImage(screen,getUnitPortrait(selectionHandler.getUnit()->get_type()).c_str(), getCol(2,1,32), 50);
-        drawer.drawText(screen,"Pos X: ",getCol(3,1,0),150);
-        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posx()),getCol(3,2,0),150);
-        drawer.drawText(screen,"Pos Y: ",getCol(3,1,0),170);
-        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posy()),getCol(3,2,0),170);
-        drawer.drawText(screen,"Vida: ",getCol(3,1,0),190);
-        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_heatlh()),getCol(3,2,0),190);
-        drawer.drawText(screen,"Tipo: ",getCol(3,1,0),210);
-        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_type()),getCol(3,2,0),210);
+        drawer.drawImage(screen,getUnitPortrait(selectionHandler.getUnit()->get_type()).c_str(), getCol(2,1,32), 70);
+        drawer.drawText(screen,"Pos X: ",getCol(3,1,0),160);
+        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posx()),getCol(3,2,0),160);
+        drawer.drawText(screen,"Pos Y: ",getCol(3,1,0),180);
+        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posy()),getCol(3,2,0),180);
+        drawer.drawText(screen,"Vida: ",getCol(3,1,0),200);
+        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_heatlh()),getCol(3,2,0),200);
+        drawer.drawText(screen,"Tipo: ",getCol(3,1,0),220);
+        drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_type()),getCol(3,2,0),220);
         if(selectionHandler.getUnit()->getTypeDriver() > -1){
-            drawer.drawText(screen,"Conductor: ",getCol(3,1,0),230);
-            drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->getTypeDriver()),getCol(3,2,0),230);
+            drawer.drawText(screen,"Conductor: ",getCol(3,1,0),240);
+            drawer.drawText(screen,
+                            constantsInterpretor.idToString(selectionHandler.getUnit()->getTypeDriver()),
+                            getCol(3,2,0),
+                            240);
         }
     } else {
-        drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),150);
+        drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),160);
     }
 
     for(int i = 0; i != buttons.size(); i++) {
