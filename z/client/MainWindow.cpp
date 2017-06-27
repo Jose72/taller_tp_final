@@ -77,7 +77,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     if(screen == NULL){
         std::cout<<"No se puede inicializar el modo grafico\n" <<SDL_GetError();
     }
-    atexit(SDL_Quit);
+   // atexit(SDL_Quit);
     SpritesPool pool(screen);
     Factory_Units factory(pool);
     Game_map game_map(screen);
@@ -118,9 +118,11 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
 
         PlayerInterface playerInterface(screen, WINDOW_W, WINDOW_H, PLAYER_INTERFACE_W);
 
-        // while(waiting_server){}
+        while(waiting_server){
+            sleep(1);
+        }
 
-        //sleep(5);
+
         //main application loop
         threads.push_back(
                 new EventHandler(screen,

@@ -167,12 +167,12 @@ void EventHandler::run() {
             }
         }
         checkDead();
-        int sleepTime = (1000/35 )-(SDL_GetTicks()-ticks);
+        /**int sleepTime = (1000/35 )-(SDL_GetTicks()-ticks);
         if(sleepTime<0){
             sleepTime = 0;
         }
         std::cout <<sleepTime <<"\n";
-        SDL_Delay(sleepTime);
+        SDL_Delay(sleepTime);*/
         //camera2.update_pos();
     }
 }
