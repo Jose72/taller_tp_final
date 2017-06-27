@@ -49,7 +49,9 @@ int tServer::processClient(){
 				cli_man->start();
 				
 				
-			} catch(...) {} //catch del aceptar
+			} catch(...) {
+				acepter_open = false;
+			} //catch del aceptar
 		} catch(...) {//catch del bind and listen
 			acepter_open = false;
 		}

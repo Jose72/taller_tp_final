@@ -239,6 +239,7 @@ void serverProtocol::receiveSelectionCode(int &c){
 	c = ntohl(i);
 }
 
+//recepciond e datos para crear el juego
 void serverProtocol::receiveCreateGameData(int &cant_p, int &type_game, int &teams){
 	int i = -1;
 	socket.receive((char*)&i, INT_SIZE);
@@ -251,7 +252,7 @@ void serverProtocol::receiveCreateGameData(int &cant_p, int &type_game, int &tea
 	teams = ntohl(i);
 }
 
-//recibo el nombre del mapa que selcciono el cliente
+//recibo el nombre del mapa que selecciono el cliente
 void serverProtocol::receiveMapName(std::string &map_name){
 	//recibo tamanio del nombre
 	int name_size = 0;
@@ -263,6 +264,7 @@ void serverProtocol::receiveMapName(std::string &map_name){
 	map_name = std::string(&buff[0]);
 }
 
+//envio de descripcion de los mapas al cliente
 void serverProtocol::sendGamesDescription(std::vector<int> &des, int cant_j) {
 	//envio cant juegos
 	int cant_games = htonl(cant_j);
@@ -276,6 +278,7 @@ void serverProtocol::sendGamesDescription(std::vector<int> &des, int cant_j) {
 	}
 }
 
+//recepcion del codigo de juego a unirse y el numero de equipo
 void serverProtocol::receiveGameToJoin(int &g_id, int &t) {
 	int g_to_join = 0;
 	socket.receive((char*)&g_to_join, 4);
