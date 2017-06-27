@@ -9,9 +9,11 @@ MapLoader::MapLoader(std::string &path): pathFolder(path), jsonHandler(path) {
 
 void MapLoader::loadListData() {
     loadDirectory(pathFolder);
+    /*
     for (unsigned int i = 0; i <this->dataMaps.size() ; ++i) {
         std::cout << this->dataMaps[i].mapName << "\n";
     }
+    */
 }
 std::vector<dataMap> MapLoader::mapsForTeams(int cantEquipos) {
     std::vector<dataMap> vecDataMap;

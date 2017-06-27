@@ -27,14 +27,18 @@ public:
     void send_units_game(std::map<int,unit*> &map_units);
 	void send_team_number(int t);
 	void send_init_pos(int x, int y);
-    void confirm_client(); // Esto es re turbio pero por ahora lo usamos asi que va al protocolo
 	int sendActualization(std::map<int,unit*> &map_units);
     int receive_event(Event &e);
-	int sendUpdateTechLvl(int tech_lvl);
 	int sendVictory(int winner);
 	int sendOKConfimation();
 	void sendMapsInfo(std::vector<dataMap> &maps);
 	void send_map_dim(int map_dim);
+
+	void receiveSelectionCode(int &c);
+	void receiveCreateGameData(int &cant_p, int &type_game, int &teams);
+	void receiveMapName(std::string &map_name);
+	void sendGamesDescription(std::vector<int> &des, int cant_j);
+	void receiveGameToJoin(int &g_id, int &t);
 };
 
 

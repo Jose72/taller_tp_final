@@ -101,8 +101,7 @@ void gameMap::setBlocking(std::map<int,unit*> &units){
 		unit *u = it->second;
 		int b = u->getBlockingType();
 		if (b != B_NOTHING){
-			
-			std::cout << "unit: " << it->first << std::endl;
+
 			int h = u->getHeight();
 			int w = u->getWidth();
 			
@@ -111,13 +110,9 @@ void gameMap::setBlocking(std::map<int,unit*> &units){
 			int counter_x = (w / TILE_LENGHT);
 			if (counter_x < 1) counter_x = 1;
 			
-			//std::cout << "casi in y: " << counter_y << std::endl;
-			//std::cout << "casi in x: " << counter_x << std::endl;
-			
 			int x_pos = u->getX();
 			int y_pos = u->getY();
-			
-			
+
 			tile *t = this->getTilePFromUnit(x_pos, y_pos);
 			int x_tile = t->getX();
 			int y_tile = t->getY();
@@ -131,7 +126,7 @@ void gameMap::setBlocking(std::map<int,unit*> &units){
 					} else {
 						p = true;
 					}
-					//std::cout << "casi que block: " << i << "-" << j << std::endl; 
+
 					t2->putUnitOver(p);
 				}
 			}
