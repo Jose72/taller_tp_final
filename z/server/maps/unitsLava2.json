@@ -1,0 +1,485 @@
+[
+   {
+      "id" : 1,
+      "owner" : 1,
+      "posX" : 16,
+      "posY" : 0,
+      "techLevel" : 0
+   },
+   {
+      "id" : 11,
+      "owner" : 1,
+      "posX" : 64,
+      "posY" : 64,
+      "techLevel" : 4
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 128,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 160,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 192,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 448,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 480,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 512,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 128,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 160,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 192,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 448,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 480,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 512,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 480,
+      "posY" : 160,
+      "techLevel" : 0
+   },
+   {
+      "id" : 13,
+      "owner" : 0,
+      "posX" : 320,
+      "posY" : 0,
+      "techLevel" : 2
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 736,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 736,
+      "posY" : 128,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 736,
+      "posY" : 160,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 736,
+      "posY" : 192,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 736,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 768,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 800,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 832,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 864,
+      "posY" : 96,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 864,
+      "posY" : 128,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 864,
+      "posY" : 160,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 864,
+      "posY" : 192,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 864,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 768,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 800,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 832,
+      "posY" : 224,
+      "techLevel" : 0
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 800,
+      "posY" : 160,
+      "techLevel" : 0
+   },
+   {
+      "id" : 13,
+      "owner" : 0,
+      "posX" : 640,
+      "posY" : 0,
+      "techLevel" : 2
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 224,
+      "posY" : 480,
+      "techLevel" : 0
+   },
+   {
+      "id" : 12,
+      "owner" : 0,
+      "posX" : 96,
+      "posY" : 416,
+      "techLevel" : 2
+   },
+   {
+      "id" : 21,
+      "owner" : 0,
+      "posX" : 48,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 480,
+      "techLevel" : 0
+   },
+   {
+      "id" : 12,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 416,
+      "techLevel" : 2
+   },
+   {
+      "id" : 21,
+      "owner" : 0,
+      "posX" : 368,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 864,
+      "posY" : 480,
+      "techLevel" : 0
+   },
+   {
+      "id" : 12,
+      "owner" : 0,
+      "posX" : 736,
+      "posY" : 416,
+      "techLevel" : 2
+   },
+   {
+      "id" : 21,
+      "owner" : 0,
+      "posX" : 688,
+      "posY" : 544,
+      "techLevel" : 0
+   },
+   {
+      "id" : 14,
+      "owner" : 0,
+      "posX" : 224,
+      "posY" : 800,
+      "techLevel" : 0
+   },
+   {
+      "id" : 12,
+      "owner" : 0,
+      "posX" : 96,
+      "posY" : 736,
+      "techLevel" : 2
+   },
+   {
+      "id" : 21,
+      "owner" : 0,
+      "posX" : 48,
+      "posY" : 864,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 736,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 768,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 800,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 832,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 416,
+      "posY" : 864,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 448,
+      "posY" : 736,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 480,
+      "posY" : 736,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 512,
+      "posY" : 736,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 736,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 768,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 800,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 832,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 544,
+      "posY" : 864,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 448,
+      "posY" : 864,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 480,
+      "posY" : 864,
+      "techLevel" : 0
+   },
+   {
+      "id" : 23,
+      "owner" : 0,
+      "posX" : 512,
+      "posY" : 864,
+      "techLevel" : 0
+   },
+   {
+      "id" : 1,
+      "owner" : 2,
+      "posX" : 656,
+      "posY" : 640,
+      "techLevel" : 0
+   },
+   {
+      "id" : 11,
+      "owner" : 2,
+      "posX" : 704,
+      "posY" : 704,
+      "techLevel" : 4
+   },
+   {
+      "id" : 9,
+      "owner" : 0,
+      "posX" : 640,
+      "posY" : 640,
+      "techLevel" : 0
+   }
+]
