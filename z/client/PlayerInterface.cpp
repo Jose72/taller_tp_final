@@ -208,16 +208,18 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posx()),getCol(3,2,0),160);
         drawer.drawText(screen,"Pos Y: ",getCol(3,1,0),180);
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_posy()),getCol(3,2,0),180);
-        drawer.drawText(screen,"Vida: ",getCol(3,1,0),200);
+        drawer.drawText(screen,"Life: ",getCol(3,1,0),200);
         drawer.drawText(screen,std::to_string(selectionHandler.getUnit()->get_heatlh()),getCol(3,2,0),200);
-        drawer.drawText(screen,"Tipo: ",getCol(3,1,0),220);
+        drawer.drawText(screen,"Type: ",getCol(3,1,0),220);
         drawer.drawText(screen,constantsInterpretor.flagToString(selectionHandler.getUnit()->get_type()),getCol(3,2,0),220);
+        drawer.drawText(screen,"Gun: ",getCol(3,1,0),240);
+        drawer.drawText(screen,constantsInterpretor.flagToWeapon(selectionHandler.getUnit()->get_type()),getCol(3,2,0),240);
         if(selectionHandler.getUnit()->getTypeDriver() > -1){
-            drawer.drawText(screen,"Conductor: ",getCol(3,1,0),240);
+            drawer.drawText(screen,"Conductor: ",getCol(3,1,0),260);
             drawer.drawText(screen,
                             constantsInterpretor.idToString(selectionHandler.getUnit()->getTypeDriver()),
                             getCol(3,2,0),
-                            240);
+                            260);
         }
     } else {
         drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),160);

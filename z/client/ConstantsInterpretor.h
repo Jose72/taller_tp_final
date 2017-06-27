@@ -40,6 +40,8 @@ public:
     std::string idToString(int id);
 
     std::string flagToString(FlagsUnitType);
+
+    std::string flagToWeapon(FlagsUnitType flag);
 };
 
 

@@ -253,6 +253,67 @@ std::string ConstantsInterpretor::flagToString(FlagsUnitType flag){
 
 }
 
+std::string ConstantsInterpretor::flagToWeapon(FlagsUnitType flag){
+    if(flag == FORT_ALIVE){
+        return "Nothing";
+    }
+
+    if(flag == FACTORY_ROBOTS_ALIVE){
+        return "Nothing";
+    }
+
+    if(flag == FACTORY_VEHICLES_ALIVE){
+        return "Nothing";
+    }
+
+    if(grunt.find(flag) != grunt.end()){
+        return "Bullets";
+    }
+
+    if(jeep.find(flag) != jeep.end()){
+        return "Bullets";
+    }
+
+    if(medium_tank.find(flag) != medium_tank.end()){
+        return "High caliber projectiles";
+    }
+
+    if(light_tank.find(flag) != light_tank.end()){
+        return "High caliber projectiles";
+    }
+
+    if(heavy_tank.find(flag) != heavy_tank.end()){
+        return "High caliber projectiles";
+    }
+
+    if(misile_launcher.find(flag) != misile_launcher.end()){
+        return "Missiles";
+    }
+
+    if(psycho.find(flag) != psycho.end()){
+        return "Bullets";
+    }
+
+    if(tought.find(flag) != tought.end()){
+        return "Missiles";
+    }
+
+    if(pyro.find(flag) != pyro.end()){
+        return "Flamethrower";
+    }
+
+    if(sniper.find(flag) != sniper.end()){
+        return "Bullets";
+    }
+
+    if(laser.find(flag) != laser.end()){
+        return "Lazer";
+    }
+
+    return std::to_string(flag);
+
+}
+
 std::string ConstantsInterpretor::idToString(int id){
     switch (id){
         case GRUNT:
