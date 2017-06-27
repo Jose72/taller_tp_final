@@ -111,10 +111,6 @@ void serverProtocol::send_units_game(std::map<int, unit *> &map_units) {
 		switch(c){
 			case BUILDING:{
 				m = it->second->getTechLvl();
-				if (it->second->getUnitId() == FORT){
-					std::cout << "unit: " << it->first << std::endl;
-					std::cout << "fort_t: " << it->second->getTechLvl() << std::endl;
-				}
 				break;
 			}
 			case VEHICLE:{
@@ -140,7 +136,6 @@ void serverProtocol::send_map_dim(int map_dim) {
 
 //recepcion de un evento
 int serverProtocol::receive_event(Event &e) {
-    std::cout << "recibe event" << std::endl;
 	int s = 0;
     int cod_operation;
     socket.receive((char*)&cod_operation, INT_SIZE);
@@ -158,9 +153,6 @@ int serverProtocol::receive_event(Event &e) {
     s = socket.receive((char*)&posY, INT_SIZE);
     int posY_CS = ntohl(posY);
 
-
-    std::cout << "op_code: " << cod_operation_CS << " unit_code: " << cod_unit_CS <<
-              " x_code: " << posX_CS << " y_code: " << posY_CS << std::endl;
 	e = Event(cod_operation_CS, cod_unit_CS, posX_CS, posY_CS);
 	return s;
 }
@@ -184,7 +176,6 @@ int serverProtocol::sendVictory(int w){
 	socket.send((char*) &trash, INT_SIZE);
 	socket.send((char*) &trash, INT_SIZE);
 	s = socket.send((char*) &trash, INT_SIZE);
-    //std::cout << "finish act - s: " << s << std::endl;
 	return s;
 }
 
@@ -240,3 +231,57 @@ int serverProtocol::sendActualization(std::map<int,unit*> &map_units){
 	
 	return s;
 }
+
+//recibe el codigo para unirse a un juego o crearlo
+void serverProtocol::receiveSelectionCode(int &c){
+	int i;
+	socket.receive((char*)&i, INT_SIZE);
+	c = ntohl(i);
+}
+
+void serverProtocol::receiveCreateGameData(int &cant_p, int &type_game, int &teams){
+	int i = -1;
+	socket.receive((char*)&i, INT_SIZE);
+	cant_p = ntohl(i);
+	i = -1;
+	socket.receive((char*)&i, INT_SIZE);
+	type_game = ntohl(i);
+	i = -1;
+	socket.receive((char*)&i, INT_SIZE);
+	teams = ntohl(i);
+}
+
+//recibo el nombre del mapa que selcciono el cliente
+void serverProtocol::receiveMapName(std::string &map_name){
+	//recibo tamanio del nombre
+	int name_size = 0;
+	socket.receive((char*)&name_size,INT_SIZE);
+	name_size = ntohl(name_size);
+	//recibo el nombre
+	char buff[100] = {'\0'};
+	socket.receive((char*)&buff[0], name_size);
+	map_name = std::string(&buff[0]);
+}
+
+void serverProtocol::sendGamesDescription(std::vector<int> &des, int cant_j) {
+	//envio cant juegos
+	int cant_games = htonl(cant_j);
+	socket.send((char *) &cant_games, INT_SIZE);
+
+	//loop envio descripcion de juegos
+	for (auto it = des.begin(); it != des.end(); ++it) {
+		int i = (*it);
+		i = htonl(i);
+		socket.send((char *) &i, INT_SIZE);
+	}
+}
+
+void serverProtocol::receiveGameToJoin(int &g_id, int &t) {
+	int g_to_join = 0;
+	socket.receive((char*)&g_to_join, 4);
+	g_id = ntohl(g_to_join);
+	int team_to_join = 0;
+	socket.receive((char*)&team_to_join, 4);
+	t = ntohl(team_to_join);
+}
+

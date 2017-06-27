@@ -31,26 +31,18 @@ int tClientManager::gameSelection(){
 
 	//recibo el codigo
 	int code = -1;
-	cli_skt.receive((char*)&code, 4);
-	code = ntohl(code);
+	prot.receiveSelectionCode(code);
 
 	if (code == CREATE_GAME) {
 		//envio confirmacion
 		prot.sendOKConfimation();
 
 		//recibo datos
-		int cant_p = -1;
-		cli_skt.receive((char*)&cant_p, 4);
-		cant_p = ntohl(cant_p);
+        int cant_p = -1;
+        int type_game = -1;
+        int teams = -1;
+        prot.receiveCreateGameData(cant_p, type_game, teams);
 
-		int type_game = -1;
-		cli_skt.receive((char*)&type_game, 4);
-		type_game = ntohl(type_game);
-
-		int teams = -1;
-		cli_skt.receive((char*)&teams, 4);
-		teams = ntohl(teams);
-		
 		//si la cant de jugadores es menor o igual a 1 da error
 		if (cant_p <= 1 ){
 			return 1;
@@ -86,19 +78,9 @@ int tClientManager::gameSelection(){
 		std::vector<dataMap> maps_info = m_loader.mapsForTeams(teams2);
 		prot.sendMapsInfo(maps_info);
 
-
-
-		//recibo tamanio del nombre
-		int name_size = 0;
-		cli_skt.receive((char*)&name_size, 4);
-		name_size = ntohl(name_size);
-		//recibo el nombre
-		char buff[100] = {'\0'};
-		cli_skt.receive((char*)&buff[0], name_size);
-		std::string mapa_nombre(&buff[0]);
-
-		std::cout << mapa_nombre << std::endl;
-		
+        //recibo nombre de mapa
+        std::string mapa_nombre;
+        prot.receiveMapName(mapa_nombre);
 		
 		///////////////////////////////////////////////////////////
 		//creo el nuevo juego
@@ -106,9 +88,6 @@ int tClientManager::gameSelection(){
 		j->clientJoin(id_client, &cli_skt, 1);
 		//pusheo en el vector de juegos, para que quede listado
 		juegos.push_back(j);
-
-		//envio confirmacion
-		//prot.sendOKConfimation(); //cliente no espera confirmacion despues de elegir el mapa
 
 		//empiezo el juego
 		j->start();
@@ -119,22 +98,15 @@ int tClientManager::gameSelection(){
 	if (code == JOIN_GAME){ //si seleccione unirme
 		//envio confirmacion
 		prot.sendOKConfimation();
+
 		//obtengo la descripcion de los juegos
 		int cant_games;
 		std::vector<int> des;
 		juegos.descriptionGames(des, cant_games);
-		
-		//envio cant juegos
-		cant_games = htonl(juegos.size());
-		cli_skt.send((char*)&cant_games, 4);
-		
-		//loop envio descripcion de juegos
-		for (auto it = des.begin(); it != des.end(); ++it){
-			int i = (*it);
-			i = htonl(i);
-			cli_skt.send((char*)&i, 4);
-		}
-		
+
+        //envio descripcion  de los juegos
+        prot.sendGamesDescription(des, cant_games);
+
 		//recibir codigo
 		//mientras el socket siga vivo (y no me hagan stop en el manager)
 		//loopeo hasta que joinee a la aprtida
@@ -143,14 +115,15 @@ int tClientManager::gameSelection(){
 			
 			//recibo numero de creador y de equipo
 			int g_to_join = 0;
+            int team_to_join = 0;
+            prot.receiveGameToJoin(g_to_join,team_to_join);
+            /*
 			s = cli_skt.receive((char*)&g_to_join, 4);
 			g_to_join = ntohl(g_to_join);
-			int team_to_join = 0;
+
 			s = cli_skt.receive((char*)&team_to_join, 4);
 			team_to_join = ntohl(team_to_join);
-			std::cout << "g_to join: "  << g_to_join << std::endl;
-			std::cout << "team_to_join: "  << team_to_join << std::endl;
-
+            */
 			//intento unirme al juego
 			int joineo = juegos.joinGame(id_client, &cli_skt, &j, g_to_join, team_to_join);
 			
@@ -161,7 +134,6 @@ int tClientManager::gameSelection(){
 				return 0;
 			} else {
 				//envio que salio mal
-				std::cout << "no joineo: " << std::endl;
 				int confirm = htonl(-1);
 				s = cli_skt.send((char*)&confirm, 4);
 			}
@@ -180,10 +152,8 @@ int tClientManager::gameSelection(){
 
 
 void tClientManager::stop(){
-		std::cout << "manager stop" << std::endl;	
 		end_game = true;
         cli_skt.shutdown(SHUT_RDWR);
-		std::cout << "manager stop out" << std::endl;	
 }
 
 void tClientManager::run(){
@@ -209,12 +179,12 @@ void tClientManager::run(){
 		Event e;
 		s = protocolo.receive_event(e);
 		if (s > 0) {
+
 			//el juego tiene el mutex
 			j->take_event(e);
 		}
 	}
-	
-	std::cout << "manager out" << std::endl;	
+
 	ended = true;
 	return;
 }

@@ -123,7 +123,6 @@ void juego::unit_cleaner(){
 
 void juego::take_event(Event &e){
 	tLock l(event_m);//lockeo
-	//std::cout << "event push" << std::endl;
 	event_list.push(e);
 	return;
 }
@@ -150,15 +149,11 @@ int juego::clientJoin(int cli_id, tSocket *cli_s, int team_n){
 }
 
 void juego::sendInit(){
-	//map_name = "map";
 	JsonHandler jsonHandler(map_folder);
 	std::vector<int> mapDes = jsonHandler.jsonToMap(map_name);
 	mapa = gameMap(mapDes);
     jsonHandler.jsonToUnits(id_unit_counter,builder,units,map_name);
 
-
-	
-	
 	//hay que inicilizar la info de cada equipo
 	//codigo de equipo (owner), puntero a fuerte, cant incial de unidades
 	//cant de unidades es solo robots y vehiculos, edificios no cuentan
@@ -297,7 +292,7 @@ void juego::run(){
 	}
 	//envio de mapa, unidades iniciales y cosas basicas
 	this->sendInit();
-	std::cout << "llego" << std::endl;
+
 	//seteo el actualizador de unidades
 	actualizeUnit actualizer(builder, u_info);
 	
@@ -353,7 +348,6 @@ void juego::run(){
 		int elapsed_time = (clock() - Start) * 1000000 / CLOCKS_PER_SEC;
 		int sleep_time = (MILISEC_SLICE * 1000) - elapsed_time;
 		if (sleep_time < 0) sleep_time = 0;
-		//std::cout << "Time Difference: " << sleep_time << std::endl;
 		usleep(sleep_time);
 			
 	}
@@ -362,7 +356,6 @@ void juego::run(){
 	running = false;
 	
 	//limpio unidades al final del juego
-	//std::cout << "delete units" << std::endl;
 	for (auto it = units.begin(); it != units.end(); ++it){
 		delete it->second;
 	}
@@ -371,7 +364,6 @@ void juego::run(){
 	for (auto it = protocols.begin(); it != protocols.end(); ++it){
 		delete (*it);
 	}
-	
-	//std::cout << "juego out" << std::endl;	
+
 	return;
 }

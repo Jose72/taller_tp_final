@@ -20,7 +20,6 @@ int autoAttackActualize(unit &attacker, std::map<int, unit*> &units, gameMap &ma
 		(target->getClassId() == ROBOT || target->getClassId() == VEHICLE || target->getClassId() == BUILDING)){
 			//si esta en rango
 			if (attacker.isInRange(*target)){
-				//std::cout << "target in range" << it->first << std::endl;
 				attacker.setAutoAttack(target);
 				return 0;
 			}

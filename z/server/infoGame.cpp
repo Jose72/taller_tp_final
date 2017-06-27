@@ -14,106 +14,6 @@ infoGame::infoGame(int max_p, int game_type, int teams){
 	this->initializeTeams();
 }	
 	
-/*
-	
-//adhiere nuevo jugador, con su protocolo
-void infoGame::addNewPlayer(int id_p, serverProtocol *prot){
-	if (players_info.size() < max_players){
-		infoPlayer i(id_p, prot);
-		players_info.insert(std::pair<int,infoPlayer>(id_p,i));
-	}
-}
-
-
-//no usar!!
-void infoGame::addNewPlayer(int id_p){
-	if (players_info.size() < max_players){
-		infoPlayer i(id_p);
-		players_info.insert(std::pair<int,infoPlayer>(id_p,i));
-	}
-}
-
-
-
-//inciiaiza a un jugador
-//guarda el puntero al fuerte y la cant de unidades iniciales
-void infoGame::initializePlayer(int id_p, unit *fort, int units_count){
-	std::map<int,infoPlayer>::iterator it;
-	it = players_info.find(id_p);
-	if (id_p == it->first)
-		(it->second).initialize(fort, units_count);
-}
-
-
-//devuelde DEFEAT si el jugador fue derrotado en este turno
-//OK si sigue vivo
-//-1 si ya estaba derrotado
-int infoGame::updateVictoryConditions(int id_p){
-	//busco el info del player
-	std::map<int,infoPlayer>::iterator it;
-	it = players_info.find(id_p);
-	//si no fue derrotado, hago el update
-	if ((it->second).isDefeated()) return -1;
-	int i = (it->second).updateVictoryConditions();
-	if (i == DEFEAT){
-			std::cout << "jugador: " << (it->second).getPlayerId()
-			<< "derrotado------" << std::endl;
-	}
-	//devuelvo el resultado
-	return i;
-}
-
-
-//retorna el id del winner si lo hay, sino retorna 0
-int infoGame::checkForWinner(){
-	//si es un deathmath
-	if (game_type == DEATHMATCH){
-		int defeated_count = 0;
-		int winner = NO_WINNER;
-		//me fijo que en los jugadores
-		for (auto it = players_info.begin(); it != players_info.end(); ++it){
-			if ((it->second).isDefeated()){
-				defeated_count++;
-			} else {
-				winner = (it->second).getPlayerId();
-			}
-		}
-		//si solo quedo uno no derrotado es el ganador
-		if (defeated_count == (int)max_players - 1){
-			return winner;
-		} 
-		return NO_WINNER;
-	}
-	return NO_WINNER;
-}
-
-
-
-void infoGame::incrementUnitsCount(int id_p){
-	std::map<int,infoPlayer>::iterator it;
-	it = players_info.find(id_p);
-	(it->second).incrementUnitsCount();
-}
-
-void infoGame::decrementUnitsCount(int id_p){
-	std::map<int,infoPlayer>::iterator it;
-	it = players_info.find(id_p);
-	(it->second).decrementUnitsCount();
-}
-
-
-//si un jugador llego a su limite de poblacion
-bool infoGame::maxPopulationReached(int id_p){
-	std::map<int,infoPlayer>::iterator it;
-	it = players_info.find(id_p);
-	if (id_p == it->first){
-		return (it->second).maxUnitsReached();
-	} 
-	return false;
-}
-*/
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
 
 
 void infoGame::initializeTeams(){
@@ -127,8 +27,6 @@ void infoGame::initializeTeams(){
 		for (unsigned int i = 1; i <= team_limit; ++i){
 			team t(i, max_players/max_teams);
 			teams.push_back(t);
-			std::cout << "team: " << i << std::endl;
-			std::cout << "ppt: " << max_players/max_teams << std::endl;
 		}
 	}
 
@@ -164,10 +62,6 @@ int infoGame::updateVictoryCond(int team_n){
 		if (team_n == it->getTeamNumber()){
 			if (it->isDefeated()) return -1;
 			int i = it->updateVictoryConditions();
-			if (i == DEFEAT){
-				std::cout << "team: " << it->getTeamNumber()
-				<< "derrotado------" << std::endl;
-			}
 			return i;
 		}
 	}
