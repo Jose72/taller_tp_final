@@ -4,7 +4,7 @@ Factory_Units::Factory_Units(SpritesPool &pool):pool(pool) {}
 
 Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int posy, int unit_owner) {
 
-    switch (unit){
+    switch ((int) unit){
         case BLUE_GRUNT:
             return new Unit(this->pool.get_animations(BLUE_GRUNT),
                             this->pool.get_animations(FIRE_BLUE_GRUNT),
@@ -500,6 +500,20 @@ Unit* Factory_Units::createUnit(FlagsUnitType unit,int unit_code, int posx, int 
                             this->pool.get_animations(TOUGHT_BULLET),
                             this->pool.get_animations(TOUGHT_BULLET),
                             unit_code,posx,posy,MOVING1,HCP_BULLET, unit_owner);
+        default:
+            return new Unit(this->pool.get_animations(TOUGHT_BULLET),
+                            this->pool.get_animations(TOUGHT_BULLET),
+                            this->pool.get_animations(BULLET_DEAD),
+                            this->pool.get_animations(TOUGHT_BULLET),
+                            this->pool.get_animations(TOUGHT_BULLET),
+                            unit_code,posx,posy,MOVING1,HCP_BULLET, unit_owner);
     }
+
+    return new Unit(this->pool.get_animations(TOUGHT_BULLET),
+                    this->pool.get_animations(TOUGHT_BULLET),
+                    this->pool.get_animations(BULLET_DEAD),
+                    this->pool.get_animations(TOUGHT_BULLET),
+                    this->pool.get_animations(TOUGHT_BULLET),
+                    unit_code,posx,posy,MOVING1,HCP_BULLET, unit_owner);
 
 }

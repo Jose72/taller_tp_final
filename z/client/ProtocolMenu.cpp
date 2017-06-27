@@ -8,7 +8,7 @@
 #include "ProtocolMenu.h"
 #include "InfoGameSelection.h"
 #define SIZE_INT 4
-
+#define MAXNAMESIZE 200
 
 
 
@@ -100,7 +100,7 @@ void ProtocolMenu::infoJoinGame(){
 }
 
 void ProtocolMenu::cleanInfoGames(){
-    for (int i = 0; i < infoGames.size(); i++){
+    for (unsigned int i = 0; i < infoGames.size(); i++){
         delete infoGames[i];
     }
     infoGames.clear();
@@ -117,7 +117,7 @@ std::vector<mapData> ProtocolMenu::receiveMapsInfo() {
         int nameSize;
         socket.receive((char*) &nameSize,SIZE_INT);
         int nameSizeSC = ntohl(nameSize);
-        char name [nameSizeSC+1];
+        char name [MAXNAMESIZE];
         name[nameSizeSC] = '\0';
         socket.receive(name,nameSizeSC);
         int dim;

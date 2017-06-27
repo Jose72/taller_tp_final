@@ -12,12 +12,13 @@
 
 class SelectionHandler {
 private:
-    bool unit_selected;
-    Unit * unit;
     Protocol &protocol;
     int &id_client;
     Camera2 &cam;
+    bool unit_selected;
+    Unit * unit;
     std::vector<Unit*> unitsSelected;
+
 
 public:
     SelectionHandler(Protocol &p, int &id, Camera2 &cam);

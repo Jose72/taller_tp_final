@@ -26,7 +26,7 @@ void unit::setPos(double p_x, double p_y){
 
 bool unit::isMoving(){
 	return ((x != dest_x || y != dest_y));
-};
+}
 
 int unit::getUnitId(){
 	return unit_id;

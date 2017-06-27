@@ -328,8 +328,8 @@ void SpritesPool::load_sprites(std::string path,
         //return EXIT_FAILURE;
     }
     std::string temp;
-    for (int i = 0; i <list_dir.size(); ++i) {
-        for (int j = 0; j <list_dir.size(); ++j) {
+    for (unsigned int i = 0; i <list_dir.size(); ++i) {
+        for (unsigned int j = 0; j <list_dir.size(); ++j) {
 
             if (list_dir[i] < list_dir[j]) {
                 temp = list_dir[j];
@@ -338,7 +338,7 @@ void SpritesPool::load_sprites(std::string path,
             }
         }
     }
-    for (int j = 2; j <list_dir.size() ; ++j) {
+    for (unsigned int j = 2; j <list_dir.size() ; ++j) {
         std::string full_dir;
         full_dir.append(rootDirectory);
         full_dir.append("/");
@@ -385,8 +385,8 @@ void SpritesPool::load_sprites_with_null(std::string path,
         //return EXIT_FAILURE;
     }
     std::string temp;
-    for (int i = 0; i <list_dir.size(); ++i) {
-        for (int j = 0; j <list_dir.size(); ++j) {
+    for (unsigned int i = 0; i <list_dir.size(); ++i) {
+        for (unsigned int j = 0; j <list_dir.size(); ++j) {
 
             if (list_dir[i] < list_dir[j]) {
                 temp = list_dir[j];
@@ -395,7 +395,7 @@ void SpritesPool::load_sprites_with_null(std::string path,
             }
         }
     }
-    for (int j = 2; j <list_dir.size() ; ++j) {
+    for (unsigned int j = 2; j <list_dir.size() ; ++j) {
         std::string full_dir;
         full_dir.append(rootDirectory);
         full_dir.append("/");
@@ -444,8 +444,8 @@ void SpritesPool::load_sprites_with_dim(std::string path,
         //return EXIT_FAILURE;
     }
     std::string temp;
-    for (int i = 0; i <list_dir.size(); ++i) {
-        for (int j = 0; j <list_dir.size(); ++j) {
+    for (unsigned int i = 0; i <list_dir.size(); ++i) {
+        for (unsigned int j = 0; j <list_dir.size(); ++j) {
 
             if (list_dir[i] < list_dir[j]) {
                 temp = list_dir[j];
@@ -454,7 +454,7 @@ void SpritesPool::load_sprites_with_dim(std::string path,
             }
         }
     }
-    for (int j = 2; j <list_dir.size() ; ++j) {
+    for (unsigned int j = 2; j <list_dir.size() ; ++j) {
         std::string full_dir;
         full_dir.append(rootDirectory);
         full_dir.append("/");
@@ -501,8 +501,8 @@ void SpritesPool::load_sprite(std::string path,
         //return EXIT_FAILURE;
     }
     std::string temp;
-    for (int i = 0; i <list_dir.size(); ++i) {
-        for (int j = 0; j <list_dir.size(); ++j) {
+    for (unsigned int i = 0; i <list_dir.size(); ++i) {
+        for (unsigned int j = 0; j <list_dir.size(); ++j) {
 
             if (list_dir[i] < list_dir[j]) {
                 temp = list_dir[j];
@@ -511,7 +511,7 @@ void SpritesPool::load_sprite(std::string path,
             }
         }
     }
-    for (int j = 2; j <list_dir.size() ; ++j) {
+    for (unsigned int j = 2; j <list_dir.size() ; ++j) {
         std::string full_dir;
         full_dir.append(rootDirectory);
         full_dir.append("/");

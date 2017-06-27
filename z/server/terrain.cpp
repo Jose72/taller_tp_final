@@ -57,7 +57,7 @@ void terrain::construct(int t_type, bool pb_robot, bool pb_vehicle, double t_fac
 
 terrain::terrain(int t_type, bool pb_robot, bool pb_vehicle, double t_factor): 
 t_type(t_type), passable_by_robot(pb_robot), passable_by_vehicle(pb_vehicle), 
-terrain_factor(t_factor) {};
+terrain_factor(t_factor) {}
 
 bool terrain::isPassable(int unit_code){
 	if (unit_code == ROBOT) return passable_by_robot;

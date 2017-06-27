@@ -157,7 +157,7 @@ std::vector<Unit*> Units_Protected::selectUnits(int rangeX1,
 
 void Units_Protected::addToUnitsSelected(std::vector<Unit *> &vectorUnits, Unit *unit) {
     bool alreadyInVector = false;
-    for (int i = 0; i <vectorUnits.size() ; ++i) {
+    for (unsigned int i = 0; i <vectorUnits.size() ; ++i) {
         if(vectorUnits[i]->get_unit_code() == unit->get_unit_code()){
             alreadyInVector = true;
         }
@@ -473,4 +473,5 @@ Unit* Units_Protected::getFortPlayer(int idClient) {
             }
         }
     }
+    return it->second;
 }

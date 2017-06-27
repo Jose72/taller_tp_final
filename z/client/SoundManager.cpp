@@ -225,7 +225,7 @@ void SoundManager::addLaserBullet(int id) {
 }
 
 void SoundManager::playLaser(){
-    int i = 0;
+    unsigned int i = 0;
     bool newLaser = false;
     while(i < laserBullets.size() && !newLaser) {
         if(std::find(previousLaserBullets.begin(), previousLaserBullets.end(), laserBullets[i]) == previousLaserBullets.end()) {
@@ -243,7 +243,7 @@ void SoundManager::playLaser(){
 }
 
 void SoundManager::playToughBullets(){
-    int i = 0;
+    unsigned int i = 0;
     bool newBullet = false;
     bool explosion = false;
     while(i < toughBullets.size() && !newBullet) {

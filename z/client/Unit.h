@@ -41,14 +41,8 @@ enum State{
 
 class Unit {
 protected:
-    int posx;
-    int posy;
     int cod_unit;
     int health;
-    int posxO;
-    int posyO;
-    int posX_attack;
-    int posY_attack;
     int owner;
     int techLevel;
     int rangoX;
@@ -69,6 +63,12 @@ protected:
     std::vector<Animation *> &animation3;
     std::vector<Animation *> &animation4;
     std::vector<Animation *> &animation5;
+    int posx;
+    int posy;
+    int posxO;
+    int posyO;
+    int posX_attack;
+    int posY_attack;
     FlagsUnitType unitType;
 
 public:

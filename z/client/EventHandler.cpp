@@ -52,7 +52,7 @@ void EventHandler::run() {
 
     Camera2 camera2(screen,posCameraX,posCameraY,CAMERADX,CAMERADY,dimensions,dimensions,factory);
     SelectionHandler sHandler(protocol,id_client,camera2);
-    int destinoX, destinoY, seleccionX, seleccionY;
+    int destinoX, destinoY;
     int selectionStartX;
     int selectionStartY;
     int selectionEndX;
@@ -61,14 +61,12 @@ void EventHandler::run() {
     while(running == true) {
         //MOSTRAR
         camera2.updateCameraPos();
-        int  ticks =SDL_GetTicks();
         //camera2.set_position_cameraRect(posCameraX,posCameraY);
         posCameraX = camera2.getPosCameraX();
         posCameraY = camera2.getPosCameraY();
         camera2.draw(units,gameMap,soundManager);
         playerInterface.show(sHandler, techLevel,winner,id_client);
         SDL_Flip(screen);
-
 
         //MOSTRAR
         while (SDL_PollEvent(&event)) {
@@ -79,7 +77,7 @@ void EventHandler::run() {
                     running = false;
                     break;
                 case SDL_KEYDOWN:
-                    switch (event.key.keysym.sym) {
+                    switch ((int) event.key.keysym.sym) {
                         case SDLK_LEFT:
                             camera2.startMovingLeft();
                             break;
@@ -96,7 +94,7 @@ void EventHandler::run() {
                     break;
 
                 case SDL_KEYUP:
-                    switch (event.key.keysym.sym) {
+                    switch ((int) event.key.keysym.sym) {
                         case SDLK_LEFT:
                             camera2.stopMovingLeft();
                             break;

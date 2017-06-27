@@ -20,7 +20,7 @@ gameMap::gameMap(std::vector<int> &casilla_code){
 
 
 gameMap::gameMap(int height, int width, std::vector<tile> &casillas): height(height), 
-width(width), casillas(casillas) {};
+width(width), casillas(casillas) {}
 
 
 
@@ -32,7 +32,7 @@ gameMap::gameMap(int *cas, int size) {
 			casillas.push_back(tile(j, i, *(cas + j + i * width)));
 		}
 	}
-};
+}
 
 
 // vecinos

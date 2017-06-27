@@ -9,9 +9,9 @@
 ClickableButton::ClickableButton(int x, int y, int width, int height, std::string text,int idUnit):text(std::move(text))
         ,x(x)
         ,y(y)
-        ,idUnit(idUnit)
         ,width(width)
         ,height(height)
+        ,idUnit(idUnit)
         ,next(0) {
 
 }

@@ -46,7 +46,7 @@ Unit::Unit(std::vector<Animation*> &a0,
 
 
 Unit::~Unit() {
-    for (int i = 0; i <animation.size() ; ++i) {
+    for (unsigned int i = 0; i <animation.size() ; ++i) {
         delete (this->animation[i]);
     }
 }
@@ -62,7 +62,7 @@ void Unit::animate(SDL_Rect &cameraRect) {
             break;
         case DEAD1:
             animate_static(cameraRect,animation3,maxFrame3);
-            if((current_frame == (animation3.size()-1))){
+            if(((unsigned int)current_frame == (animation3.size()-1))){
                 this->set_state(DEAD2);
             }
             break;

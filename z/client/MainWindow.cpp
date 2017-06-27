@@ -58,8 +58,6 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     }
 
     Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048);
-    Mix_Chunk *sonidoMover = Mix_LoadWAV( "sounds/acknowledge_01.wav" );
-
 
     //Initialize PNG loading
     int imgFlags = IMG_INIT_PNG;
@@ -141,7 +139,7 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
                                  soundManager));
         threads[1]->start();
 
-        for (int i = 0; i < threads.size(); ++i) {
+        for (unsigned int i = 0; i < threads.size(); ++i) {
             threads[i]->join();
 
         }
@@ -183,7 +181,7 @@ void on_siguiente_crear_clicked(Glib::RefPtr<Gtk::Application> app,int argc, cha
     if(response == RESPONSE_PROTOCOL_MENU_OK){
         pWindow->cleanBox();
         std::vector<mapData> mapDatas = protocolMenu.receiveMapsInfo();
-        for(int i = 0; i < mapDatas.size(); i++){
+        for(unsigned int i = 0; i < mapDatas.size(); i++){
             Gtk::Button* buttonMap;
             std::ostringstream texto;
             texto << "Nombre: ";
@@ -388,7 +386,7 @@ void MainWindow::deleteBox(){
     delete image;
     delete messageDialog;
 
-    for (int i = 0; i < buttons.size(); i++){
+    for (unsigned int i = 0; i < buttons.size(); i++){
         delete buttons[i];
     }
     buttons.clear();

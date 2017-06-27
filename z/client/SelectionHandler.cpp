@@ -15,10 +15,6 @@ SelectionHandler::SelectionHandler(Protocol &p, int &id, Camera2 &cam):protocol(
 }
 
 void SelectionHandler::set_location(int posX, int posY,Units_Protected &units) {
-    int dx1 = posX - SIZE_OF_DELTA;
-    int dx2 = posX + SIZE_OF_DELTA;
-    int dy1 = posY - SIZE_OF_DELTA;
-    int dy2 = posY + SIZE_OF_DELTA;
     unit = units.selectUnit(posX,posY,unit_selected, id_client);
 }
 
@@ -65,13 +61,13 @@ void SelectionHandler::set_target(int destX, int destY, Units_Protected &units) 
         enemy = units.selectEnemy(destX,destY,action, id_client);
         switch (action){
             case MOVE:
-                for (int i = 0; i <this->unitsSelected.size() ; ++i) {
+                for (unsigned int i = 0; i <this->unitsSelected.size() ; ++i) {
                     protocol.moveUnitCS(this->unitsSelected[i]->get_unit_code(),destX,destY);
                 }
                 break;
             case ATTACK:
                 if((enemy->get_state() != DEAD2) && (enemy->get_state() != DEAD1)) {
-                    for (int i = 0; i <this->unitsSelected.size() ; ++i) {
+                    for (unsigned int i = 0; i <this->unitsSelected.size() ; ++i) {
                         protocol.attackUnitCS(this->unitsSelected[i]->get_unit_code(), enemy->get_unit_code());
                     }
                 }
@@ -90,7 +86,7 @@ void SelectionHandler::set_target(int destX, int destY, Units_Protected &units) 
 }
 
 Unit* SelectionHandler::getDriver(bool &finded) {
-    for (int i = 0; i <this->unitsSelected.size() ; ++i) {
+    for (unsigned int i = 0; i <this->unitsSelected.size() ; ++i) {
         FlagsUnitType type = this->unitsSelected[i]->get_type();
         if((type!=FACTORY_ROBOTS_ALIVE) &&
            (type != FACTORY_VEHICLES_ALIVE) &&

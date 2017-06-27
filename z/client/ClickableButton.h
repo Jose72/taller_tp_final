@@ -10,16 +10,17 @@
 
 class ClickableButton {
     private:
+        std::string text;
         int x;
         int y;
         int width;
         int height;
-        std::string text;
+
     protected:
         int idUnit;
     public:
         ClickableButton(int x, int y, int width, int height, std::string text,int idUnit);
-        ~ClickableButton();
+        virtual ~ClickableButton();
 
         bool checkBounds(int posX, int posY, Protocol aProtocol);
 

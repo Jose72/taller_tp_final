@@ -35,7 +35,7 @@ int PlayerInterface::getCol(int division,int offset,int sizeElement,int leftPadd
 
 bool PlayerInterface::checkClickedButtons(int x, int y,Protocol protocol){
     bool result = false;
-    for(int i = 0; i != buttons.size(); i++) {
+    for(unsigned int i = 0; i != buttons.size(); i++) {
         result = result || buttons[i]->checkBounds(x, y, protocol);
     }
     return result;
@@ -148,7 +148,7 @@ int PlayerInterface::loadVehiclesButtons(int pos,int unitCode, int tech){
 }
 
 void PlayerInterface::cleanButtons(){
-    for(int i = 0; i != buttons.size(); i++) {
+    for(unsigned int i = 0; i != buttons.size(); i++) {
         delete(buttons[i]);
     }
     buttons.clear();
@@ -173,7 +173,7 @@ void PlayerInterface::drawCompletionTime(int time, int idUnit) {
 
 void PlayerInterface::loadButtons(Unit *unit) {
     int initialYPos = 300;
-    switch (unit->get_type()){
+    switch ((int) unit->get_type()){
         case FACTORY_ROBOTS_ALIVE:
             loadRobotsButtons(initialYPos,unit->get_unit_code(),unit->get_techLevel());
             drawTech(unit->get_techLevel());
@@ -225,7 +225,7 @@ void PlayerInterface::show(SelectionHandler selectionHandler, TechLevelProtected
         drawer.drawText(screen,"Nada seleccionado",getCol(2,1,0),160);
     }
 
-    for(int i = 0; i != buttons.size(); i++) {
+    for(unsigned int i = 0; i != buttons.size(); i++) {
         drawer.drawButton(screen,buttons[i]);
     }
 

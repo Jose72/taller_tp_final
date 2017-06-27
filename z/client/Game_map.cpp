@@ -31,9 +31,9 @@ void Game_map::draw_map(int limitXL, int limitXR, int limitYU, int limitYD, SDL_
     int mapDimensions = sqrt(map_des.size());
     int x,y,t;
 
-    for (int i =0 ; i<mapDimensions; i++) {
-        for (int j=0 ; j<mapDimensions; j++) {
-            int pos = ((i*mapDimensions)+(j));
+    for (int i =0 ; i < mapDimensions; i++) {
+        for (int j=0 ; j < mapDimensions; j++) {
+            unsigned int pos = ((i*mapDimensions)+(j));
             if(pos < map_des.size()){
                 t = this->map_des[pos];
                 // calculo de la posición del tile
