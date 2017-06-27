@@ -90,11 +90,8 @@ class unit {
 		//seters
 		void changeState(int state);
 		void changeOwnerForTargetOwner();
-		void decreaseTechLvl();
-		void increaseTechLvl();
 		void setTechLvl(int tl);
 		void changeOwner(int o);
-		void setDriver(unit *);
 		void setDestiny(int x, int y);
 		
 		//events

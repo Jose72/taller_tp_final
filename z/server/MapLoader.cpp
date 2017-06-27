@@ -9,13 +9,13 @@ MapLoader::MapLoader(std::string &path): pathFolder(path), jsonHandler(path) {
 
 void MapLoader::loadListData() {
     loadDirectory(pathFolder);
-    for (int i = 0; i <this->dataMaps.size() ; ++i) {
+    for (unsigned int i = 0; i <this->dataMaps.size() ; ++i) {
         std::cout << this->dataMaps[i].mapName << "\n";
     }
 }
 std::vector<dataMap> MapLoader::mapsForTeams(int cantEquipos) {
     std::vector<dataMap> vecDataMap;
-    for (int i = 0; i <this->dataMaps.size() ; ++i) {
+    for (unsigned int i = 0; i <this->dataMaps.size() ; ++i) {
         if(this->dataMaps[i].cantEquipos == cantEquipos){
             vecDataMap.push_back(this->dataMaps[i]);
         }
@@ -48,8 +48,8 @@ void MapLoader::loadDirectory(std::string path) {
         //return EXIT_FAILURE;
     }
     std::string temp;
-    for (int i = 0; i <list_dir.size(); ++i) {
-        for (int j = 0; j <list_dir.size(); ++j) {
+    for (unsigned int i = 0; i <list_dir.size(); ++i) {
+        for (unsigned int j = 0; j <list_dir.size(); ++j) {
 
             if (list_dir[i] < list_dir[j]) {
                 temp = list_dir[j];
@@ -58,7 +58,7 @@ void MapLoader::loadDirectory(std::string path) {
             }
         }
     }
-    for (int j = 0; j <list_dir.size() ; ++j) {
+    for (unsigned int j = 0; j <list_dir.size() ; ++j) {
         std::string full_dir;
         full_dir.append(mother);
         full_dir.append("/");

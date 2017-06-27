@@ -4,6 +4,8 @@
 #include <vector>
 
 
+#define INVALID_POS -200
+
 unit::unit(int unit_id, int class_id, int height, int width, int owner, int x, int y, 
 int health, int state, int blocking, int speed, int a_range, int base_damage, bool explosive, 
 int base_time, int unit_to_c, int tech_level): unit_id(unit_id),   
@@ -67,8 +69,6 @@ int unit::getHealth(){
 
 void unit::printPos(){
 	std::cout << "unit--------" << std::endl;
-	//std::cout << "class_id: " << class_id << std::endl;
-	//std::cout << "unit_id: " << unit_id << std::endl;
 	std::cout << "x_pos: " << x << std::endl;
 	std::cout << "y_pos: " << y << std::endl;
 	std::cout << "health: " << health << std::endl;
@@ -84,7 +84,6 @@ double unit::getRelativeDamage(){
 	}
 	return 1;
 }
-
 
 //////////////////////////////////////////////////
 ////// EVENT METHODS /////////////////////////////
@@ -140,10 +139,8 @@ void unit::drive(unit *vehicle){
 		
 		
 		//setear una pos invalida
-		this->x = -200;
-		this->y = -200;
-		//std::cout << "x------: " << this->getX() << std::endl;
-		//std::cout << "y------: " << this->getY() << std::endl;
+		this->x = INVALID_POS;
+		this->y = INVALID_POS;
 		
 		
 	} else {
@@ -151,7 +148,7 @@ void unit::drive(unit *vehicle){
 	}
 }
 
-//chequear tiempo correcto
+
 void unit::create(int u_id, int time){
 	if (class_id != BUILDING) return;
 	if (unit_code_to_create != u_id){
@@ -569,10 +566,6 @@ void unit::instantDrive(unit *vehicle){
 	//setear una pos invalida
 	this->x = -200;
 	this->y = -200;
-}
-
-void unit::setDriver(unit *u){
-	driver = u;
 }
 
 

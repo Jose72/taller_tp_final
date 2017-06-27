@@ -81,13 +81,11 @@ int juego::checkVictory(){
 }
 
 void juego::stop(){
-	std::cout << "juego stop" << std::endl;	
 	//rompo los sockets
 	stop_signal = true;
 	for (auto it = cli_skts.begin(); it != cli_skts.end(); ++it){
-			(*it)->shutdown(SHUT_WR);
+			(*it)->shutdown(SHUT_RDWR);
 	}
-	std::cout << "juego stop out" << std::endl;	
 }
 
 void juego::unit_cleaner(){

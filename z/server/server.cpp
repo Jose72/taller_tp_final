@@ -21,11 +21,16 @@ void tServer::stop(){
 			//paro y joineo los managers
 			client_mngrs[j]->stop();
 			client_mngrs[j]->join();
-			delete client_mngrs[j];
 		}
 
 		g_list.stopGames();
 		g_list.cleanGames();
+		
+		for (unsigned int j = 0; j < client_mngrs.size(); j++){
+			//limpio
+			delete client_mngrs[j];
+		}
+		
 		std::cout << "server stop out" << std::endl;	
 }
 
