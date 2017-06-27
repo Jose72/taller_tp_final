@@ -17,7 +17,6 @@ int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, 
 			default:
 				return 0;
 		}
-		
 	} else {
 		switch(u_class){
 			case ROBOT:
@@ -32,7 +31,8 @@ int attackHandler::attackActualize(unit &attacker, std::map<int, unit*> &units, 
 }
 
 //ATAQUE COMUN
-int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &units, int &unit_id_c, int time){
+int attackHandler::attackCommonActualize(unit &attacker, 
+std::map<int, unit*> &units, int &unit_id_c, int time){
 	unit *attacked = attacker.getTarget();
 	if (attacker.targetIsInRange() && attacker.targetIsAttackable()){
 			//actualiza el timer
@@ -44,7 +44,6 @@ int attackHandler::attackCommonActualize(unit &attacker, std::map<int, unit*> &u
 				if (attacker.unitToCreate() == BALAS){
 					attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 				} else {
-					//std::cout << "crea bullet" << std::endl;
 					unit *u = ub.build(attacker.unitToCreate(), attacker.getCenterX(), attacker.getCenterY());
 					u->attack(attacked);
 					units.insert(std::pair<int,unit*>(unit_id_c,u));
@@ -100,13 +99,11 @@ int attackHandler::autoAttackCommonActualize(unit &attacker, std::map<int, unit*
 
 int attackHandler::attackBulletActualize(unit &attacker, int time){
 	unit *attacked = attacker.getTarget();
-	
 	//si el taget enta en rango
 	//recibe daño
 	if (attacker.targetIsInRange() && attacker.targetIsAttackable()){
 			attacked->takeDamage(round(attacker.getDamage()),attacker.isExplosiveDamage());
 	}
-	
 	//la bala muere cuando ataca
 	attacker.changeState(DEAD);
 	return 0;

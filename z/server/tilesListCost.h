@@ -18,10 +18,8 @@ class tilesListCost{
 		bool empty();
 		bool found(tile *t);
 		tile* begin();
-		int foundReplaceOrInsert(tile *t);
 		int size();
 		void print();
-		tile* getClosesTileToDestiny();
 };
 
 #endif

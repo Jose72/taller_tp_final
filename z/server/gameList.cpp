@@ -55,9 +55,8 @@ int gameList::joinGame(int my_id, tSocket *s, juego **j, int creator, int team){
 		if ((*it)->isCreator(creator)){
 			//si me pude unir
 			if ((*it)->clientJoin(my_id, s, team) == 0){
-				//el amnager se guarda el puntero al juego
+				//el manager se guarda el puntero al juego
 				*j = (*it);
-				//std::cout << "puntero juego" << j << std::endl;
 				return 0;
 			}
 		}
@@ -71,14 +70,6 @@ int gameList::joinGame(int my_id, tSocket *s, juego **j, int creator, int team){
 void gameList::descriptionGames(std::vector<int> &des, int &c){
 	tLock l(m);
 	c = juegos.size();
-	/*
-	if (c == 0){
-		for (int i = 0; i < 5; ++i){
-			des.push_back(0);
-		}
-		return;
-	}
-	*/
 	for (auto it = juegos.begin(); it != juegos.end(); ++it){
 		int a,b,c,d,e;
 		(*it)->getDescription(a,b,c,d,e);

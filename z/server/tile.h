@@ -25,8 +25,6 @@ class tile{
 		tile(int x, int y, int terrain_id);
 		int getX();
 		int getY();
-		int getTerrainCode();
-		void setTerrain(int t_code);
 		tile* getParent();
 		void setParent(tile *p);
 		double gValue();           

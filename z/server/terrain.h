@@ -4,7 +4,7 @@
 //para los codigos de unidades
 #include "unit.h"
 
-//esto en un xml?
+
 #define TIERRA 6
 #define PRADERA 0
 #define NIEVE 3

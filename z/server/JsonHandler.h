@@ -6,6 +6,7 @@
 #include <map>
 #include "unitBuilder.h"
 
+
 struct dataMap{
     std::string mapName;
     int cantEquipos;

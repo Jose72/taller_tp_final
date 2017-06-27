@@ -122,9 +122,6 @@ double tile::getTerrainFactor(){
 	return terr.getTerrainFactor();
 }
 
-int tile::getTerrainCode(){
-	return terr.getTerrainCode();
-}
 
 //si hay una undiad arriba
 //seteo en true el flg
@@ -136,10 +133,6 @@ void tile::putUnitOver(bool b){
 
 void tile::releaseUnitOver(){
 	unit_over = false;
-}
-
-void tile::setTerrain(int t_code){
-	terr = terrain(t_code);
 }
 
 double tile::euclideanDist(tile *t){

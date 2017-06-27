@@ -39,10 +39,8 @@ int createHandler::createVehicleActualize(unit &creator, std::map<int, unit*> &u
 	driv->instantDrive(u);
 	units.insert(std::pair<int,unit*>(unit_id_c, driv));
 	unit_id_c++;//incremento id_unit
-	
-	//ip.incrementUnitsCount(creator.getOwner()); 
-	
-	
+
+	//incremento solo una vez
 	ip.incrementUnitsCount(creator.getOwner());
 	
 	//reseteo el timer

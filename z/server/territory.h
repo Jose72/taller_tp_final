@@ -11,7 +11,6 @@ class territory {
 		unit *factory;
 	public:
 		territory(unit *f, unit *factory);
-		bool flagBelongToTerritory(unit *f);
 		void changeOwnership();
 };
 
