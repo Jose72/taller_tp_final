@@ -93,8 +93,24 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
     if (c == 0) {
 
 
-        threads.push_back(new TClient_receive(*socket, game_map, all_units, factory, waiting_server, running, id_client,
-                                              techLevel, winnerProtected, soundManager));
+
+        int dimensions = 0;
+        int posXI = 0;
+        int posYI = 0;
+
+        threads.push_back(new TClient_receive(*socket,
+                                              game_map,
+                                              all_units,
+                                              factory,
+                                              waiting_server,
+                                              running,
+                                              id_client,
+                                              dimensions,
+                                              posXI,
+                                              posYI,
+                                              techLevel,
+                                              winnerProtected,
+                                              soundManager));
         threads[0]->start();
 
         Protocol protocol(*socket, all_units, game_map, factory, techLevel, winnerProtected, soundManager);
@@ -107,8 +123,20 @@ void jugar(Glib::RefPtr<Gtk::Application> app,int argc, char* argv[],MainWindow 
         //sleep(5);
         //main application loop
         threads.push_back(
-                new EventHandler(screen, playerInterface, all_units, *socket, game_map, running, factory, id_client,
-                                 techLevel, winnerProtected, soundManager));
+                new EventHandler(screen,
+                                 playerInterface,
+                                 all_units,
+                                 *socket,
+                                 game_map,
+                                 running,
+                                 factory,
+                                 id_client,
+                                 dimensions,
+                                 posXI,
+                                 posYI,
+                                 techLevel,
+                                 winnerProtected,
+                                 soundManager));
         threads[1]->start();
 
         for (int i = 0; i < threads.size(); ++i) {
