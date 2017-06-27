@@ -17,16 +17,14 @@
 #define NO_WINNER 0
 
 
-//contiene la info global de un jugador
+//contiene la info de un jugador
 class infoPlayer {
 	private:
 		int player_id;
 		serverProtocol *prot;
-		//int state;
 		
 	public:
 		infoPlayer(int id, serverProtocol *prot);
-		int getPlayerId();
 		void sendTeamNumber(int t);
 		void sendInitialPos(int x, int y);
 };

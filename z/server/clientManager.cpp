@@ -19,9 +19,7 @@ tClientManager::tClientManager(int id, tSocket cli_s, gameList &jgs,
 std::string &map_folder, std::string &unit_info_path): 
 id_client(id), cli_skt(std::move(cli_s)), 
 juegos(jgs), map_folder(map_folder), unit_info_path(unit_info_path), 
-end_game(false), j(nullptr), ended(false) {
-	std::cout <<"iniciao manager" << std::endl;
-	}
+end_game(false), j(nullptr), ended(false) {}
 
 
 bool tClientManager::readyToClean(){
@@ -52,10 +50,6 @@ int tClientManager::gameSelection(){
 		int teams = -1;
 		cli_skt.receive((char*)&teams, 4);
 		teams = ntohl(teams);
-
-		//std::cout << "cant p: " << cant_p << std::endl;
-		//std::cout << "gem: " << type_game << std::endl;
-		//std::cout << "tcant eq: " << teams << std::endl;
 		
 		//si la cant de jugadores es menor o igual a 1 da error
 		if (cant_p <= 1 ){
@@ -65,14 +59,18 @@ int tClientManager::gameSelection(){
 		//creo el juego
 		//harcodeo
 		
-		//si es deathmantc equipos = juagdores
+		//si es deathmanth -> equipos = jugadores
 		int teams2 = teams;
 		if (type_game == DEATHMATCH) {
 			teams2 = cant_p;
 		} else {
 			//sino tienen que ser equipos parejos
 			// 1 < cant equipos < 4
-			if ((cant_p % teams) != 0 || teams <= 1 || teams > 4) return 1;
+			if ((cant_p % teams) != 0 || teams <= 1 || teams > 4) {
+				int confirm = htonl(1);
+				cli_skt.send((char*)&confirm, 4);
+				return 1;
+			}
 		}
 		
 		//////////////////////////////////////////////////////////
@@ -84,13 +82,9 @@ int tClientManager::gameSelection(){
         prot.sendOKConfimation();
 
 		MapLoader m_loader(map_folder);
-		std::cout << "tatatat" << std::endl;
 		m_loader.loadListData();
-		std::cout << "tatatat" << std::endl;
 		std::vector<dataMap> maps_info = m_loader.mapsForTeams(teams2);
-		std::cout << "tatatata" << std::endl;
 		prot.sendMapsInfo(maps_info);
-		std::cout << "tatatat" << std::endl;
 
 
 
@@ -107,7 +101,6 @@ int tClientManager::gameSelection(){
 		
 		
 		///////////////////////////////////////////////////////////
-		//*nombre del mapa harcodeado (arreglar cuando este la seleccion de mapas)
 		//creo el nuevo juego
 		j = new juego(id_client, cant_p, type_game, teams2, mapa_nombre, map_folder, unit_info_path);
 		j->clientJoin(id_client, &cli_skt, 1);
@@ -144,6 +137,7 @@ int tClientManager::gameSelection(){
 		
 		//recibir codigo
 		//mientras el socket siga vivo (y no me hagan stop en el manager)
+		//loopeo hasta que joinee a la aprtida
 		int s = 1;
 		while (s > 0 && !end_game) {
 			

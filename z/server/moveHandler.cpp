@@ -77,7 +77,6 @@ while (!open.empty()){//mientras al lista no este vacia
 
 //hay que retornar la lista de punteros
 
-//std::cout << "last: " << last << std::endl;
 
 //voy hacia  atras con parent
 while (last != nullptr){
@@ -87,19 +86,6 @@ while (last != nullptr){
 }
 
 return 0;
-}
-
-
-tile* getClosestPassableTile(tile* dest, gameMap &gmap, int c_code){
-	std::vector<tile*> ady;
-	gmap.getNeightboors(*dest, ady);
-	for (auto it = ady.begin(); it != ady.end(); ++it){
-		tile *t = (*it);
-		if (t->isPassable(c_code)){
-			return t;
-		}
-	}
-	return nullptr;
 }
 
 
@@ -148,7 +134,6 @@ int moveHandler::moveActualize(unit &u, gameMap &mapa, double time){
 	}
 	
 }
-
 
 
 

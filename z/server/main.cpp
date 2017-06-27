@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <iostream>
-#include "testS.h" //small tests
 #include "server.h"
 #include "configParser.h"
 

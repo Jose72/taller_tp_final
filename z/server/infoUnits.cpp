@@ -97,7 +97,6 @@ void unitPlantilla::print(){
 infoUnits::infoUnits(std::string &file_path){
 	JsonUnitInfoHandler ju;
 	ju.jsonToUnitsInfo(file_path, *this);
-	//u_info.print();
 }
 
 void infoUnits::addInfo(unitPlantilla &up){

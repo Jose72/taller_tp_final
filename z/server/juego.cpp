@@ -287,7 +287,6 @@ void juego::eventHandle(Event &e, std::map<int,unit*> &units){
 void juego::run(){
 	started = true;
 	running = true;
-	
 	//espero a que el juego este listo
 	while(!this->readyToStart() && !stop_signal){
 		usleep(500000);
@@ -298,7 +297,7 @@ void juego::run(){
 	}
 	//envio de mapa, unidades iniciales y cosas basicas
 	this->sendInit();
-	
+	std::cout << "llego" << std::endl;
 	//seteo el actualizador de unidades
 	actualizeUnit actualizer(builder, u_info);
 	

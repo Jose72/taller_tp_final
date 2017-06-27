@@ -21,8 +21,6 @@ int deathHandler::deathBuilding(unit &u, std::map<int, unit*> &units, int &id_un
 //se encarga de dejar al driver(si lo tiene) en la posicion del vehiculo 
 int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units, gameMap &mapa){
 	unit* a = u.getDriver();
-	//std::cout << "vehicle driver"  << u.getDriver() << std::endl;
-	//std::cout << "x: " << a->getX() << "Y: " << a->getY() <<std::endl;
 	if (a){
 	a->setPos(u.getX(), u.getY());
 		a->setTarget(nullptr);
@@ -38,7 +36,6 @@ int deathHandler::deathVehicle(unit &u, std::map<int, unit*> &units, gameMap &ma
 			}
 		}
 	}
-	//u.releaseDriver();
 	return 0;
 }
 
@@ -49,7 +46,6 @@ int deathHandler::deathBridge(unit &u, std::map<int, unit*> &units, gameMap &map
 		int a_class = a->getClassId();
 		if (u.hasOnTop(a)){
 			if (a_class == ROBOT || a_class == VEHICLE){
-				//std::cout << "clase" << a_class << std::endl;
 				a->changeState(READY_TO_DIE);
 			}
 		}
@@ -63,7 +59,7 @@ int deathHandler::deathBridge(unit &u, std::map<int, unit*> &units, gameMap &map
 
 
 int deathHandler::deathBlock(unit &u, gameMap &mapa){
-	//seteo las casillas como bloqueadas
+	//"desbloqueo" la casilla
 	mapa.releaseUnitBlocking(&u);
 	return 0;
 }
@@ -79,7 +75,6 @@ int deathHandler::death(unit &u, std::map<int, unit*> &units, int &id_unit_count
 			break;
 		case VEHICLE:
 			deathVehicle(u, units, mapa);
-			//ip.decrementUnitsCount(u.getOwner());
 			break;
 		case BUILDING:
 			deathBuilding(u, units, id_unit_counter);

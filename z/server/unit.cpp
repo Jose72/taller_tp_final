@@ -25,9 +25,7 @@ void unit::setPos(double p_x, double p_y){
 
 
 bool unit::isMoving(){
-	
-	if ((x != dest_x || y != dest_y)) return true;
-	return false;
+	return ((x != dest_x || y != dest_y));
 };
 
 int unit::getUnitId(){
@@ -114,19 +112,6 @@ void unit::attack(unit *u){
 	} 
 }
 
-void unit::follow(unit *u){
-	if (u) {
-		auto_attack = false;
-		target = u;
-		u->setFollower(this);
-		if (this->targetIsInRange()){
-			this->changeState(STANDING);
-		} else {
-			this->moveToTarget();
-		}
-	}
-}
-
 void unit::drive(unit *vehicle){
 	//si tenia target le digo que no lo sigo y targetteo vehiculo
 	if (target) target->removeFollower(this);
@@ -190,13 +175,6 @@ int unit::takeDamage(int dam, bool explosive){
 	return DAMAGE_TAKEN;
 }
 
-void unit::setAttack(unit *u){
-	if (u->owner != this->owner){
-		target = u;
-	}
-	
-}
-
 void unit::setDestiny(int x, int y){
 	dest_x = x;
 	dest_y = y;
@@ -220,12 +198,8 @@ void unit::printPosDest(){
 }
 
 bool unit::isEnemy(unit *u){
-	//pendiente: chequear si el owner es mageMap 
-	//(en el caso de que la unidad sea una piedra u otro objeto destruible)
-
 	if (!u || u->owner == 0 || u->class_id == FLAG) return false;
 	if (this->owner != u->owner) {
-		//if (this->sameTeam(&u)) return false;
 		return true;
 	}
 	return false;
@@ -247,7 +221,6 @@ bool unit::isAlive(){
 
 //countdown me dice cuando puedo atacar (cuando esta en 0)
 //hay "espera" por la frecuencia de disparo
-//
 bool unit::canAttack(){
 	return (countdown <= 0);
 }
@@ -278,23 +251,10 @@ void unit::changeState(int s){
 bool unit::targetIsInRange(){
 	if (target) {
 		return this->isInRange(*target);
-		//if (sqrt(pow((x - target->x),2) + pow((y - target->y),2)) <= this->attack_range) {
-		//return true;
-		//}
 	}
 	return false;
 }
 
-
-void unit::moveToCenterTarget(){
-	if (target){
-		this->dest_x = target->getCenterX();
-		this->dest_y = target->getCenterY();
-		state = MOVING;
-	} else {
-		state = STANDING;
-	}
-}
 
 
 //si tengo taget lo pongo como destino
@@ -333,10 +293,6 @@ void unit::removeTarget(unit *u){
 	}
 }
 
-bool unit::isDead(){
-	if (state == DEAD) return true;
-	return false;
-}
 
 //true si u es uno de mis followers
 bool unit::isFollowedBy(unit *u){
@@ -387,18 +343,8 @@ void unit::setTarget(unit *u){
 	target = u;
 }
 
-bool unit::sameOwner(unit *u){
-	if (this->owner == u->owner) return true;
-	return false;
-}
-
 bool unit::sameOwnerAsTarget(){
 	if (this->owner == target->owner) return true;
-	return false;
-}
-
-bool unit::timerIsZero(){
-	if (countdown == 0) return true;
 	return false;
 }
 
@@ -437,10 +383,6 @@ void unit::driveTarget(){
 	state = DRIVING;
 }
 
-bool unit::isDriving(){
-	return (state == DRIVING);
-}
-
 bool unit::isExplosiveDamage(){
 	return explosive_damage;
 }
@@ -469,14 +411,6 @@ void unit::setFlagTarget(unit *u){
 	u->setFollower(this);
 }
 
-void unit::releaseDriver(){
-	if (driver){
-		driver->x = this->x;
-		driver->y = this->y;
-		driver->target = nullptr;
-		driver->state = STANDING;
-	}
-}
 
 int unit::getWidth(){
 	return width;

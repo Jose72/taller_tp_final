@@ -1,6 +1,5 @@
 #include "actualizeUnit.h"
 #include <vector>
-#include "tilesListCost.h"
 #include <iostream>
 #include <math.h>  
 #include <algorithm> 
@@ -34,54 +33,42 @@ int actualizeUnit::operator()(int unit_game_id, unit &u, std::map<int, unit*> &u
 	int state = u.getState();
 	switch(state){
 		case MOVING:
-			//std::cout << "unit: " << unit_game_id << " move" << std::endl;
 			move_h.moveActualize(u, mapa, time / 100);
 			return 0;
 		case ATTACKING:
-			//std::cout << "unit: " << unit_game_id << " attac" << std::endl;
 			attack_h.attackActualize(u, units, unit_id_count, time);
 			return 0;
 		case CREATING:
-			//std::cout << "unit: " << unit_game_id << " creat" << std::endl;
 			create_h.createActualize(u, units, unit_id_count, time, ip);
 			return 0;
 		case STANDING:
-			//std::cout << "unit: " << unit_game_id << " stand" << std::endl;
 			autoAttackActualize(u, units, mapa, time);
 			return 0;
 		case CHECKING_CAPTURE:
-			//std::cout << "unit: " << unit_game_id << " check_capt" << std::endl;
 			capture_h.checkingCaptureActualize(u, units, time, ip);
 			return 0;
 		case CAPTURED:
-			//std::cout << "unit: " << unit_game_id << " captured" << std::endl;
 			u.changeState(CHECKING_CAPTURE);
 			return 0;
 		case READY_TO_DIE:
 			u.changeState(DEAD);
 			return 0;
 		case DRIVING:{
-			//std::cout << "unit: " << unit_game_id << " driving" << std::endl;
-			
+			//si el vehiculo que conduzco tiene owner 0 (recien entro en DRIVING)
+			//creo un nuevo vehiculo con el owner del conductor
+			//y los seteo 
+			//se hace por una limitacion del cliente
+			//el vehiculo viejo se para a ERASED para ser borrado luego
 			unit *v = u.getTarget();
 			if (v->getOwner() != u.getOwner()){
-				//std::cout << "vehic own: " << v->getOwner() << std::endl;
 				unit *n_v = ub.build(v->getUnitId(), u.getOwner(), v->getX(), v->getY());
 				units.insert(std::pair<int,unit*>(unit_id_count,n_v));
 				unit_id_count++;
 				u.instantDrive(n_v);
 				v->changeState(ERASED);
-				/*
-				v->setPos(-200, -200);
-				v->setDriver(nullptr);
-				v->changeState(DEAD);
-				*/ 
 			}
 			return 0;
 			}
-		case DEFEATED:
-			//std::cout << "unit: " << unit_game_id << " defeated" << std::endl;
-			return 0;
 	}
 	return 0;
 }

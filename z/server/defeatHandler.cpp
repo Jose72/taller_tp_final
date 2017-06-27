@@ -3,7 +3,7 @@
 
 
 //si el edificio esta muerto no hace falta hacer nada
-//si el fuerte esta vivo (perdio porquwe se quedo sin undiades)
+//si el fuerte esta vivo (perdio porque se quedo sin undiades)
 //lo paso a DEAD (el deathHandler hara lo suyo)
 //si es una fabrica, pasa a NO_STATE (para que no costruya y luego sea tomada por otro)
 int defeatHandler::defeatBuilding(unit *u){
@@ -41,7 +41,6 @@ int defeatHandler::defeatPlayer(int t_code, std::map<int, unit*> &units){
 					break;
 				case VEHICLE:
 				case ROBOT:
-					//std::cout << "defeat robot or vehicle" << std::endl;
 					defeatCommon(u);
 					break;
 			}

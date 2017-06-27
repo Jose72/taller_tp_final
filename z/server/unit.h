@@ -48,8 +48,6 @@ class unit {
 		int quant_to_create;
 		int tech_level;
 		
-		//bandera
-		
 		
 	public:
 		unit(int unit_id, int class_id, int height, int width, int owner, int x, int y, 
@@ -97,9 +95,7 @@ class unit {
 		//events
 		void move(int d_x, int d_y);
 		void moveToTarget();
-		void moveToCenterTarget();
 		void attack(unit *u);
-		void follow(unit *u);
 		void stop();
 		void drive(unit *vehicle);
 		void driveTarget();
@@ -110,15 +106,12 @@ class unit {
 		//checks
 		bool isInRange(unit &u);
 		bool isAlive();
-		bool isDead();
 		bool canAttack();
 		bool isEnemy(unit *u);
 		bool canCreate();
 		bool autoAttackEnabled();
-		bool timerIsZero();
 		bool targetIsInRange();
 		bool canDriveTarget();
-		bool isDriving();
 		bool isAttackable(unit *u);
 		bool hasOnTop(unit *u);
 		
@@ -131,24 +124,17 @@ class unit {
 		void printPosDest();
 		bool targetIsEnemy();
 		bool targetIsAttackable();
-		bool sameOwner(unit *u);
 		bool sameOwnerAsTarget();
-		bool sameTeam(unit *u);
-		
-		int checkCreating(double time);
-		void destroy();
 		
 		//creacion-captura
 		void actualizeTimer(int time); // para ataque
 		void actualizeCaptureTimer(int time); // para ataque
-		void updateCreationTimer(int time, int t_count); ///para crear unidad
+		void updateCreationTimer(int time, int t_count); //para crear unidad
 		void resetTimer();
 		void resetAttackTimer();
 		int unitToCreate();
 		bool timerComplete();
-		
-		//driving
-		void releaseDriver();
+
 		
 		//targeting
 		void setTarget(unit *u);
@@ -156,7 +142,6 @@ class unit {
 		void setFollower(unit *u);
 		void removeFollower(unit* u);
 		void removeTarget(unit *u);
-		void setAttack(unit *u);
 		bool isFollowedBy(unit *u);
 		void stopFollowers();
 		void setFlagTarget(unit *);

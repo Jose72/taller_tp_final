@@ -1,6 +1,5 @@
 #include "gameMap.h"
 #include <iostream>
-#include <vector>
 #include "math.h"
 #include <iostream>
 
@@ -35,9 +34,6 @@ gameMap::gameMap(int *cas, int size) {
 	}
 };
 
-int gameMap::getMapDimension(){
-	return height;
-}
 
 // vecinos
 // x-1, y-1 | x, y-1   | x+1, y-1 |
@@ -65,16 +61,6 @@ void gameMap::getNeightboors(tile &q, std::vector<tile*> &ady){
 		}
 	}
 	
-}
-
-
-void gameMap::getNeightboorsNoDiagonal(tile &q, std::vector<tile*> &ady){
-	this->getNeightboors(q, ady);
-	for (auto it = ady.begin(); it != ady.end(); ++it){
-		if ((*it)->isDiagonal(q)){
-			it = ady.erase(it);
-		}
-	}
 }
 
 
@@ -153,14 +139,6 @@ void gameMap::setBlocking(std::map<int,unit*> &units){
 		}
 	}
 }
-
-//para testing
-void gameMap::seePassableForUnit(int unit_code){
-	for (auto it = casillas.begin(); it != casillas.end(); ++it){
-		std::cout << "x: " << it->getX() << " y: " << it->getY() << " - " << it->isPassable(unit_code) << std::endl;
-	}
-}
-
 
 //bloquea la/las casillas que ocupa la unidad
 //(ej: cuando se destruye un puente)
