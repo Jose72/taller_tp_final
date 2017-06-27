@@ -34,65 +34,67 @@ int tClientManager::gameSelection(){
 	prot.receiveSelectionCode(code);
 
 	if (code == CREATE_GAME) {
-		//envio confirmacion
-		prot.sendOKConfimation();
+        //envio confirmacion
+        prot.sendOKConfimation();
 
-		//recibo datos
+        //recibo datos
         int cant_p = -1;
         int type_game = -1;
         int teams = -1;
         prot.receiveCreateGameData(cant_p, type_game, teams);
 
-		//si la cant de jugadores es menor o igual a 1 da error
-		if (cant_p <= 1 ){
-			return 1;
-		}
-		
-		//creo el juego
-		//harcodeo
-		
-		//si es deathmanth -> equipos = jugadores
-		int teams2 = teams;
-		if (type_game == DEATHMATCH) {
-			teams2 = cant_p;
-		} else {
-			//sino tienen que ser equipos parejos
-			// 1 < cant equipos < 4
-			if ((cant_p % teams) != 0 || teams <= 1 || teams > 4) {
-				int confirm = htonl(1);
-				cli_skt.send((char*)&confirm, 4);
-				return 1;
-			}
-		}
-		
-		//////////////////////////////////////////////////////////
-		//PARTE DE SELECCION DE MAPAS
+        //si la cant de jugadores es menor o igual a 1 da error
+        if (cant_p <= 1) {
+            return 1;
+        }
+
+        //creo el juego
+        //harcodeo
+
+        //si es deathmanth -> equipos = jugadores
+        int teams2 = teams;
+        if (type_game == DEATHMATCH) {
+            teams2 = cant_p;
+        } else {
+            //sino tienen que ser equipos parejos
+            // 1 < cant equipos < 4
+            if ((cant_p % teams) != 0 || teams <= 1 || teams > 4) {
+                int confirm = htonl(1);
+                cli_skt.send((char *) &confirm, 4);
+                return 1;
+            }
+        }
+
+        //////////////////////////////////////////////////////////
+        //PARTE DE SELECCION DE MAPAS
 
 
         //envio confirmacion
 
         prot.sendOKConfimation();
 
-		MapLoader m_loader(map_folder);
-		m_loader.loadListData();
-		std::vector<dataMap> maps_info = m_loader.mapsForTeams(teams2);
-		prot.sendMapsInfo(maps_info);
+        MapLoader m_loader(map_folder);
+        m_loader.loadListData();
+        std::vector<dataMap> maps_info = m_loader.mapsForTeams(teams2);
+        prot.sendMapsInfo(maps_info);
 
         //recibo nombre de mapa
         std::string mapa_nombre;
-        prot.receiveMapName(mapa_nombre);
-		
-		///////////////////////////////////////////////////////////
-		//creo el nuevo juego
-		j = new juego(id_client, cant_p, type_game, teams2, mapa_nombre, map_folder, unit_info_path);
-		j->clientJoin(id_client, &cli_skt, 1);
-		//pusheo en el vector de juegos, para que quede listado
-		juegos.push_back(j);
+        //si recibi bien
+        if (0 < prot.receiveMapName(mapa_nombre) && mapa_nombre != "") {
+			
+            //creo el nuevo juego
+            j = new juego(id_client, cant_p, type_game, teams2, mapa_nombre, map_folder, unit_info_path);
+            j->clientJoin(id_client, &cli_skt, 1);
+            //pusheo en el vector de juegos, para que quede listado
+            juegos.push_back(j);
 
-		//empiezo el juego
-		j->start();
-		return 0;
-		
+            //empiezo el juego
+            j->start();
+            return 0;
+        }
+        return -1;
+
 		///////////////////////FIN-CREATE-GAME////////////////////////////////7
 	}
 	if (code == JOIN_GAME){ //si seleccione unirme

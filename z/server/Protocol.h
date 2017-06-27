@@ -36,7 +36,7 @@ public:
 
 	void receiveSelectionCode(int &c);
 	void receiveCreateGameData(int &cant_p, int &type_game, int &teams);
-	void receiveMapName(std::string &map_name);
+	int receiveMapName(std::string &map_name);
 	void sendGamesDescription(std::vector<int> &des, int cant_j);
 	void receiveGameToJoin(int &g_id, int &t);
 };

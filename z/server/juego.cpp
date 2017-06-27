@@ -334,6 +334,11 @@ void juego::run(){
 			
 			//limpio los fiambres
 			unit_cleaner();
+
+			s = 0;
+			for (auto it = protocols.begin(); it != protocols.end(); ++it){
+				s += (*it)->sendActualization(units);
+			}
 			
 			//check si gano alguien, o si perdio
 			if (NO_WINNER != checkVictory()){

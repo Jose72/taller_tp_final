@@ -253,15 +253,17 @@ void serverProtocol::receiveCreateGameData(int &cant_p, int &type_game, int &tea
 }
 
 //recibo el nombre del mapa que selecciono el cliente
-void serverProtocol::receiveMapName(std::string &map_name){
+int serverProtocol::receiveMapName(std::string &map_name){
+    int s = 0;
 	//recibo tamanio del nombre
 	int name_size = 0;
 	socket.receive((char*)&name_size,INT_SIZE);
 	name_size = ntohl(name_size);
 	//recibo el nombre
 	char buff[100] = {'\0'};
-	socket.receive((char*)&buff[0], name_size);
+	s = socket.receive((char*)&buff[0], name_size);
 	map_name = std::string(&buff[0]);
+    return s;
 }
 
 //envio de descripcion de los mapas al cliente
